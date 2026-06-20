@@ -53,6 +53,16 @@ export function Journey() {
     restDelta: 0.001
   });
 
+  const lineVariants = {
+    hidden: { opacity: 0, y: 30, filter: "blur(12px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 1.4, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
   return (
     <section 
       id="journey" 
@@ -63,26 +73,32 @@ export function Journey() {
       
       <div className="max-w-7xl mx-auto">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
           className="text-center space-y-8 mb-32 md:mb-48"
         >
-          <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass border-white/5">
+          <motion.div variants={lineVariants} className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass border-white/5">
             <p className="text-[9px] md:text-[10px] font-bold tracking-[0.5em] md:tracking-[0.6em] text-primary/40 uppercase">The Journey</p>
+          </motion.div>
+          <div className="space-y-4">
+            <motion.h2 variants={lineVariants} className="text-5xl md:text-9xl font-headline font-black tracking-tighter text-white leading-none">
+              From Learning
+            </motion.h2>
+            <motion.h2 variants={lineVariants} className="text-5xl md:text-9xl font-headline font-black tracking-tighter text-white leading-none">
+              To Building
+            </motion.h2>
+            <motion.h2 variants={lineVariants} className="text-5xl md:text-9xl font-headline font-black tracking-tighter text-[#EAE0C8] italic font-medium leading-none">
+              Ecosystems.
+            </motion.h2>
           </div>
-          <h2 className="text-5xl md:text-9xl font-headline font-black tracking-tighter text-white leading-none">
-            From Learning<br />
-            To Building<br />
-            <span className="text-[#EAE0C8] italic font-medium">Ecosystems.</span>
-          </h2>
-          <p className="text-lg md:text-2xl text-[#EAE0C8]/40 font-light leading-relaxed max-w-2xl mx-auto">
+          <motion.p variants={lineVariants} className="text-lg md:text-2xl text-[#EAE0C8]/40 font-light leading-relaxed max-w-2xl mx-auto pt-6">
             The evolution of curiosity into interconnected digital products and long-term systems thinking.
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="relative">
-          {/* Central Vertical Line (Visible on md+) */}
+          {/* Central Vertical Line */}
           <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-white/5 md:-translate-x-1/2">
             <motion.div 
               style={{ scaleY: pathLength }}
@@ -105,21 +121,21 @@ function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
   const isLeft = chapter.side === "left";
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const yearY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  const yearY = useTransform(scrollYProgress, [0, 1], [40, -40]);
   
   return (
     <motion.div 
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 60, filter: "blur(15px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-10%" }}
-      transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 1.4, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "relative flex flex-col items-start gap-12 md:gap-32",
         isLeft ? "md:flex-row" : "md:flex-row-reverse"
       )}
     >
-      {/* Background Year - Micro interaction: soft parallax */}
+      {/* Background Year */}
       <motion.div 
         style={{ y: yearY }}
         className={cn(

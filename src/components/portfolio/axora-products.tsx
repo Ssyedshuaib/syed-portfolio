@@ -52,14 +52,26 @@ const PRODUCTS = [
 ];
 
 export function AxoraProducts() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
   return (
-    <section id="ecosystem" className="relative bg-background">
+    <section id="ecosystem" ref={containerRef} className="relative bg-background">
       <div className="max-w-screen-2xl mx-auto px-6 lg:px-20">
         <div className="flex flex-col lg:flex-row gap-20">
           
           {/* LEFT SIDE: Sticky Narrative */}
           <div className="lg:w-1/3 pt-32 lg:pb-32">
-            <div className="lg:sticky lg:top-48 space-y-10">
+            <motion.div 
+              initial={{ opacity: 0, x: -30, filter: "blur(10px)" }}
+              whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true }}
+              className="lg:sticky lg:top-48 space-y-10"
+            >
               <div className="space-y-6">
                 <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">
                   AXORA ECOSYSTEM
@@ -80,7 +92,7 @@ export function AxoraProducts() {
                   "We build for impact, ensuring every line of code serves a larger human purpose."
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* RIGHT SIDE: Vertical Scrolling Stories */}
@@ -102,18 +114,28 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
     offset: ["start end", "end start"]
   });
 
-  const y = useSpring(useTransform(scrollYProgress, [0, 1], [100, -100]), {
-    stiffness: 100,
+  const springY = useSpring(useTransform(scrollYProgress, [0, 1], [120, -120]), {
+    stiffness: 80,
     damping: 30
   });
+
+  const revealVariants = {
+    hidden: { opacity: 0, y: 60, filter: "blur(15px)" },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: "blur(0px)",
+      transition: { duration: 1.4, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
 
   return (
     <motion.div 
       ref={ref}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: "-20%" }}
-      transition={{ duration: 1 }}
+      variants={revealVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-10%" }}
       className="relative group"
     >
       {/* Background Accent Glow */}
@@ -129,7 +151,10 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
           idx % 2 === 0 ? "items-start" : "items-end text-right"
         )}>
           <div className="space-y-6 max-w-xl">
-            <div className="flex items-center gap-6 group-hover:gap-8 transition-all duration-700">
+            <div className={cn(
+              "flex items-center gap-6 group-hover:gap-8 transition-all duration-700",
+              idx % 2 !== 0 && "flex-row-reverse"
+            )}>
                <span className="text-[14px] font-mono font-bold tracking-[0.4em] text-primary/20">{product.id}</span>
                <div className="h-px w-12 bg-primary/10 group-hover:w-20 transition-all duration-700" />
                <Badge variant="outline" className="text-[8px] font-bold uppercase tracking-[0.3em] border-primary/10 text-primary/40 px-4 py-1.5 rounded-full">
@@ -153,7 +178,10 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
           </div>
 
           {/* Metrics Strip */}
-          <div className="flex gap-12 pt-8 border-t border-white/5 w-full">
+          <div className={cn(
+            "flex gap-12 pt-8 border-t border-white/5 w-full",
+            idx % 2 !== 0 && "justify-end"
+          )}>
             {product.metrics.map((metric: any) => (
               <div key={metric.label} className="space-y-2">
                 <p className="text-3xl font-headline font-black text-white">{metric.value}</p>
@@ -163,9 +191,9 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
           </div>
         </div>
 
-        {/* Visual Mockup Area */}
+        {/* Visual Mockup Area with Inertia */}
         <motion.div 
-          style={{ y }}
+          style={{ y: springY }}
           className="relative px-4 lg:px-0"
         >
           <LaptopMockup imageId={product.imageId} />

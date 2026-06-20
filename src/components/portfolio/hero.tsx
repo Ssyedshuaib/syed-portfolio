@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { OrbitalSystem } from "./orbital-system";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 interface Particle {
@@ -20,10 +19,10 @@ export function Hero() {
   const [particles, setParticles] = useState<Particle[]>([]);
   const { scrollY } = useScroll();
 
-  // Typography Parallax Layers
-  const y1 = useTransform(scrollY, [0, 500], [0, -100]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -50]);
-  const y3 = useTransform(scrollY, [0, 500], [0, -150]);
+  // Premium Inertia & Parallax
+  const y1 = useTransform(scrollY, [0, 800], [0, -120]); // Faster
+  const y2 = useTransform(scrollY, [0, 800], [0, -60]);  // Slower midground
+  const y3 = useTransform(scrollY, [0, 800], [0, -180]); // Deep parallax
 
   useEffect(() => {
     setIsMounted(true);
@@ -47,20 +46,24 @@ export function Hero() {
     },
   };
 
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
+  const lineVariants = {
+    hidden: { opacity: 0, y: 30, filter: "blur(12px)" },
     visible: {
-      y: 0,
       opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
       transition: {
-        duration: 1.2,
+        duration: 1.4,
         ease: [0.16, 1, 0.3, 1],
       },
     },
   };
 
+  if (!isMounted) return null;
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-16 px-6 overflow-hidden bg-background">
+      {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.08),transparent_70%)]" />
       </div>
@@ -91,9 +94,9 @@ export function Hero() {
         animate="visible"
         className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center z-10"
       >
-        <div className="space-y-8 md:space-y-12 text-center lg:text-left">
+        <div className="space-y-10 md:space-y-14 text-center lg:text-left">
           <motion.div 
-            variants={itemVariants} 
+            variants={lineVariants} 
             whileHover={{ scale: 1.02, x: 5 }}
             className="inline-flex items-center gap-3 md:gap-4 px-5 md:px-6 py-2 rounded-full glass border-[#EAE0C8]/5 text-[9px] md:text-[10px] font-bold text-[#EAE0C8] tracking-[0.4em] md:tracking-[0.5em] uppercase cursor-default"
           >
@@ -102,25 +105,45 @@ export function Hero() {
           </motion.div>
           
           <div className="space-y-6 md:space-y-8">
-            <motion.h1 
-              style={{ y: y1 }}
-              variants={itemVariants}
-              className="text-5xl md:text-7xl lg:text-[7rem] font-headline font-black tracking-tighter leading-[0.9] text-white"
-            >
-              Building Products.<br />
-              <motion.span style={{ y: y2 }} className="text-[#536878] block">Building Systems.</motion.span>
-              <motion.span style={{ y: y3 }} className="italic font-medium text-[#EAE0C8] block">Building The Future.</motion.span>
-            </motion.h1>
+            <div className="overflow-hidden">
+              <motion.h1 
+                style={{ y: y1 }}
+                variants={lineVariants}
+                className="text-5xl md:text-7xl lg:text-[7.5rem] font-headline font-black tracking-tighter leading-[0.85] text-white"
+              >
+                Building Products.
+              </motion.h1>
+            </div>
+            
+            <div className="overflow-hidden">
+              <motion.span 
+                variants={lineVariants}
+                style={{ y: y2 }}
+                className="text-4xl md:text-6xl lg:text-[6rem] text-[#536878] block font-headline font-black tracking-tighter leading-[0.9]"
+              >
+                Building Systems.
+              </motion.span>
+            </div>
+
+            <div className="overflow-hidden">
+              <motion.span 
+                variants={lineVariants}
+                style={{ y: y3 }}
+                className="text-4xl md:text-6xl lg:text-[6.5rem] italic font-medium text-[#EAE0C8] block font-headline tracking-tighter leading-[0.9]"
+              >
+                Building The Future.
+              </motion.span>
+            </div>
             
             <motion.p 
-              variants={itemVariants}
-              className="text-base md:text-xl text-[#EAE0C8]/70 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
+              variants={lineVariants}
+              className="text-base md:text-xl text-[#EAE0C8]/70 max-w-xl mx-auto lg:mx-0 leading-relaxed font-light pt-4"
             >
               I architect digital products and scalable experiences designed to solve meaningful problems and create lasting impact.
             </motion.p>
           </div>
           
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-8 md:gap-10">
+          <motion.div variants={lineVariants} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-8 md:gap-10">
             <Button asChild size="lg" className="w-full sm:w-auto h-14 md:h-16 px-10 md:px-12 rounded-full bg-[#EAE0C8] text-[#0F1317] hover:bg-[#FFFFFF] hover:scale-105 transition-all duration-500 font-bold text-base md:text-lg group shadow-[0_10px_30px_rgba(234,224,200,0.15)]">
               <Link href="#ecosystem">
                 Explore Work <ArrowRight className="ml-3 w-4 md:w-5 h-4 md:h-5 group-hover:translate-x-2 transition-transform duration-500" />
@@ -134,9 +157,9 @@ export function Hero() {
         </div>
 
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9, rotateY: 10 }}
-          animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-          transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, scale: 1.05, filter: "blur(20px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="hidden lg:block relative"
         >
           <OrbitalSystem />
