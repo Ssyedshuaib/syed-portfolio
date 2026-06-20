@@ -148,7 +148,7 @@ export function ProductEcosystem() {
                 <VisualIdentity type={product.visualHint} />
                 
                 {/* Spotlight effect */}
-                <div className="absolute inset-0 bg-radial-gradient from-[#536878]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.1),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
 
                 <div className="flex justify-between items-start relative z-10 mb-8">
                   <div className="space-y-1">

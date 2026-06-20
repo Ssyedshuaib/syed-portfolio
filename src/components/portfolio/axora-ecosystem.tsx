@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -103,14 +104,14 @@ export function AxoraEcosystem() {
 
         <div className="relative h-[600px] md:h-[900px] glass rounded-[5rem] border-white/5 overflow-hidden group">
           <div className="absolute inset-0 pointer-events-none">
-             <svg className="w-full h-full">
+             <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                {AXORA_PRODUCTS.map((p, i) => (
                  <motion.line 
                    key={i}
-                   x1="50%" y1="50%"
-                   x2={`${p.x}%`} y2={`${p.y}%`}
+                   x1="50" y1="50"
+                   x2={p.x} y2={p.y}
                    stroke="rgba(234,224,200,0.15)"
-                   strokeWidth="1"
+                   strokeWidth="0.1"
                    initial={{ pathLength: 0, opacity: 0 }}
                    whileInView={{ pathLength: 1, opacity: 1 }}
                    viewport={{ once: true }}
@@ -120,12 +121,12 @@ export function AxoraEcosystem() {
                {AXORA_PRODUCTS.map((p, i) => (
                  <motion.circle
                    key={`p-${i}`}
-                   r="2"
+                   r="0.4"
                    fill="#EAE0C8"
                    initial={{ opacity: 0 }}
                    animate={{ 
-                     cx: ["50%", `${p.x}%`],
-                     cy: ["50%", `${p.y}%`],
+                     cx: [50, p.x],
+                     cy: [50, p.y],
                      opacity: [0, 1, 0]
                    }}
                    transition={{ 
@@ -184,7 +185,7 @@ export function AxoraEcosystem() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: product.y > 70 ? -20 : 20, scale: 0.95 }}
                       className={cn(
-                        "absolute left-1/2 -translate-x-1/2 w-72 bg-[#161C21]/80 backdrop-blur-3xl p-6 rounded-3xl border-[#EAE0C8]/30 text-center z-50 shadow-2xl",
+                        "absolute left-1/2 -translate-x-1/2 w-72 bg-[#161C21]/90 backdrop-blur-3xl p-6 rounded-3xl border-[#EAE0C8]/30 text-center z-50 shadow-2xl",
                         product.y > 70 ? "bottom-full mb-8" : "top-full mt-8"
                       )}
                     >

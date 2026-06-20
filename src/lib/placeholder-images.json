@@ -1,3 +1,58 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "reverie-discover",
+      "description": "Reverie Discover screen showing stories from places that moved people",
+      "imageUrl": "https://picsum.photos/seed/reverie-discover/600/1200",
+      "imageHint": "mobile discover"
+    },
+    {
+      "id": "reverie-capture",
+      "description": "Reverie Capture screen for preserving meaningful moments",
+      "imageUrl": "https://picsum.photos/seed/reverie-capture/600/1200",
+      "imageHint": "mobile camera"
+    },
+    {
+      "id": "reverie-atlas",
+      "description": "Reverie Memory Atlas showing a global map of experiences",
+      "imageUrl": "https://picsum.photos/seed/reverie-atlas/600/1200",
+      "imageHint": "mobile map"
+    },
+    {
+      "id": "reverie-keepsakes",
+      "description": "Reverie Keepsakes screen for curated digital collections",
+      "imageUrl": "https://picsum.photos/seed/reverie-keepsakes/600/1200",
+      "imageHint": "mobile gallery"
+    },
+    {
+      "id": "novapu-onboarding",
+      "description": "NovaPU onboarding screen showing intelligent personalization",
+      "imageUrl": "https://picsum.photos/seed/novapu-onboarding/600/1200",
+      "imageHint": "education mobile"
+    },
+    {
+      "id": "novapu-dashboard",
+      "description": "NovaPU dashboard showing academic command center",
+      "imageUrl": "https://picsum.photos/seed/novapu-dashboard/600/1200",
+      "imageHint": "dashboard mobile"
+    },
+    {
+      "id": "novapu-ai-mentor",
+      "description": "NovaPU AI Mentor chat interface",
+      "imageUrl": "https://picsum.photos/seed/novapu-ai-mentor/600/1200",
+      "imageHint": "ai chat"
+    },
+    {
+      "id": "novapu-test-centre",
+      "description": "NovaPU test centre for practice exams",
+      "imageUrl": "https://picsum.photos/seed/novapu-test-centre/600/1200",
+      "imageHint": "quiz app"
+    },
+    {
+      "id": "founder-portrait",
+      "description": "Syed Sharfuddin Shuaib professional portrait",
+      "imageUrl": "https://picsum.photos/seed/syed-portrait/800/1000",
+      "imageHint": "founder professional portrait"
+    }
+  ]
 }
