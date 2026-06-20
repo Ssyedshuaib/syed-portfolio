@@ -81,6 +81,7 @@ export function FounderProfile() {
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-32 items-start">
           
+          {/* Left Column: Info */}
           <motion.div variants={revealVariants} className="lg:col-span-4 space-y-20">
             <div className="space-y-12">
               <div className="space-y-8">
@@ -136,60 +137,69 @@ export function FounderProfile() {
             </div>
           </motion.div>
 
-          <motion.div variants={revealVariants} className="lg:col-span-4 space-y-16">
+          {/* Center Column: Portrait + Unified Stats Dashboard */}
+          <motion.div variants={revealVariants} className="lg:col-span-4 flex flex-col gap-6">
             <motion.div 
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-              className="relative aspect-[4/5.5] w-full glass rounded-[4.5rem] border-white/10 overflow-hidden shadow-2xl group"
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="group flex flex-col w-full"
             >
-              {portrait && (
-                <motion.div
-                  initial={{ scale: 1.1, filter: "blur(30px)" }}
-                  whileInView={{ scale: 1, filter: "blur(0px)" }}
-                  transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute inset-0"
-                >
-                  <Image 
-                    src={portrait.imageUrl} 
-                    alt={portrait.description} 
-                    fill 
-                    className="object-cover opacity-90 grayscale group-hover:grayscale-0 group-hover:scale-[1.05] transition-all duration-[3000ms]"
-                    data-ai-hint={portrait.imageHint}
-                  />
-                </motion.div>
-              )}
-              
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-90" />
-              
-              <div className="absolute bottom-16 left-12 right-12">
-                <div className="glass p-10 rounded-[3rem] border-white/10 backdrop-blur-[50px] space-y-6 transform transition-transform group-hover:translate-y-[-15px] duration-1000">
-                  <div className="flex items-center justify-between">
-                    <span className="text-white font-headline font-bold text-xs tracking-[0.8em] uppercase">AXORA</span>
-                    <div className="w-2 h-2 rounded-full bg-primary shadow-[0_0_15px_rgba(234,224,200,0.6)] animate-pulse" />
+              {/* Image Card */}
+              <div className="relative aspect-[4/5.5] w-full glass rounded-t-[4.5rem] rounded-b-3xl border-white/10 overflow-hidden shadow-2xl transition-all duration-1000 group-hover:border-primary/20">
+                {portrait && (
+                  <motion.div
+                    initial={{ scale: 1.1, filter: "blur(30px)" }}
+                    whileInView={{ scale: 1, filter: "blur(0px)" }}
+                    transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute inset-0"
+                  >
+                    <Image 
+                      src={portrait.imageUrl} 
+                      alt={portrait.description} 
+                      fill 
+                      className="object-cover opacity-90 grayscale group-hover:grayscale-0 group-hover:scale-[1.05] transition-all duration-[3000ms]"
+                      data-ai-hint={portrait.imageHint}
+                    />
+                  </motion.div>
+                )}
+                
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-90" />
+                
+                <div className="absolute bottom-12 left-12 right-12">
+                  <div className="glass p-8 rounded-[2.5rem] border-white/10 backdrop-blur-[50px] space-y-4 transform transition-transform group-hover:translate-y-[-5px] duration-1000">
+                    <div className="flex items-center justify-between">
+                      <span className="text-white font-headline font-bold text-[10px] tracking-[0.8em] uppercase">AXORA</span>
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_15px_rgba(234,224,200,0.6)] animate-pulse" />
+                    </div>
+                    <div className="h-px w-full bg-white/10" />
+                    <div className="space-y-1">
+                      <p className="text-[10px] font-bold tracking-[0.5em] text-white uppercase">Founder</p>
+                      <p className="text-[9px] font-bold tracking-[0.4em] text-primary/40 uppercase">Architecting Impact</p>
+                    </div>
                   </div>
-                  <div className="h-px w-full bg-white/10" />
-                  <div className="space-y-2">
-                    <p className="text-[11px] font-bold tracking-[0.5em] text-white uppercase">Founder</p>
-                    <p className="text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase">Architecting Impact</p>
-                  </div>
+                </div>
+
+                <div className="absolute top-10 right-10 opacity-30 group-hover:opacity-100 transition-opacity duration-1000">
+                  <Sparkles className="w-6 h-6 text-primary" />
                 </div>
               </div>
 
-              <div className="absolute top-12 right-12 opacity-30 group-hover:opacity-100 transition-opacity duration-1000">
-                <Sparkles className="w-8 h-8 text-primary" />
+              {/* Connected Stats Card */}
+              <div className="flex justify-between items-center px-10 py-12 glass rounded-b-[4.5rem] rounded-t-3xl border-t-0 border-white/5 shadow-2xl transition-all duration-1000 group-hover:border-primary/20 bg-gradient-to-b from-transparent to-primary/[0.02]">
+                {METRICS.map((metric, idx) => (
+                  <div key={metric.label} className="text-center space-y-3 relative">
+                    <p className="text-3xl font-headline font-black text-white leading-none tracking-tighter">{metric.value}</p>
+                    <p className="text-[8px] font-bold tracking-[0.5em] text-primary/30 uppercase">{metric.label}</p>
+                    {idx < METRICS.length - 1 && (
+                      <div className="absolute top-1/2 -right-1/2 h-8 w-px bg-white/5 -translate-y-1/2" />
+                    )}
+                  </div>
+                ))}
               </div>
             </motion.div>
-
-            <div className="flex justify-between items-center px-8 py-10 glass rounded-[3.5rem] border-white/5 shadow-xl">
-              {METRICS.map((metric) => (
-                <div key={metric.label} className="text-center px-4 space-y-3">
-                  <p className="text-3xl font-headline font-black text-white leading-none">{metric.value}</p>
-                  <p className="text-[9px] font-bold tracking-[0.5em] text-primary/20 uppercase">{metric.label}</p>
-                </div>
-              ))}
-            </div>
           </motion.div>
 
+          {/* Right Column: Philosophy & Ecosystem */}
           <motion.div variants={revealVariants} className="lg:col-span-4 space-y-20">
             <div className="glass p-16 rounded-[4.5rem] border-white/5 space-y-12 relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none group-hover:opacity-[0.08] transition-opacity duration-1000">
