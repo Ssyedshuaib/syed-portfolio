@@ -2,9 +2,26 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
-import { ArrowRight, Mail, MapPin, Target, Clock } from "lucide-react";
+import { motion, AnimatePresence, useSpring, useMotionValue } from "framer-motion";
+import { 
+  ArrowRight, 
+  Mail, 
+  MapPin, 
+  Target, 
+  Clock, 
+  Linkedin, 
+  Calendar,
+  X
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export function Contact() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,6 +64,30 @@ export function Contact() {
     mouseX.set(0);
     mouseY.set(0);
   }
+
+  const CONTACT_LINKS = [
+    {
+      id: "01",
+      label: "Email Me",
+      sub: "Direct communication for collaboration.",
+      href: "mailto:hello@axora.in",
+      icon: Mail
+    },
+    {
+      id: "02",
+      label: "LinkedIn",
+      sub: "Professional network and insights.",
+      href: "#",
+      icon: Linkedin
+    },
+    {
+      id: "03",
+      label: "Schedule A Call",
+      sub: "Discuss product ideas or ventures.",
+      href: "#",
+      icon: Calendar
+    }
+  ];
 
   return (
     <section id="contact" ref={containerRef} className="relative bg-background overflow-hidden">
@@ -168,32 +209,93 @@ export function Contact() {
         </div>
       </div>
 
-      {/* SECTION 4: Primary Magnetic CTA */}
+      {/* SECTION 4: Primary Magnetic CTA with Luxury Modal */}
       <div className="py-64 flex flex-col items-center justify-center relative">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_70%)] pointer-events-none" />
         
-        <motion.div
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          style={{ x: springX, y: springY }}
-          className="relative z-10 cursor-pointer"
-        >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="group relative flex items-center justify-center"
-          >
-            {/* Glow Aura */}
-            <div className="absolute inset-0 bg-primary/20 blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            
-            <div className="h-48 w-48 md:h-64 md:w-64 rounded-full glass border-white/10 flex flex-col items-center justify-center gap-4 transition-all duration-700 group-hover:border-primary/40 group-hover:bg-primary/[0.02]">
-              <span className="text-[10px] font-bold tracking-[0.4em] text-primary/60 uppercase">Start A</span>
-              <span className="text-xs font-bold tracking-[0.2em] text-white uppercase flex items-center gap-2">
-                Conversation <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </span>
+        <Dialog>
+          <DialogTrigger asChild>
+            <motion.div
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              style={{ x: springX, y: springY }}
+              className="relative z-10 cursor-pointer"
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative flex items-center justify-center"
+              >
+                {/* Glow Aura */}
+                <div className="absolute inset-0 bg-primary/20 blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                
+                <div className="h-48 w-48 md:h-64 md:w-64 rounded-full glass border-white/10 flex flex-col items-center justify-center gap-4 transition-all duration-700 group-hover:border-primary/40 group-hover:bg-primary/[0.02]">
+                  <span className="text-[10px] font-bold tracking-[0.4em] text-primary/60 uppercase">Start A</span>
+                  <span className="text-xs font-bold tracking-[0.2em] text-white uppercase flex items-center gap-2">
+                    Conversation <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </div>
+              </motion.div>
+            </motion.div>
+          </DialogTrigger>
+          
+          <DialogContent className="max-w-2xl bg-[#0F1317]/90 backdrop-blur-[40px] border-white/5 rounded-[3rem] p-0 overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.8)] animate-in fade-in-0 zoom-in-95 duration-500">
+            <div className="p-12 md:p-16 space-y-16">
+              <DialogHeader className="space-y-6 text-left">
+                <div className="flex items-center justify-between">
+                  <div className="inline-flex items-center gap-3 px-4 py-1 rounded-full glass border-white/5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                    <p className="text-[9px] font-bold tracking-[0.4em] text-primary/60 uppercase">Founder Interaction</p>
+                  </div>
+                </div>
+                
+                <DialogTitle className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter leading-none">
+                  Let's Build <br />
+                  <span className="text-primary italic font-medium">Something Meaningful.</span>
+                </DialogTitle>
+                
+                <DialogDescription className="text-xl text-[#EAE0C8]/50 font-light leading-relaxed max-w-md">
+                  Whether you're building a startup, exploring collaboration, discussing product ideas, or looking for partnerships, I'd love to hear from you.
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-4">
+                {CONTACT_LINKS.map((link, idx) => (
+                  <motion.a
+                    key={link.id}
+                    href={link.href}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 * idx }}
+                    className="group block glass p-8 rounded-[2rem] border-white/5 hover:border-primary/20 hover:bg-primary/[0.02] transition-all duration-500"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-6">
+                        <div className="w-12 h-12 rounded-2xl glass border-white/5 flex items-center justify-center text-[#536878] group-hover:text-primary transition-colors">
+                          <link.icon className="w-5 h-5" />
+                        </div>
+                        <div className="space-y-0.5">
+                          <p className="text-[10px] font-bold tracking-[0.3em] text-primary/30 uppercase group-hover:text-primary/50 transition-colors">{link.id}</p>
+                          <p className="text-lg font-bold tracking-tight text-white">{link.label}</p>
+                          <p className="text-[11px] font-bold tracking-[0.1em] text-[#536878] uppercase">{link.sub}</p>
+                        </div>
+                      </div>
+                      <ArrowRight className="w-5 h-5 text-[#536878] opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500" />
+                    </div>
+                  </motion.a>
+                ))}
+              </div>
+
+              <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 border-t border-white/5">
+                <p className="text-[9px] font-bold tracking-[0.4em] text-[#536878] uppercase">Axora Venture Studio © 2026</p>
+                <div className="flex items-center gap-6">
+                   <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                   <p className="text-[9px] font-bold tracking-[0.3em] text-white/40 uppercase">Open for collaborations</p>
+                </div>
+              </div>
             </div>
-          </motion.div>
-        </motion.div>
+          </DialogContent>
+        </Dialog>
       </div>
     </section>
   );
