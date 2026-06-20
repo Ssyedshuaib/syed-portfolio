@@ -1,5 +1,6 @@
+"use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar } from "@/components/portfolio/navbar";
 import { Hero } from "@/components/portfolio/hero";
 import { FounderPhilosophy } from "@/components/portfolio/founder-philosophy";
@@ -17,31 +18,57 @@ import { IdeasLab } from "@/components/portfolio/ideas-lab";
 import { SkillsClusters } from "@/components/portfolio/skills-clusters";
 import { Contact } from "@/components/portfolio/contact";
 import { Footer } from "@/components/portfolio/footer";
+import { Preloader } from "@/components/portfolio/preloader";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Prevent scrolling when loading
+  useEffect(() => {
+    if (isLoading) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isLoading]);
+
   return (
-    <main className="min-h-screen relative overflow-x-hidden">
-      <div className="fixed inset-0 grain-overlay z-[100]" />
-      <div className="fixed inset-0 premium-glow pointer-events-none z-0" />
-      <div className="fixed inset-0 blueprint-grid opacity-[0.02] pointer-events-none z-0" />
-      
-      <Navbar />
-      <Hero />
-      <FounderProfile />
-      <AxoraProducts />
-      <FounderPhilosophy />
-      <FounderManifesto />
-      <WhatImBuilding />
-      <Journey />
-      <BuilderPhilosophy />
-      <AxoraEcosystem />
-      <Leadership />
-      <ProductMetrics />
-      <ProductEcosystem />
-      <IdeasLab />
-      <SkillsClusters />
-      <Contact />
-      <Footer />
-    </main>
+    <>
+      <AnimatePresence mode="wait">
+        {isLoading && (
+          <Preloader key="preloader" onComplete={() => setIsLoading(false)} />
+        )}
+      </AnimatePresence>
+
+      <motion.main 
+        className="min-h-screen relative overflow-x-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isLoading ? 0 : 1 }}
+        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <div className="fixed inset-0 grain-overlay z-[100] pointer-events-none" />
+        <div className="fixed inset-0 premium-glow pointer-events-none z-0" />
+        <div className="fixed inset-0 blueprint-grid opacity-[0.02] pointer-events-none z-0" />
+        
+        <Navbar />
+        <Hero />
+        <FounderProfile />
+        <AxoraProducts />
+        <FounderPhilosophy />
+        <FounderManifesto />
+        <WhatImBuilding />
+        <Journey />
+        <BuilderPhilosophy />
+        <AxoraEcosystem />
+        <Leadership />
+        <ProductMetrics />
+        <ProductEcosystem />
+        <IdeasLab />
+        <SkillsClusters />
+        <Contact />
+        <Footer />
+      </motion.main>
+    </>
   );
 }
