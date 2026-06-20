@@ -19,25 +19,25 @@ export function OrbitalSystem() {
     <div className="relative w-full aspect-square max-w-[650px] flex items-center justify-center">
       {/* Central Node */}
       <div className="relative z-20 group">
-        <div className="w-32 h-32 rounded-full glass flex items-center justify-center border-white/20 shadow-[0_0_80px_rgba(255,255,255,0.05)] group-hover:scale-110 transition-transform duration-700">
+        <div className="w-40 h-40 rounded-full glass flex items-center justify-center border-white/20 shadow-[0_0_100px_rgba(125,211,252,0.1)] group-hover:scale-110 transition-transform duration-1000">
           <div className="text-center">
-            <span className="text-foreground font-headline font-bold text-xl tracking-[0.2em] uppercase block">SYED</span>
-            <div className="h-px w-6 bg-white/20 mx-auto mt-2 rounded-full group-hover:w-10 transition-all duration-700" />
+            <span className="text-foreground font-headline font-bold text-2xl tracking-[0.3em] uppercase block">SYED</span>
+            <div className="h-px w-8 bg-primary/40 mx-auto mt-3 rounded-full group-hover:w-14 transition-all duration-1000" />
           </div>
         </div>
         {/* Glow behind center */}
-        <div className="absolute inset-0 bg-white/5 blur-3xl rounded-full -z-10 animate-pulse" />
+        <div className="absolute inset-0 bg-primary/10 blur-[80px] rounded-full -z-10 animate-pulse" />
       </div>
 
       {/* Orbit Rings */}
       {[140, 180, 200, 220, 260, 300].map((r) => (
         <div
           key={r}
-          className="absolute rounded-full border border-white/[0.03] transition-colors duration-700"
+          className="absolute rounded-full border border-white/[0.05] transition-colors duration-1000"
           style={{ 
             width: r * 2, 
             height: r * 2,
-            borderColor: hoveredNode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.03)'
+            borderColor: hoveredNode ? 'rgba(125, 211, 252, 0.15)' : 'rgba(255, 255, 255, 0.03)'
           }}
         />
       ))}
@@ -57,10 +57,10 @@ export function OrbitalSystem() {
           onMouseLeave={() => setHoveredNode(null)}
         >
           <div className={cn(
-            "px-5 py-2.5 glass rounded-full text-[10px] font-bold tracking-[0.15em] uppercase transition-all duration-500 cursor-default",
+            "px-6 py-3 glass rounded-full text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-700 cursor-default",
             hoveredNode?.label === orbit.label 
-              ? "text-foreground border-white/40 scale-125 bg-white/10" 
-              : "text-muted-foreground opacity-50 hover:opacity-100"
+              ? "text-primary border-primary/40 scale-125 bg-primary/10 shadow-[0_0_30px_rgba(125,211,252,0.2)]" 
+              : "text-muted-foreground/60 hover:text-foreground"
           )}>
             {orbit.label}
           </div>
@@ -69,9 +69,9 @@ export function OrbitalSystem() {
 
       {/* Tooltip */}
       {hoveredNode && (
-        <div className="absolute top-[80%] glass p-6 rounded-2xl border-white/10 w-64 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <p className="text-primary font-bold tracking-widest uppercase text-[10px] mb-2">{hoveredNode.label}</p>
-          <p className="text-muted-foreground text-sm font-light leading-relaxed">{hoveredNode.desc}</p>
+        <div className="absolute bottom-[0%] glass p-8 rounded-3xl border-primary/20 w-80 text-center animate-in fade-in zoom-in-95 duration-700 shadow-2xl">
+          <p className="text-primary font-bold tracking-[0.4em] uppercase text-[10px] mb-4">{hoveredNode.label}</p>
+          <p className="text-muted-foreground text-base font-light leading-relaxed">{hoveredNode.desc}</p>
         </div>
       )}
     </div>

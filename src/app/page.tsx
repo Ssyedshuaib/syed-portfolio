@@ -2,8 +2,10 @@ import React from "react";
 import { Navbar } from "@/components/portfolio/navbar";
 import { Hero } from "@/components/portfolio/hero";
 import { Philosophy } from "@/components/portfolio/philosophy";
+import { About } from "@/components/portfolio/about";
 import { FounderManifesto } from "@/components/portfolio/founder-manifesto";
 import { Journey } from "@/components/portfolio/journey";
+import { AxoraEcosystem } from "@/components/portfolio/axora-ecosystem";
 import { ProductMetrics } from "@/components/portfolio/product-metrics";
 import { ProductEcosystem } from "@/components/portfolio/product-ecosystem";
 import { IdeasLab } from "@/components/portfolio/ideas-lab";
@@ -14,14 +16,16 @@ import { Footer } from "@/components/portfolio/footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative">
-      <div className="fixed inset-0 grain-overlay pointer-events-none z-[60]" />
-      <div className="fixed inset-0 premium-gradient pointer-events-none z-0" />
+    <main className="min-h-screen relative overflow-x-hidden">
+      <div className="fixed inset-0 grain-overlay z-[100]" />
+      <div className="fixed inset-0 premium-glow pointer-events-none z-0" />
       <Navbar />
       <Hero />
       <Philosophy />
+      <About />
       <FounderManifesto />
       <Journey />
+      <AxoraEcosystem />
       <ProductMetrics />
       <ProductEcosystem />
       <IdeasLab />
