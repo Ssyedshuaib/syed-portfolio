@@ -28,20 +28,20 @@ const CHANNELS = [
   { 
     label: "Email", 
     description: "Best for partnerships and product discussions",
-    href: "mailto:hello@axora.in",
+    href: "mailto:syedshuaib2429@gmail.com",
     icon: Mail 
   },
   { 
     label: "LinkedIn", 
     description: "Professional conversations and networking",
-    href: "https://linkedin.com", 
+    href: "https://www.linkedin.com/in/syedshuaib485/", 
     icon: Linkedin 
   },
   { 
-    label: "Schedule Call", 
-    description: "For deeper strategic discussions",
-    href: "https://calendly.com", 
-    icon: Calendar 
+    label: "Build Together", 
+    description: "For founders, builders, and meaningful collaborations.",
+    href: "mailto:syedshuaib2429@gmail.com?subject=Build%20Together%20-%20Axora", 
+    icon: Target 
   },
 ];
 
@@ -192,7 +192,7 @@ export function Contact() {
                 <div className="space-y-4">
                   <p className="text-[10px] font-bold tracking-[0.5em] text-primary/40 uppercase">Direct Email</p>
                   <p className="text-2xl md:text-3xl font-headline font-bold text-white transition-colors group-hover:text-primary">
-                    hello@axora.in
+                    syedshuaib2429@gmail.com
                   </p>
                 </div>
 
@@ -356,8 +356,8 @@ export function Contact() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: idx * 0.1, duration: 0.8 }}
                                 href={channel.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                target={channel.label === "LinkedIn" ? "_blank" : undefined}
+                                rel={channel.label === "LinkedIn" ? "noopener noreferrer" : undefined}
                                 className="group relative flex items-center justify-between p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-700 overflow-hidden"
                               >
                                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[2000ms]" />
