@@ -20,6 +20,7 @@ import { Contact } from "@/components/portfolio/contact";
 import { Footer } from "@/components/portfolio/footer";
 import { Preloader } from "@/components/portfolio/preloader";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -27,14 +28,12 @@ export default function Home() {
 
   useEffect(() => {
     // Session-based persistence: Intro plays once per visit.
-    // Check sessionStorage to skip intro on internal navigation (back from projects).
     const introPlayed = sessionStorage.getItem("axora_intro_played");
     if (introPlayed === "true") {
       setIsLoading(false);
     }
     
-    // Satisfy requirement: On browser refresh, intro should play again.
-    // We clear the flag on unload so a fresh load (refresh/new tab) triggers it.
+    // On browser refresh, intro should play again (clear on unload)
     const handleUnload = () => sessionStorage.removeItem("axora_intro_played");
     window.addEventListener("beforeunload", handleUnload);
     
@@ -42,7 +41,6 @@ export default function Home() {
     return () => window.removeEventListener("beforeunload", handleUnload);
   }, []);
 
-  // Maintain lock on body scroll during the cinematic sequence
   useEffect(() => {
     if (isLoading && hasMounted) {
       document.body.style.overflow = "hidden";
@@ -56,7 +54,6 @@ export default function Home() {
     setIsLoading(false);
   };
 
-  // Prevent hydration flicker: Only render preloader once client state is ready.
   if (!hasMounted) return null;
 
   return (
@@ -66,6 +63,18 @@ export default function Home() {
           <Preloader key="preloader" onComplete={handleIntroComplete} />
         )}
       </AnimatePresence>
+
+      {/* 
+        CRITICAL FIX: Navbar is moved outside the transformed motion.main 
+        to ensure 'position: fixed' remains anchored to the viewport.
+        We synchronize its emergence visibility with a dedicated wrapper.
+      */}
+      <div className={cn(
+        "fixed inset-x-0 top-0 z-[100] transition-all duration-[1.5s] ease-out",
+        isLoading ? "opacity-[0.05] pointer-events-none blur-[10px]" : "opacity-100 blur-0"
+      )}>
+        <Navbar />
+      </div>
 
       <motion.main 
         className="min-h-screen relative overflow-x-hidden"
@@ -84,7 +93,6 @@ export default function Home() {
         <div className="fixed inset-0 premium-glow pointer-events-none z-0" />
         <div className="fixed inset-0 blueprint-grid opacity-[0.02] pointer-events-none z-0" />
         
-        <Navbar />
         <Hero />
         <FounderProfile />
         <AxoraProducts />

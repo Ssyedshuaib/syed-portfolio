@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -22,7 +21,7 @@ export function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       if (typeof window !== "undefined") {
-        setScrolled(window.scrollY > 50);
+        setScrolled(window.scrollY > 40);
       }
     };
     handleScroll();
@@ -33,7 +32,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-[100] transition-all duration-700 flex justify-center px-4",
+        "fixed top-0 left-0 right-0 z-[100] transition-all duration-600 ease-out flex justify-center px-4",
         scrolled ? "py-4 md:py-6" : "py-8 md:py-10"
       )}
     >
@@ -42,7 +41,7 @@ export function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
         className={cn(
-          "flex items-center justify-between lg:justify-start gap-4 md:gap-10 px-6 md:px-8 py-3.5 rounded-full transition-all duration-700 border w-full max-w-7xl lg:w-auto",
+          "flex items-center justify-between lg:justify-start gap-4 md:gap-10 px-6 md:px-8 py-3.5 rounded-full transition-all duration-600 ease-out border w-full max-w-7xl lg:w-auto",
           scrolled 
             ? "bg-[#0F1317]/80 backdrop-blur-[40px] border-[#EAE0C8]/10 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.6)]" 
             : "bg-transparent border-transparent"
@@ -54,8 +53,8 @@ export function Navbar() {
           onClick={() => setMobileMenuOpen(false)}
         >
           <div className={cn(
-            "w-2 h-2 rounded-full transition-colors duration-700",
-            scrolled ? "bg-primary" : "bg-[#EAE0C8]"
+            "w-2 h-2 rounded-full transition-colors duration-600 ease-out",
+            scrolled ? "bg-primary shadow-[0_0_10px_rgba(234,224,200,0.4)]" : "bg-[#EAE0C8]"
           )} />
           <span className="text-white font-headline font-bold text-[11px] tracking-[0.6em] uppercase group-hover:text-primary transition-colors">
             SYED
@@ -81,7 +80,7 @@ export function Navbar() {
           <Link 
             href="#contact"
             className={cn(
-              "hidden md:block px-6 py-2 rounded-full text-[9px] font-bold tracking-[0.4em] uppercase transition-all duration-700",
+              "hidden md:block px-6 py-2 rounded-full text-[9px] font-bold tracking-[0.4em] uppercase transition-all duration-600 ease-out",
               scrolled 
                 ? "bg-primary text-[#0F1317] hover:bg-white" 
                 : "bg-[#EAE0C8] text-[#0F1317] hover:bg-white"
