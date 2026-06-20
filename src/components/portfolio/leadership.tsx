@@ -2,116 +2,147 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { Quote, Sparkles, Target, Zap } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const EXECUTIVES = [
+const LEADERS = [
   {
-    name: "Syed Maaz Athar",
-    role: "Co-Founder",
-    focus: ["Growth", "Strategy", "Operations"],
+    role: "Founder",
+    name: "Syed Sharfuddin Shuaib",
+    focus: ["Product Vision", "Systems Design", "Innovation"],
+    quote: "Building systems that outlive trends.",
+    icon: Sparkles,
   },
   {
-    name: "Syed Umar",
+    role: "Co-Founder",
+    name: "Syed Maaz Athar",
+    focus: ["Growth", "Strategy", "Operations"],
+    quote: "Turning ideas into scalable opportunities.",
+    icon: Target,
+  },
+  {
     role: "Chief Executive Officer",
+    name: "Syed Umar",
     focus: ["Execution", "Business Development", "Scaling"],
+    quote: "Transforming vision into execution.",
+    icon: Zap,
   },
 ];
 
-const FOUNDER_FOCUS = ["Product Vision", "Systems Design", "Innovation"];
-
 export function Leadership() {
   return (
-    <section id="leadership" className="py-64 px-6 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 blueprint-grid opacity-[0.01] pointer-events-none" />
+    <section id="leadership" className="py-64 px-6 bg-[#050505] relative overflow-hidden">
+      {/* Architectural Background */}
+      <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-px h-full bg-white/[0.02] pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-px h-full bg-white/[0.02] pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto space-y-48">
-        {/* Section Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="space-y-8"
-        >
-          <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">LEADERSHIP</p>
-          <h2 className="text-6xl md:text-8xl font-headline font-black tracking-tighter text-white leading-none">
-            The Vision <br />
-            <span className="text-primary italic font-medium">Architects.</span>
-          </h2>
-        </motion.div>
+      <div className="max-w-7xl mx-auto space-y-32">
+        {/* Header Section */}
+        <div className="max-w-3xl space-y-8">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-6"
+          >
+            <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">Leadership</p>
+            <h2 className="text-6xl md:text-8xl font-headline font-black tracking-tighter text-white leading-none">
+              The Minds <br />
+              <span className="text-primary italic font-medium">Behind Axora.</span>
+            </h2>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-4"
+          >
+            <p className="text-xl md:text-2xl text-[#EAE0C8]/60 font-light leading-relaxed">
+              Three complementary perspectives. One long-term vision.
+            </p>
+            <p className="text-lg text-[#536878] font-bold tracking-[0.2em] uppercase">
+              Together building products, platforms and digital ecosystems.
+            </p>
+          </motion.div>
+        </div>
 
-        {/* Featured Founder Area */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="space-y-24"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
-            <div className="lg:col-span-8 space-y-12">
-              <div className="space-y-6">
-                <p className="text-[11px] font-bold tracking-[0.5em] text-primary/60 uppercase">Founder</p>
-                <h3 className="text-7xl md:text-9xl font-headline font-black text-white tracking-tighter leading-[0.85]">
-                  Syed Sharfuddin <br /> Shuaib
-                </h3>
-              </div>
-              
-              <div className="max-w-2xl">
-                <blockquote className="text-2xl md:text-4xl text-primary/70 font-light leading-relaxed italic border-l-2 border-primary/10 pl-10">
-                  "Building systems that outlive trends through technology, design, and long-term systems thinking."
-                </blockquote>
-              </div>
-            </div>
-            
-            <div className="lg:col-span-4 space-y-8 pb-4">
-              <p className="text-[9px] font-bold tracking-[0.4em] text-primary/30 uppercase">Strategic Focus</p>
-              <ul className="space-y-4">
-                {FOUNDER_FOCUS.map((item) => (
-                  <li key={item} className="text-xl text-primary/50 font-light flex items-center gap-4">
-                    <div className="h-px w-6 bg-primary/20" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Executive Divider */}
-        <div className="h-px w-full bg-primary/5" />
-
-        {/* Executive Team Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-32">
-          {EXECUTIVES.map((member, idx) => (
+        {/* Leadership Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {LEADERS.map((leader, idx) => (
             <motion.div
-              key={member.name}
-              initial={{ opacity: 0, y: 20 }}
+              key={leader.name}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1, duration: 1 }}
-              className="space-y-12 group"
+              transition={{ duration: 1, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -10 }}
+              className="group relative"
             >
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <p className="text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase group-hover:text-primary transition-colors">
-                    {member.role}
-                  </p>
-                  <h4 className="text-4xl md:text-5xl font-headline font-bold text-white tracking-tight">
-                    {member.name}
-                  </h4>
-                </div>
+              <div className="glass p-12 rounded-[3.5rem] border-white/5 h-full flex flex-col justify-between transition-all duration-700 hover:border-primary/20 hover:bg-primary/[0.02] relative overflow-hidden">
+                {/* Internal Card Spotlight */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(234,224,200,0.05),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                 
-                <div className="flex flex-wrap gap-x-10 gap-y-4">
-                  {member.focus.map((item) => (
-                    <div key={item} className="flex items-center gap-3">
-                      <div className="w-1 h-1 rounded-full bg-primary/20" />
-                      <span className="text-sm font-light text-primary/60 tracking-wide">{item}</span>
+                <div className="space-y-12 relative z-10">
+                  {/* Header */}
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <p className="text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase group-hover:text-primary transition-colors">
+                        {leader.role}
+                      </p>
+                      <leader.icon className="w-4 h-4 text-primary/20 group-hover:text-primary group-hover:rotate-12 transition-all duration-700" />
                     </div>
-                  ))}
+                    <h3 className="text-3xl font-headline font-bold text-white tracking-tight leading-tight">
+                      {leader.name}
+                    </h3>
+                  </div>
+
+                  {/* Focus Areas */}
+                  <div className="space-y-4">
+                    <p className="text-[9px] font-bold tracking-[0.4em] text-[#536878] uppercase">Core Focus</p>
+                    <ul className="space-y-3">
+                      {leader.focus.map((item) => (
+                        <li key={item} className="flex items-center gap-4 text-lg text-[#EAE0C8]/50 font-light group-hover:text-[#EAE0C8]/80 transition-colors">
+                          <div className="h-px w-4 bg-primary/20 group-hover:w-6 group-hover:bg-primary/40 transition-all duration-500" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Footer Quote */}
+                <div className="pt-12 mt-12 border-t border-white/5 relative z-10">
+                  <div className="flex gap-4">
+                    <Quote className="w-4 h-4 text-primary/30 flex-shrink-0" />
+                    <p className="text-lg text-[#EAE0C8]/60 italic font-light leading-relaxed">
+                      "{leader.quote}"
+                    </p>
+                  </div>
                 </div>
               </div>
+
+              {/* External Card Glow */}
+              <div className="absolute inset-0 bg-primary/5 blur-[80px] rounded-full opacity-0 group-hover:opacity-40 transition-opacity duration-1000 -z-10" />
             </motion.div>
           ))}
         </div>
+
+        {/* Closing Vision */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="pt-24 flex flex-col items-center gap-8 text-center"
+        >
+          <div className="h-px w-24 bg-primary/10" />
+          <p className="text-[10px] font-bold tracking-[0.6em] text-[#536878] uppercase">
+            Architecting The Future Together.
+          </p>
+        </motion.div>
       </div>
     </section>
   );
