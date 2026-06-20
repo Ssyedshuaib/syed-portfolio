@@ -56,12 +56,18 @@ export function FounderPhilosophy() {
     restDelta: 0.001,
   });
 
+  // Fade the rail in/out at section boundaries
+  const railOpacity = useTransform(scrollYProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0]);
+
   return (
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-64">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
-      {/* Vertical Progress Rail */}
-      <div className="hidden lg:flex fixed left-12 top-1/2 -translate-y-1/2 flex-col items-center gap-6 z-50 pointer-events-none">
+      {/* Vertical Progress Rail - Section Specific Navigation */}
+      <motion.div 
+        style={{ opacity: railOpacity }}
+        className="hidden lg:flex fixed left-12 top-1/2 -translate-y-1/2 flex-col items-center gap-6 z-50 pointer-events-none"
+      >
         <div className="text-[10px] font-bold tracking-[0.4em] text-primary/20 uppercase rotate-90 mb-12">Manifesto</div>
         <div className="relative h-64 w-px bg-white/5 overflow-hidden">
           <motion.div 
@@ -70,17 +76,34 @@ export function FounderPhilosophy() {
           />
         </div>
         <div className="flex flex-col gap-4 mt-12">
-          {PRINCIPLES.map((p, i) => (
-            <motion.span 
-              key={p.id}
-              style={{ opacity: useTransform(scrollYProgress, [i / 5, (i + 1) / 5], [0.2, 1]) }}
-              className="text-[10px] font-mono font-bold text-primary"
-            >
-              {p.id}
-            </motion.span>
-          ))}
+          {PRINCIPLES.map((p, i) => {
+            // Map the principles to their active ranges in the overall section scroll
+            // Since there are 5 principles + 1 final statement, we split into 6 segments
+            const start = i * 0.16;
+            const end = (i + 1) * 0.16;
+            
+            // For the last principle, keep it active until the very end of the section
+            const displayEnd = i === 4 ? 1 : end;
+            
+            // Create a discrete highlight for the current chapter
+            const chapterHighlight = useTransform(
+              scrollYProgress, 
+              [start, start + 0.05, displayEnd - 0.05, displayEnd], 
+              [0.2, 1, 1, i === 4 ? 1 : 0.2]
+            );
+
+            return (
+              <motion.span 
+                key={p.id}
+                style={{ opacity: chapterHighlight }}
+                className="text-[10px] font-mono font-bold text-primary"
+              >
+                {p.id}
+              </motion.span>
+            );
+          })}
         </div>
-      </div>
+      </motion.div>
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Intro */}
