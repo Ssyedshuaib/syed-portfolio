@@ -53,35 +53,31 @@ const PRODUCTS = [
 
 export function AxoraProducts() {
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
 
   return (
-    <section id="ecosystem" ref={containerRef} className="relative bg-background">
-      <div className="max-w-screen-2xl mx-auto px-6 lg:px-20">
-        <div className="flex flex-col lg:flex-row gap-20">
+    <section id="ecosystem" ref={containerRef} className="relative bg-background overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
           
           {/* LEFT SIDE: Sticky Narrative */}
-          <div className="lg:w-1/3 pt-32 lg:pb-32">
+          <div className="lg:w-1/3 pt-24 lg:pt-32">
             <motion.div 
-              initial={{ opacity: 0, x: -30, filter: "blur(10px)" }}
-              whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               viewport={{ once: true }}
-              className="lg:sticky lg:top-48 space-y-10"
+              className="lg:sticky lg:top-32 space-y-8"
             >
               <div className="space-y-6">
                 <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">
                   AXORA ECOSYSTEM
                 </p>
-                <h2 className="text-5xl md:text-7xl font-headline font-black tracking-tighter text-white leading-[0.9]">
+                <h2 className="text-5xl md:text-6xl lg:text-[clamp(3rem,6vw,4.5rem)] font-headline font-black tracking-tighter text-white leading-[0.9]">
                   Building <br />
                   Products <br />
                   <span className="text-primary italic font-medium">That Matter.</span>
                 </h2>
-                <p className="text-lg text-primary/60 font-light leading-relaxed max-w-sm">
+                <p className="text-base lg:text-lg text-primary/60 font-light leading-relaxed max-w-sm">
                   Axora is a venture studio dedicated to architecting digital ecosystems across education, memory, and future technologies.
                 </p>
               </div>
@@ -96,7 +92,7 @@ export function AxoraProducts() {
           </div>
 
           {/* RIGHT SIDE: Vertical Scrolling Stories */}
-          <div className="lg:w-2/3 space-y-32 lg:space-y-64 pt-32 pb-64">
+          <div className="lg:w-2/3 space-y-48 lg:space-y-72 pt-24 lg:pt-32 pb-48">
             {PRODUCTS.map((product, idx) => (
               <ProductChapter key={product.id} product={product} idx={idx} />
             ))}
@@ -114,101 +110,71 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
     offset: ["start end", "end start"]
   });
 
-  const springY = useSpring(useTransform(scrollYProgress, [0, 1], [120, -120]), {
+  const springY = useSpring(useTransform(scrollYProgress, [0, 1], [80, -80]), {
     stiffness: 80,
     damping: 30
   });
 
-  const revealVariants = {
-    hidden: { opacity: 0, y: 60, filter: "blur(15px)" },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      filter: "blur(0px)",
-      transition: { duration: 1.4, ease: [0.16, 1, 0.3, 1] }
-    }
-  };
-
   return (
     <motion.div 
       ref={ref}
-      variants={revealVariants}
-      initial="hidden"
-      whileInView="visible"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
+      transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
       className="relative group"
     >
-      {/* Background Ambient Accent Glow */}
-      <motion.div 
-        animate={{ 
-          scale: [1, 1.1, 1], 
-          opacity: [0.05, 0.12, 0.05],
-          x: [0, 10, 0]
-        }}
-        transition={{ duration: 15 + idx * 2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -inset-40 blur-[150px] rounded-full pointer-events-none"
-        style={{ background: product.accent }}
-      />
-
-      <div className="space-y-20 relative z-10">
-        {/* Header Block */}
+      <div className="space-y-16 relative z-10">
         <div className={cn(
-          "flex flex-col gap-10",
+          "flex flex-col gap-8",
           idx % 2 === 0 ? "items-start" : "items-end text-right"
         )}>
           <div className="space-y-6 max-w-xl">
             <div className={cn(
-              "flex items-center gap-6 group-hover:gap-8 transition-all duration-700",
+              "flex items-center gap-6",
               idx % 2 !== 0 && "flex-row-reverse"
             )}>
                <span className="text-[14px] font-mono font-bold tracking-[0.4em] text-primary/20">{product.id}</span>
-               <div className="h-px w-12 bg-primary/10 group-hover:w-20 transition-all duration-700" />
-               <Badge variant="outline" className="text-[8px] font-bold uppercase tracking-[0.3em] border-primary/10 text-primary/40 px-4 py-1.5 rounded-full">
+               <div className="h-px w-10 bg-primary/10" />
+               <Badge variant="outline" className="text-[8px] font-bold uppercase tracking-[0.3em] border-primary/10 text-primary/40 px-4 py-1 rounded-full">
                  {product.status}
                </Badge>
             </div>
             
             <div className="space-y-2">
-              <p className="text-[11px] font-bold tracking-[0.6em] text-primary/40 uppercase">{product.category}</p>
-              <h3 className="text-7xl md:text-9xl font-headline font-black text-white tracking-tighter leading-none transition-colors group-hover:text-primary">
+              <p className="text-[10px] font-bold tracking-[0.6em] text-primary/40 uppercase">{product.category}</p>
+              <h3 className="text-5xl md:text-7xl lg:text-[clamp(3.5rem,8vw,7rem)] font-headline font-black text-white tracking-tighter leading-none transition-colors group-hover:text-primary">
                 {product.name}
               </h3>
-              <p className="text-3xl md:text-4xl font-headline font-light text-primary/60 italic tracking-tight">
+              <p className="text-2xl md:text-3xl font-headline font-light text-primary/60 italic tracking-tight">
                 {product.mission}
               </p>
             </div>
 
-            <p className="text-xl text-primary/40 font-light leading-relaxed">
+            <p className="text-lg lg:text-xl text-primary/40 font-light leading-relaxed">
               {product.description}
             </p>
           </div>
 
-          {/* Metrics Strip */}
           <div className={cn(
-            "flex gap-12 pt-8 border-t border-white/5 w-full",
+            "flex gap-10 pt-8 border-t border-white/5 w-full",
             idx % 2 !== 0 && "justify-end"
           )}>
             {product.metrics.map((metric: any) => (
-              <div key={metric.label} className="space-y-2">
-                <p className="text-3xl font-headline font-black text-white">{metric.value}</p>
-                <p className="text-[9px] font-bold tracking-[0.4em] text-primary/20 uppercase">{metric.label}</p>
+              <div key={metric.label} className="space-y-1">
+                <p className="text-2xl md:text-3xl font-headline font-black text-white">{metric.value}</p>
+                <p className="text-[8px] font-bold tracking-[0.4em] text-primary/20 uppercase">{metric.label}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Visual Mockup Area with Inertia & Ambient Float */}
         <motion.div 
           style={{ y: springY }}
-          animate={{ y: [0, -4, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="relative px-4 lg:px-0"
+          className="relative"
         >
           <LaptopMockup imageId={product.imageId} />
         </motion.div>
-
-        {/* Closing Divider */}
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/5 to-transparent pt-32" />
       </div>
     </motion.div>
   );

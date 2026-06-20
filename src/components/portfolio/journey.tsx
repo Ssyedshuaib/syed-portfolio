@@ -53,66 +53,49 @@ export function Journey() {
     restDelta: 0.001
   });
 
-  const lineVariants = {
-    hidden: { opacity: 0, y: 30, filter: "blur(12px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 1.4, ease: [0.16, 1, 0.3, 1] }
-    }
-  };
-
   return (
     <section 
       id="journey" 
       ref={containerRef}
-      className="relative bg-[#050505] py-48 md:py-80 px-6 overflow-hidden"
+      className="relative bg-[#050505] py-32 md:py-48 px-6 overflow-hidden"
     >
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto">
         <motion.div 
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center space-y-8 mb-32 md:mb-48"
+          className="text-center space-y-6 mb-24 md:mb-40"
         >
-          <motion.div variants={lineVariants} className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass border-white/5">
-            <p className="text-[9px] md:text-[10px] font-bold tracking-[0.5em] md:tracking-[0.6em] text-primary/40 uppercase">The Journey</p>
-          </motion.div>
-          <div className="space-y-4">
-            <motion.h2 variants={lineVariants} className="text-5xl md:text-9xl font-headline font-black tracking-tighter text-white leading-none">
-              From Learning
-            </motion.h2>
-            <motion.h2 variants={lineVariants} className="text-5xl md:text-9xl font-headline font-black tracking-tighter text-white leading-none">
-              To Building
-            </motion.h2>
-            <motion.h2 variants={lineVariants} className="text-5xl md:text-9xl font-headline font-black tracking-tighter text-[#EAE0C8] italic font-medium leading-none">
-              Ecosystems.
-            </motion.h2>
+          <div className="inline-flex items-center gap-3 px-4 py-1 rounded-full glass border-white/5">
+            <p className="text-[10px] font-bold tracking-[0.6em] text-primary/40 uppercase">The Journey</p>
           </div>
-          <motion.p variants={lineVariants} className="text-lg md:text-2xl text-[#EAE0C8]/40 font-light leading-relaxed max-w-2xl mx-auto pt-6">
+          <div className="space-y-4">
+            <h2 className="text-4xl md:text-7xl lg:text-[clamp(3.5rem,8vw,8.5rem)] font-headline font-black tracking-tighter text-white leading-none">
+              From Learning
+            </h2>
+            <h2 className="text-4xl md:text-7xl lg:text-[clamp(3.5rem,8vw,8.5rem)] font-headline font-black tracking-tighter text-white leading-none">
+              To Building
+            </h2>
+            <h2 className="text-4xl md:text-7xl lg:text-[clamp(3.5rem,8vw,8.5rem)] font-headline font-black tracking-tighter text-[#EAE0C8] italic font-medium leading-none">
+              Ecosystems.
+            </h2>
+          </div>
+          <p className="text-base md:text-xl text-[#EAE0C8]/40 font-light leading-relaxed max-w-xl mx-auto pt-6">
             The evolution of curiosity into interconnected digital products and long-term systems thinking.
-          </motion.p>
+          </p>
         </motion.div>
 
         <div className="relative">
-          {/* Central Vertical Line with Ambient Energy */}
           <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-white/5 md:-translate-x-1/2">
             <motion.div 
               style={{ scaleY: pathLength }}
               className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary via-primary/50 to-transparent origin-top shadow-[0_0_20px_rgba(234,224,200,0.3)]"
             />
-            {/* Ambient Energy Pulse */}
-            <motion.div 
-              animate={{ top: ["0%", "100%"], opacity: [0, 1, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-              className="absolute left-0 w-full h-32 bg-gradient-to-b from-transparent via-primary/40 to-transparent pointer-events-none"
-            />
           </div>
 
-          <div className="space-y-32 md:space-y-96 pl-8 md:pl-0">
+          <div className="space-y-32 md:space-y-72 pl-8 md:pl-0">
             {CHAPTERS.map((chapter, idx) => (
               <TimelineChapter key={chapter.id} chapter={chapter} idx={idx} />
             ))}
@@ -127,31 +110,28 @@ function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
   const isLeft = chapter.side === "left";
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const yearY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const yearY = useTransform(scrollYProgress, [0, 1], [30, -30]);
   
   return (
     <motion.div 
       ref={ref}
-      initial={{ opacity: 0, y: 60, filter: "blur(15px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 1.4, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        "relative flex flex-col items-start gap-12 md:gap-32",
+        "relative flex flex-col items-start gap-12 md:gap-24",
         isLeft ? "md:flex-row" : "md:flex-row-reverse"
       )}
     >
-      {/* Background Year with Ambient Opacity Breathing */}
       <motion.div 
         style={{ y: yearY }}
-        animate={{ opacity: [0.015, 0.04, 0.015] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         className={cn(
-          "absolute -top-16 md:-top-32 pointer-events-none select-none z-0",
-          isLeft ? "left-0 md:-left-20" : "right-0 md:-right-20"
+          "absolute -top-12 md:-top-24 pointer-events-none select-none z-0 opacity-[0.03]",
+          isLeft ? "left-0 md:-left-16" : "right-0 md:-right-16"
         )}
       >
-        <span className="text-[8rem] md:text-[22rem] font-headline font-black text-white tracking-tighter block leading-none">
+        <span className="text-7xl md:text-[clamp(8rem,18vw,20rem)] font-headline font-black text-white tracking-tighter block leading-none">
           {chapter.year}
         </span>
       </motion.div>
@@ -160,69 +140,58 @@ function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
         "flex-1 w-full relative z-10",
         isLeft ? "md:text-right" : "md:text-left"
       )}>
-        <motion.div 
-          whileHover={{ x: isLeft ? -5 : 5 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className={cn(
-            "space-y-6 md:space-y-8 max-w-xl",
+        <div className={cn(
+            "space-y-6 max-w-xl",
             isLeft ? "md:ml-auto" : "md:mr-auto"
           )}
         >
           <div className={cn(
-            "flex items-center gap-4 md:gap-6",
+            "flex items-center gap-4",
             isLeft ? "md:flex-row-reverse" : "md:flex-row"
           )}>
-            <span className="text-[12px] md:text-[14px] font-mono font-bold tracking-[0.4em] text-primary/30">{chapter.id}</span>
-            <div className="h-px w-8 md:w-12 bg-primary/10" />
-            <span className="text-[9px] md:text-[10px] font-bold tracking-[0.4em] md:tracking-[0.6em] text-primary/60 uppercase">
+            <span className="text-[12px] font-mono font-bold tracking-[0.4em] text-primary/30">{chapter.id}</span>
+            <div className="h-px w-10 bg-primary/10" />
+            <span className="text-[9px] font-bold tracking-[0.6em] text-primary/60 uppercase">
               Milestone
             </span>
           </div>
 
-          <div className="space-y-4 md:space-y-6">
-            <h3 className="text-4xl md:text-7xl font-headline font-black text-white tracking-tight leading-none group-hover:text-primary transition-colors duration-500">
+          <div className="space-y-4">
+            <h3 className="text-3xl md:text-5xl lg:text-7xl font-headline font-black text-white tracking-tight leading-none">
               {chapter.title}
             </h3>
-            <p className="text-xl md:text-3xl font-light text-[#EAE0C8]/60 leading-relaxed italic">
+            <p className="text-lg md:text-2xl font-light text-[#EAE0C8]/60 leading-relaxed italic">
               {chapter.description}
             </p>
           </div>
 
           {chapter.chips && (
             <div className={cn(
-              "flex flex-wrap gap-2 md:gap-3 pt-4 md:pt-6",
+              "flex flex-wrap gap-2 pt-4",
               isLeft ? "md:justify-end" : "justify-start"
             )}>
               {chapter.chips.map((chip: string) => (
-                <motion.div
+                <div
                   key={chip}
-                  whileHover={{ scale: 1.05, borderColor: "rgba(234,224,200,0.3)" }}
-                  className="px-4 md:px-6 py-2 md:py-2.5 rounded-full glass border-white/5 text-[8px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-primary/70 cursor-default transition-all"
+                  className="px-5 py-2 rounded-full glass border-white/5 text-[9px] font-bold tracking-[0.2em] uppercase text-primary/70"
                 >
                   {chip}
-                </motion.div>
+                </div>
               ))}
             </div>
           )}
 
-          <div className="pt-8 md:pt-10 border-t border-white/5">
-            <p className="text-[8px] md:text-[9px] font-bold tracking-[0.5em] text-primary/20 uppercase mb-2">Primary Focus</p>
+          <div className="pt-8 border-t border-white/5">
+            <p className="text-[8px] font-bold tracking-[0.5em] text-primary/20 uppercase mb-2">Primary Focus</p>
             <p className="text-xs md:text-sm text-primary/40 font-medium tracking-widest uppercase">
               {chapter.details}
             </p>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       <div className="hidden md:flex relative w-12 items-center justify-center">
-        <motion.div 
-          whileInView={{ scale: [1, 1.2, 1], boxShadow: ["0 0 0px transparent", "0 0 15px rgba(234,224,200,0.4)", "0 0 0px transparent"] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-4 h-4 rounded-full bg-black border-2 border-primary/40 z-20" 
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-12 h-12 bg-primary/5 blur-xl rounded-full" />
-        </div>
+        <div className="w-3 h-3 rounded-full bg-black border-2 border-primary/40 z-20" />
       </div>
 
       <div className="flex-1 hidden md:block" />
