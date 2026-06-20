@@ -46,11 +46,13 @@ export function FounderPhilosophy() {
   const containerRef = useRef<HTMLDivElement>(null);
   const closingRef = useRef<HTMLDivElement>(null);
   
+  // Scroll progress for the entire philosophy section
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end end"],
   });
 
+  // Scroll progress specifically for the closing section to trigger exit
   const { scrollYProgress: closingProgress } = useScroll({
     target: closingRef,
     offset: ["start end", "end center"],
@@ -62,7 +64,13 @@ export function FounderPhilosophy() {
     restDelta: 0.001,
   });
 
-  const railOpacity = useTransform(scrollYProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0]);
+  // Entry and Exit logic for the navigation rail
+  const railOpacity = useTransform(scrollYProgress, [0, 0.05, 0.85, 0.95], [0, 1, 1, 0]);
+  const railX = useTransform(closingProgress, [0, 0.2], [0, -20]);
+  const exitOpacity = useTransform(closingProgress, [0, 0.2], [1, 0]);
+
+  // Pointer events disabled when opacity is low
+  const pointerEvents = useTransform(exitOpacity, (v) => v < 0.1 ? "none" : "auto");
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -85,29 +93,37 @@ export function FounderPhilosophy() {
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-32 md:pb-48">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
-      {/* Progress Rail */}
+      {/* FIXED MANIFESTO NAVIGATION RAIL */}
       <motion.div 
-        style={{ opacity: railOpacity }}
-        className="fixed left-4 md:left-10 top-1/2 -translate-y-1/2 flex flex-col items-center gap-6 z-50 pointer-events-none hidden lg:flex"
+        style={{ 
+          opacity: railOpacity,
+          x: railX,
+          pointerEvents: pointerEvents as any
+        }}
+        className="fixed left-6 md:left-12 top-1/2 -translate-y-1/2 flex flex-col items-center gap-8 z-[60] hidden lg:flex"
       >
-        <div className="text-[8px] font-bold tracking-[0.4em] text-primary/20 uppercase rotate-90 mb-12">Manifesto</div>
-        <div className="relative h-48 w-[1px] bg-white/5 overflow-hidden rounded-full">
+        <div className="text-[9px] font-bold tracking-[0.5em] text-primary/40 uppercase rotate-90 mb-16 whitespace-nowrap">
+          Manifesto
+        </div>
+        
+        <div className="relative h-64 w-[1px] bg-white/5 overflow-hidden rounded-full">
           <motion.div 
             style={{ scaleY: progressLine }}
-            className="absolute top-0 left-0 w-full h-full bg-primary origin-top"
+            className="absolute top-0 left-0 w-full h-full bg-primary origin-top shadow-[0_0_15px_rgba(234,224,200,0.4)]"
           />
         </div>
-        <div className="flex flex-col gap-3 mt-12">
+
+        <div className="flex flex-col gap-4 mt-8">
           {PRINCIPLES.map((p, i) => {
             const start = i * 0.16;
             const end = (i + 1) * 0.16;
-            const displayEnd = i === 4 ? 1 : end;
-            const chapterHighlight = useTransform(scrollYProgress, [start, start + 0.05, displayEnd - 0.05, displayEnd], [0.2, 1, 1, i === 4 ? 1 : 0.2]);
+            const isActive = useTransform(scrollYProgress, [start, start + 0.05, end - 0.05, end], [0.2, 1, 1, 0.2]);
+            
             return (
               <motion.span 
                 key={p.id}
-                style={{ opacity: chapterHighlight }}
-                className="text-[9px] font-mono font-bold text-primary"
+                style={{ opacity: isActive }}
+                className="text-[10px] font-mono font-bold text-primary"
               >
                 {p.id}
               </motion.span>
@@ -132,12 +148,14 @@ export function FounderPhilosophy() {
           </motion.div>
         </div>
 
+        {/* Principles Narrative Blocks */}
         <div className="space-y-48 lg:space-y-[45vh]">
           {PRINCIPLES.map((principle, idx) => (
             <PrincipleChapter key={idx} principle={principle} idx={idx} />
           ))}
         </div>
 
+        {/* CLOSING STATEMENT - TRIGGERS RAIL EXIT */}
         <div ref={closingRef} className="min-h-[120vh] flex flex-col items-center justify-center text-center py-48 relative">
           <div className="flex flex-col items-center gap-16 w-full">
             <motion.div 
