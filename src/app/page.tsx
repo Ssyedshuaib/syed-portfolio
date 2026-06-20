@@ -8,6 +8,7 @@ import { FounderStatement } from "@/components/portfolio/founder-statement";
 import { WhatImBuilding } from "@/components/portfolio/what-im-building";
 import { Journey } from "@/components/portfolio/journey";
 import { AxoraEcosystem } from "@/components/portfolio/axora-ecosystem";
+import { Leadership } from "@/components/portfolio/leadership";
 import { ProductMetrics } from "@/components/portfolio/product-metrics";
 import { ProductEcosystem } from "@/components/portfolio/product-ecosystem";
 import { IdeasLab } from "@/components/portfolio/ideas-lab";
@@ -33,6 +34,7 @@ export default function Home() {
       <WhoIAm />
       <BuilderPhilosophy />
       <AxoraEcosystem />
+      <Leadership />
       <ProductMetrics />
       <ProductEcosystem />
       <IdeasLab />
