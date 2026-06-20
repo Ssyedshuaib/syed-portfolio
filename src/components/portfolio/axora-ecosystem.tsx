@@ -1,255 +1,166 @@
 
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { cn } from "@/lib/utils";
-import { Layers, MapPin, Zap, GraduationCap, Globe, Layout, Sparkles, Target, Compass, Rocket } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
+import { MapPin, Layout, Compass, Sparkles } from "lucide-react";
 
-const AXORA_PRODUCTS = [
-  { 
-    name: "Reverie", 
-    icon: MapPin, 
-    x: 20, 
-    y: 30, 
-    category: "Memory Platform", 
-    status: "In Development",
-    desc: "A place-based memory platform helping people preserve stories, emotions, and experiences connected to real-world locations." 
+const ECOSYSTEM_NODES = [
+  {
+    title: "REVERIE",
+    description: "Place-based memory platform.",
+    icon: MapPin,
+    position: "top-left",
   },
-  { 
-    name: "DevNexus", 
-    icon: Layout, 
-    x: 70, 
-    y: 20, 
-    category: "Student Ecosystem",
-    status: "Production Ready",
-    desc: "An all-in-one platform designed to help students learn, connect, earn, and grow through a unified digital ecosystem." 
+  {
+    title: "DEVNEXUS",
+    description: "Student growth ecosystem.",
+    icon: Layout,
+    position: "top-right",
   },
-  { 
-    name: "NovaPU", 
-    icon: GraduationCap, 
-    x: 80, 
-    y: 60, 
-    category: "Education Technology",
-    status: "Live",
-    desc: "A modern digital platform designed for structured academic prep and effective learning experiences." 
-  },
-  { 
-    name: "Campus Connect", 
-    icon: Globe, 
-    x: 15, 
-    y: 70, 
-    category: "Community Platform",
-    status: "Beta",
-    desc: "A hyper-local networking engine designed specifically for university environments to foster collaboration." 
-  },
-  { 
-    name: "Zappy", 
-    icon: Zap, 
-    x: 45, 
-    y: 85, 
-    category: "Productivity",
-    status: "Production",
-    desc: "A minimalist productivity experience designed for deep work, focusing on organization and clarity." 
-  },
-  { 
-    name: "Global Group of Schools", 
-    icon: Layers, 
-    x: 50, 
-    y: 12, 
-    category: "Education Technology", 
-    status: "Completed",
-    desc: "A modern digital platform for educational institutions focused on admissions and parent engagement." 
+  {
+    title: "FUTURE VENTURES",
+    description: "Emerging digital products.",
+    icon: Compass,
+    position: "bottom-center",
   },
 ];
 
 export function AxoraEcosystem() {
-  const [activeProduct, setActiveProduct] = useState<string | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  if (!isMounted) {
-    return <section id="axora" className="py-64 bg-background" />;
-  }
-
   return (
-    <section id="axora" className="py-64 px-6 relative overflow-hidden bg-background" ref={containerRef}>
-      <div className="absolute inset-0 premium-glow opacity-30 pointer-events-none" />
+    <section id="axora" className="py-64 px-6 bg-[#050505] relative overflow-hidden">
+      {/* Subtle background texture */}
+      <div className="absolute inset-0 blueprint-grid opacity-[0.01] pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto space-y-48">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="text-center space-y-12"
-        >
-          <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full glass border-[#EAE0C8]/20 text-[10px] font-bold text-[#EAE0C8] uppercase tracking-[0.6em]">
-            VENTURE STUDIO • ECOSYSTEM • FUTURE
-          </div>
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
           
-          <div className="space-y-8">
-            <h2 className="text-8xl md:text-[12rem] font-headline font-black tracking-tighter uppercase leading-none text-white drop-shadow-[0_0_30px_rgba(83,104,120,0.1)]">
-              AXORA
-            </h2>
-            <p className="text-2xl md:text-3xl text-[#EAE0C8]/70 font-light leading-tight max-w-4xl mx-auto">
-              Building products, systems, and digital ecosystems that solve meaningful problems and create lasting impact.
-            </p>
-          </div>
-        </motion.div>
-
-        <div className="relative h-[600px] md:h-[900px] glass rounded-[5rem] border-white/5 overflow-hidden group">
-          <div className="absolute inset-0 pointer-events-none">
-             <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-               {AXORA_PRODUCTS.map((p, i) => (
-                 <motion.line 
-                   key={i}
-                   x1="50" y1="50"
-                   x2={p.x} y2={p.y}
-                   stroke="rgba(234,224,200,0.15)"
-                   strokeWidth="0.1"
-                   initial={{ pathLength: 0, opacity: 0 }}
-                   whileInView={{ pathLength: 1, opacity: 1 }}
-                   viewport={{ once: true }}
-                   transition={{ duration: 1.5, delay: i * 0.1 }}
-                 />
-               ))}
-               {AXORA_PRODUCTS.map((p, i) => (
-                 <motion.circle
-                   key={`p-${i}`}
-                   r="0.4"
-                   fill="#EAE0C8"
-                   initial={{ opacity: 0 }}
-                   animate={{ 
-                     cx: [50, p.x],
-                     cy: [50, p.y],
-                     opacity: [0, 1, 0]
-                   }}
-                   transition={{ 
-                     duration: 3, 
-                     repeat: Infinity, 
-                     delay: i * 0.5,
-                     ease: "linear"
-                   }}
-                 />
-               ))}
-             </svg>
-          </div>
-
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-             <motion.div 
-               animate={{ scale: [1, 1.05, 1] }}
-               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-               className="w-48 h-48 rounded-full glass border-[#EAE0C8]/40 flex flex-col items-center justify-center shadow-[0_0_100px_rgba(83,104,120,0.2)]"
-             >
-                <div className="absolute inset-0 rounded-full bg-[#536878]/5 blur-2xl animate-pulse" />
-                <Sparkles className="w-10 h-10 text-[#EAE0C8] mb-4 relative z-10" />
-                <span className="text-[#EAE0C8] font-headline font-bold text-xs tracking-[0.6em] uppercase relative z-10">AXORA</span>
-             </motion.div>
-          </div>
-
-          {AXORA_PRODUCTS.map((product) => (
+          {/* Text Content */}
+          <div className="lg:col-span-5 space-y-12">
             <motion.div
-              key={product.name}
-              className="absolute transition-all duration-1000"
-              style={{ left: `${product.x}%`, top: `${product.y}%` }}
-              onMouseEnter={() => setActiveProduct(product.name)}
-              onMouseLeave={() => setActiveProduct(null)}
-              initial={{ scale: 0, opacity: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="space-y-6"
+            >
+              <p className="text-[10px] font-bold tracking-[0.8em] text-[#536878] uppercase">AXORA ECOSYSTEM</p>
+              <h2 className="text-6xl md:text-8xl font-headline font-black tracking-tighter text-white leading-none">
+                One Vision.<br />
+                <span className="text-[#EAE0C8] italic font-medium">Multiple Products.</span>
+              </h2>
+              <p className="text-xl md:text-2xl text-[#EAE0C8]/60 font-light leading-relaxed max-w-lg">
+                Axora is a venture studio focused on building digital ecosystems across education, memory preservation, productivity, and future technologies.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Visualization Area */}
+          <div className="lg:col-span-7 relative aspect-square max-w-[600px] mx-auto flex items-center justify-center">
+            
+            {/* Center Node: AXORA */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
+              className="relative z-20"
             >
-              <div className="relative group cursor-pointer -translate-x-1/2 -translate-y-1/2">
-                <motion.div 
-                  whileHover={{ 
-                    scale: 1.2, 
-                    borderColor: "rgba(234,224,200,0.5)",
-                    boxShadow: "0 0 25px rgba(83,104,120,0.4)" 
-                  }}
-                  className="w-16 h-16 rounded-2xl glass border-white/10 flex items-center justify-center transition-all shadow-xl"
-                  style={{
-                    boxShadow: activeProduct === product.name ? '0 0 30px rgba(83,104,120,0.3)' : 'none'
-                  }}
-                >
-                  <product.icon className="w-6 h-6 text-[#EAE0C8] brightness-125 group-hover:text-[#FFFFFF] transition-colors" />
-                </motion.div>
-                
-                <AnimatePresence>
-                  {activeProduct === product.name && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: product.y > 70 ? -20 : 20, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: product.y > 70 ? -20 : 20, scale: 0.95 }}
-                      className={cn(
-                        "absolute left-1/2 -translate-x-1/2 w-72 bg-[#161C21]/90 backdrop-blur-3xl p-6 rounded-3xl border-[#EAE0C8]/30 text-center z-50 shadow-2xl",
-                        product.y > 70 ? "bottom-full mb-8" : "top-full mt-8"
-                      )}
-                    >
-                      <div className="space-y-4">
-                        <div className="space-y-1">
-                          <p className="text-[#536878] font-bold tracking-[0.5em] text-[8px] uppercase">{product.category}</p>
-                          <p className="text-white font-black tracking-[0.2em] uppercase text-sm">{product.name}</p>
-                        </div>
-                        <p className="text-[#EAE0C8]/80 text-[10px] font-light leading-relaxed">{product.desc}</p>
-                        <div className="pt-4 border-t border-white/10">
-                          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-[8px] font-bold text-[#EAE0C8] uppercase tracking-wider">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#536878] animate-pulse" />
-                            {product.status}
-                          </span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              <div className="w-40 h-40 rounded-full glass border-[#EAE0C8]/10 flex flex-col items-center justify-center shadow-[0_0_80px_rgba(234,224,200,0.05)]">
+                <Sparkles className="w-6 h-6 text-[#536878] mb-3" />
+                <span className="text-white font-headline font-bold text-xs tracking-[0.5em] uppercase">AXORA</span>
               </div>
+              {/* Subtle ambient glow */}
+              <div className="absolute inset-0 bg-[#EAE0C8]/5 blur-[60px] rounded-full -z-10" />
             </motion.div>
-          ))}
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-24 items-start">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-            className="space-y-24"
-          >
-            <div className="space-y-8">
-              <div className="flex items-center gap-4 text-[#536878]">
-                <Target className="w-5 h-5" />
-                <h4 className="text-[9px] font-bold tracking-[0.5em] uppercase">Mission Statement</h4>
-              </div>
-              <p className="text-3xl md:text-5xl font-headline font-bold text-white tracking-tighter italic">
-                "Turning Problems Into Powerful Solutions."
-              </p>
+            {/* Satellite Nodes */}
+            <div className="absolute inset-0 pointer-events-none">
+              <svg className="w-full h-full" viewBox="0 0 100 100">
+                {/* Connection Lines */}
+                <motion.line 
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  whileInView={{ pathLength: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.5, delay: 0.5 }}
+                  x1="50" y1="50" x2="25" y2="30" 
+                  stroke="rgba(83,104,120,0.2)" strokeWidth="0.2" 
+                />
+                <motion.line 
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  whileInView={{ pathLength: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.5, delay: 0.7 }}
+                  x1="50" y1="50" x2="75" y2="30" 
+                  stroke="rgba(83,104,120,0.2)" strokeWidth="0.2" 
+                />
+                <motion.line 
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  whileInView={{ pathLength: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.5, delay: 0.9 }}
+                  x1="50" y1="50" x2="50" y2="75" 
+                  stroke="rgba(83,104,120,0.2)" strokeWidth="0.2" 
+                />
+              </svg>
             </div>
-          </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-            className="space-y-24"
-          >
-            <div className="glass p-12 rounded-[3.5rem] border-[#EAE0C8]/20">
-              <div className="space-y-8">
-                <p className="text-[9px] font-bold tracking-[0.5em] text-[#536878] uppercase">Founder Note</p>
-                <div className="space-y-4">
-                  <p className="text-2xl font-headline font-bold text-white italic">
-                    "Every project begins with one question: 'What problem am I solving?'"
-                  </p>
-                  <p className="text-[#EAE0C8]/70 text-base font-light leading-relaxed">
-                    That question continues to guide every product and vision behind Axora.
-                  </p>
+            {/* Reverie Node */}
+            <div className="absolute top-[30%] left-[25%] -translate-x-1/2 -translate-y-1/2 group pointer-events-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.8 }}
+                className="flex flex-col items-center gap-6"
+              >
+                <div className="w-14 h-14 rounded-2xl glass border-[#EAE0C8]/05 flex items-center justify-center group-hover:border-[#EAE0C8]/20 transition-all duration-700">
+                  <MapPin className="w-5 h-5 text-[#EAE0C8]/60 group-hover:text-white transition-colors" />
                 </div>
-              </div>
+                <div className="text-center space-y-2 opacity-0 group-hover:opacity-100 transition-all duration-700 -translate-y-2 group-hover:translate-y-0">
+                  <p className="text-[10px] font-bold tracking-[0.3em] text-white uppercase">REVERIE</p>
+                  <p className="text-[9px] text-[#536878] tracking-widest uppercase">Memory Platform</p>
+                </div>
+              </motion.div>
             </div>
-          </motion.div>
+
+            {/* DevNexus Node */}
+            <div className="absolute top-[30%] right-[25%] translate-x-1/2 -translate-y-1/2 group pointer-events-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 1 }}
+                className="flex flex-col items-center gap-6"
+              >
+                <div className="w-14 h-14 rounded-2xl glass border-[#EAE0C8]/05 flex items-center justify-center group-hover:border-[#EAE0C8]/20 transition-all duration-700">
+                  <Layout className="w-5 h-5 text-[#EAE0C8]/60 group-hover:text-white transition-colors" />
+                </div>
+                <div className="text-center space-y-2 opacity-0 group-hover:opacity-100 transition-all duration-700 -translate-y-2 group-hover:translate-y-0">
+                  <p className="text-[10px] font-bold tracking-[0.3em] text-white uppercase">DEVNEXUS</p>
+                  <p className="text-[9px] text-[#536878] tracking-widest uppercase">Student Growth</p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Future Ventures Node */}
+            <div className="absolute bottom-[25%] left-1/2 -translate-x-1/2 translate-y-1/2 group pointer-events-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 1.2 }}
+                className="flex flex-col items-center gap-6"
+              >
+                <div className="w-14 h-14 rounded-2xl glass border-[#EAE0C8]/05 flex items-center justify-center group-hover:border-[#EAE0C8]/20 transition-all duration-700">
+                  <Compass className="w-5 h-5 text-[#EAE0C8]/60 group-hover:text-white transition-colors" />
+                </div>
+                <div className="text-center space-y-2 opacity-0 group-hover:opacity-100 transition-all duration-700 -translate-y-2 group-hover:translate-y-0">
+                  <p className="text-[10px] font-bold tracking-[0.3em] text-white uppercase">FUTURE VENTURES</p>
+                  <p className="text-[9px] text-[#536878] tracking-widest uppercase">Emerging Products</p>
+                </div>
+              </motion.div>
+            </div>
+
+          </div>
         </div>
       </div>
     </section>
