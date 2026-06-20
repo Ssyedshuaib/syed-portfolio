@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -21,6 +20,10 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { ReverieShowcase } from "@/components/portfolio/reverie-showcase";
 import { NovaPUShowcase } from "@/components/portfolio/novapu-showcase";
+import { DevNexusShowcase } from "@/components/portfolio/dev-nexus-showcase";
+import { GlobalSchoolsShowcase } from "@/components/portfolio/global-schools-showcase";
+import { CampusConnectShowcase } from "@/components/portfolio/campus-connect-showcase";
+import { ZappyShowcase } from "@/components/portfolio/zappy-showcase";
 
 const PROJECT_DATA: Record<string, any> = {
   reverie: {
@@ -209,7 +212,7 @@ export default function ProjectPage() {
                       className="grid grid-cols-1 md:grid-cols-2 gap-16"
                     >
                       <div className="space-y-6">
-                        <div className="flex items-center gap-3 text-[#91766E]">
+                        <div className="flex items-center gap-3 text-[#536878]">
                           <div className="h-px w-8 bg-current" />
                           <span className="text-[10px] font-bold tracking-[0.5em] uppercase">The Problem</span>
                         </div>
@@ -218,7 +221,7 @@ export default function ProjectPage() {
                         </p>
                       </div>
                       <div className="space-y-6">
-                        <div className="flex items-center gap-3 text-[#F6ECE3]">
+                        <div className="flex items-center gap-3 text-primary">
                           <div className="h-px w-8 bg-current" />
                           <span className="text-[10px] font-bold tracking-[0.5em] uppercase">The Solution</span>
                         </div>
@@ -279,7 +282,7 @@ export default function ProjectPage() {
                       viewport={{ once: true }}
                       className="space-y-8"
                     >
-                      <div className="flex items-center gap-3 text-[#91766E]">
+                      <div className="flex items-center gap-3 text-[#536878]">
                         <Milestone className="w-5 h-5" />
                         <span className="text-[10px] font-bold tracking-[0.5em] uppercase">Future Roadmap</span>
                       </div>
@@ -331,6 +334,10 @@ export default function ProjectPage() {
             {/* Custom Project-Specific Sections */}
             {slug === "reverie" && <ReverieShowcase />}
             {slug === "novapu" && <NovaPUShowcase />}
+            {slug === "devnexus" && <DevNexusShowcase />}
+            {slug === "global-group-schools" && <GlobalSchoolsShowcase />}
+            {slug === "campus-connect" && <CampusConnectShowcase />}
+            {slug === "zappy" && <ZappyShowcase />}
           </motion.div>
         )}
       </AnimatePresence>

@@ -9,58 +9,58 @@ import { cn } from "@/lib/utils";
 const FEATURES = [
   {
     number: "01",
-    label: "STUDENT ECOSYSTEM",
-    title: "One Platform For Every Student Need.",
-    description: "The digital heartbeat of engineering education. DevNexus integrates fragmented resources into a unified command center.",
-    imageId: "devnexus-landing"
-  },
-  {
-    number: "02",
-    label: "ACADEMIC HUB",
-    title: "Resource Library & Previous Papers",
-    description: "Curated academic resources, model papers, and comprehensive notes organized by stream and semester for maximum efficiency.",
-    imageId: "devnexus-resources"
-  },
-  {
-    number: "03",
-    label: "INTELLIGENT MENTOR",
-    title: "AI-Powered Academic Guidance",
-    description: "A 24/7 mentor that understands your curriculum and provides instant, context-aware support for your studies.",
-    imageId: "novapu-ai-mentor"
-  },
-  {
-    number: "04",
-    label: "COMMUNITY",
-    title: "Collaborative Student Networks",
-    description: "Connect with peers across institutions. Share knowledge, collaborate on projects, and build meaningful networks.",
+    label: "COMMUNITY PLATFORM",
+    title: "Connecting Students Beyond Classrooms.",
+    description: "A hyper-local networking engine designed to foster collaboration, community, and meaningful digital connections on campus.",
     imageId: "campus-landing"
   },
   {
+    number: "02",
+    label: "INTERACTION",
+    title: "Real-time Community Feed",
+    description: "Stay updated with campus-wide discussions, announcements, and peer contributions through a high-speed local event bus.",
+    imageId: "campus-feed"
+  },
+  {
+    number: "03",
+    label: "NETWORKING",
+    title: "Intelligent Peer Discovery",
+    description: "Find peer collaborators based on shared interests, skills, and academic goals using our localized networking engine.",
+    imageId: "campus-networking"
+  },
+  {
+    number: "04",
+    label: "EVENTS",
+    title: "Hyper-Local Event Mapping",
+    description: "Discover and participate in workshops, hackathons, and social events happening within your immediate campus environment.",
+    imageId: "campus-events"
+  },
+  {
     number: "05",
-    label: "EARN & GROW",
-    title: "Student Marketplace & Opportunities",
-    description: "A direct bridge between learning and earning. Discover internships, gigs, and academic opportunities curated for your skill level.",
-    imageId: "devnexus-marketplace"
+    label: "GROUPS",
+    title: "Purpose-Driven Student Hubs",
+    description: "Create and join high-intent professional and academic groups focused on deep collaboration and long-term project growth.",
+    imageId: "campus-groups"
   },
   {
     number: "06",
-    label: "ANALYTICS",
-    title: "Measurable Academic Growth",
-    description: "Detailed tracking of your learning progress, consistency streaks, and performance across various academic modules.",
-    imageId: "novapu-dashboard"
+    label: "COLLABORATION",
+    title: "Seamless Project Partnerships",
+    description: "Tools designed specifically for campus-based project management and cross-departmental collaboration.",
+    imageId: "campus-collaboration"
   },
   {
     number: "07",
-    label: "IDENTITY",
-    title: "Verifiable Student Ledger",
-    description: "Every contribution and achievement is recorded, creating a professional digital profile that actually matters to recruiters.",
-    imageId: "devnexus-overview"
+    label: "VISION",
+    title: "The Digital Heartbeat of Campus.",
+    description: "Transforming the offline campus experience into a dynamic, connected, and highly engaged digital ecosystem.",
+    imageId: "campus-overview"
   }
 ];
 
-export function DevNexusShowcase() {
+export function CampusConnectShowcase() {
   return (
-    <section id="devnexus-experience" className="bg-[#050505] relative overflow-hidden py-32">
+    <section id="campus-experience" className="bg-[#050505] relative overflow-hidden py-32">
       <div className="absolute inset-0 blueprint-grid opacity-[0.01] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 space-y-[25vh]">
         <motion.div 
@@ -70,11 +70,11 @@ export function DevNexusShowcase() {
           className="text-center space-y-12 mb-[15vh]"
         >
           <div className="inline-flex items-center gap-3 text-[10px] font-bold text-primary uppercase tracking-[0.6em] border border-white/5 px-6 py-2 rounded-full glass">
-            Product Experience
+            Hyper-Local Network
           </div>
           <h2 className="text-7xl md:text-9xl font-headline font-black tracking-tighter text-white leading-none">
-            The Student <br />
-            <span className="text-primary italic font-medium">Operating System.</span>
+            Campus <br />
+            <span className="text-primary italic font-medium">Connect.</span>
           </h2>
         </motion.div>
 
@@ -114,7 +114,7 @@ export function DevNexusShowcase() {
               </div>
               
               <button className="group flex items-center gap-4 text-[11px] font-bold tracking-[0.4em] uppercase text-white hover:text-primary transition-colors">
-                Explore Module
+                Explore Network
                 <div className="w-12 h-12 rounded-full glass border-white/10 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all">
                   <ArrowRight className="w-5 h-5" />
                 </div>

@@ -9,58 +9,58 @@ import { cn } from "@/lib/utils";
 const FEATURES = [
   {
     number: "01",
-    label: "STUDENT ECOSYSTEM",
-    title: "One Platform For Every Student Need.",
-    description: "The digital heartbeat of engineering education. DevNexus integrates fragmented resources into a unified command center.",
-    imageId: "devnexus-landing"
+    label: "PRODUCTIVITY PLATFORM",
+    title: "Work Faster. Think Clearer.",
+    description: "A minimalist productivity experience designed for deep work, focusing on organization, clarity, and zero-latency workflow optimization.",
+    imageId: "zappy-landing"
   },
   {
     number: "02",
-    label: "ACADEMIC HUB",
-    title: "Resource Library & Previous Papers",
-    description: "Curated academic resources, model papers, and comprehensive notes organized by stream and semester for maximum efficiency.",
-    imageId: "devnexus-resources"
+    label: "WORKFLOW",
+    title: "High-Speed Task Management",
+    description: "Zero-bloat task organization that keeps you in the flow. Built on local-first architecture for instant state synchronization.",
+    imageId: "zappy-tasks"
   },
   {
     number: "03",
-    label: "INTELLIGENT MENTOR",
-    title: "AI-Powered Academic Guidance",
-    description: "A 24/7 mentor that understands your curriculum and provides instant, context-aware support for your studies.",
-    imageId: "novapu-ai-mentor"
+    label: "INTERFACE",
+    title: "Minimalist High-Density Design",
+    description: "An interface that removes the noise. Every pixel is optimized for focus, ensuring the tool never gets in the way of the work.",
+    imageId: "zappy-dashboard"
   },
   {
     number: "04",
-    label: "COMMUNITY",
-    title: "Collaborative Student Networks",
-    description: "Connect with peers across institutions. Share knowledge, collaborate on projects, and build meaningful networks.",
-    imageId: "campus-landing"
+    label: "DEEP WORK",
+    title: "Built-in Focus Analytics",
+    description: "Track your deep work cycles and workflow optimization metrics through intuitive and beautiful visual analytics.",
+    imageId: "zappy-analytics"
   },
   {
     number: "05",
-    label: "EARN & GROW",
-    title: "Student Marketplace & Opportunities",
-    description: "A direct bridge between learning and earning. Discover internships, gigs, and academic opportunities curated for your skill level.",
-    imageId: "devnexus-marketplace"
+    label: "TOOLS",
+    title: "Integrated Workflow Systems",
+    description: "Unified tools for notes, tasks, and scheduling, all connected through a single minimalist command center.",
+    imageId: "zappy-tools"
   },
   {
     number: "06",
-    label: "ANALYTICS",
-    title: "Measurable Academic Growth",
-    description: "Detailed tracking of your learning progress, consistency streaks, and performance across various academic modules.",
-    imageId: "novapu-dashboard"
+    label: "ARCHITECTURE",
+    title: "Local-First Data Reliability",
+    description: "Your data stays with you. Experience zero-latency performance even with complex workflows and large data sets.",
+    imageId: "zappy-workflow"
   },
   {
     number: "07",
-    label: "IDENTITY",
-    title: "Verifiable Student Ledger",
-    description: "Every contribution and achievement is recorded, creating a professional digital profile that actually matters to recruiters.",
-    imageId: "devnexus-overview"
+    label: "SYSTEM",
+    title: "The Ultimate Personal OS.",
+    description: "More than a tool—a system that helps you organize your modern digital life with unprecedented clarity and speed.",
+    imageId: "zappy-overview"
   }
 ];
 
-export function DevNexusShowcase() {
+export function ZappyShowcase() {
   return (
-    <section id="devnexus-experience" className="bg-[#050505] relative overflow-hidden py-32">
+    <section id="zappy-experience" className="bg-[#050505] relative overflow-hidden py-32">
       <div className="absolute inset-0 blueprint-grid opacity-[0.01] pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 space-y-[25vh]">
         <motion.div 
@@ -70,11 +70,11 @@ export function DevNexusShowcase() {
           className="text-center space-y-12 mb-[15vh]"
         >
           <div className="inline-flex items-center gap-3 text-[10px] font-bold text-primary uppercase tracking-[0.6em] border border-white/5 px-6 py-2 rounded-full glass">
-            Product Experience
+            Productivity Engine
           </div>
           <h2 className="text-7xl md:text-9xl font-headline font-black tracking-tighter text-white leading-none">
-            The Student <br />
-            <span className="text-primary italic font-medium">Operating System.</span>
+            Minimal <br />
+            <span className="text-primary italic font-medium">Zappy.</span>
           </h2>
         </motion.div>
 
@@ -114,7 +114,7 @@ export function DevNexusShowcase() {
               </div>
               
               <button className="group flex items-center gap-4 text-[11px] font-bold tracking-[0.4em] uppercase text-white hover:text-primary transition-colors">
-                Explore Module
+                View Workflow
                 <div className="w-12 h-12 rounded-full glass border-white/10 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all">
                   <ArrowRight className="w-5 h-5" />
                 </div>

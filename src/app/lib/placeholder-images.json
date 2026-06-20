@@ -1,4 +1,3 @@
-
 {
   "placeholderImages": [
     {
@@ -48,6 +47,150 @@
       "description": "NovaPU test centre for practice exams",
       "imageUrl": "https://picsum.photos/seed/novapu-test-centre/600/1200",
       "imageHint": "quiz app"
+    },
+    {
+      "id": "devnexus-landing",
+      "description": "DevNexus landing experience for students",
+      "imageUrl": "https://picsum.photos/seed/devnexus-main/1600/1000",
+      "imageHint": "dashboard software"
+    },
+    {
+      "id": "devnexus-resources",
+      "description": "DevNexus academic resource library",
+      "imageUrl": "https://picsum.photos/seed/devnexus-res/1600/1000",
+      "imageHint": "files library"
+    },
+    {
+      "id": "devnexus-marketplace",
+      "description": "DevNexus student marketplace for internships",
+      "imageUrl": "https://picsum.photos/seed/devnexus-market/1600/1000",
+      "imageHint": "jobs portal"
+    },
+    {
+      "id": "devnexus-overview",
+      "description": "DevNexus complete student ecosystem overview",
+      "imageUrl": "https://picsum.photos/seed/devnexus-over/1600/1000",
+      "imageHint": "platform dashboard"
+    },
+    {
+      "id": "schools-landing",
+      "description": "Global Group of Schools landing page",
+      "imageUrl": "https://picsum.photos/seed/schools-main/1600/1000",
+      "imageHint": "education website"
+    },
+    {
+      "id": "schools-admissions",
+      "description": "Global Group of Schools admissions portal",
+      "imageUrl": "https://picsum.photos/seed/schools-adm/1600/1000",
+      "imageHint": "enrollment form"
+    },
+    {
+      "id": "schools-academic",
+      "description": "Global Group of Schools academic programs",
+      "imageUrl": "https://picsum.photos/seed/schools-aca/1600/1000",
+      "imageHint": "curriculum page"
+    },
+    {
+      "id": "schools-campus",
+      "description": "Global Group of Schools campus showcase",
+      "imageUrl": "https://picsum.photos/seed/schools-cam/1600/1000",
+      "imageHint": "school facilities"
+    },
+    {
+      "id": "schools-parent",
+      "description": "Global Group of Schools parent engagement hub",
+      "imageUrl": "https://picsum.photos/seed/schools-par/1600/1000",
+      "imageHint": "community portal"
+    },
+    {
+      "id": "schools-contact",
+      "description": "Global Group of Schools communication center",
+      "imageUrl": "https://picsum.photos/seed/schools-con/1600/1000",
+      "imageHint": "contact center"
+    },
+    {
+      "id": "schools-ecosystem",
+      "description": "Global Group of Schools digital ecosystem overview",
+      "imageUrl": "https://picsum.photos/seed/schools-eco/1600/1000",
+      "imageHint": "integrated system"
+    },
+    {
+      "id": "campus-landing",
+      "description": "Campus Connect landing experience",
+      "imageUrl": "https://picsum.photos/seed/campus-main/1600/1000",
+      "imageHint": "social network"
+    },
+    {
+      "id": "campus-feed",
+      "description": "Campus Connect community feed",
+      "imageUrl": "https://picsum.photos/seed/campus-feed/1600/1000",
+      "imageHint": "activity stream"
+    },
+    {
+      "id": "campus-groups",
+      "description": "Campus Connect project groups",
+      "imageUrl": "https://picsum.photos/seed/campus-grp/1600/1000",
+      "imageHint": "collaborative teams"
+    },
+    {
+      "id": "campus-events",
+      "description": "Campus Connect local events",
+      "imageUrl": "https://picsum.photos/seed/campus-evnt/1600/1000",
+      "imageHint": "event calendar"
+    },
+    {
+      "id": "campus-networking",
+      "description": "Campus Connect peer networking",
+      "imageUrl": "https://picsum.photos/seed/campus-net/1600/1000",
+      "imageHint": "user profiles"
+    },
+    {
+      "id": "campus-collaboration",
+      "description": "Campus Connect collaboration tools",
+      "imageUrl": "https://picsum.photos/seed/campus-collab/1600/1000",
+      "imageHint": "project board"
+    },
+    {
+      "id": "campus-overview",
+      "description": "Campus Connect ecosystem overview",
+      "imageUrl": "https://picsum.photos/seed/campus-over/1600/1000",
+      "imageHint": "network graph"
+    },
+    {
+      "id": "zappy-landing",
+      "description": "Zappy productivity platform landing",
+      "imageUrl": "https://picsum.photos/seed/zappy-main/1600/1000",
+      "imageHint": "minimal software"
+    },
+    {
+      "id": "zappy-tasks",
+      "description": "Zappy high-speed task management",
+      "imageUrl": "https://picsum.photos/seed/zappy-tsk/1600/1000",
+      "imageHint": "tasks list"
+    },
+    {
+      "id": "zappy-workflow",
+      "description": "Zappy integrated workflow systems",
+      "imageUrl": "https://picsum.photos/seed/zappy-work/1600/1000",
+      "imageHint": "process diagram"
+    },
+    {
+      "id": "zappy-tools",
+      "description": "Zappy productivity tools command center",
+      "imageUrl": "https://picsum.photos/seed/zappy-tool/1600/1000",
+      "imageHint": "toolkit dashboard"
+    },
+    {
+      "id": "zappy-analytics",
+      "description": "Zappy focus and deep work analytics",
+      "imageUrl": "https://picsum.photos/seed/zappy-ana/1600/1000",
+      "imageHint": "productivity charts"
+    },
+    {
+      "id": "zappy-overview",
+      "description": "Zappy complete personal OS overview",
+      "imageUrl": "https://picsum.photos/seed/zappy-over/1600/1000",
+      "imageHint": "minimalist dashboard"
     },
     {
       "id": "founder-portrait",
