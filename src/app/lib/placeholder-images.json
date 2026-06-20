@@ -1,0 +1,17 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "reverie-app-ui",
+      "description": "Reverie mobile application interface showing the Discover screen",
+      "imageUrl": "https://picsum.photos/seed/reverie-ui/600/1200",
+      "imageHint": "mobile app ui"
+    },
+    {
+      "id": "founder-portrait",
+      "description": "Syed Sharfuddin Shuaib professional portrait",
+      "imageUrl": "https://picsum.photos/seed/syed-portrait/800/1000",
+      "imageHint": "founder professional portrait"
+    }
+  ]
+}
