@@ -1,8 +1,8 @@
 
 "use client";
 
-import React, { useRef } from "react";
-import { motion, useInView, useScroll, useSpring, useTransform } from "framer-motion";
+import React, { useRef, useEffect, useState } from "react";
+import { motion, useInView, useScroll, useSpring, useTransform, useMotionValue } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const PRINCIPLES = [
@@ -66,20 +66,38 @@ export function FounderPhilosophy() {
   // Rail logic: Fade in/out only within the philosophy section
   const railOpacity = useTransform(scrollYProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0]);
 
+  // Mouse Depth Interaction
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
+  const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const { clientX, clientY } = e;
+      const x = (clientX / window.innerWidth) - 0.5;
+      const y = (clientY / window.innerHeight) - 0.5;
+      mouseX.set(x);
+      mouseY.set(y);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
+
   return (
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-64">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
-      {/* Vertical Progress Rail - Appears only when in section */}
+      {/* Premium Progress Rail */}
       <motion.div 
         style={{ opacity: railOpacity }}
         className="hidden lg:flex fixed left-12 top-1/2 -translate-y-1/2 flex-col items-center gap-6 z-50 pointer-events-none"
       >
         <div className="text-[10px] font-bold tracking-[0.4em] text-primary/20 uppercase rotate-90 mb-12">Manifesto</div>
-        <div className="relative h-64 w-px bg-white/5 overflow-hidden">
+        <div className="relative h-64 w-[2px] bg-white/5 overflow-hidden rounded-full">
           <motion.div 
             style={{ scaleY: progressLine }}
-            className="absolute top-0 left-0 w-full h-full bg-primary origin-top"
+            className="absolute top-0 left-0 w-full h-full bg-primary origin-top shadow-[0_0_15px_rgba(234,224,200,0.5)]"
           />
         </div>
         <div className="flex flex-col gap-4 mt-12">
@@ -87,16 +105,29 @@ export function FounderPhilosophy() {
             const start = i * 0.16;
             const end = (i + 1) * 0.16;
             const displayEnd = i === 4 ? 1 : end;
+            
+            // Highlight Logic
             const chapterHighlight = useTransform(
               scrollYProgress, 
               [start, start + 0.05, displayEnd - 0.05, displayEnd], 
               [0.2, 1, 1, i === 4 ? 1 : 0.2]
             );
+
+            // Soft Glow for past items
+            const pastHighlight = useTransform(
+              scrollYProgress,
+              [displayEnd, displayEnd + 0.01],
+              [0.2, 0.4]
+            );
+
             return (
               <motion.span 
                 key={p.id}
-                style={{ opacity: chapterHighlight }}
-                className="text-[10px] font-mono font-bold text-primary"
+                style={{ opacity: i < (scrollYProgress.get() * 6) ? pastHighlight : chapterHighlight }}
+                className={cn(
+                  "text-[10px] font-mono font-bold transition-all duration-500",
+                  "text-primary"
+                )}
               >
                 {p.id}
               </motion.span>
@@ -130,7 +161,7 @@ export function FounderPhilosophy() {
         </div>
 
         {/* Animated Manifesto Closing Statement */}
-        <div ref={closingRef} className="min-h-[120vh] flex flex-col items-center justify-center text-center py-64 relative">
+        <div ref={closingRef} className="min-h-[150vh] flex flex-col items-center justify-center text-center py-64 relative">
           <div className="flex flex-col items-center gap-24 w-full">
             <motion.div 
               style={{ opacity: useTransform(closingProgress, [0, 0.2], [0, 0.1]) }}
@@ -143,7 +174,10 @@ export function FounderPhilosophy() {
                   text="The Goal" 
                   progress={closingProgress} 
                   range={[0.1, 0.4]} 
-                  offset={150}
+                  offset={-200}
+                  direction="top"
+                  mouseX={smoothMouseX}
+                  mouseY={smoothMouseY}
                 />
               </div>
               <div className="overflow-hidden">
@@ -151,8 +185,12 @@ export function FounderPhilosophy() {
                   text="Is Not To Build" 
                   progress={closingProgress} 
                   range={[0.2, 0.5]} 
-                  offset={-150}
+                  offset={-300}
+                  direction="left"
                   className="text-primary/30"
+                  isBackground
+                  mouseX={smoothMouseX}
+                  mouseY={smoothMouseY}
                 />
               </div>
               <div className="overflow-hidden">
@@ -160,7 +198,10 @@ export function FounderPhilosophy() {
                   text="More Products." 
                   progress={closingProgress} 
                   range={[0.3, 0.6]} 
-                  offset={100}
+                  offset={200}
+                  direction="bottom"
+                  mouseX={smoothMouseX}
+                  mouseY={smoothMouseY}
                 />
               </div>
               
@@ -170,8 +211,11 @@ export function FounderPhilosophy() {
                     text="The Goal" 
                     progress={closingProgress} 
                     range={[0.4, 0.7]} 
-                    offset={-100}
+                    offset={-200}
+                    direction="top"
                     italic
+                    mouseX={smoothMouseX}
+                    mouseY={smoothMouseY}
                   />
                 </div>
                 <div className="overflow-hidden">
@@ -179,9 +223,13 @@ export function FounderPhilosophy() {
                     text="Is To Build" 
                     progress={closingProgress} 
                     range={[0.5, 0.8]} 
-                    offset={150}
+                    offset={300}
+                    direction="right"
                     className="text-primary/30"
                     noItalic
+                    isBackground
+                    mouseX={smoothMouseX}
+                    mouseY={smoothMouseY}
                   />
                 </div>
                 <div className="overflow-hidden">
@@ -189,8 +237,11 @@ export function FounderPhilosophy() {
                     text="Better Systems." 
                     progress={closingProgress} 
                     range={[0.6, 0.9]} 
-                    offset={-150}
+                    offset={200}
+                    direction="bottom"
                     italic
+                    mouseX={smoothMouseX}
+                    mouseY={smoothMouseY}
                   />
                 </div>
               </div>
@@ -216,33 +267,54 @@ function ManifestoLine({
   progress, 
   range, 
   offset, 
+  direction,
   className, 
   italic, 
-  noItalic 
+  noItalic,
+  isBackground,
+  mouseX,
+  mouseY
 }: { 
   text: string; 
   progress: any; 
   range: [number, number]; 
   offset: number;
+  direction: 'top' | 'left' | 'right' | 'bottom';
   className?: string;
   italic?: boolean;
   noItalic?: boolean;
+  isBackground?: boolean;
+  mouseX: any;
+  mouseY: any;
 }) {
-  const yBase = useTransform(progress, range, [offset, 0]);
-  const opacity = useTransform(progress, range, [0, 1]);
-  const blur = useTransform(progress, range, [20, 0]);
-  const scale = useTransform(progress, range, [0.8, 1]);
+  // Parallax Depth logic (Grey layer moves slower)
+  const movementMultiplier = isBackground ? 0.8 : 1.0;
+  const effectiveOffset = offset * movementMultiplier;
+
+  // Assembly Motion
+  const xBase = useTransform(progress, range, [direction === 'left' ? effectiveOffset : (direction === 'right' ? effectiveOffset : 0), 0]);
+  const yBase = useTransform(progress, range, [direction === 'top' ? effectiveOffset : (direction === 'bottom' ? effectiveOffset : 0), 0]);
   
-  // Smooth the scroll movement
+  const opacity = useTransform(progress, range, [0, 1]);
+  const blurValue = useTransform(progress, range, [20, 0]);
+  const scaleValue = useTransform(progress, range, [0.95, 1]);
+  
+  // Smooth Scroll Inertia
+  const springX = useSpring(xBase, { stiffness: 60, damping: 20 });
   const springY = useSpring(yBase, { stiffness: 60, damping: 20 });
+
+  // Mouse Depth Interaction (max 2px)
+  const mouseMoveX = useTransform(mouseX, [-0.5, 0.5], [isBackground ? 2 : -2, isBackground ? -2 : 2]);
+  const mouseMoveY = useTransform(mouseY, [-0.5, 0.5], [isBackground ? 2 : -2, isBackground ? -2 : 2]);
 
   return (
     <motion.div
       style={{ 
-        y: springY, 
+        x: springX,
+        y: springY,
         opacity, 
-        scale,
-        filter: `blur(${blur}px)`,
+        scale: scaleValue,
+        filter: useTransform(blurValue, (v) => `blur(${v}px)`),
       }}
       className={cn(
         "text-6xl md:text-[9rem] lg:text-[11rem] font-headline font-black tracking-tighter text-white leading-[0.85] select-none",
@@ -252,13 +324,15 @@ function ManifestoLine({
       )}
     >
       <motion.span
+        style={{
+          x: mouseMoveX,
+          y: mouseMoveY,
+        }}
         animate={{ 
-          y: [0, -15, 0],
-          x: [0, 5, 0],
-          rotate: [0, 1, 0]
+          scale: [1, 1.003, 1],
         }}
         transition={{ 
-          duration: 7 + Math.random() * 3, 
+          duration: 12, 
           repeat: Infinity, 
           ease: "easeInOut" 
         }}
