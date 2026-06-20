@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 
 const STATEMENTS = [
   "Building Products.",
@@ -11,43 +11,42 @@ const STATEMENTS = [
 
 export function Preloader({ onComplete }: { onComplete: () => void }) {
   const [scene, setScene] = useState(0); 
+  const [mounted, setIsMounted] = useState(false);
   
-  // Motion values for environmental reactions
-  const lightIntensity = useMotionValue(0.03);
+  const lightIntensity = useMotionValue(0.04);
   const ambientScale = useMotionValue(1);
-  const smoothIntensity = useSpring(lightIntensity, { stiffness: 20, damping: 30 });
-  const smoothScale = useSpring(ambientScale, { stiffness: 20, damping: 30 });
+  const smoothIntensity = useSpring(lightIntensity, { stiffness: 15, damping: 40 });
+  const smoothScale = useSpring(ambientScale, { stiffness: 15, damping: 40 });
 
   useEffect(() => {
+    setIsMounted(true);
     /**
-     * PRECISION CINEMATIC TIMELINE (7-9s active narrative + emergence)
-     * Scene 0: 0s - 0.8s (Silence/Anticipation)
-     * Scene 1: 0.8s - 3.1s (Building Products. - 1.5s visible + 0.8s transition)
-     * Scene 2: 3.1s - 5.4s (Designing Systems. - 1.5s visible + 0.8s transition)
-     * Scene 3: 5.4s - 7.7s (Creating Ecosystems. - 1.5s visible + 0.8s transition)
-     * Scene 4: 7.7s - 10.2s (Name Reveal - 2.5s emotional peak)
-     * Final: 11s (Seamless Handoff)
+     * PRECISION CINEMATIC TIMELINE (11s Complete Sequence)
+     * Scene 0: Silence (0.8s)
+     * Scene 1-3: Statements (1.5s visible + 0.8s transition each)
+     * Scene 4: Name Reveal (2.5s emotional hold)
+     * Final Handoff: 11s
      */
     const t0 = setTimeout(() => {
       setScene(1);
-      lightIntensity.set(0.06);
+      lightIntensity.set(0.07);
       ambientScale.set(1.02);
     }, 800);
 
     const t1 = setTimeout(() => {
       setScene(2);
-      lightIntensity.set(0.07);
+      lightIntensity.set(0.08);
     }, 3100);
 
     const t2 = setTimeout(() => {
       setScene(3);
-      lightIntensity.set(0.06);
+      lightIntensity.set(0.07);
     }, 5400);
 
     const t3 = setTimeout(() => {
       setScene(4);
-      lightIntensity.set(0.1);
-      ambientScale.set(1.05);
+      lightIntensity.set(0.12);
+      ambientScale.set(1.06);
     }, 7700);
 
     const t4 = setTimeout(onComplete, 11000);
@@ -60,9 +59,9 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
   const textVariants = {
     initial: { 
       opacity: 0, 
-      y: 10, 
+      y: 15, 
       filter: "blur(20px)",
-      scale: 1.02
+      scale: 1.05
     },
     animate: { 
       opacity: 1, 
@@ -70,63 +69,59 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       filter: "blur(0px)",
       scale: 1,
       transition: { 
-        duration: 1.6, 
+        duration: 1.8, 
         ease: [0.16, 1, 0.3, 1] 
       }
     },
     exit: { 
       opacity: 0, 
-      y: -5, 
+      y: -8, 
       filter: "blur(15px)",
       transition: { 
-        duration: 0.8, 
+        duration: 1, 
         ease: [0.16, 1, 0.3, 1] 
       }
     }
   };
+
+  if (!mounted) return null;
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ 
         opacity: 0, 
-        scale: 1.08, 
-        filter: "blur(60px)",
-        transition: { duration: 1.8, ease: [0.16, 1, 0.3, 1] } 
+        scale: 1.1, 
+        filter: "blur(80px)",
+        transition: { duration: 2.2, ease: [0.16, 1, 0.3, 1] } 
       }}
-      className="fixed inset-0 z-[9999] bg-transparent flex items-center justify-center overflow-hidden"
+      className="fixed inset-0 z-[9999] bg-[#050505] flex items-center justify-center overflow-hidden"
     >
-      {/* LAYER 1: Deep Luxury Gradient */}
-      <div className="absolute inset-0 bg-[#050505] z-[-2]" />
-      
-      {/* LAYER 2: Volumetric Light - Deep Drift */}
+      {/* LAYER 1: Deep Atmospheric Depth */}
       <motion.div 
         style={{ 
           opacity: smoothIntensity,
           scale: smoothScale,
         }}
         animate={{ 
-          x: [-30, 30, -30],
-          y: [-20, 20, -20],
+          x: [-40, 40, -40],
+          y: [-30, 30, -30],
         }}
-        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-[-20%] bg-[radial-gradient(circle_at_30%_30%,rgba(83,104,120,0.15),transparent_60%)] z-[-1]" 
+        transition={{ duration: 40, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-[-30%] bg-[radial-gradient(circle_at_30%_30%,rgba(83,104,120,0.18),transparent_70%)] z-[-1]" 
       />
 
-      {/* LAYER 3: Atmospheric Fog / Soft Volumetric Shifts */}
       <motion.div 
         animate={{ 
-          opacity: [0.02, 0.04, 0.02],
-          rotate: [0, 5, 0],
+          opacity: [0.02, 0.05, 0.02],
+          rotate: [0, 8, 0],
         }}
-        transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-[-50%] bg-[conic-gradient(from_0deg,transparent,rgba(234,224,200,0.02),transparent)] blur-[100px] z-[-1]"
+        transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-[-60%] bg-[conic-gradient(from_0deg,transparent,rgba(234,224,200,0.03),transparent)] blur-[120px] z-[-1]"
       />
 
-      {/* LAYER 4: Grain Overlay */}
-      <div className="fixed inset-0 grain-overlay z-[1] opacity-[0.03] pointer-events-none" />
+      <div className="fixed inset-0 grain-overlay z-[1] opacity-[0.025] pointer-events-none" />
 
-      {/* SEQUENTIAL NARRATIVE */}
       <div className="relative z-10 w-full text-center px-6">
         <AnimatePresence mode="wait">
           {(scene >= 1 && scene <= 3) && (
@@ -138,15 +133,14 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
               exit="exit"
               className="flex flex-col items-center justify-center"
             >
-              <h2 className="text-3xl md:text-5xl lg:text-6xl font-headline font-black tracking-tighter text-white/90 uppercase italic leading-none select-none drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+              <h2 className="text-4xl md:text-6xl lg:text-7xl font-headline font-black tracking-tighter text-white/90 uppercase italic leading-none select-none drop-shadow-[0_0_40px_rgba(255,255,255,0.1)]">
                 {STATEMENTS[scene - 1]}
               </h2>
-              {/* Confident Pause Indicator */}
               <motion.div 
                 initial={{ width: 0 }}
-                animate={{ width: 60 }}
-                transition={{ delay: 0.8, duration: 2 }}
-                className="h-px bg-primary/10 mt-12"
+                animate={{ width: 80 }}
+                transition={{ delay: 1, duration: 2.2 }}
+                className="h-[1px] bg-primary/20 mt-16"
               />
             </motion.div>
           )}
@@ -154,36 +148,35 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
           {scene === 4 && (
             <motion.div
               key="final-reveal"
-              initial={{ opacity: 0, filter: "blur(30px)", scale: 0.98 }}
+              initial={{ opacity: 0, filter: "blur(40px)", scale: 0.97 }}
               animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
-              transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 3, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
             >
-              <div className="space-y-16">
+              <div className="space-y-20">
                 <motion.div
-                  animate={{ y: [0, -4, 0] }}
-                  transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <h1 className="text-5xl md:text-[7rem] lg:text-[8.5rem] font-headline font-black tracking-tighter text-white uppercase relative leading-none select-none">
+                  <h1 className="text-6xl md:text-[8rem] lg:text-[10rem] font-headline font-black tracking-tighter text-white uppercase relative leading-none select-none">
                     SYED SHARFUDDIN SHUAIB
-                    {/* Atmospheric Light Sweep */}
                     <motion.div 
                       initial={{ left: "-100%", opacity: 0 }}
-                      animate={{ left: "200%", opacity: [0, 0.05, 0] }}
-                      transition={{ duration: 8, ease: "easeInOut", delay: 1 }}
-                      className="absolute top-0 bottom-0 w-full bg-gradient-to-r from-transparent via-white to-transparent skew-x-12 pointer-events-none"
+                      animate={{ left: "200%", opacity: [0, 0.08, 0] }}
+                      transition={{ duration: 10, ease: "easeInOut", delay: 1.5 }}
+                      className="absolute top-0 bottom-0 w-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 pointer-events-none"
                     />
                   </h1>
                 </motion.div>
                 
                 <motion.div 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 0.3, y: 0 }}
-                  transition={{ delay: 2, duration: 2.5 }}
-                  className="flex flex-col items-center gap-8"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 0.4, y: 0 }}
+                  transition={{ delay: 2.5, duration: 3 }}
+                  className="flex flex-col items-center gap-10"
                 >
-                  <div className="h-px w-24 bg-primary/20" />
-                  <p className="text-[10px] md:text-[12px] font-bold tracking-[1.2em] text-[#EAE0C8] uppercase select-none">
+                  <div className="h-px w-32 bg-primary/30" />
+                  <p className="text-[11px] md:text-[14px] font-bold tracking-[1.4em] text-primary/80 uppercase select-none">
                     Founder • Builder • Systems Thinker
                   </p>
                 </motion.div>
@@ -193,15 +186,14 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
         </AnimatePresence>
       </div>
 
-      {/* ARCHITECTURAL SIGNATURE */}
-      <div className="absolute bottom-16 left-12 right-12 z-20 hidden md:flex justify-between items-end opacity-10 pointer-events-none">
-         <div className="space-y-1">
-            <p className="text-[8px] font-bold tracking-[0.6em] text-white uppercase">Personal Portfolio</p>
-            <p className="text-[8px] font-bold tracking-[0.6em] text-[#536878] uppercase">Studio v2.5</p>
+      <div className="absolute bottom-20 left-16 right-16 z-20 hidden md:flex justify-between items-end opacity-20 pointer-events-none">
+         <div className="space-y-2">
+            <p className="text-[9px] font-bold tracking-[0.8em] text-white uppercase">Personal Portfolio</p>
+            <p className="text-[9px] font-bold tracking-[0.8em] text-primary/40 uppercase">Studio v3.0 Institutional</p>
          </div>
-         <div className="flex items-center gap-12">
-            <div className="w-16 h-px bg-white/10" />
-            <span className="text-[9px] font-mono tracking-[0.5em] text-white">EST. 2025</span>
+         <div className="flex items-center gap-16">
+            <div className="w-24 h-px bg-white/10" />
+            <span className="text-[10px] font-mono tracking-[0.6em] text-white">EST. 2025</span>
          </div>
       </div>
     </motion.div>

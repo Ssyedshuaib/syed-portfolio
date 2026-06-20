@@ -34,7 +34,11 @@ export function Navbar() {
     open: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: 0.1 + i * 0.05, duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+      transition: { 
+        delay: 0.1 + i * 0.05, 
+        duration: 0.8, 
+        ease: [0.16, 1, 0.3, 1] 
+      },
     }),
   };
 
@@ -43,72 +47,68 @@ export function Navbar() {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-[100] transition-all duration-1000 flex justify-center px-4",
-          scrolled ? "py-4 md:py-5" : "py-6 md:py-10"
+          scrolled ? "py-6" : "py-10"
         )}
       >
         <motion.div
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
           className={cn(
-            "flex items-center justify-between lg:justify-start gap-4 md:gap-12 px-6 md:px-10 py-3 md:py-4 rounded-full transition-all duration-700 border w-full max-w-7xl lg:w-auto",
+            "flex items-center justify-between lg:justify-start gap-4 md:gap-12 px-8 py-4 rounded-full transition-all duration-1000 border w-full max-w-7xl lg:w-auto",
             scrolled 
-              ? "bg-[#0F1317]/80 backdrop-blur-[30px] border-[#EAE0C8]/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] lg:scale-95" 
-              : "bg-[#0F1317]/20 backdrop-blur-[10px] border-white/5 lg:bg-transparent lg:border-transparent lg:backdrop-blur-none"
+              ? "bg-[#0F1317]/70 backdrop-blur-[40px] border-[#EAE0C8]/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] lg:scale-95" 
+              : "bg-transparent border-transparent"
           )}
         >
           <Link 
             href="/" 
-            className="flex items-center gap-4 md:gap-5 group cursor-pointer" 
+            className="flex items-center gap-5 group" 
             onClick={() => setMobileMenuOpen(false)}
-            aria-label="Back to Homepage"
           >
             <motion.div 
-              whileHover={{ scale: 1.2, boxShadow: "0 0 25px rgba(234,224,200,0.8)" }}
-              className="w-2 md:w-2.5 h-2 md:h-2.5 rounded-full bg-[#EAE0C8] shadow-[0_0_15px_rgba(234,224,200,0.4)]" 
+              whileHover={{ scale: 1.2, boxShadow: "0 0 30px rgba(234,224,200,0.6)" }}
+              className="w-2.5 h-2.5 rounded-full bg-[#EAE0C8]" 
             />
-            <span className="text-[#FFFFFF] font-headline font-bold text-[11px] md:text-[13px] tracking-[0.5em] md:tracking-[0.65em] uppercase group-hover:text-[#EAE0C8] transition-colors">
+            <span className="text-white font-headline font-bold text-[12px] tracking-[0.6em] uppercase group-hover:text-primary transition-colors duration-700">
               SYED
             </span>
           </Link>
           
           <div className="h-4 w-px bg-white/5 hidden lg:block" />
 
-          <nav className="hidden lg:flex items-center gap-10 text-[11.5px] font-bold tracking-[0.55em] text-[#EAE0C8]/70 uppercase" aria-label="Main Navigation">
+          <nav className="hidden lg:flex items-center gap-10 text-[11px] font-bold tracking-[0.5em] text-[#EAE0C8]/60 uppercase">
             {NAV_LINKS.map((link) => (
-              <motion.div key={link.label} whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 400, damping: 25 }}>
+              <motion.div key={link.label} whileHover={{ y: -1 }}>
                 <Link 
                   href={link.href} 
-                  className="hover:text-white transition-all relative group"
+                  className="hover:text-white transition-all relative group py-2"
                 >
                   {link.label}
-                  <span className="absolute -bottom-2 left-0 w-0 h-[1.5px] bg-[#536878] transition-all duration-500 ease-premium group-hover:w-full" />
+                  <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary/40 transition-all duration-700 ease-premium group-hover:w-full" />
                 </Link>
               </motion.div>
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 ml-auto lg:ml-8">
             <motion.div
-              whileHover={{ scale: 1.05, y: -1 }}
+              whileHover={{ y: -1 }}
               whileTap={{ scale: 0.98 }}
               className="hidden md:block"
             >
               <Link 
                 href="#contact"
-                className="bg-[#EAE0C8] text-[#0F1317] px-6 md:px-8 py-2 md:py-2.5 rounded-full text-[9px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] uppercase hover:bg-[#FFFFFF] hover:shadow-[0_15px_30px_rgba(234,224,200,0.3)] transition-all shadow-[0_10px_30px_rgba(234,224,200,0.15)]"
-                aria-label="Navigate to Contact Section"
+                className="bg-[#EAE0C8] text-[#0F1317] px-8 py-2.5 rounded-full text-[10px] font-bold tracking-[0.4em] uppercase hover:bg-white transition-all shadow-[0_10px_30px_rgba(234,224,200,0.1)]"
               >
                 Contact
               </Link>
             </motion.div>
 
-            {/* Mobile Menu Toggle */}
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-white hover:text-primary transition-colors focus:outline-none"
-              aria-expanded={mobileMenuOpen}
-              aria-label={mobileMenuOpen ? "Close Menu" : "Open Menu"}
+              className="lg:hidden p-2 text-white/70 hover:text-white transition-colors"
+              aria-label="Toggle Menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -116,16 +116,15 @@ export function Navbar() {
         </motion.div>
       </header>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[90] bg-[#050505]/95 backdrop-blur-2xl lg:hidden flex flex-col items-center justify-center p-8"
+            className="fixed inset-0 z-[90] bg-[#050505]/95 backdrop-blur-[50px] lg:hidden flex flex-col items-center justify-center p-8"
           >
-            <nav className="space-y-8 text-center" aria-label="Mobile Navigation">
+            <nav className="space-y-10 text-center">
               {[...NAV_LINKS, { label: "Contact", href: "#contact" }].map((link, i) => (
                 <motion.div
                   key={link.label}
@@ -138,22 +137,16 @@ export function Navbar() {
                   <Link 
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="text-4xl md:text-5xl font-headline font-black text-white hover:text-primary transition-colors tracking-tighter"
+                    className="text-5xl font-headline font-black text-white hover:text-primary transition-colors tracking-tighter italic"
                   >
                     {link.label}
                   </Link>
                 </motion.div>
               ))}
             </nav>
-
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 0.2, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="absolute bottom-12 text-[10px] font-bold tracking-[0.5em] text-[#EAE0C8] uppercase"
-            >
+            <div className="absolute bottom-16 text-[9px] font-bold tracking-[0.8em] text-white/20 uppercase">
               Axora Venture Studio
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

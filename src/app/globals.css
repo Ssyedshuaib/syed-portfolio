@@ -4,136 +4,64 @@
 
 @layer base {
   :root {
-    --background: 210 21% 7%;
+    --background: 210 21% 5%; /* Slightly deeper background for more depth */
     --foreground: 42 33% 85%;
-    --card: 208 18% 40% / 0.10;
+    --card: 208 18% 40% / 0.08;
     --card-foreground: 0 0% 100%;
-    --popover: 210 21% 7%;
+    --popover: 210 21% 5%;
     --popover-foreground: 42 33% 85%;
     --primary: 42 33% 85%;
     --primary-foreground: 210 21% 7%;
     --secondary: 208 18% 40%;
     --secondary-foreground: 42 33% 85%;
     --muted: 208 18% 40%;
-    --muted-foreground: 42 10% 70%;
+    --muted-foreground: 42 10% 65%;
     --accent: 208 18% 40% / 0.12;
     --accent-foreground: 42 33% 85%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 38% 97%;
-    --border: 42 33% 85% / 0.08;
-    --input: 208 18% 40% / 0.2;
+    --border: 42 33% 85% / 0.06;
+    --input: 208 18% 40% / 0.15;
     --ring: 208 18% 40%;
-    --radius: 1.5rem;
+    --radius: 2rem; /* Consistent large border radius for a handcrafted feel */
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border selection:bg-primary/20 selection:text-primary;
   }
   body {
-    @apply bg-background text-foreground font-body antialiased selection:bg-primary/20 selection:text-primary;
+    @apply bg-background text-foreground font-body antialiased;
     scroll-behavior: smooth;
-    background: linear-gradient(180deg, #0F1317 0%, #161C21 100%);
+    background: radial-gradient(circle at 50% -20%, #161C21 0%, #0F1317 100%);
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-headline tracking-tight;
+    @apply font-headline tracking-tighter;
   }
 }
 
 .blueprint-grid {
   background-image: 
-    linear-gradient(rgba(234, 224, 200, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(234, 224, 200, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
+    linear-gradient(rgba(234, 224, 200, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(234, 224, 200, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
 }
 
 .glass {
-  @apply bg-[#161C21]/60 backdrop-blur-[30px] border border-[#EAE0C8]/[0.08] transition-all duration-700;
+  @apply bg-[#161C21]/40 backdrop-blur-[35px] border border-[#EAE0C8]/[0.05] transition-all duration-1000;
 }
 
 .premium-glow {
-  background: radial-gradient(circle at 50% 50%, rgba(83, 104, 120, 0.12) 0%, transparent 80%);
+  background: radial-gradient(circle at 50% 50%, rgba(83, 104, 120, 0.1) 0%, transparent 80%);
 }
 
 .grain-overlay {
   background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  filter: contrast(150%) brightness(120%) invert(0);
-  opacity: 0.02;
+  filter: contrast(160%) brightness(120%) invert(0);
+  opacity: 0.015;
   pointer-events: none;
 }
-
-.reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal-on-scroll.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.orbit-animation {
-  animation: orbit var(--duration, 20s) linear infinite;
-  animation-play-state: var(--play-state, running);
-}
-
-@keyframes orbit {
-  from { transform: rotate(0deg) translateX(var(--radius, 150px)) rotate(0deg); }
-  to { transform: rotate(360deg) translateX(var(--radius, 150px)) rotate(-360deg); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-15px) rotate(0.5deg); }
-}
-
-.animate-float {
-  animation: float 12s ease-in-out infinite;
-}
-
-/* Ambient Breathing Animations */
-@keyframes breathing {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.002); }
-}
-
-.animate-breathing {
-  animation: breathing 15s ease-in-out infinite;
-}
-
-@keyframes slow-opacity-pulse {
-  0%, 100% { opacity: 0.015; }
-  50% { opacity: 0.04; }
-}
-
-.animate-opacity-pulse {
-  animation: slow-opacity-pulse 8s ease-in-out infinite;
-}
-
-.dust-particle {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: #EAE0C8;
-  border-radius: 50%;
-  opacity: 0.05;
-  pointer-events: none;
-  animation: drift var(--duration) linear infinite;
-}
-
-@keyframes drift {
-  from { transform: translateY(0) translateX(0); opacity: 0; }
-  20% { opacity: 0.1; }
-  80% { opacity: 0.1; }
-  to { transform: translateY(-100vh) translateX(50px); opacity: 0; }
-}
-
-.stagger-1 { transition-delay: 150ms; }
-.stagger-2 { transition-delay: 300ms; }
-.stagger-3 { transition-delay: 450ms; }
-.stagger-4 { transition-delay: 600ms; }
 
 /* Custom Premium Easing */
 .ease-premium {
