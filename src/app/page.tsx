@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar } from "@/components/portfolio/navbar";
 import { Hero } from "@/components/portfolio/hero";
 import { Philosophy } from "@/components/portfolio/philosophy";
-import { About } from "@/components/portfolio/about";
+import { WhoIAm } from "@/components/portfolio/who-i-am";
 import { FounderManifesto } from "@/components/portfolio/founder-manifesto";
 import { WhatImBuilding } from "@/components/portfolio/what-im-building";
 import { Journey } from "@/components/portfolio/journey";
@@ -23,10 +23,10 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Philosophy />
-      <About />
       <FounderManifesto />
       <WhatImBuilding />
       <Journey />
+      <WhoIAm />
       <AxoraEcosystem />
       <ProductMetrics />
       <ProductEcosystem />
