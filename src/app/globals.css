@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 212 29% 10%;
-    --foreground: 20 25% 94%;
-    --card: 213 30% 20%;
-    --card-foreground: 20 25% 94%;
-    --popover: 212 29% 10%;
-    --popover-foreground: 20 25% 94%;
-    --primary: 206 33% 84%;
-    --primary-foreground: 212 29% 10%;
-    --secondary: 198 24% 45%;
-    --secondary-foreground: 20 25% 94%;
-    --muted: 213 20% 45%;
-    --muted-foreground: 213 15% 65%;
-    --accent: 213 30% 32%;
-    --accent-foreground: 20 25% 94%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 351 10% 69% / 0.08;
+    --card-foreground: 28 47% 93%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 28 47% 93%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 13 14% 50%;
+    --secondary-foreground: 28 47% 93%;
+    --muted: 351 10% 69%;
+    --muted-foreground: 351 5% 65%;
+    --accent: 13 14% 50% / 0.12;
+    --accent-foreground: 28 47% 93%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 38% 97%;
-    --border: 206 33% 84% / 0.12;
-    --input: 213 30% 32%;
-    --ring: 206 33% 84%;
+    --border: 28 47% 93% / 0.08;
+    --input: 13 14% 50% / 0.2;
+    --ring: 13 14% 50%;
     --radius: 1.5rem;
   }
 }
@@ -32,9 +32,9 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body antialiased selection:bg-primary/20 selection:text-primary;
+    @apply bg-background text-foreground font-body antialiased selection:bg-secondary/30 selection:text-primary;
     scroll-behavior: smooth;
-    background: radial-gradient(circle at top right, #3A506B 0%, #0F1724 50%, #050816 100%);
+    background: #000000;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-headline tracking-tight;
@@ -42,24 +42,24 @@
 }
 
 .glass {
-  @apply bg-[#3A506B]/30 backdrop-blur-[20px] border border-white/[0.08] transition-all duration-700;
+  @apply bg-[#111111]/60 backdrop-blur-[30px] border border-white/[0.04] transition-all duration-700;
 }
 
 .premium-glow {
-  background: radial-gradient(circle at 50% 50%, rgba(86, 124, 141, 0.15) 0%, transparent 80%);
+  background: radial-gradient(circle at 50% 50%, rgba(145, 118, 110, 0.12) 0%, transparent 80%);
 }
 
 .grain-overlay {
   background-image: url("https://grainy-gradients.vercel.app/noise.svg");
   filter: contrast(150%) brightness(120%) invert(0);
-  opacity: 0.03;
+  opacity: 0.02;
   pointer-events: none;
 }
 
 .reveal-on-scroll {
   opacity: 0;
   transform: translateY(30px);
-  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-on-scroll.visible {
@@ -83,21 +83,28 @@
 }
 
 .animate-float {
-  animation: float 10s ease-in-out infinite;
+  animation: float 12s ease-in-out infinite;
 }
 
-.text-reveal-mask {
-  mask-image: linear-gradient(to right, black, black 50%, transparent 50%);
-  mask-size: 200% 100%;
-  animation: text-reveal-anim 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.dust-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: #F6ECE3;
+  border-radius: 50%;
+  opacity: 0.1;
+  pointer-events: none;
+  animation: drift var(--duration) linear infinite;
 }
 
-@keyframes text-reveal-anim {
-  from { mask-position: 100% 0; }
-  to { mask-position: 0% 0; }
+@keyframes drift {
+  from { transform: translateY(0) translateX(0); opacity: 0; }
+  20% { opacity: 0.2; }
+  80% { opacity: 0.2; }
+  to { transform: translateY(-100vh) translateX(50px); opacity: 0; }
 }
 
-.stagger-1 { transition-delay: 100ms; }
-.stagger-2 { transition-delay: 200ms; }
-.stagger-3 { transition-delay: 300ms; }
-.stagger-4 { transition-delay: 400ms; }
+.stagger-1 { transition-delay: 150ms; }
+.stagger-2 { transition-delay: 300ms; }
+.stagger-3 { transition-delay: 450ms; }
+.stagger-4 { transition-delay: 600ms; }
