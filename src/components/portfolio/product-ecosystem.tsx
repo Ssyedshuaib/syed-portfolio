@@ -1,9 +1,11 @@
+
 "use client";
 
 import React, { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { ExternalLink, Layers, MapPin, Zap, GraduationCap, Globe, Layout } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const PRODUCTS = [
   {
@@ -154,3 +156,4 @@ export function ProductEcosystem() {
     </section>
   );
 }
+
