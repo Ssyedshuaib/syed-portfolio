@@ -1,7 +1,8 @@
+
 import React from "react";
 import { Navbar } from "@/components/portfolio/navbar";
 import { Hero } from "@/components/portfolio/hero";
-import { Philosophy } from "@/components/portfolio/philosophy";
+import { FounderPhilosophy } from "@/components/portfolio/founder-philosophy";
 import { FounderProfile } from "@/components/portfolio/founder-profile";
 import { AxoraProducts } from "@/components/portfolio/axora-products";
 import { FounderManifesto } from "@/components/portfolio/founder-manifesto";
@@ -28,7 +29,7 @@ export default function Home() {
       <Hero />
       <FounderProfile />
       <AxoraProducts />
-      <Philosophy />
+      <FounderPhilosophy />
       <FounderManifesto />
       <WhatImBuilding />
       <Journey />
