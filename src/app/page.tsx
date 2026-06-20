@@ -43,7 +43,7 @@ export default function Home() {
 
       <motion.main 
         className="min-h-screen relative overflow-x-hidden"
-        initial={{ opacity: 0.05 }} // Subconscious hero preview during Scene 4
+        initial={{ opacity: 0.05 }} // Subconscious hero preview during sequence
         animate={{ 
           opacity: isLoading ? 0.05 : 1,
           scale: isLoading ? 0.99 : 1,
