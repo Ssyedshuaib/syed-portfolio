@@ -18,25 +18,29 @@ export function OrbitalSystem() {
   const [hoveredNode, setHoveredNode] = useState<{label: string, desc: string} | null>(null);
 
   return (
-    <div className="relative w-full aspect-square max-w-[420px] flex items-center justify-center perspective-[1000px] opacity-60 hover:opacity-100 transition-opacity duration-1000">
+    <div className="relative w-full aspect-square max-w-[420px] flex items-center justify-center perspective-[1000px] opacity-70 hover:opacity-100 transition-opacity duration-1000">
       {/* Central Node */}
       <motion.div 
         whileHover={{ scale: 1.02 }}
+        animate={{ scale: [1, 1.02, 1] }}
+        transition={{ 
+          scale: { duration: 8, repeat: Infinity, ease: "easeInOut" }
+        }}
         className="relative z-20 group"
       >
-        <div className="w-24 h-24 rounded-full glass flex items-center justify-center border-white/5 shadow-[0_0_60px_rgba(83,104,120,0.05)] group-hover:shadow-[0_0_80px_rgba(234,224,200,0.1)] transition-all duration-1000">
+        <div className="w-24 h-24 rounded-full glass flex items-center justify-center border-white/10 shadow-[0_0_60px_rgba(83,104,120,0.1)] group-hover:shadow-[0_0_80px_rgba(234,224,200,0.2)] transition-all duration-1000">
           <div className="text-center">
             <span className="text-white font-headline font-bold text-base tracking-[0.4em] uppercase block">SYED</span>
             <motion.div 
               animate={{ width: hoveredNode ? "2rem" : "1.2rem" }}
-              className="h-px bg-primary/30 mx-auto mt-2 rounded-full" 
+              className="h-px bg-primary/40 mx-auto mt-2 rounded-full shadow-[0_0_10px_rgba(234,224,200,0.5)]" 
             />
           </div>
         </div>
         <motion.div 
-          animate={{ scale: [1, 1.1, 1], opacity: [0.03, 0.08, 0.03] }}
+          animate={{ scale: [1, 1.15, 1], opacity: [0.05, 0.12, 0.05] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute inset-0 bg-primary/10 blur-[50px] rounded-full -z-10" 
+          className="absolute inset-0 bg-primary/20 blur-[50px] rounded-full -z-10" 
         />
       </motion.div>
 
@@ -44,11 +48,11 @@ export function OrbitalSystem() {
       {[100, 135, 155, 170, 210, 250].map((r) => (
         <div
           key={r}
-          className="absolute rounded-full border border-[#EAE0C8]/05 transition-colors duration-1000"
+          className="absolute rounded-full border border-[#EAE0C8]/10 transition-colors duration-1000"
           style={{ 
             width: r * 2, 
             height: r * 2,
-            borderColor: hoveredNode ? 'rgba(234, 224, 200, 0.08)' : 'rgba(234, 224, 200, 0.03)'
+            borderColor: hoveredNode ? 'rgba(234, 224, 200, 0.12)' : 'rgba(234, 224, 200, 0.06)'
           }}
         />
       ))}
@@ -72,8 +76,8 @@ export function OrbitalSystem() {
             className={cn(
               "px-4 py-1.5 glass rounded-full text-[8px] font-bold tracking-[0.3em] uppercase transition-all duration-700 cursor-default",
               hoveredNode?.label === orbit.label 
-                ? "text-white border-primary/30 bg-primary/[0.08] shadow-[0_0_20px_rgba(234,224,200,0.15)]" 
-                : "text-[#EAE0C8]/30 hover:text-white"
+                ? "text-white border-primary/40 bg-primary/[0.12] shadow-[0_0_20px_rgba(234,224,200,0.2)]" 
+                : "text-[#EAE0C8]/40 hover:text-white"
             )}
           >
             {orbit.label}
@@ -89,7 +93,7 @@ export function OrbitalSystem() {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: 10, filter: "blur(10px)" }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute bottom-[-10%] glass p-6 rounded-[2rem] border-[#EAE0C8]/10 w-64 text-center shadow-2xl z-50"
+            className="absolute bottom-[-15%] glass p-6 rounded-[2rem] border-[#EAE0C8]/10 w-64 text-center shadow-2xl z-50"
           >
             <p className="text-primary font-bold tracking-[0.4em] uppercase text-[9px] mb-3">{hoveredNode.label}</p>
             <p className="text-[#EAE0C8]/60 text-xs font-light leading-relaxed">{hoveredNode.desc}</p>
