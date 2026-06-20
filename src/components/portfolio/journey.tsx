@@ -4,35 +4,41 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 const CHAPTERS = [
   {
     id: "01",
     year: "2024",
+    side: "left",
     title: "Learning To Build",
-    description: "Started exploring software engineering, systems thinking, and product creation. The goal was understanding how technology creates value.",
-    details: "Focus: Core Logic & System Foundations"
+    description: "Started exploring software engineering, systems thinking, and product architecture. The goal was understanding how technology creates value.",
+    details: "Foundational research & core logic development.",
   },
   {
     id: "02",
     year: "2025",
+    side: "right",
     title: "Building The Foundation",
-    description: "The first products, experiments, and the beginning of Axora. Moving from learning to building.",
-    details: "Focus: Rapid Prototyping & Development"
+    description: "The first experiments, prototypes, and the beginning of Axora. Moving from theory to tangible product development.",
+    details: "Rapid prototyping & venture studio conception.",
   },
   {
     id: "03",
     year: "2026",
+    side: "left",
     title: "Creating Ecosystems",
-    description: "Building interconnected digital ecosystems through DevNexus, Reverie, educational platforms, and future ventures.",
-    details: "Focus: Ecosystem Design & Strategy"
+    description: "Building DevNexus, Reverie, and educational platforms as interconnected digital experiences that empower users.",
+    details: "Multi-platform integration & ecosystem strategy.",
+    chips: ["DevNexus", "Reverie", "Axora Studio"]
   },
   {
     id: "04",
-    year: "FUTURE",
+    year: "∞",
+    side: "right",
     title: "The Long-Term Vision",
-    description: "Building a venture studio focused on education, memory preservation, productivity, and future technology experiences.",
-    details: "Focus: Scalability & Long-term Impact"
+    description: "Building meaningful technology ecosystems that create long-term value, outliving trends and solving real human problems.",
+    details: "Sustainable innovation & global impact.",
   }
 ];
 
@@ -53,49 +59,44 @@ export function Journey() {
     <section 
       id="journey" 
       ref={containerRef}
-      className="relative bg-[#050505] py-64 px-6 overflow-hidden"
+      className="relative bg-[#050505] py-80 px-6 overflow-hidden"
     >
       {/* Background Architectural Elements */}
-      <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
+      <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-24">
-        
-        {/* LEFT COLUMN: Sticky Narrative */}
-        <div className="lg:w-1/3">
-          <div className="lg:sticky lg:top-48 space-y-12">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2 }}
-              className="space-y-8"
-            >
-              <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass border-white/5">
-                <p className="text-[10px] font-bold tracking-[0.6em] text-[#536878] uppercase">The Journey</p>
-              </div>
-              <h2 className="text-5xl md:text-7xl font-headline font-black tracking-tighter text-white leading-[0.9]">
-                Every Product <br />
-                Started As A <br />
-                <span className="text-[#EAE0C8] italic font-medium">Problem Worth Solving.</span>
-              </h2>
-              <p className="text-lg text-[#EAE0C8]/40 font-light leading-relaxed max-w-sm">
-                The story behind the evolution of Axora and the pursuit of building systems that outlive trends.
-              </p>
-            </motion.div>
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center space-y-8 mb-48"
+        >
+          <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass border-white/5">
+            <p className="text-[10px] font-bold tracking-[0.6em] text-primary/40 uppercase">The Journey</p>
           </div>
-        </div>
+          <h2 className="text-6xl md:text-9xl font-headline font-black tracking-tighter text-white leading-none">
+            From Learning<br />
+            To Building<br />
+            <span className="text-[#EAE0C8] italic font-medium">Ecosystems.</span>
+          </h2>
+          <p className="text-xl md:text-2xl text-[#EAE0C8]/40 font-light leading-relaxed max-w-2xl mx-auto">
+            The evolution of Axora from curiosity and learning to building interconnected digital products and long-term technology systems.
+          </p>
+        </motion.div>
 
-        {/* RIGHT COLUMN: Scrolling Timeline */}
-        <div className="lg:w-2/3 relative">
-          {/* Vertical Timeline Path */}
-          <div className="absolute left-0 md:left-12 top-0 bottom-0 w-px bg-white/5">
+        {/* Timeline Layout */}
+        <div className="relative">
+          {/* Central Vertical Line */}
+          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-white/5 -translate-x-1/2 hidden md:block">
             <motion.div 
               style={{ scaleY: pathLength }}
-              className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary via-primary/50 to-transparent origin-top shadow-[0_0_15px_rgba(234,224,200,0.3)]"
+              className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary via-primary/50 to-transparent origin-top shadow-[0_0_20px_rgba(234,224,200,0.3)]"
             />
           </div>
 
-          <div className="space-y-64 pl-12 md:pl-32">
+          {/* Chapters */}
+          <div className="space-y-48 md:space-y-96">
             {CHAPTERS.map((chapter, idx) => (
               <TimelineChapter key={chapter.id} chapter={chapter} idx={idx} />
             ))}
@@ -107,55 +108,100 @@ export function Journey() {
 }
 
 function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 80%", "end 20%"]
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.1, 1, 1, 0.1]);
-  const y = useTransform(scrollYProgress, [0, 0.5, 1], [40, 0, -40]);
-
+  const isLeft = chapter.side === "left";
+  
   return (
     <motion.div 
-      ref={ref}
-      style={{ opacity, y }}
-      className="relative group"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10%" }}
+      transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+      className={cn(
+        "relative flex flex-col md:flex-row items-center gap-16 md:gap-32",
+        isLeft ? "md:flex-row" : "md:flex-row-reverse"
+      )}
     >
-      {/* Giant Background Year Number */}
-      <div className="absolute -top-12 -left-20 md:-left-40 pointer-events-none select-none overflow-hidden h-32 w-full">
-        <span className="text-[12rem] font-headline font-black text-white/[0.02] tracking-tighter block transition-colors duration-1000 group-hover:text-primary/[0.04]">
+      {/* Background Year */}
+      <div className={cn(
+        "absolute -top-24 md:-top-32 pointer-events-none select-none z-0",
+        isLeft ? "left-0 md:-left-20" : "right-0 md:-right-20"
+      )}>
+        <span className="text-[12rem] md:text-[22rem] font-headline font-black text-white/[0.02] tracking-tighter block">
           {chapter.year}
         </span>
       </div>
 
-      <div className="space-y-10 relative z-10">
-        <div className="space-y-6">
-          <div className="flex items-center gap-6">
-            <span className="text-[11px] font-mono font-bold tracking-[0.4em] text-primary/40">{chapter.id}</span>
-            <div className="h-px w-12 bg-primary/10 group-hover:w-24 transition-all duration-1000" />
-            <span className="text-[10px] font-bold tracking-[0.5em] text-white/20 uppercase group-hover:text-primary/60 transition-colors">
-              Timeline Chapter
+      {/* Content Area */}
+      <div className={cn(
+        "flex-1 w-full relative z-10",
+        isLeft ? "md:text-right" : "md:text-left"
+      )}>
+        <div className={cn(
+          "space-y-8 max-w-xl",
+          isLeft ? "md:ml-auto" : "md:mr-auto"
+        )}>
+          <div className={cn(
+            "flex items-center gap-6",
+            isLeft ? "md:flex-row-reverse" : "md:flex-row"
+          )}>
+            <span className="text-[14px] font-mono font-bold tracking-[0.4em] text-primary/30">{chapter.id}</span>
+            <div className="h-px w-12 bg-primary/10" />
+            <span className="text-[10px] font-bold tracking-[0.6em] text-primary/60 uppercase">
+              Milestone
             </span>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-4xl md:text-6xl font-headline font-bold text-white tracking-tight">
+          <div className="space-y-6">
+            <h3 className="text-5xl md:text-7xl font-headline font-black text-white tracking-tight leading-none">
               {chapter.title}
             </h3>
-            <p className="text-2xl md:text-3xl font-light text-[#EAE0C8]/60 leading-relaxed max-w-2xl italic">
+            <p className="text-2xl md:text-3xl font-light text-[#EAE0C8]/60 leading-relaxed italic">
               {chapter.description}
             </p>
           </div>
-        </div>
 
-        <div className="pt-8 border-t border-white/5 max-w-xs">
-          <p className="text-[9px] font-bold tracking-[0.4em] text-[#536878] uppercase mb-1">Active Specialization</p>
-          <p className="text-xs text-primary/40 font-medium tracking-widest uppercase">
-            {chapter.details}
-          </p>
+          {chapter.chips && (
+            <div className={cn(
+              "flex flex-wrap gap-3 pt-6",
+              isLeft ? "justify-end" : "justify-start"
+            )}>
+              {chapter.chips.map((chip: string) => (
+                <motion.div
+                  key={chip}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  className="px-6 py-2.5 rounded-full glass border-white/5 text-[10px] font-bold tracking-[0.2em] uppercase text-primary/70 hover:text-primary transition-colors cursor-default"
+                >
+                  {chip}
+                </motion.div>
+              ))}
+            </div>
+          )}
+
+          <div className="pt-10 border-t border-white/5">
+            <p className="text-[9px] font-bold tracking-[0.5em] text-primary/20 uppercase mb-2">Primary Focus</p>
+            <p className="text-sm text-primary/40 font-medium tracking-widest uppercase">
+              {chapter.details}
+            </p>
+          </div>
         </div>
       </div>
+
+      {/* Center Spacer for Node Visual */}
+      <div className="hidden md:flex relative w-12 items-center justify-center">
+        <div className="w-4 h-4 rounded-full bg-black border-2 border-primary/40 z-20 shadow-[0_0_15px_rgba(234,224,200,0.2)]" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.div 
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            className="w-12 h-12 bg-primary/5 blur-xl rounded-full"
+          />
+        </div>
+      </div>
+
+      {/* Equal Spacer for Balance */}
+      <div className="flex-1 hidden md:block" />
     </motion.div>
   );
 }
+
