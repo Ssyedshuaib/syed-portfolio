@@ -2,138 +2,235 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const PRINCIPLES = [
   {
     id: "01",
+    label: "CLARITY",
     title: "Solve Problems, Not Trends.",
     sub: "Technology changes constantly. Meaningful problems remain.",
-    body: "I focus on building solutions that stay valuable long after trends disappear.",
+    body: "I focus on building solutions that stay valuable long after trends disappear. Innovation is found in solving the friction of today, not chasing the hype of tomorrow.",
   },
   {
     id: "02",
+    label: "SYSTEMS",
     title: "Systems Over Shortcuts.",
     sub: "Strong systems create consistent outcomes.",
-    body: "Rather than chasing quick wins, I design frameworks that scale.",
+    body: "Rather than chasing quick wins or temporary hacks, I design frameworks that scale. A well-built system compounds value while a shortcut creates technical debt.",
   },
   {
     id: "03",
+    label: "VALUE",
     title: "Products Should Create Value.",
-    sub: "Impact is measured by utility.",
-    body: "Every feature should improve learning, memory, productivity, or decision making.",
+    sub: "Impact is measured by utility, not engagement metrics.",
+    body: "Every feature should improve learning, memory, productivity, or decision making. If a product doesn't fundamentally improve the human experience, it shouldn't exist.",
   },
   {
     id: "04",
+    label: "LONGEVITY",
     title: "Think Long-Term.",
     sub: "The goal is not attention. The goal is lasting impact.",
-    body: "I build with a decade-long perspective, ensuring Axora products compound value over time.",
+    body: "I build with a decade-long perspective. In a world of fast software, I choose to architect digital products that remain relevant as users grow and needs evolve.",
   },
   {
     id: "05",
+    label: "ECOSYSTEMS",
     title: "Build Ecosystems, Not Isolated Apps.",
-    sub: "Interconnectivity is a feature.",
-    body: "Every Axora product should strengthen the larger vision and connect seamlessly within the ecosystem.",
+    sub: "Interconnectivity is a feature, not an afterthought.",
+    body: "Every Axora product is designed to strengthen the larger vision. We build modular, connected systems that work together to simplify the digital life of the student.",
   },
 ];
 
 export function FounderPhilosophy() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end end"],
+  });
+
+  const progressLine = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   return (
-    <section id="philosophy" className="py-80 px-6 relative bg-background overflow-hidden">
+    <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-64">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 lg:gap-32">
-          
-          {/* Left Column: Intro */}
-          <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-48 space-y-12">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="space-y-8"
-              >
-                <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">FOUNDER PHILOSOPHY</p>
-                <h2 className="text-6xl md:text-[5.5rem] font-headline font-black tracking-tighter text-white leading-[0.9]">
-                  The Principles <br />
-                  Behind Every <br />
-                  <span className="text-primary italic font-medium">Decision.</span>
-                </h2>
-                <p className="text-xl md:text-2xl text-primary/40 font-light leading-relaxed max-w-sm">
-                  The ideas that guide how I build products, design systems, and grow Axora.
-                </p>
-              </motion.div>
-            </div>
-          </div>
 
-          {/* Right Column: Manifesto List */}
-          <div className="lg:col-span-7 space-y-64 pb-32">
-            {PRINCIPLES.map((principle, idx) => (
-              <PrincipleItem key={idx} principle={principle} />
-            ))}
-          </div>
-
+      {/* Vertical Progress Rail */}
+      <div className="hidden lg:flex fixed left-12 top-1/2 -translate-y-1/2 flex-col items-center gap-6 z-50 pointer-events-none">
+        <div className="text-[10px] font-bold tracking-[0.4em] text-primary/20 uppercase rotate-90 mb-12">Manifesto</div>
+        <div className="relative h-64 w-px bg-white/5 overflow-hidden">
+          <motion.div 
+            style={{ scaleY: progressLine }}
+            className="absolute top-0 left-0 w-full h-full bg-primary origin-top"
+          />
         </div>
+        <div className="flex flex-col gap-4 mt-12">
+          {PRINCIPLES.map((p, i) => (
+            <motion.span 
+              key={p.id}
+              style={{ opacity: useTransform(scrollYProgress, [i / 5, (i + 1) / 5], [0.2, 1]) }}
+              className="text-[10px] font-mono font-bold text-primary"
+            >
+              {p.id}
+            </motion.span>
+          ))}
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Section Intro */}
+        <div className="py-64 space-y-12 text-center lg:text-left">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            <p className="text-[10px] font-bold tracking-[1em] text-primary/40 uppercase">FOUNDER PHILOSOPHY</p>
+            <h2 className="text-6xl md:text-[8rem] font-headline font-black tracking-tighter text-white leading-none">
+              The Principles <br />
+              <span className="text-primary italic font-medium">Behind Axora.</span>
+            </h2>
+          </motion.div>
+        </div>
+
+        {/* Principles Stack */}
+        <div className="space-y-[40vh]">
+          {PRINCIPLES.map((principle, idx) => (
+            <PrincipleChapter key={idx} principle={principle} idx={idx} />
+          ))}
+        </div>
+
+        {/* Closing Statement - Full Screen Experience */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="min-h-screen flex flex-col items-center justify-center text-center space-y-24 py-64"
+        >
+          <div className="h-px w-24 bg-primary/10" />
+          
+          <div className="space-y-12">
+            <h3 className="text-6xl md:text-[10rem] font-headline font-black tracking-tighter text-white leading-[0.85]">
+              The Goal <br />
+              <span className="text-primary/30">Is Not To Build</span> <br />
+              More Products.
+            </h3>
+            <h3 className="text-6xl md:text-[10rem] font-headline font-black tracking-tighter text-white leading-[0.85] italic">
+              The Goal <br />
+              <span className="text-primary/30 not-italic">Is To Build</span> <br />
+              Better Systems.
+            </h3>
+          </div>
+
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 4, repeat: Infinity }}
+            className="pt-24"
+          >
+            <p className="text-[10px] font-bold tracking-[0.8em] text-primary/20 uppercase">Axora Operating System</p>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-function PrincipleItem({ principle }: { principle: any }) {
+function PrincipleChapter({ principle, idx }: { principle: any, idx: number }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { 
-    margin: "-30% 0px -45% 0px",
-    once: false 
-  });
+  const isInView = useInView(ref, { margin: "-20% 0px -20% 0px" });
+  const isRight = idx % 2 === 0;
 
   return (
     <motion.div
       ref={ref}
-      animate={{ 
-        opacity: isInView ? 1 : 0.15,
-        scale: isInView ? 1 : 0.98,
-        y: isInView ? 0 : 20
-      }}
-      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-      className="space-y-10 group"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      className={cn(
+        "relative flex flex-col items-center gap-24 lg:gap-48",
+        isRight ? "lg:flex-row" : "lg:flex-row-reverse"
+      )}
     >
-      <div className="flex items-center gap-8">
-        <span className={cn(
-          "text-[14px] font-mono font-bold tracking-[0.4em] transition-colors duration-700",
-          isInView ? "text-primary" : "text-primary/20"
-        )}>
+      {/* Ghost Background Number */}
+      <div className={cn(
+        "absolute -top-32 md:-top-64 pointer-events-none select-none z-0",
+        isRight ? "-left-12 lg:-left-24" : "-right-12 lg:-right-24"
+      )}>
+        <motion.span 
+          animate={{ 
+            opacity: isInView ? 0.04 : 0.01,
+            scale: isInView ? 1 : 0.95
+          }}
+          className="text-[20rem] md:text-[40rem] font-headline font-black text-white tracking-tighter block leading-none"
+        >
           {principle.id}
-        </span>
-        <div className={cn(
-          "h-px transition-all duration-700",
-          isInView ? "w-20 bg-primary/40" : "w-8 bg-primary/10"
-        )} />
+        </motion.span>
       </div>
 
-      <div className="space-y-8">
-        <h3 className={cn(
-          "text-5xl md:text-7xl font-headline font-black tracking-tight leading-none transition-all duration-700",
-          isInView ? "text-white" : "text-white/20"
+      {/* Content Area */}
+      <div className="flex-1 space-y-16 relative z-10 w-full">
+        <div className={cn(
+          "space-y-12 max-w-2xl",
+          isRight ? "lg:mr-auto" : "lg:ml-auto"
         )}>
-          {principle.title}
-        </h3>
-        
-        <div className="space-y-6">
-          <p className={cn(
-            "text-2xl md:text-3xl font-light italic transition-all duration-700",
-            isInView ? "text-primary/70" : "text-primary/10"
-          )}>
-            {principle.sub}
-          </p>
-          <p className={cn(
-            "text-xl md:text-2xl font-light leading-relaxed max-w-xl transition-all duration-700",
-            isInView ? "text-white/40" : "text-white/05"
-          )}>
-            {principle.body}
-          </p>
+          <motion.div
+            animate={{ 
+              x: isInView ? 0 : (isRight ? -30 : 30),
+              opacity: isInView ? 1 : 0
+            }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-6"
+          >
+            <div className="flex items-center gap-6">
+               <span className="text-xs font-mono font-bold text-primary/40 tracking-[0.4em]">{principle.id}</span>
+               <div className="h-px w-12 bg-primary/20" />
+               <span className="text-[10px] font-bold tracking-[0.6em] text-primary uppercase">
+                 {principle.label}
+               </span>
+            </div>
+            
+            <h3 className="text-5xl md:text-8xl font-headline font-black text-white tracking-tighter leading-none">
+              {principle.title}
+            </h3>
+          </motion.div>
+
+          <motion.div
+            animate={{ 
+              y: isInView ? 0 : 20,
+              opacity: isInView ? 1 : 0
+            }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-8"
+          >
+            <p className="text-2xl md:text-4xl font-light text-primary/70 italic leading-tight">
+              {principle.sub}
+            </p>
+            <p className="text-xl md:text-2xl text-white/40 font-light leading-relaxed">
+              {principle.body}
+            </p>
+          </motion.div>
         </div>
+      </div>
+
+      {/* Visual Spacer / Accent */}
+      <div className="hidden lg:flex flex-1 items-center justify-center">
+        <motion.div
+          animate={{ 
+            scale: isInView ? 1 : 0.8,
+            opacity: isInView ? 0.2 : 0,
+            rotate: isInView ? 0 : 45
+          }}
+          className="w-96 h-96 border border-primary/20 rounded-[4rem] relative flex items-center justify-center"
+        >
+          <div className="absolute inset-0 bg-primary/5 blur-3xl rounded-full" />
+          <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+        </motion.div>
       </div>
     </motion.div>
   );
