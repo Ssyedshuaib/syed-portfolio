@@ -1,30 +1,61 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 export function FounderManifesto() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    const children = sectionRef.current?.querySelectorAll(".reveal-on-scroll");
+    children?.forEach((child) => observer.observe(child));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-64 px-6 relative overflow-hidden">
-      <div className="aurora-blur w-[1000px] h-[600px] bg-secondary/5 bottom-[-20%] right-[-10%]" />
+    <section className="py-64 px-6 relative overflow-hidden" ref={sectionRef}>
+      <div className="absolute inset-0 premium-glow pointer-events-none opacity-50" />
       
-      <div className="max-w-5xl mx-auto text-center space-y-24 relative z-10">
-        <div className="space-y-8">
-          <h2 className="text-[11px] font-bold tracking-[0.6em] text-primary uppercase">Founder Manifesto</h2>
-          <h3 className="text-7xl md:text-[9rem] font-headline font-bold tracking-tighter leading-[0.8] reveal-on-scroll">
-            Building With <br />
-            <span className="italic text-white/20 font-medium">Intention.</span>
+      <div className="max-w-5xl mx-auto text-center space-y-32 relative z-10">
+        <div className="space-y-8 reveal-on-scroll">
+          <h2 className="text-[11px] font-bold tracking-[0.8em] text-primary/60 uppercase">Founder Manifesto</h2>
+          <h3 className="text-6xl md:text-[8rem] font-headline font-black tracking-tighter leading-[0.85] text-foreground">
+            Build Things <br />
+            <span className="italic text-primary/30 font-medium">That Matter.</span>
           </h3>
         </div>
 
-        <div className="space-y-16 text-2xl md:text-5xl font-light leading-tight text-muted-foreground max-w-4xl mx-auto reveal-on-scroll delay-300">
-          <p>
-            I don't build products to chase trends. I build products to create <span className="text-foreground font-medium">clarity</span>, remove <span className="text-foreground font-medium">friction</span>, and improve the way people learn, connect, and grow.
+        <div className="space-y-20 text-2xl md:text-5xl font-light leading-tight text-muted-foreground max-w-4xl mx-auto">
+          <p className="reveal-on-scroll stagger-1">
+            I don't build products to chase trends. I build products because technology should make life <span className="text-foreground font-medium">simpler</span>, more <span className="text-foreground font-medium">meaningful</span>, and more <span className="text-foreground font-medium">human</span>.
           </p>
-          <div className="h-px w-32 bg-primary/20 mx-auto" />
-          <p>
-            Every system begins with <span className="italic">understanding</span>. <br />
-            Every product begins with <span className="italic">purpose</span>. <br />
-            Every idea begins with <span className="italic">curiosity</span>.
+          
+          <div className="flex flex-col gap-12 text-lg md:text-2xl text-primary/80 reveal-on-scroll stagger-2">
+            <div className="h-px w-24 bg-primary/20 mx-auto" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 italic font-light">
+              <p>Every idea begins with a problem.</p>
+              <p>Every product begins with understanding people.</p>
+              <p>Every system begins with purpose.</p>
+            </div>
+          </div>
+
+          <p className="reveal-on-scroll stagger-3 text-xl md:text-3xl font-light leading-relaxed">
+            My goal isn't simply to launch applications. My goal is to create products that continue creating value long after they are released. 
+            <br /><br />
+            <span className="text-foreground font-medium">Technology evolves. Trends disappear. Meaningful products endure.</span>
+            <br />
+            That principle guides everything I build.
           </p>
         </div>
       </div>

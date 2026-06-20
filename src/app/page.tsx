@@ -4,6 +4,7 @@ import { Hero } from "@/components/portfolio/hero";
 import { Philosophy } from "@/components/portfolio/philosophy";
 import { About } from "@/components/portfolio/about";
 import { FounderManifesto } from "@/components/portfolio/founder-manifesto";
+import { WhatImBuilding } from "@/components/portfolio/what-im-building";
 import { Journey } from "@/components/portfolio/journey";
 import { AxoraEcosystem } from "@/components/portfolio/axora-ecosystem";
 import { ProductMetrics } from "@/components/portfolio/product-metrics";
@@ -24,6 +25,7 @@ export default function Home() {
       <Philosophy />
       <About />
       <FounderManifesto />
+      <WhatImBuilding />
       <Journey />
       <AxoraEcosystem />
       <ProductMetrics />
