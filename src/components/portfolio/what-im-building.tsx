@@ -1,63 +1,105 @@
+
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import { Sparkles, Target, Zap, TrendingUp, Cpu, Globe } from "lucide-react";
+import React from "react";
+import { motion } from "framer-motion";
 
-const STATEMENTS = [
-  { text: "Build a startup and become a founder.", icon: Target },
-  { text: "Build products that solve meaningful problems.", icon: Sparkles },
-  { text: "Create technology people genuinely enjoy using.", icon: Zap },
-  { text: "Scale Axora into a multi-product technology company.", icon: Globe },
-  { text: "Turn ideas into systems.", icon: Cpu },
-  { text: "Turn businesses into impact.", icon: TrendingUp },
+const PILLARS = [
+  {
+    id: "01",
+    title: "LEARN",
+    description: "Making education accessible through systems that empower students.",
+  },
+  {
+    id: "02",
+    title: "REMEMBER",
+    description: "Preserving memories, experiences, and stories through technology.",
+  },
+  {
+    id: "03",
+    title: "CONNECT",
+    description: "Building meaningful communities and digital ecosystems.",
+  },
+  {
+    id: "04",
+    title: "CREATE",
+    description: "Designing products that solve real problems with elegance and purpose.",
+  },
 ];
 
 export function WhatImBuilding() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
       },
-      { threshold: 0.1 }
-    );
+    },
+  };
 
-    const children = sectionRef.current?.querySelectorAll(".reveal-on-scroll");
-    children?.forEach((child) => observer.observe(child));
-
-    return () => observer.disconnect();
-  }, []);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1.2,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
 
   return (
-    <section className="py-64 px-6 bg-[#3A506B]/5" ref={sectionRef}>
-      <div className="max-w-7xl mx-auto space-y-32">
-        <div className="text-center space-y-8 reveal-on-scroll">
-          <h2 className="text-[11px] font-bold tracking-[0.8em] text-primary/60 uppercase">The Vision</h2>
-          <h3 className="text-5xl md:text-7xl font-headline font-bold tracking-tighter">WHAT I'M BUILDING</h3>
-        </div>
+    <section id="vision" className="py-64 px-6 bg-background relative overflow-hidden">
+      <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto space-y-48">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-3xl"
+        >
+          <p className="text-[10px] font-bold tracking-[0.8em] text-[#536878] uppercase mb-8">The Vision</p>
+          <h2 className="text-5xl md:text-7xl font-headline font-black tracking-tighter text-white leading-[0.9]">
+            I build for a future where technology <br />
+            <span className="text-[#EAE0C8] italic">simplifies the human experience.</span>
+          </h2>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {STATEMENTS.map((item, idx) => (
-            <div 
-              key={idx} 
-              className={`glass p-12 rounded-[3rem] group hover:border-primary/30 hover:bg-[#3A506B]/40 transition-all duration-700 reveal-on-scroll stagger-${(idx % 4) + 1}`}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-10%" }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-48"
+        >
+          {PILLARS.map((pillar) => (
+            <motion.div 
+              key={pillar.id}
+              variants={itemVariants}
+              className="group space-y-8 relative"
             >
-              <div className="space-y-8">
-                <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <item.icon className="w-8 h-8 text-primary/60 group-hover:text-primary" />
-                </div>
-                <p className="text-2xl md:text-3xl font-light leading-snug group-hover:text-foreground transition-colors">
-                  {item.text}
+              <div className="flex items-center gap-6">
+                <span className="text-[12px] font-bold tracking-[0.4em] text-[#536878]">
+                  {pillar.id}
+                </span>
+                <div className="h-px w-8 bg-[#536878]/30 transition-all duration-700 group-hover:w-16 group-hover:bg-[#EAE0C8]/40" />
+              </div>
+
+              <div className="space-y-6">
+                <h3 className="text-6xl md:text-8xl font-headline font-black text-white tracking-tighter relative inline-block transition-all duration-700 group-hover:text-[#EAE0C8] group-hover:drop-shadow-[0_0_20px_rgba(234,224,200,0.15)]">
+                  {pillar.title}
+                  <span className="absolute -bottom-2 left-0 w-0 h-1 bg-[#EAE0C8] transition-all duration-700 group-hover:w-full" />
+                </h3>
+                <p className="text-xl md:text-2xl text-[#EAE0C8]/70 font-light leading-relaxed max-w-sm">
+                  {pillar.description}
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
