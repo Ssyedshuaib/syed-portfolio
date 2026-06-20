@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -13,10 +14,10 @@ import {
 import { cn } from "@/lib/utils";
 
 const TOPICS = [
-  { id: "01", label: "Products" },
-  { id: "02", label: "Ventures" },
+  { id: "01", label: "Building Products" },
+  { id: "02", label: "Ventures & Startups" },
   { id: "03", label: "Collaboration" },
-  { id: "04", label: "Ideas" },
+  { id: "04", label: "Ideas & Strategy" },
   { id: "05", label: "Just Say Hello" },
 ];
 
@@ -79,7 +80,7 @@ export function Contact() {
 
   return (
     <section id="contact" ref={containerRef} className="relative bg-background overflow-hidden">
-      {/* SECTION 1: Editorial Closing Statement */}
+      {/* SECTION 1: Closing Statement */}
       <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center space-y-24">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -93,36 +94,16 @@ export function Contact() {
             Building Systems <br />
             <span className="text-primary italic font-medium">That Outlive Trends.</span>
           </h2>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5, delay: 0.3 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-12 text-[11px] font-bold tracking-[0.4em] text-primary/30 uppercase"
-        >
-          <div className="space-y-2">
-            <p className="text-white/60">Technology</p>
-            <p>Changes.</p>
-          </div>
-          <div className="space-y-2">
-            <p className="text-white/60">Principles</p>
-            <p>Remain.</p>
-          </div>
-          <div className="space-y-2">
-            <p className="text-white/60">Products</p>
-            <p>Evolve.</p>
-          </div>
-          <div className="space-y-2">
-            <p className="text-white/60">Mission</p>
-            <p>Endures.</p>
+          <div className="max-w-xl mx-auto pt-12">
+             <p className="text-2xl md:text-3xl text-primary/60 font-light leading-relaxed">
+               Technology changes. Principles remain. Products evolve. The mission stays the same.
+             </p>
           </div>
         </motion.div>
       </div>
 
       {/* SECTION 2 & 3: Invitation & Contact Card */}
-      <div className="max-w-7xl mx-auto px-6 py-64">
+      <div className="max-w-7xl mx-auto px-6 py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-end">
           
           {/* Left: Invitation */}
@@ -138,9 +119,10 @@ export function Contact() {
                 Let's Build <br />
                 <span className="text-primary/40 italic font-medium">Something Meaningful.</span>
               </h3>
-              <p className="text-xl md:text-2xl text-[#EAE0C8]/60 font-light leading-relaxed max-w-md">
-                Whether it's a product, venture, ecosystem, or ambitious idea. I'm always interested in meaningful problems.
-              </p>
+              <div className="space-y-6 text-xl md:text-2xl text-[#EAE0C8]/60 font-light leading-relaxed max-w-md">
+                <p>Whether it's a product, venture, ecosystem, or ambitious idea.</p>
+                <p>I'm always interested in meaningful problems.</p>
+              </div>
             </div>
 
             {/* Bangalore Clock */}
@@ -197,7 +179,7 @@ export function Contact() {
         </div>
       </div>
 
-      {/* SECTION 4: Primary Expanding CTA */}
+      {/* SECTION 4: Expanding Conversation Panel */}
       <div className="py-64 flex flex-col items-center justify-center relative min-h-[800px]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_70%)] pointer-events-none" />
         
