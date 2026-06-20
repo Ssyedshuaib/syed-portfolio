@@ -2,10 +2,28 @@
 {
   "placeholderImages": [
     {
-      "id": "reverie-app-ui",
-      "description": "Reverie mobile application interface showing the Discover screen",
-      "imageUrl": "https://picsum.photos/seed/reverie-ui/600/1200",
-      "imageHint": "mobile app ui"
+      "id": "reverie-discover",
+      "description": "Reverie Discover screen showing location-based stories",
+      "imageUrl": "https://picsum.photos/seed/reverie-discover/600/1200",
+      "imageHint": "mobile discover"
+    },
+    {
+      "id": "reverie-capture",
+      "description": "Reverie Capture screen for preserving meaningful moments",
+      "imageUrl": "https://picsum.photos/seed/reverie-capture/600/1200",
+      "imageHint": "mobile camera"
+    },
+    {
+      "id": "reverie-atlas",
+      "description": "Reverie Memory Atlas showing a global map of experiences",
+      "imageUrl": "https://picsum.photos/seed/reverie-atlas/600/1200",
+      "imageHint": "mobile map"
+    },
+    {
+      "id": "reverie-keepsakes",
+      "description": "Reverie Keepsakes screen for curated digital collections",
+      "imageUrl": "https://picsum.photos/seed/reverie-keepsakes/600/1200",
+      "imageHint": "mobile gallery"
     },
     {
       "id": "founder-portrait",
