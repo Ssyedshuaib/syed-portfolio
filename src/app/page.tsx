@@ -16,7 +16,7 @@ import { ProductEcosystem } from "@/components/portfolio/product-ecosystem";
 import { IdeasLab } from "@/components/portfolio/ideas-lab";
 import { SkillsClusters } from "@/components/portfolio/skills-clusters";
 import { Contact } from "@/components/portfolio/contact";
-import { Footer } from "@/components/portfolio/footer";
+import { CinematicEnding } from "@/components/portfolio/cinematic-ending";
 
 export default function Home() {
   return (
@@ -41,7 +41,7 @@ export default function Home() {
       <IdeasLab />
       <SkillsClusters />
       <Contact />
-      <Footer />
+      <CinematicEnding />
     </main>
   );
 }
