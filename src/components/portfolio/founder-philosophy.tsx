@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useInView, useScroll, useSpring, useTransform, useVelocity } from "framer-motion";
+import { motion, useInView, useScroll, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const PRINCIPLES = [
@@ -54,7 +54,7 @@ export function FounderPhilosophy() {
 
   const { scrollYProgress: closingProgress } = useScroll({
     target: closingRef,
-    offset: ["start end", "end end"],
+    offset: ["start end", "end center"],
   });
 
   const progressLine = useSpring(scrollYProgress, {
@@ -63,14 +63,14 @@ export function FounderPhilosophy() {
     restDelta: 0.001,
   });
 
-  // Rail logic
+  // Rail logic: Fade in/out only within the philosophy section
   const railOpacity = useTransform(scrollYProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0]);
 
   return (
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-64">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
-      {/* Vertical Progress Rail */}
+      {/* Vertical Progress Rail - Appears only when in section */}
       <motion.div 
         style={{ opacity: railOpacity }}
         className="hidden lg:flex fixed left-12 top-1/2 -translate-y-1/2 flex-col items-center gap-6 z-50 pointer-events-none"
@@ -129,29 +129,29 @@ export function FounderPhilosophy() {
           ))}
         </div>
 
-        {/* Closing Statement - Interactive Manifesto */}
-        <div ref={closingRef} className="min-h-screen flex flex-col items-center justify-center text-center py-64 relative">
-          <motion.div
-            style={{ opacity: closingProgress }}
-            className="flex flex-col items-center gap-24"
-          >
-            <div className="h-px w-24 bg-primary/10" />
+        {/* Animated Manifesto Closing Statement */}
+        <div ref={closingRef} className="min-h-[120vh] flex flex-col items-center justify-center text-center py-64 relative">
+          <div className="flex flex-col items-center gap-24 w-full">
+            <motion.div 
+              style={{ opacity: useTransform(closingProgress, [0, 0.2], [0, 0.1]) }}
+              className="h-px w-24 bg-primary" 
+            />
             
-            <div className="space-y-12 cursor-default">
+            <div className="space-y-4 md:space-y-8 cursor-default w-full">
               <div className="overflow-hidden">
                 <ManifestoLine 
                   text="The Goal" 
                   progress={closingProgress} 
-                  range={[0, 0.4]} 
-                  offset={-100}
+                  range={[0.1, 0.4]} 
+                  offset={150}
                 />
               </div>
               <div className="overflow-hidden">
                 <ManifestoLine 
                   text="Is Not To Build" 
                   progress={closingProgress} 
-                  range={[0.1, 0.5]} 
-                  offset={100}
+                  range={[0.2, 0.5]} 
+                  offset={-150}
                   className="text-primary/30"
                 />
               </div>
@@ -159,18 +159,18 @@ export function FounderPhilosophy() {
                 <ManifestoLine 
                   text="More Products." 
                   progress={closingProgress} 
-                  range={[0.2, 0.6]} 
-                  offset={-50}
+                  range={[0.3, 0.6]} 
+                  offset={100}
                 />
               </div>
               
-              <div className="pt-24 space-y-12">
+              <div className="pt-24 space-y-4 md:space-y-8">
                 <div className="overflow-hidden">
                   <ManifestoLine 
                     text="The Goal" 
                     progress={closingProgress} 
-                    range={[0.3, 0.7]} 
-                    offset={50}
+                    range={[0.4, 0.7]} 
+                    offset={-100}
                     italic
                   />
                 </div>
@@ -178,8 +178,8 @@ export function FounderPhilosophy() {
                   <ManifestoLine 
                     text="Is To Build" 
                     progress={closingProgress} 
-                    range={[0.4, 0.8]} 
-                    offset={-100}
+                    range={[0.5, 0.8]} 
+                    offset={150}
                     className="text-primary/30"
                     noItalic
                   />
@@ -188,8 +188,8 @@ export function FounderPhilosophy() {
                   <ManifestoLine 
                     text="Better Systems." 
                     progress={closingProgress} 
-                    range={[0.5, 0.9]} 
-                    offset={100}
+                    range={[0.6, 0.9]} 
+                    offset={-150}
                     italic
                   />
                 </div>
@@ -197,13 +197,14 @@ export function FounderPhilosophy() {
             </div>
 
             <motion.div
+              style={{ opacity: useTransform(closingProgress, [0.8, 1], [0, 0.4]) }}
               animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 4, repeat: Infinity }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               className="pt-24"
             >
-              <p className="text-[10px] font-bold tracking-[0.8em] text-primary/20 uppercase">Axora Operating System</p>
+              <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">Axora Operating System</p>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -227,21 +228,21 @@ function ManifestoLine({
   italic?: boolean;
   noItalic?: boolean;
 }) {
-  const y = useTransform(progress, range, [offset, 0]);
+  const yBase = useTransform(progress, range, [offset, 0]);
   const opacity = useTransform(progress, range, [0, 1]);
-  const blur = useTransform(progress, range, [10, 0]);
-  const rotate = useTransform(progress, range, [offset / 10, 0]);
+  const blur = useTransform(progress, range, [20, 0]);
+  const scale = useTransform(progress, range, [0.8, 1]);
   
-  // Subtle "hovering" idle animation
-  const idleY = useSpring(useTransform(progress, [0, 1], [0, 5]), { stiffness: 50, damping: 10 });
+  // Smooth the scroll movement
+  const springY = useSpring(yBase, { stiffness: 60, damping: 20 });
 
   return (
     <motion.div
       style={{ 
-        y, 
+        y: springY, 
         opacity, 
+        scale,
         filter: `blur(${blur}px)`,
-        rotateX: rotate
       }}
       className={cn(
         "text-6xl md:text-[9rem] lg:text-[11rem] font-headline font-black tracking-tighter text-white leading-[0.85] select-none",
@@ -252,10 +253,12 @@ function ManifestoLine({
     >
       <motion.span
         animate={{ 
-          y: [0, -8, 0],
+          y: [0, -15, 0],
+          x: [0, 5, 0],
+          rotate: [0, 1, 0]
         }}
         transition={{ 
-          duration: 5 + Math.random() * 2, 
+          duration: 7 + Math.random() * 3, 
           repeat: Infinity, 
           ease: "easeInOut" 
         }}
