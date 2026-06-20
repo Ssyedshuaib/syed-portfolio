@@ -20,104 +20,102 @@ interface Particle {
 
 export function Preloader({ onComplete }: { onComplete: () => void }) {
   const [scene, setScene] = useState(0); 
-  /* 
-    0: The Void (Anticipation)
-    1: Statement 1
-    2: Statement 2
-    3: Statement 3
-    4: Name Reveal
-    5: Hand-off Transition
-  */
-  
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    // Generate cinematic dust/particles on mount (client-side only to avoid hydration mismatch)
-    const generated = [...Array(30)].map((_, i) => ({
+    // Generate atmospheric particles on mount
+    const generated = [...Array(40)].map((_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
-      duration: 25 + Math.random() * 25,
+      duration: 30 + Math.random() * 30,
       delay: Math.random() * 10,
-      size: 1 + Math.random() * 1.5
+      size: 1 + Math.random() * 1.2
     }));
     setParticles(generated);
 
-    // Orchestrated Cinematic Timeline (Slower, deliberate pacing)
-    const t0 = setTimeout(() => setScene(1), 800);  // Scene 1: Statement 1
-    const t1 = setTimeout(() => setScene(2), 2500); // Scene 2: Statement 2
-    const t2 = setTimeout(() => setScene(3), 4200); // Scene 3: Statement 3
-    const t3 = setTimeout(() => setScene(4), 5900); // Scene 4: Name Reveal
-    const t4 = setTimeout(() => setScene(5), 8500); // Final Emergence
-    const t5 = setTimeout(onComplete, 9500);       // Sequence End
+    /**
+     * REFINED CINEMATIC TIMELINE (7-9s active narrative)
+     * Scene 1: 0.8s - 2.3s (Visible) + 0.8s transition
+     * Scene 2: 3.1s - 4.6s (Visible) + 0.8s transition
+     * Scene 3: 5.4s - 6.9s (Visible) + 0.8s transition
+     * Scene 4: 7.7s - 10.2s (Visible Peak)
+     * Emergence: 10.2s (onComplete triggered)
+     */
+    const t0 = setTimeout(() => setScene(1), 800);   // "Building Products."
+    const t1 = setTimeout(() => setScene(2), 3100);  // "Designing Systems."
+    const t2 = setTimeout(() => setScene(3), 5400);  // "Creating Ecosystems."
+    const t3 = setTimeout(() => setScene(4), 7700);  // Name Reveal (Peak)
+    const t4 = setTimeout(onComplete, 10200);        // Seamless Handoff Trigger
 
     return () => {
-      [t0, t1, t2, t3, t4, t5].forEach(clearTimeout);
+      [t0, t1, t2, t3, t4].forEach(clearTimeout);
     };
   }, [onComplete]);
 
-  const containerVariants = {
-    exit: {
-      scale: 1.05,
-      filter: "blur(60px)",
-      opacity: 0,
-      transition: { duration: 2, ease: [0.16, 1, 0.3, 1] }
-    }
-  };
-
+  // Transition variants for heavy, confident typography
   const textVariants = {
-    initial: { opacity: 0, y: 20, filter: "blur(15px)" },
+    initial: { 
+      opacity: 0, 
+      y: 15, 
+      filter: "blur(15px)",
+      scale: 1.02
+    },
     animate: { 
       opacity: 1, 
       y: 0, 
       filter: "blur(0px)",
-      transition: { duration: 1.8, ease: [0.16, 1, 0.3, 1] }
+      scale: 1,
+      transition: { 
+        duration: 1.2, 
+        ease: [0.16, 1, 0.3, 1] 
+      }
     },
     exit: { 
       opacity: 0, 
-      y: -20, 
+      y: -10, 
       filter: "blur(10px)",
-      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] }
+      transition: { 
+        duration: 0.8, 
+        ease: [0.16, 1, 0.3, 1] 
+      }
     }
   };
 
   return (
     <motion.div
-      variants={containerVariants}
       initial={{ opacity: 1 }}
-      exit="exit"
+      exit={{ 
+        opacity: 0, 
+        scale: 1.05, 
+        filter: "blur(40px)",
+        transition: { duration: 1.5, ease: [0.16, 1, 0.3, 1] } 
+      }}
       className="fixed inset-0 z-[9999] bg-[#050505] flex items-center justify-center overflow-hidden"
     >
-      {/* ATMOSPHERIC BACKGROUND LAYERS */}
-      <div className="fixed inset-0 grain-overlay z-[1] opacity-[0.02]" />
+      {/* ATMOSPHERIC ENVIRONMENT */}
+      <div className="fixed inset-0 grain-overlay z-[1] opacity-[0.03]" />
       
-      {/* Volumetric Light Drifts */}
+      {/* Volumetric Light - Deep Drift */}
       <motion.div 
         animate={{ 
           opacity: [0.03, 0.06, 0.03],
-          scale: [1, 1.1, 1]
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(83,104,120,0.08),transparent_50%)] z-0" 
-      />
-      <motion.div 
-        animate={{ 
-          opacity: [0.02, 0.05, 0.02],
-          scale: [1.2, 1, 1.2]
+          scale: [1, 1.08, 1],
+          x: [-20, 20, -20]
         }}
         transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(234,224,200,0.04),transparent_60%)] z-0" 
+        className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(83,104,120,0.1),transparent_60%)] z-0" 
       />
 
-      {/* Persistent Atmospheric Particles */}
+      {/* Drifting Particles */}
       <div className="absolute inset-0 z-[2] pointer-events-none">
         {particles.map((p) => (
           <motion.div
             key={p.id}
             initial={{ opacity: 0 }}
             animate={{ 
-              opacity: [0, 0.2, 0],
-              y: [0, -100],
+              opacity: [0, 0.15, 0],
+              y: [0, -150],
             }}
             transition={{ 
               duration: p.duration, 
@@ -125,7 +123,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
               delay: p.delay,
               ease: "linear"
             }}
-            className="absolute bg-white/20 rounded-full blur-[0.5px]"
+            className="absolute bg-white/20 rounded-full blur-[1px]"
             style={{ 
               left: p.left, 
               top: p.top,
@@ -136,11 +134,9 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
         ))}
       </div>
 
-      {/* SEQUENTIAL NARRATIVE CONTAINER */}
+      {/* SEQUENTIAL NARRATIVE */}
       <div className="relative z-10 w-full text-center px-6">
         <AnimatePresence mode="wait">
-          
-          {/* STATEMENTS (SCENE 1, 2, 3) */}
           {(scene >= 1 && scene <= 3) && (
             <motion.div
               key={`statement-${scene}`}
@@ -150,39 +146,39 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
               exit="exit"
               className="flex flex-col items-center justify-center"
             >
-              <h2 className="text-3xl md:text-6xl font-headline font-black tracking-tighter text-white uppercase italic leading-none">
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-headline font-black tracking-tighter text-white/90 uppercase italic leading-none select-none">
                 {STATEMENTS[scene - 1]}
               </h2>
+              {/* Confident Pause Indicator (Subconscious) */}
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: 40 }}
+                transition={{ delay: 0.5, duration: 1.5 }}
+                className="h-px bg-primary/20 mt-8"
+              />
             </motion.div>
           )}
 
-          {/* FINAL REVEAL (SCENE 4 & 5) */}
-          {(scene === 4 || scene === 5) && (
+          {scene === 4 && (
             <motion.div
               key="final-reveal"
               initial={{ opacity: 0, filter: "blur(30px)", scale: 0.98 }}
-              animate={{ 
-                opacity: 1, 
-                filter: "blur(0px)", 
-                scale: scene === 5 ? 1.05 : 1,
-              }}
-              transition={{ duration: 3, ease: [0.16, 1, 0.3, 1] }}
+              animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+              transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
             >
               <div className="space-y-12">
                 <motion.div
-                  initial={{ letterSpacing: "0.02em" }}
-                  animate={{ letterSpacing: scene === 5 ? "0.15em" : "0.05em" }}
-                  transition={{ duration: 4, ease: "easeInOut" }}
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <h1 className="text-5xl md:text-[7rem] lg:text-[8.5rem] font-headline font-black tracking-tighter text-white uppercase relative leading-none">
+                  <h1 className="text-5xl md:text-[7rem] lg:text-[8.5rem] font-headline font-black tracking-tighter text-white uppercase relative leading-none select-none">
                     SYED SHARFUDDIN SHUAIB
-                    
-                    {/* Atmospheric Light Sweep */}
+                    {/* Slow Light Sweep */}
                     <motion.div 
                       initial={{ left: "-100%", opacity: 0 }}
-                      animate={{ left: "200%", opacity: [0, 0.1, 0] }}
-                      transition={{ duration: 5, ease: "easeInOut", delay: 1 }}
+                      animate={{ left: "200%", opacity: [0, 0.08, 0] }}
+                      transition={{ duration: 6, ease: "easeInOut", delay: 1.5 }}
                       className="absolute top-0 bottom-0 w-full bg-gradient-to-r from-transparent via-white to-transparent skew-x-12 pointer-events-none"
                     />
                   </h1>
@@ -190,12 +186,12 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
                 
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 0.35, y: 0 }}
-                  transition={{ delay: 1.5, duration: 2 }}
+                  animate={{ opacity: 0.4, y: 0 }}
+                  transition={{ delay: 1.8, duration: 2 }}
                   className="flex flex-col items-center gap-6"
                 >
-                  <div className="h-px w-12 md:w-20 bg-primary opacity-30" />
-                  <p className="text-[10px] md:text-[12px] font-bold tracking-[0.8em] md:tracking-[1.2em] text-[#EAE0C8] uppercase">
+                  <div className="h-px w-16 bg-primary/30" />
+                  <p className="text-[10px] md:text-[12px] font-bold tracking-[1em] text-[#EAE0C8] uppercase select-none">
                     Founder • Builder • Systems Thinker
                   </p>
                 </motion.div>
@@ -205,15 +201,15 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
         </AnimatePresence>
       </div>
 
-      {/* INSTITUTIONAL SIGNATURE */}
-      <div className="absolute bottom-16 left-12 right-12 z-20 flex justify-between items-end opacity-20 hidden md:flex">
-         <div className="space-y-2">
+      {/* Architectural Signature */}
+      <div className="absolute bottom-16 left-12 right-12 z-20 hidden md:flex justify-between items-end opacity-20 pointer-events-none">
+         <div className="space-y-1">
             <p className="text-[8px] font-bold tracking-[0.5em] text-white uppercase">Personal Portfolio</p>
-            <p className="text-[8px] font-bold tracking-[0.5em] text-[#536878] uppercase">Est. 2025</p>
+            <p className="text-[8px] font-bold tracking-[0.5em] text-[#536878] uppercase">Production v2.0</p>
          </div>
-         <div className="flex items-center gap-6">
-            <div className="w-16 h-px bg-white/20" />
-            <span className="text-[9px] font-mono tracking-[0.3em] text-white">ARCH.SYS.485</span>
+         <div className="flex items-center gap-8">
+            <div className="w-12 h-px bg-white/10" />
+            <span className="text-[9px] font-mono tracking-[0.4em] text-white">EST. 2025</span>
          </div>
       </div>
     </motion.div>

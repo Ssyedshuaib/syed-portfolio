@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { Navbar } from "@/components/portfolio/navbar";
 import { Hero } from "@/components/portfolio/hero";
-import { FounderPhilosophy } from "@/components/portfolio/founder-philosophy";
 import { FounderProfile } from "@/components/portfolio/founder-profile";
 import { AxoraProducts } from "@/components/portfolio/axora-products";
+import { FounderPhilosophy } from "@/components/portfolio/founder-philosophy";
 import { FounderManifesto } from "@/components/portfolio/founder-manifesto";
 import { WhatImBuilding } from "@/components/portfolio/what-im-building";
 import { Journey } from "@/components/portfolio/journey";
@@ -24,7 +24,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
-  // Prevent scrolling when loading to maintain focus on the cinematic intro
+  // Maintain lock on body scroll during the cinematic sequence
   useEffect(() => {
     if (isLoading) {
       document.body.style.overflow = "hidden";
@@ -43,14 +43,14 @@ export default function Home() {
 
       <motion.main 
         className="min-h-screen relative overflow-x-hidden"
-        initial={{ opacity: 0.05 }} // Subconscious hero preview during sequence
+        initial={{ opacity: 0.05 }} // Subconscious preview during intro
         animate={{ 
           opacity: isLoading ? 0.05 : 1,
           scale: isLoading ? 0.99 : 1,
-          filter: isLoading ? "blur(20px)" : "blur(0px)"
+          filter: isLoading ? "blur(30px)" : "blur(0px)"
         }}
         transition={{ 
-          duration: 2.5, 
+          duration: 1.5, // Hero Emergence Duration (Scene 5)
           ease: [0.16, 1, 0.3, 1] 
         }}
       >
