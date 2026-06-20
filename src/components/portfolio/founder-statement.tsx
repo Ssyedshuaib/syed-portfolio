@@ -36,10 +36,15 @@ export function FounderStatement() {
           >
             <div className="lg:col-span-8 space-y-12">
               <div className="space-y-10 text-2xl md:text-4xl text-primary/70 font-light leading-relaxed">
-                <p>
-                  I am <span className="text-white font-medium">Syed Sharfuddin Shuaib</span>, <br />
-                  Founder of Axora.
-                </p>
+                <div className="space-y-4">
+                  <p>
+                    I am <span className="text-white font-medium">Syed Sharfuddin Shuaib</span>, <br />
+                    Founder of Axora.
+                  </p>
+                  <p className="text-lg md:text-xl text-primary/40 italic font-light">
+                    Building digital ecosystems focused on education, memory preservation, and productivity.
+                  </p>
+                </div>
                 <p>
                   My work focuses on designing digital ecosystems that solve meaningful problems through technology, systems thinking, and intentional design.
                 </p>

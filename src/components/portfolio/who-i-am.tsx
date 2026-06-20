@@ -45,10 +45,15 @@ export function WhoIAm() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#0F1317] via-transparent to-transparent opacity-60" />
               
               {/* Floating metadata */}
-              <div className="absolute bottom-12 left-12 right-12 space-y-4">
+              <div className="absolute bottom-12 left-12 right-12 space-y-6">
                 <div className="h-px w-12 bg-[#536878]" />
-                <p className="text-[10px] font-bold tracking-[0.5em] text-[#EAE0C8]/50 uppercase">Product Architect</p>
-                <p className="text-4xl font-headline font-black text-[#FFFFFF] leading-none">Syed Sharfuddin <br />Shuaib</p>
+                <div className="space-y-2">
+                  <p className="text-[9px] font-bold tracking-[0.4em] text-primary/60 uppercase">Founder, Axora</p>
+                  <p className="text-4xl font-headline font-black text-white leading-none tracking-tighter">Syed Sharfuddin <br />Shuaib</p>
+                </div>
+                <p className="text-[10px] text-[#EAE0C8]/40 leading-relaxed font-light uppercase tracking-[0.2em]">
+                  Building digital ecosystems focused on education, memory preservation, and productivity.
+                </p>
               </div>
             </div>
           </div>
