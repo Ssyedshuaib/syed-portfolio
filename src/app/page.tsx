@@ -2,9 +2,8 @@ import React from "react";
 import { Navbar } from "@/components/portfolio/navbar";
 import { Hero } from "@/components/portfolio/hero";
 import { Philosophy } from "@/components/portfolio/philosophy";
-import { WhoIAm } from "@/components/portfolio/who-i-am";
+import { FounderProfile } from "@/components/portfolio/founder-profile";
 import { FounderManifesto } from "@/components/portfolio/founder-manifesto";
-import { FounderStatement } from "@/components/portfolio/founder-statement";
 import { WhatImBuilding } from "@/components/portfolio/what-im-building";
 import { Journey } from "@/components/portfolio/journey";
 import { AxoraEcosystem } from "@/components/portfolio/axora-ecosystem";
@@ -26,12 +25,11 @@ export default function Home() {
       
       <Navbar />
       <Hero />
-      <FounderStatement />
+      <FounderProfile />
       <Philosophy />
       <FounderManifesto />
       <WhatImBuilding />
       <Journey />
-      <WhoIAm />
       <BuilderPhilosophy />
       <AxoraEcosystem />
       <Leadership />
