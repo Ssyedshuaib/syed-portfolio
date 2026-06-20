@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -64,7 +65,7 @@ export function FounderProfile() {
   };
 
   return (
-    <section id="founder" className="py-80 px-6 relative bg-background overflow-hidden">
+    <section id="founder" className="py-64 px-6 relative bg-background overflow-hidden">
       <motion.div 
         animate={{ scale: [1, 1.08, 1], opacity: [0.2, 0.4, 0.2] }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
@@ -78,7 +79,7 @@ export function FounderProfile() {
         viewport={{ once: true, margin: "-10%" }}
         className="max-w-7xl mx-auto relative z-10"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-32 items-start">
           
           <motion.div variants={revealVariants} className="lg:col-span-4 space-y-20">
             <div className="space-y-12">
@@ -86,9 +87,11 @@ export function FounderProfile() {
                 <p className="text-[11px] font-bold tracking-[1em] text-primary/30 uppercase">
                   The Architect
                 </p>
-                <h3 className="text-7xl md:text-8xl font-headline font-black text-white tracking-tighter uppercase leading-[0.8] italic">
-                  Syed <br />Sharfuddin <br />Shuaib
-                </h3>
+                <div className="space-y-2">
+                  <h3 className="text-4xl md:text-5xl font-headline font-black text-white tracking-tighter uppercase leading-tight italic">
+                    Syed Sharfuddin Shuaib
+                  </h3>
+                </div>
                 <div className="space-y-6 pt-4">
                   <p className="text-[13px] font-bold tracking-[0.5em] text-primary uppercase flex items-center gap-4">
                     <span className="w-8 h-px bg-primary/40" />

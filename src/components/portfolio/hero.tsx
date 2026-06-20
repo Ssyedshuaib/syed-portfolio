@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -7,26 +8,11 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-interface Particle {
-  id: number;
-  left: string;
-  duration: number;
-  delay: number;
-}
-
 export function Hero() {
   const [isMounted, setIsMounted] = useState(false);
-  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
     setIsMounted(true);
-    const newParticles = [...Array(15)].map((_, i) => ({
-      id: i,
-      left: `${Math.random() * 100}%`,
-      duration: 25 + Math.random() * 20,
-      delay: Math.random() * 5,
-    }));
-    setParticles(newParticles);
   }, []);
 
   const containerVariants = {
@@ -34,8 +20,8 @@ export function Hero() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.8,
+        staggerChildren: 0.15,
+        delayChildren: 0.5,
       },
     },
   };
@@ -46,7 +32,7 @@ export function Hero() {
       opacity: 1,
       filter: "blur(0px)",
       transition: {
-        duration: 2.2,
+        duration: 1.8,
         ease: [0.16, 1, 0.3, 1],
       },
     },
@@ -65,50 +51,41 @@ export function Hero() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20 items-center z-10"
+        className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-20 lg:gap-32 items-center z-10"
       >
-        <div className="space-y-10 text-center lg:text-left">
+        <div className="space-y-12 text-center lg:text-left">
           <motion.div 
             variants={lineVariants}
             className="inline-flex items-center gap-4 px-5 py-1.5 rounded-full glass border-white/5 text-[10px] font-bold text-[#EAE0C8] tracking-[0.5em] uppercase"
           >
             <Sparkles className="w-3 h-3 text-primary" />
-            Founder • Product Builder
+            Founder • Product Architect
           </motion.div>
           
-          <div className="space-y-3">
+          <div className="space-y-6">
             <div className="overflow-visible">
               <motion.h1 
                 variants={lineVariants}
-                className="text-4xl md:text-7xl lg:text-[clamp(3.5rem,7vw,7.5rem)] font-headline font-black tracking-tighter leading-[0.85] text-white"
+                className="text-4xl md:text-7xl lg:text-[clamp(2.5rem,5.5vw,5.8rem)] font-headline font-black tracking-tighter leading-tight text-white uppercase whitespace-nowrap"
               >
-                Building Products.
+                Syed Sharfuddin Shuaib
               </motion.h1>
             </div>
             
-            <div className="overflow-visible">
-              <motion.span 
+            <div className="space-y-2">
+              <motion.p 
                 variants={lineVariants}
-                className="text-3xl md:text-6xl lg:text-[clamp(3rem,6vw,6.5rem)] text-primary/30 block font-headline font-black tracking-tighter leading-[0.85]"
+                className="text-xl md:text-3xl font-headline font-light tracking-tight italic text-primary/40"
               >
-                Building Systems.
-              </motion.span>
-            </div>
-
-            <div className="overflow-visible">
-              <motion.span 
-                variants={lineVariants}
-                className="text-3xl md:text-6xl lg:text-[clamp(3rem,6vw,7rem)] italic font-medium text-primary/80 block font-headline tracking-tighter leading-[0.9]"
-              >
-                Building The Future.
-              </motion.span>
+                Building products. Systems. The Future.
+              </motion.p>
             </div>
             
             <motion.p 
               variants={lineVariants}
-              className="text-base md:text-xl text-[#EAE0C8]/50 max-w-lg mx-auto lg:mx-0 leading-relaxed font-light pt-6"
+              className="text-base md:text-xl text-[#EAE0C8]/40 max-w-lg mx-auto lg:mx-0 leading-relaxed font-light pt-6"
             >
-              Architecting digital products and scalable experiences designed to solve meaningful problems and create lasting impact.
+              Architecting digital ecosystems and scalable experiences designed to solve meaningful problems and create lasting impact.
             </motion.p>
           </div>
           
@@ -126,10 +103,10 @@ export function Hero() {
         </div>
 
         <motion.div 
-          initial={{ opacity: 0, scale: 0.98, filter: "blur(20px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          initial={{ opacity: 0, scale: 0.9, filter: "blur(20px)" }}
+          animate={{ opacity: 0.25, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 2.5, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="hidden lg:flex justify-end lg:pr-8"
+          className="hidden lg:flex justify-end pr-8"
         >
           <OrbitalSystem />
         </motion.div>
@@ -141,7 +118,7 @@ export function Hero() {
         transition={{ delay: 4, duration: 2 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
-        <span className="text-[8px] font-bold tracking-[0.8em] uppercase text-white/30">Explore Ecosystem</span>
+        <span className="text-[8px] font-bold tracking-[0.8em] uppercase text-white/30">Scroll To Discover</span>
         <div className="w-px h-12 bg-gradient-to-b from-primary/30 to-transparent" />
       </motion.div>
     </section>
