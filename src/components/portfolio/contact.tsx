@@ -1,48 +1,199 @@
+
 "use client";
 
-import React from "react";
-import { Github, Linkedin, Mail, FileText, ArrowRight } from "lucide-react";
-import Link from "next/link";
-import { motion } from "framer-motion";
-
-const SOCIALS = [
-  { label: "GitHub", icon: Github, href: "https://github.com/Errorr-bot" },
-  { label: "LinkedIn", icon: Linkedin, href: "https://www.linkedin.com/in/syedshuaib485/" },
-  { label: "Email", icon: Mail, href: "mailto:hello@example.com" },
-  { label: "Resume", icon: FileText, href: "#" },
-];
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
+import { ArrowRight, Mail, MapPin, Target, Clock } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function Contact() {
-  return (
-    <section id="contact" className="py-64 px-6 bg-background">
-      <div className="max-w-5xl mx-auto text-center space-y-24">
-        <div className="space-y-12">
-          <h2 className="text-6xl md:text-9xl font-headline font-bold tracking-tighter leading-[0.85] text-white">
-            Let's Build Something <br />
-            <span className="italic text-[#EAE0C8]/40 font-medium">Meaningful.</span>
-          </h2>
-          <div className="space-y-4">
-            <p className="text-xl md:text-2xl text-[#EAE0C8]/70 max-w-2xl mx-auto font-light leading-relaxed">
-              I'm always open to discussing ambitious products, startup ideas, technology, and meaningful collaborations.
-            </p>
-            <p className="text-[10px] font-bold tracking-[0.4em] text-[#536878] uppercase">Typical response time: Within 24 hours</p>
-          </div>
-        </div>
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [time, setTime] = useState("");
 
-        <div className="flex flex-wrap justify-center gap-6">
-          {SOCIALS.map((social) => (
-            <motion.div key={social.label} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link 
-                href={social.href}
-                className="group flex items-center gap-4 px-10 py-5 bg-[#536878]/10 rounded-full border border-[#EAE0C8]/10 hover:border-[#EAE0C8]/40 hover:bg-[#536878]/20 transition-all duration-500"
-              >
-                <social.icon className="w-5 h-5 text-[#EAE0C8]/70 group-hover:text-white transition-colors" />
-                <span className="font-bold tracking-[0.2em] uppercase text-[10px] text-[#EAE0C8]/70 group-hover:text-white">{social.label}</span>
-                <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-              </Link>
-            </motion.div>
-          ))}
+  // Live Bangalore Clock (IST is UTC +5:30)
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      };
+      setTime(new Intl.DateTimeFormat("en-GB", options).format(now));
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Magnetic Button Logic
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 150, damping: 15 });
+  const springY = useSpring(mouseY, { stiffness: 150, damping: 15 });
+
+  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - (rect.left + rect.width / 2);
+    const y = e.clientY - (rect.top + rect.height / 2);
+    mouseX.set(x * 0.3);
+    mouseY.set(y * 0.3);
+  }
+
+  function handleMouseLeave() {
+    mouseX.set(0);
+    mouseY.set(0);
+  }
+
+  return (
+    <section id="contact" ref={containerRef} className="relative bg-background overflow-hidden">
+      {/* SECTION 1: Editorial Closing Statement */}
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center space-y-24">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-12"
+        >
+          <p className="text-[10px] font-bold tracking-[1em] text-primary/40 uppercase">THE MISSION</p>
+          <h2 className="text-6xl md:text-9xl font-headline font-black tracking-tighter text-white leading-[0.85]">
+            Building Systems <br />
+            <span className="text-primary italic font-medium">That Outlive Trends.</span>
+          </h2>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, delay: 0.3 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-12 text-[11px] font-bold tracking-[0.4em] text-primary/30 uppercase"
+        >
+          <div className="space-y-2">
+            <p className="text-white/60">Technology</p>
+            <p>Changes.</p>
+          </div>
+          <div className="space-y-2">
+            <p className="text-white/60">Principles</p>
+            <p>Remain.</p>
+          </div>
+          <div className="space-y-2">
+            <p className="text-white/60">Products</p>
+            <p>Evolve.</p>
+          </div>
+          <div className="space-y-2">
+            <p className="text-white/60">Mission</p>
+            <p>Endures.</p>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* SECTION 2 & 3: Invitation & Contact Card */}
+      <div className="max-w-7xl mx-auto px-6 py-64">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-end">
+          
+          {/* Left: Invitation */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-16"
+          >
+            <div className="space-y-8">
+              <h3 className="text-5xl md:text-7xl font-headline font-black text-white tracking-tighter leading-none">
+                Let's Build <br />
+                <span className="text-primary/40 italic font-medium">Something Meaningful.</span>
+              </h3>
+              <p className="text-xl md:text-2xl text-[#EAE0C8]/60 font-light leading-relaxed max-w-md">
+                Whether it's a product, venture, ecosystem, or ambitious idea. I'm always interested in meaningful problems.
+              </p>
+            </div>
+
+            {/* Bangalore Clock */}
+            <div className="flex items-center gap-6 glass w-fit px-8 py-4 rounded-2xl border-white/5">
+              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              <div className="space-y-0.5">
+                <p className="text-[9px] font-bold tracking-[0.3em] text-primary/40 uppercase">Bangalore, IN</p>
+                <p className="text-lg font-mono font-medium text-white tracking-widest">{time}</p>
+              </div>
+              <Clock className="w-4 h-4 text-primary/20 ml-4" />
+            </div>
+          </motion.div>
+
+          {/* Right: Contact Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            className="glass p-12 md:p-16 rounded-[4rem] border-white/10 space-y-16 relative overflow-hidden group"
+          >
+            <div className="absolute top-0 right-0 p-16 opacity-5 group-hover:opacity-10 transition-opacity">
+              <Target className="w-24 h-24 text-white" />
+            </div>
+
+            <div className="space-y-12 relative z-10">
+              <div className="space-y-4">
+                <p className="text-[10px] font-bold tracking-[0.5em] text-primary/40 uppercase">Direct Email</p>
+                <p className="text-2xl md:text-3xl font-headline font-bold text-white transition-colors group-hover:text-primary">
+                  hello@axora.in
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <p className="text-[10px] font-bold tracking-[0.5em] text-primary/40 uppercase">Location</p>
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-4 h-4 text-primary" />
+                  <p className="text-xl text-[#EAE0C8]/80 font-light">Bangalore, India</p>
+                </div>
+              </div>
+
+              <div className="space-y-6 pt-10 border-t border-white/5">
+                <p className="text-[10px] font-bold tracking-[0.5em] text-primary/40 uppercase">Current Focus</p>
+                <div className="flex flex-wrap gap-3">
+                  {["Axora Studio", "DevNexus", "Reverie"].map(focus => (
+                    <span key={focus} className="px-5 py-2 rounded-full glass border-white/5 text-[9px] font-bold tracking-[0.2em] uppercase text-white/60">
+                      {focus}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
+      </div>
+
+      {/* SECTION 4: Primary Magnetic CTA */}
+      <div className="py-64 flex flex-col items-center justify-center relative">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_70%)] pointer-events-none" />
+        
+        <motion.div
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          style={{ x: springX, y: springY }}
+          className="relative z-10 cursor-pointer"
+        >
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative flex items-center justify-center"
+          >
+            {/* Glow Aura */}
+            <div className="absolute inset-0 bg-primary/20 blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            
+            <div className="h-48 w-48 md:h-64 md:w-64 rounded-full glass border-white/10 flex flex-col items-center justify-center gap-4 transition-all duration-700 group-hover:border-primary/40 group-hover:bg-primary/[0.02]">
+              <span className="text-[10px] font-bold tracking-[0.4em] text-primary/60 uppercase">Start A</span>
+              <span className="text-xs font-bold tracking-[0.2em] text-white uppercase flex items-center gap-2">
+                Conversation <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
