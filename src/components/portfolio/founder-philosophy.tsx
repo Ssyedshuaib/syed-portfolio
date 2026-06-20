@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useRef, useEffect } from "react";
@@ -46,31 +47,42 @@ export function FounderPhilosophy() {
   const containerRef = useRef<HTMLDivElement>(null);
   const closingRef = useRef<HTMLDivElement>(null);
   
-  // Scroll progress for the entire philosophy section
+  // 1. Scroll progress for the entire philosophy section
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end end"],
   });
 
-  // Scroll progress specifically for the closing section to trigger exit
+  // 2. Scroll progress for the closing section to trigger exit transition
   const { scrollYProgress: closingProgress } = useScroll({
     target: closingRef,
     offset: ["start end", "end center"],
   });
 
-  const progressLine = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  // 3. Navigation Rail Entry/Exit Logic
+  // Fades in at start of principles, Fades out as closing enters
+  const railOpacity = useTransform(
+    [scrollYProgress, closingProgress],
+    ([prog, close]) => {
+      const fadeIn = (prog as number) * 8; // Quick fade in
+      const fadeOut = 1 - (close as number) * 5; // Quick fade out as closing enters
+      return Math.max(0, Math.min(1, fadeIn)) * Math.max(0, Math.min(1, fadeOut));
+    }
+  );
 
-  // Entry and Exit logic for the navigation rail
-  const railOpacity = useTransform(scrollYProgress, [0, 0.05, 0.85, 0.95], [0, 1, 1, 0]);
+  // Moves 20px left as closing section enters
   const railX = useTransform(closingProgress, [0, 0.2], [0, -20]);
-  const exitOpacity = useTransform(closingProgress, [0, 0.2], [1, 0]);
+  const pointerEvents = useTransform(railOpacity, (v) => v > 0.1 ? "auto" : "none");
 
-  // Pointer events disabled when opacity is low
-  const pointerEvents = useTransform(exitOpacity, (v) => v < 0.1 ? "none" : "auto");
+  // 4. Progress Line: Completes when closing section enters
+  const progressLine = useSpring(
+    useTransform([scrollYProgress, closingProgress], ([prog, close]) => {
+      if ((close as number) > 0) return 1;
+      // Scale progress to complete before the closing section (roughly 85% of section scroll)
+      return Math.min(1, (prog as number) / 0.85);
+    }),
+    { stiffness: 100, damping: 30 }
+  );
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
