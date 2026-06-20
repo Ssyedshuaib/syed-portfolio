@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { OrbitalSystem } from "./orbital-system";
-import { ArrowRight, ChevronDown, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 export function Hero() {
   const [isMounted, setIsMounted] = useState(false);
@@ -14,99 +15,125 @@ export function Hero() {
     setIsMounted(true);
   }, []);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 40, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 1.2,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-16 px-6 overflow-hidden bg-black">
-      {/* Cinematic Depth Gradient */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(145,118,110,0.12),transparent_60%)]" />
       </div>
 
-      {/* Floating Dust Particles */}
       {isMounted && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(30)].map((_, i) => (
-            <div
+          {[...Array(20)].map((_, i) => (
+            <motion.div
               key={i}
-              className="dust-particle"
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: [0, 0.2, 0], y: -1000 }}
+              transition={{
+                duration: 20 + Math.random() * 20,
+                repeat: Infinity,
+                delay: Math.random() * 20,
+              }}
+              className="dust-particle absolute w-1 h-1 bg-[#F6ECE3] rounded-full"
               style={{
                 left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                "--duration": `${15 + Math.random() * 20}s`,
-                animationDelay: `${Math.random() * 10}s`,
-              } as React.CSSProperties}
+                bottom: `-10px`,
+              }}
             />
           ))}
         </div>
       )}
 
-      <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-24 items-center z-10">
-        <div className="space-y-16 text-center lg:text-left">
-          <div className={cn(
-            "inline-flex items-center gap-4 px-8 py-2.5 rounded-full glass border-[#F6ECE3]/5 text-[11px] font-bold text-[#F6ECE3] tracking-[0.6em] uppercase transition-all duration-1000",
-            isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          )}>
-            <Sparkles className="w-4 h-4 text-[#91766E] animate-pulse" />
-            Founder • Product Builder • Entrepreneur
-          </div>
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-24 items-center z-10"
+      >
+        <div className="space-y-12 text-center lg:text-left">
+          <motion.div variants={itemVariants} className="inline-flex items-center gap-4 px-6 py-2 rounded-full glass border-[#F6ECE3]/5 text-[10px] font-bold text-[#F6ECE3] tracking-[0.5em] uppercase">
+            <Sparkles className="w-3.5 h-3.5 text-[#91766E] animate-pulse" />
+            Founder • Product Builder
+          </motion.div>
           
-          <div className="space-y-12">
-            <h1 className={cn(
-              "text-6xl md:text-[8rem] font-headline font-black tracking-tighter leading-[0.9] transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] text-white",
-              isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-            )}>
-              <span className="block overflow-hidden">
-                <span className={cn("block transition-transform duration-1000 delay-100", isMounted ? "translate-y-0" : "translate-y-full")}>Building Products.</span>
-              </span>
-              <span className="block overflow-hidden">
-                <span className={cn("block text-[#91766E]/40 transition-transform duration-1000 delay-300", isMounted ? "translate-y-0" : "translate-y-full")}>Building Systems.</span>
-              </span>
-              <span className="block overflow-hidden">
-                <span className={cn("block italic font-medium text-[#F6ECE3] transition-transform duration-1000 delay-500", isMounted ? "translate-y-0" : "translate-y-full")}>Building The Future.</span>
-              </span>
-            </h1>
+          <div className="space-y-8">
+            <motion.h1 
+              variants={itemVariants}
+              className="text-6xl md:text-8xl lg:text-[7rem] font-headline font-black tracking-tighter leading-[0.9] text-white"
+            >
+              Building Products.<br />
+              <span className="text-[#91766E]/40">Building Systems.</span><br />
+              <span className="italic font-medium text-[#F6ECE3]">Building The Future.</span>
+            </motion.h1>
             
-            <p className={cn(
-              "text-xl md:text-2xl text-[#B7A7A9] max-w-xl mx-auto lg:mx-0 leading-relaxed font-light transition-all duration-[1500ms] delay-700",
-              isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            )}>
+            <motion.p 
+              variants={itemVariants}
+              className="text-lg md:text-xl text-[#B7A7A9] max-w-xl mx-auto lg:mx-0 leading-relaxed font-light"
+            >
               I create technology products, digital ecosystems, and scalable experiences designed to solve meaningful problems and create lasting impact.
-            </p>
+            </motion.p>
           </div>
           
-          <div className={cn(
-            "flex flex-wrap items-center justify-center lg:justify-start gap-12 transition-all duration-[1500ms] delay-1000",
-            isMounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          )}>
-            <Button asChild size="lg" className="h-20 px-16 rounded-full bg-[#F6ECE3] text-[#000000] hover:bg-[#91766E] hover:text-white hover:scale-105 transition-all font-bold text-xl group shadow-[0_20px_60px_rgba(145,118,110,0.15)]">
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center lg:justify-start gap-10">
+            <Button asChild size="lg" className="h-16 px-12 rounded-full bg-[#F6ECE3] text-[#000000] hover:bg-[#91766E] hover:text-white transition-all font-bold text-lg group">
               <Link href="#ecosystem">
-                Explore My Work <ArrowRight className="ml-4 w-6 h-6 group-hover:translate-x-3 transition-transform" />
+                Explore My Work <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform" />
               </Link>
             </Button>
-            <Link href="#philosophy" className="text-[#B7A7A9] hover:text-white transition-all font-bold text-xl relative group">
+            <Link href="#philosophy" className="text-[#B7A7A9] hover:text-white transition-all font-bold text-lg relative group">
               The Vision
-              <span className="absolute -bottom-2 left-0 w-0 h-px bg-[#F6ECE3]/40 transition-all duration-700 group-hover:w-full" />
+              <span className="absolute -bottom-1.5 left-0 w-0 h-px bg-[#F6ECE3]/40 transition-all duration-700 group-hover:w-full" />
             </Link>
-          </div>
+          </motion.div>
         </div>
 
-        <div className={cn(
-          "hidden lg:block relative transition-all duration-2000 delay-500",
-          isMounted ? "opacity-100 scale-100 rotate-0" : "opacity-0 scale-95 rotate-2"
-        )}>
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="hidden lg:block relative"
+        >
           <OrbitalSystem />
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
       
-      {/* Premium Scroll Indicator */}
-      <div className={cn(
-        "absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 transition-all duration-[2000ms] delay-1500",
-        isMounted ? "opacity-40" : "opacity-0"
-      )}>
-        <span className="text-[9px] font-bold tracking-[0.5em] uppercase text-[#B7A7A9]">Scroll to explore</span>
-        <div className="w-px h-16 bg-gradient-to-b from-[#F6ECE3]/40 to-transparent relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-white animate-scroll-down" />
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.4 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+      >
+        <span className="text-[8px] font-bold tracking-[0.5em] uppercase text-[#B7A7A9]">Scroll to explore</span>
+        <div className="w-px h-12 bg-gradient-to-b from-[#F6ECE3]/40 to-transparent relative overflow-hidden">
+          <motion.div 
+            animate={{ y: [0, 48, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-0 left-0 w-full h-1/2 bg-white/40" 
+          />
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

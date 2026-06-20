@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { cn } from "@/lib/utils";
+import { motion, useScroll, useSpring } from "framer-motion";
 
 const STAGES = [
   { 
@@ -37,66 +38,74 @@ const STAGES = [
 ];
 
 export function Journey() {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll(".reveal-on-scroll");
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   return (
-    <section id="journey" className="py-64 px-6 overflow-hidden bg-[#111111]" ref={sectionRef}>
+    <section id="journey" className="py-64 px-6 overflow-hidden bg-[#111111]" ref={containerRef}>
       <div className="max-w-6xl mx-auto space-y-48">
-        <div className="text-center space-y-8 reveal-on-scroll">
-          <h2 className="text-[11px] font-bold tracking-[0.8em] text-[#91766E]/60 uppercase">The Evolution</h2>
-          <h3 className="text-6xl md:text-[8rem] font-headline font-black tracking-tighter uppercase leading-none text-white">The Journey</h3>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center space-y-8"
+        >
+          <h2 className="text-[10px] font-bold tracking-[0.8em] text-[#91766E]/60 uppercase">The Evolution</h2>
+          <h3 className="text-6xl md:text-9xl font-headline font-black tracking-tighter uppercase leading-none text-white">The Journey</h3>
+        </motion.div>
 
         <div className="relative">
-          {/* Main Connector */}
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#91766E]/30 via-white/5 to-transparent -translate-x-1/2" />
+          <motion.div 
+            style={{ scaleY }}
+            className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[#91766E] via-[#F6ECE3]/40 to-transparent -translate-x-1/2 origin-top z-0" 
+          />
 
           <div className="space-y-64">
             {STAGES.map((item, idx) => (
-              <div 
+              <motion.div 
                 key={idx} 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 className={cn(
-                  "relative flex flex-col md:flex-row items-start md:items-center gap-16 reveal-on-scroll",
+                  "relative flex flex-col md:flex-row items-start md:items-center gap-16",
                   idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                 )}
               >
-                {/* Dot */}
-                <div className="absolute left-6 md:left-1/2 top-0 md:top-auto w-16 h-16 rounded-full glass border-[#91766E]/20 flex items-center justify-center -translate-x-1/2 z-10 bg-black shadow-[0_0_40px_rgba(145,118,110,0.1)]">
-                  <div className="w-3 h-3 rounded-full bg-[#F6ECE3] animate-pulse" />
+                <div className="absolute left-6 md:left-1/2 top-0 md:top-auto w-12 h-12 rounded-full glass border-[#91766E]/20 flex items-center justify-center -translate-x-1/2 z-10 bg-black">
+                  <motion.div 
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="w-2.5 h-2.5 rounded-full bg-[#F6ECE3]" 
+                  />
                 </div>
 
-                {/* Content Side */}
-                <div className="flex-1 w-full pl-20 md:pl-0 md:px-24">
-                  <div className="glass p-16 rounded-[4rem] border-white/5 hover:border-[#91766E]/20 transition-all duration-1000 hover:shadow-[0_40px_100px_rgba(0,0,0,0.5)] group">
-                    <p className="text-[10px] font-bold tracking-[0.6em] text-[#91766E] uppercase mb-6">Stage 0{idx + 1}</p>
-                    <h4 className="text-4xl md:text-5xl font-headline font-bold mb-8 text-[#F6ECE3] group-hover:text-white transition-colors">{item.stage}</h4>
-                    <p className="text-[#B7A7A9] text-xl md:text-2xl leading-relaxed mb-10 font-light">{item.desc}</p>
-                    <div className="pt-10 border-t border-white/5">
-                      <p className="text-[10px] uppercase tracking-[0.6em] text-[#B7A7A9] font-bold">{item.detail}</p>
+                <div className="flex-1 w-full pl-20 md:pl-0 md:px-16">
+                  <motion.div 
+                    whileHover={{ scale: 1.02 }}
+                    className="glass p-12 rounded-[3.5rem] border-white/5 hover:border-[#91766E]/30 transition-all duration-700 group shadow-2xl"
+                  >
+                    <p className="text-[9px] font-bold tracking-[0.5em] text-[#91766E] uppercase mb-4">Stage 0{idx + 1}</p>
+                    <h4 className="text-3xl md:text-4xl font-headline font-bold mb-6 text-[#F6ECE3]">{item.stage}</h4>
+                    <p className="text-[#B7A7A9] text-lg leading-relaxed mb-8 font-light">{item.desc}</p>
+                    <div className="pt-8 border-t border-white/5">
+                      <p className="text-[8px] uppercase tracking-[0.4em] text-[#B7A7A9]/60 font-bold">{item.detail}</p>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
 
                 <div className="flex-1 hidden md:block" />
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
