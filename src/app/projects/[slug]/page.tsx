@@ -8,7 +8,6 @@ import { Footer } from "@/components/portfolio/footer";
 import { Button } from "@/components/ui/button";
 import { 
   ArrowLeft, 
-  ChevronRight, 
   Globe, 
   Github, 
   Layout, 
@@ -17,11 +16,10 @@ import {
   Zap, 
   Layers, 
   Cpu, 
-  Code2, 
   Milestone 
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+import { ReverieShowcase } from "@/components/portfolio/reverie-showcase";
 
 const PROJECT_DATA: Record<string, any> = {
   reverie: {
@@ -328,6 +326,9 @@ export default function ProjectPage() {
                 </div>
               </div>
             </section>
+
+            {/* Custom Project-Specific Sections */}
+            {slug === "reverie" && <ReverieShowcase />}
           </motion.div>
         )}
       </AnimatePresence>
@@ -336,4 +337,3 @@ export default function ProjectPage() {
     </main>
   );
 }
-

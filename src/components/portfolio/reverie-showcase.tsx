@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,6 @@ const PRODUCT_FEATURES = [
     title: "Explore Stories Around You",
     description: "Connect with the emotional history of your surroundings. Discover memories anchored to specific locations by a global community of storytellers.",
     imageId: "reverie-discover",
-    accent: "rgba(83, 104, 120, 0.15)"
   },
   {
     id: "capture",
@@ -23,7 +22,6 @@ const PRODUCT_FEATURES = [
     title: "Preserve Meaningful Moments",
     description: "Move beyond the photo gallery. Capture the context, mood, and spirit of your experiences exactly where they happen.",
     imageId: "reverie-capture",
-    accent: "rgba(234, 224, 200, 0.08)"
   },
   {
     id: "atlas",
@@ -31,7 +29,6 @@ const PRODUCT_FEATURES = [
     title: "A Living Emotional Map",
     description: "Visualize your life's journey through a geographical lens. See your growth and experiences mapped across the world in an elegant spatial interface.",
     imageId: "reverie-atlas",
-    accent: "rgba(83, 104, 120, 0.1)"
   },
   {
     id: "keepsakes",
@@ -39,7 +36,6 @@ const PRODUCT_FEATURES = [
     title: "Collect What Matters Most",
     description: "Organize your most precious memories into curated collections. A digital home for the stories that define who you are.",
     imageId: "reverie-keepsakes",
-    accent: "rgba(234, 224, 200, 0.05)"
   }
 ];
 
@@ -98,46 +94,46 @@ export function ReverieShowcase() {
   if (!isMounted) return null;
 
   return (
-    <section id="reverie-experience" className="py-64 bg-background relative overflow-hidden">
+    <section id="product-experience" className="py-64 bg-background relative overflow-hidden">
       {/* Background Ambience */}
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#EAE0C8]/10 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6">
-        {/* Section Header */}
-        <div className="text-center space-y-12 mb-64">
+        {/* Section Header - Inspired by provided screenshot */}
+        <div className="mb-64 space-y-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-3 px-6 py-2 rounded-full glass border-[#EAE0C8]/10 text-[10px] font-bold text-[#536878] uppercase tracking-[0.6em]"
+            className="flex items-center gap-3 text-[10px] font-bold text-[#536878] uppercase tracking-[0.5em]"
           >
-            <Sparkles className="w-3.5 h-3.5" />
             Product Experience
           </motion.div>
           
-          <div className="space-y-8">
+          <div className="space-y-12">
             <motion.h2 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-7xl md:text-[10rem] font-headline font-black tracking-tighter text-white uppercase leading-[0.85]"
+              className="text-7xl md:text-[9rem] font-headline font-black tracking-tighter text-white leading-[0.85]"
             >
-              REVERIE
+              Reverie in <br />
+              <span className="text-[#EAE0C8] italic font-serif font-light">every moment.</span>
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-2xl md:text-3xl text-[#EAE0C8]/70 font-light max-w-3xl mx-auto leading-relaxed"
+              className="text-2xl md:text-3xl text-[#EAE0C8]/60 font-light max-w-2xl leading-relaxed"
             >
-              A spatial memory system designed for intentional storytelling and emotional archiving.
+              A seamless flow to capture, explore, and relive memories that matter — tied to places, emotions, and the stories that shape you.
             </motion.p>
           </div>
         </div>
 
-        {/* Feature Sections */}
+        {/* Feature Sections - Alternating Layout */}
         <div className="space-y-64 md:space-y-[40rem]">
           {PRODUCT_FEATURES.map((feature, idx) => (
             <div 
@@ -172,7 +168,7 @@ export function ReverieShowcase() {
                 </div>
               </motion.div>
 
-              {/* Visual Showcase */}
+              {/* Visual Showcase - Mockup */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9, y: 50 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
@@ -197,21 +193,6 @@ export function ReverieShowcase() {
           <blockquote className="text-3xl md:text-5xl font-headline font-bold text-white tracking-tighter leading-tight italic max-w-4xl mx-auto">
             "The goal is not just to archive data, but to preserve the emotional essence of the places that shape us."
           </blockquote>
-          
-          <div className="flex flex-wrap justify-center gap-12 pt-16">
-            <div className="text-left space-y-2">
-              <p className="text-[9px] font-bold text-[#536878] uppercase tracking-[0.4em]">Current Status</p>
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-                <p className="text-white font-medium text-lg">Alpha Testing</p>
-              </div>
-            </div>
-            <div className="w-px h-16 bg-white/5 hidden md:block" />
-            <div className="text-left space-y-2">
-              <p className="text-[9px] font-bold text-[#536878] uppercase tracking-[0.4em]">Core Tech</p>
-              <p className="text-white font-medium text-lg">Next.js • Firebase • Mapbox</p>
-            </div>
-          </div>
         </motion.div>
       </div>
     </section>
