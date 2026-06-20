@@ -144,7 +144,7 @@ export function Hero() {
           </div>
           
           <motion.div variants={lineVariants} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-8 md:gap-10">
-            <Button asChild size="lg" className="w-full sm:w-auto h-14 md:h-16 px-10 md:px-12 rounded-full bg-[#EAE0C8] text-[#0F1317] hover:bg-[#FFFFFF] hover:scale-105 transition-all duration-500 font-bold text-base md:text-lg group shadow-[0_10px_30px_rgba(234,224,200,0.15)]">
+            <Button asChild size="lg" data-cursor="enter" className="w-full sm:w-auto h-14 md:h-16 px-10 md:px-12 rounded-full bg-[#EAE0C8] text-[#0F1317] hover:bg-[#FFFFFF] hover:scale-105 transition-all duration-500 font-bold text-base md:text-lg group shadow-[0_10px_30px_rgba(234,224,200,0.15)]">
               <Link href="#ecosystem">
                 Explore Work <ArrowRight className="ml-3 w-4 md:w-5 h-4 md:h-5 group-hover:translate-x-2 transition-transform duration-500" />
               </Link>

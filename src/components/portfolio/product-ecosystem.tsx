@@ -139,6 +139,7 @@ export function ProductEcosystem() {
             >
               <Link
                 href={`/projects/${product.slug}`}
+                data-cursor="explore"
                 className={cn(
                   "group relative h-full w-full bg-[#536878]/05 rounded-[3rem] p-10 border border-[#EAE0C8]/05 flex flex-col justify-between overflow-hidden transition-all duration-700 ease-premium hover:bg-[#536878]/10 hover:border-[#EAE0C8]/25 hover:-translate-y-2",
                   product.isFlagship && "bg-[#536878]/08 border-[#EAE0C8]/15 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)]"

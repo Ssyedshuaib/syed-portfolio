@@ -27,19 +27,22 @@ const CHANNELS = [
     label: "Email", 
     description: "Best for partnerships and product discussions",
     href: "mailto:syedshuaib2429@gmail.com?subject=Inquiry%20from%20Axora%20Website",
-    icon: Mail 
+    icon: Mail,
+    cursor: "email"
   },
   { 
     label: "LinkedIn", 
     description: "Professional conversations and networking",
     href: "https://www.linkedin.com/in/syedshuaib485/", 
-    icon: Linkedin 
+    icon: Linkedin,
+    cursor: "connect"
   },
   { 
     label: "Build Together", 
     description: "For founders, builders, and meaningful collaborations.",
     href: "mailto:syedshuaib2429@gmail.com?subject=Build%20Together%20-%20Axora", 
-    icon: Target 
+    icon: Target,
+    cursor: "email"
   },
 ];
 
@@ -178,6 +181,7 @@ export function Contact() {
               viewport={{ once: true }}
               transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
               onClick={emailAction}
+              data-cursor="email"
               className="glass p-10 md:p-16 rounded-[3rem] md:rounded-[4rem] border-white/10 space-y-12 md:space-y-16 relative overflow-hidden group cursor-pointer hover:border-primary/20 transition-all duration-700 hover:bg-primary/[0.02]"
             >
               {/* Internal Spotlight */}
@@ -226,6 +230,7 @@ export function Contact() {
         <LayoutGroup>
           <motion.div
             layout
+            data-cursor="enter"
             style={{ x: isExpanded ? 0 : springX, y: isExpanded ? 0 : springY }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -292,7 +297,14 @@ export function Contact() {
                               <ArrowRight className="w-3 h-3 rotate-180 group-hover:-translate-x-1 transition-transform" /> Back to topics
                             </button>
                             {CHANNELS.map((channel, idx) => (
-                              <a key={channel.label} href={channel.href} target={channel.label === "LinkedIn" ? "_blank" : undefined} rel={channel.label === "LinkedIn" ? "noopener noreferrer" : undefined} className="group relative flex items-center justify-between p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-700 overflow-hidden">
+                              <a 
+                                key={channel.label} 
+                                href={channel.href} 
+                                target={channel.label === "LinkedIn" ? "_blank" : undefined} 
+                                rel={channel.label === "LinkedIn" ? "noopener noreferrer" : undefined} 
+                                data-cursor={channel.cursor}
+                                className="group relative flex items-center justify-between p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-700 overflow-hidden"
+                              >
                                 <div className="flex items-center gap-4 md:gap-6">
                                   <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl glass border-white/5 flex items-center justify-center text-[#536878] group-hover:text-primary group-hover:scale-110 transition-all duration-500">
                                     <channel.icon className="w-4 md:w-5 h-4 md:h-5" />
