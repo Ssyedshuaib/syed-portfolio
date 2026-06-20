@@ -1,15 +1,32 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, useSpring, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const STATEMENTS = ["Building Products.", "Designing Systems.", "Creating Ecosystems."];
+
+interface Particle {
+  id: number;
+  left: string;
+  duration: number;
+  delay: number;
+}
 
 export function Preloader({ onComplete }: { onComplete: () => void }) {
   const [statementIndex, setStatementIndex] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
+    // Generate particles only on the client to avoid hydration mismatch
+    const generatedParticles = [...Array(20)].map((_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      duration: 10 + Math.random() * 10,
+      delay: Math.random() * 10,
+    }));
+    setParticles(generatedParticles);
+
     const timer = setInterval(() => {
       setStatementIndex((prev) => (prev + 1) % STATEMENTS.length);
     }, 800);
@@ -49,19 +66,19 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
 
       {/* Floating Particle Field */}
       <div className="absolute inset-0 z-[2] pointer-events-none opacity-20">
-        {[...Array(20)].map((_, i) => (
+        {particles.map((particle) => (
           <motion.div
-            key={i}
+            key={particle.id}
             initial={{ y: "100vh", opacity: 0 }}
             animate={{ y: "-10vh", opacity: [0, 1, 0] }}
             transition={{ 
-              duration: 10 + Math.random() * 10, 
+              duration: particle.duration, 
               repeat: Infinity, 
-              delay: Math.random() * 10,
+              delay: particle.delay,
               ease: "linear"
             }}
             className="absolute w-0.5 h-0.5 bg-[#EAE0C8] rounded-full"
-            style={{ left: `${Math.random() * 100}%` }}
+            style={{ left: particle.left }}
           />
         ))}
       </div>
