@@ -28,7 +28,7 @@ const CHANNELS = [
   { 
     label: "Email", 
     description: "Best for partnerships and product discussions",
-    href: "mailto:syedshuaib2429@gmail.com",
+    href: "mailto:syedshuaib2429@gmail.com?subject=Inquiry%20from%20Axora%20Website",
     icon: Mail 
   },
   { 
@@ -358,7 +358,7 @@ export function Contact() {
                                 href={channel.href}
                                 target={channel.label === "LinkedIn" ? "_blank" : undefined}
                                 rel={channel.label === "LinkedIn" ? "noopener noreferrer" : undefined}
-                                className="group relative flex items-center justify-between p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-700 overflow-hidden"
+                                className="group relative flex items-center justify-between p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-700 overflow-hidden cursor-pointer"
                               >
                                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[2000ms]" />
                                 
@@ -373,7 +373,7 @@ export function Contact() {
                                 </div>
                                 
                                 <div className="w-12 h-12 rounded-full glass border-white/10 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all duration-500">
-                                  <ArrowUpRight className="w-5 h-5" />
+                                  <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                                 </div>
                               </motion.a>
                             ))}
