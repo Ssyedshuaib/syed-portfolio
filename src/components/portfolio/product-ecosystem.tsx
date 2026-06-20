@@ -1,16 +1,17 @@
+
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { cn } from "@/lib/utils";
-import { ExternalLink, Layers, MapPin, Zap, GraduationCap, Globe, Layout, ArrowRight } from "lucide-react";
+import { MapPin, Zap, GraduationCap, Globe, Layout, Layers, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const PRODUCTS = [
   {
-    title: "Reverie",
-    category: "Memory Platform",
-    mission: "Building the world's emotional atlas by connecting memories, places, and emotions.",
+    title: "REVERIE",
+    category: "MEMORY PLATFORM",
+    mission: "A place-based memory platform that transforms experiences, emotions, and locations into a living emotional atlas.",
     status: "In Development",
     icon: MapPin,
     slug: "reverie",
@@ -19,9 +20,9 @@ const PRODUCTS = [
     visualHint: "constellation"
   },
   {
-    title: "DevNexus",
-    category: "Student Ecosystem",
-    mission: "An integrated platform helping students learn, earn, network, and grow.",
+    title: "DEVNEXUS",
+    category: "STUDENT ECOSYSTEM",
+    mission: "A platform helping students learn, earn, connect, and grow through a unified digital experience.",
     status: "Production Ready",
     icon: Layout,
     slug: "devnexus",
@@ -29,19 +30,29 @@ const PRODUCTS = [
     visualHint: "graph"
   },
   {
-    title: "NovaPU",
-    category: "Education Technology",
-    mission: "A modern digital experience designed for future-ready education.",
-    status: "Live",
+    title: "GLOBAL SCHOOLS",
+    category: "EDUCATION TECHNOLOGY",
+    mission: "A modern educational website focused on admissions, communication, and digital-first learning experiences.",
+    status: "Completed",
+    icon: Layers,
+    slug: "global-group-schools",
+    className: "md:col-span-2 md:row-span-1",
+    visualHint: "structure"
+  },
+  {
+    title: "NOVAPU",
+    category: "LEARNING PLATFORM",
+    mission: "Helping students access structured educational experiences and resources.",
+    status: "In Development",
     icon: GraduationCap,
     slug: "novapu",
     className: "md:col-span-1 md:row-span-1",
     visualHint: "nodes"
   },
   {
-    title: "Campus Connect",
-    category: "Networking",
-    mission: "Designed to strengthen student communities and campus collaboration.",
+    title: "CAMPUS CONNECT",
+    category: "COMMUNITY PLATFORM",
+    mission: "Building stronger student communities through digital interaction and collaboration.",
     status: "Beta",
     icon: Globe,
     slug: "campus-connect",
@@ -49,45 +60,47 @@ const PRODUCTS = [
     visualHint: "grid"
   },
   {
-    title: "Zappy",
-    category: "Productivity",
-    mission: "Focused on simplifying workflows through modern digital experiences.",
-    status: "Production",
+    title: "ZAPPY",
+    category: "PRODUCTIVITY PLATFORM",
+    mission: "A modern productivity experience designed around simplicity and organization.",
+    status: "Prototype",
     icon: Zap,
     slug: "zappy",
     className: "md:col-span-1 md:row-span-1",
     visualHint: "minimal"
   },
-  {
-    title: "Global Group of Schools",
-    category: "Education Technology",
-    mission: "A modern digital experience designed for future-ready education.",
-    status: "Completed",
-    icon: Layers,
-    slug: "global-group-schools",
-    className: "md:col-span-2 md:row-span-1",
-    visualHint: "structure"
-  },
 ];
 
 const VisualIdentity = ({ type }: { type: string }) => {
+  const commonClasses = "absolute inset-0 w-full h-full opacity-[0.05] pointer-events-none transition-opacity group-hover:opacity-[0.12] duration-1000";
+  
   if (type === "constellation") {
     return (
-      <svg className="absolute inset-0 w-full h-full opacity-[0.08] pointer-events-none">
-        <circle cx="20%" cy="30%" r="1" fill="white" />
-        <circle cx="80%" cy="20%" r="1" fill="white" />
-        <circle cx="40%" cy="70%" r="1" fill="white" />
-        <circle cx="60%" cy="40%" r="1" fill="white" />
-        <line x1="20%" y1="30%" x2="60%" y2="40%" stroke="white" strokeWidth="0.5" />
-        <line x1="60%" y1="40%" x2="80%" y2="20%" stroke="white" strokeWidth="0.5" />
+      <svg className={commonClasses} viewBox="0 0 100 100">
+        <circle cx="20" cy="30" r="0.5" fill="white" />
+        <circle cx="80" cy="20" r="0.5" fill="white" />
+        <circle cx="40" cy="70" r="0.5" fill="white" />
+        <circle cx="60" cy="40" r="0.5" fill="white" />
+        <line x1="20" y1="30" x2="60" y2="40" stroke="white" strokeWidth="0.2" />
+        <line x1="60" y1="40" x2="80" y2="20" stroke="white" strokeWidth="0.2" />
+        <line x1="40" y1="70" x2="60" y2="40" stroke="white" strokeWidth="0.2" />
       </svg>
     );
   }
   if (type === "graph") {
     return (
-      <svg className="absolute inset-0 w-full h-full opacity-[0.06] pointer-events-none">
-        <rect x="10%" y="10%" width="80%" height="80%" fill="none" stroke="white" strokeWidth="0.5" strokeDasharray="4 4" />
-        <circle cx="50%" cy="50%" r="40%" fill="none" stroke="white" strokeWidth="0.5" />
+      <svg className={commonClasses} viewBox="0 0 100 100">
+        <path d="M10,90 Q50,10 90,90" fill="none" stroke="white" strokeWidth="0.2" strokeDasharray="2,2" />
+        <circle cx="50" cy="50" r="30" fill="none" stroke="white" strokeWidth="0.1" />
+      </svg>
+    );
+  }
+  if (type === "structure") {
+    return (
+      <svg className={commonClasses} viewBox="0 0 100 100">
+        <rect x="20" y="20" width="60" height="60" fill="none" stroke="white" strokeWidth="0.1" />
+        <line x1="20" y1="50" x2="80" y2="50" stroke="white" strokeWidth="0.1" />
+        <line x1="50" y1="20" x2="50" y2="80" stroke="white" strokeWidth="0.1" />
       </svg>
     );
   }
@@ -99,28 +112,28 @@ export function ProductEcosystem() {
     <section id="ecosystem" className="py-48 px-6 bg-background relative overflow-hidden">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto space-y-32">
+      <div className="max-w-7xl mx-auto space-y-24">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="space-y-8"
+          className="space-y-6"
         >
-          <h2 className="text-[10px] font-bold tracking-[0.8em] text-[#536878] uppercase">The Portfolio</h2>
+          <h2 className="text-[10px] font-bold tracking-[0.8em] text-[#536878] uppercase">Things I've Built</h2>
           <div className="space-y-4">
-            <h3 className="text-6xl md:text-8xl font-headline font-black tracking-tighter text-white">Things I've Built</h3>
-            <p className="text-xl md:text-2xl text-[#EAE0C8]/70 max-w-2xl font-light leading-relaxed">
-              Every product begins with a problem worth solving. I design systems that create clarity, leverage, and lasting impact.
+            <h3 className="text-5xl md:text-7xl font-headline font-black tracking-tighter text-white">The Product Portfolio</h3>
+            <p className="text-lg md:text-xl text-[#EAE0C8]/70 max-w-2xl font-light leading-relaxed">
+              A growing ecosystem of products designed to solve meaningful problems through technology, design, and systems thinking.
             </p>
           </div>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 auto-rows-[450px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-auto">
           {PRODUCTS.map((product, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: idx * 0.1 }}
               className={cn(product.className)}
@@ -128,45 +141,53 @@ export function ProductEcosystem() {
               <Link
                 href={`/projects/${product.slug}`}
                 className={cn(
-                  "group relative h-full w-full bg-[#536878]/05 rounded-[4rem] p-12 border border-[#EAE0C8]/05 flex flex-col justify-between overflow-hidden transition-all duration-700 hover:bg-[#536878]/10 hover:border-[#EAE0C8]/30",
-                  product.isFlagship && "bg-[#536878]/10 border-[#EAE0C8]/20 shadow-[0_0_50px_rgba(83,104,120,0.1)]"
+                  "group relative h-full w-full bg-[#536878]/05 rounded-[3rem] p-10 border border-[#EAE0C8]/05 flex flex-col justify-between overflow-hidden transition-all duration-700 hover:bg-[#536878]/10 hover:border-[#EAE0C8]/25 hover:-translate-y-2",
+                  product.isFlagship && "bg-[#536878]/08 border-[#EAE0C8]/15 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)]"
                 )}
               >
                 <VisualIdentity type={product.visualHint} />
                 
-                <div className="absolute inset-0 bg-gradient-to-br from-[#536878]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                {/* Spotlight effect */}
+                <div className="absolute inset-0 bg-radial-gradient from-[#536878]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
 
-                <div className="flex justify-between items-start relative z-10">
-                  <motion.div 
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-center group-hover:border-[#EAE0C8]/40 group-hover:bg-[#536878]/10 transition-all duration-500"
-                  >
-                    <product.icon className="w-8 h-8 text-[#EAE0C8]/50 group-hover:text-[#FFFFFF]" />
-                  </motion.div>
-                  <div className="px-4 py-1.5 rounded-full glass border-white/5 text-[8px] font-bold tracking-[0.3em] uppercase text-[#EAE0C8]/50">
-                    {product.status}
+                <div className="flex justify-between items-start relative z-10 mb-8">
+                  <div className="space-y-1">
+                    <p className="text-[9px] font-bold tracking-[0.4em] text-[#536878] uppercase">{product.category}</p>
+                    <h4 className={cn(
+                      "font-headline font-black text-white tracking-tight leading-none group-hover:text-[#EAE0C8] transition-colors",
+                      product.isFlagship ? "text-4xl md:text-6xl" : "text-2xl md:text-3xl"
+                    )}>
+                      {product.title}
+                    </h4>
+                  </div>
+                  <div className="flex flex-col items-end gap-2">
+                    <div className="px-3 py-1 rounded-full glass border-white/5 text-[7px] font-bold tracking-[0.2em] uppercase text-[#EAE0C8]/60">
+                      {product.status}
+                    </div>
                   </div>
                 </div>
                 
-                <div className="space-y-6 relative z-10">
-                  <div className="space-y-2">
-                    <p className="text-[9px] font-bold tracking-[0.5em] text-[#536878] uppercase">{product.category}</p>
-                    <p className={cn(
-                      "font-headline font-black text-white tracking-tighter leading-none group-hover:text-[#EAE0C8] transition-colors",
-                      product.isFlagship ? "text-5xl md:text-7xl" : "text-3xl md:text-5xl"
-                    )}>
-                      {product.title}
-                    </p>
-                  </div>
-                  
-                  <p className="text-[#EAE0C8]/70 text-lg leading-relaxed font-light transition-all duration-700">
+                <div className="space-y-8 relative z-10">
+                  <p className={cn(
+                    "text-[#EAE0C8]/70 leading-relaxed font-light transition-all duration-700",
+                    product.isFlagship ? "text-xl max-w-lg" : "text-base"
+                  )}>
                     {product.mission}
                   </p>
 
-                  <div className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-[#EAE0C8] uppercase opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0">
-                    Explore Experience <ArrowRight className="w-3 h-3" />
+                  <div className="flex items-center gap-3 text-[9px] font-bold tracking-[0.3em] text-[#EAE0C8] uppercase group-hover:text-white transition-all duration-500">
+                    <span className="relative">
+                      Explore Experience
+                      <span className="absolute -bottom-1 left-0 w-0 h-px bg-current group-hover:w-full transition-all duration-500" />
+                    </span>
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
+
+                {/* Flagship Indicator Glow */}
+                {product.isFlagship && (
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#EAE0C8]/[0.02] blur-3xl pointer-events-none" />
+                )}
               </Link>
             </motion.div>
           ))}
