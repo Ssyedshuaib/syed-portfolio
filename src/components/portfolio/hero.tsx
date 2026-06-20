@@ -8,11 +8,27 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 
+interface Particle {
+  id: number;
+  left: string;
+  duration: number;
+  delay: number;
+}
+
 export function Hero() {
   const [isMounted, setIsMounted] = useState(false);
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
     setIsMounted(true);
+    // Generate particles only on client to avoid hydration mismatch
+    const newParticles = [...Array(20)].map((_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      duration: 20 + Math.random() * 20,
+      delay: Math.random() * 20,
+    }));
+    setParticles(newParticles);
   }, []);
 
   const containerVariants = {
@@ -44,27 +60,25 @@ export function Hero() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.12),transparent_60%)]" />
       </div>
 
-      {isMounted && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 0 }}
-              animate={{ opacity: [0, 0.2, 0], y: -1000 }}
-              transition={{
-                duration: 20 + Math.random() * 20,
-                repeat: Infinity,
-                delay: Math.random() * 20,
-              }}
-              className="dust-particle absolute w-1 h-1 bg-[#EAE0C8] rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                bottom: `-10px`,
-              }}
-            />
-          ))}
-        </div>
-      )}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {particles.map((particle) => (
+          <motion.div
+            key={particle.id}
+            initial={{ opacity: 0, y: 0 }}
+            animate={{ opacity: [0, 0.2, 0], y: -1000 }}
+            transition={{
+              duration: particle.duration,
+              repeat: Infinity,
+              delay: particle.delay,
+            }}
+            className="dust-particle absolute w-1 h-1 bg-[#EAE0C8] rounded-full"
+            style={{
+              left: particle.left,
+              bottom: `-10px`,
+            }}
+          />
+        ))}
+      </div>
 
       <motion.div 
         variants={containerVariants}

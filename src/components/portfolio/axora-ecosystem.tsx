@@ -71,6 +71,10 @@ export function AxoraEcosystem() {
     setIsMounted(true);
   }, []);
 
+  if (!isMounted) {
+    return <section id="axora" className="py-64 bg-background" />;
+  }
+
   return (
     <section id="axora" className="py-64 px-6 relative overflow-hidden bg-background" ref={containerRef}>
       <div className="absolute inset-0 premium-glow opacity-30 pointer-events-none" />
