@@ -2,18 +2,36 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useSpring, useMotionValue } from "framer-motion";
+import { motion, useSpring, useMotionValue, AnimatePresence, LayoutGroup } from "framer-motion";
 import { 
   ArrowRight, 
   Clock, 
   MapPin, 
-  Target 
+  Target,
+  ArrowUpRight,
+  X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const TOPICS = [
+  { id: "01", label: "Products" },
+  { id: "02", label: "Ventures" },
+  { id: "03", label: "Collaboration" },
+  { id: "04", label: "Ideas" },
+  { id: "05", label: "Just Say Hello" },
+];
+
+const CHANNELS = [
+  { label: "Email", href: "mailto:hello@axora.in" },
+  { label: "LinkedIn", href: "#" },
+  { label: "Schedule Call", href: "#" },
+];
 
 export function Contact() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [time, setTime] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
 
   // Live Bangalore Clock
   useEffect(() => {
@@ -41,6 +59,7 @@ export function Contact() {
   const springY = useSpring(mouseY, { stiffness: 150, damping: 15 });
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    if (isExpanded) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - (rect.left + rect.width / 2);
     const y = e.clientY - (rect.top + rect.height / 2);
@@ -53,11 +72,10 @@ export function Contact() {
     mouseY.set(0);
   }
 
-  const handleScrollToEnding = () => {
-    const ending = document.getElementById("cinematic-ending");
-    if (ending) {
-      ending.scrollIntoView({ behavior: "smooth" });
-    }
+  const handleReset = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsExpanded(false);
+    setSelectedTopic(null);
   };
 
   return (
@@ -180,27 +198,154 @@ export function Contact() {
         </div>
       </div>
 
-      {/* SECTION 4: Primary Magnetic CTA */}
-      <div className="py-64 flex flex-col items-center justify-center relative min-h-[600px]">
+      {/* SECTION 4: Primary Expanding CTA */}
+      <div className="py-64 flex flex-col items-center justify-center relative min-h-[800px]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_70%)] pointer-events-none" />
         
-        <motion.div
-          style={{ x: springX, y: springY }}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          onClick={handleScrollToEnding}
-          className={cn(
-            "relative z-10 h-48 w-48 md:h-64 md:w-64 rounded-full glass border-white/10 flex items-center justify-center cursor-pointer transition-all duration-700 hover:border-primary/40 hover:bg-primary/[0.02] group"
-          )}
-        >
-          <div className="absolute inset-0 bg-primary/20 blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-          <div className="flex flex-col items-center justify-center gap-4 text-center">
-            <span className="text-[10px] font-bold tracking-[0.4em] text-primary/60 uppercase">Start A</span>
-            <span className="text-xs font-bold tracking-[0.2em] text-white uppercase flex items-center gap-2">
-              Conversation <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </span>
-          </div>
-        </motion.div>
+        <LayoutGroup>
+          <motion.div
+            layout
+            style={{ x: isExpanded ? 0 : springX, y: isExpanded ? 0 : springY }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            onClick={() => !isExpanded && setIsExpanded(true)}
+            transition={{ 
+              type: "spring", 
+              stiffness: 120, 
+              damping: 20,
+              layout: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+            }}
+            className={cn(
+              "relative z-10 glass border-white/10 flex flex-col items-center justify-center cursor-pointer transition-all duration-700",
+              isExpanded 
+                ? "w-full max-w-2xl rounded-[3rem] p-16 bg-[#0F1317]/95 shadow-[0_40px_100px_rgba(0,0,0,0.8)] border-primary/20" 
+                : "h-48 w-48 md:h-64 md:w-64 rounded-full hover:border-primary/40 hover:bg-primary/[0.02] group"
+            )}
+          >
+            {/* Background Glow */}
+            <motion.div 
+              layout
+              className={cn(
+                "absolute inset-0 bg-primary/20 blur-[60px] rounded-full transition-opacity duration-700 pointer-events-none",
+                isExpanded ? "opacity-30" : "opacity-0 group-hover:opacity-100"
+              )}
+            />
+
+            <AnimatePresence mode="wait">
+              {!isExpanded ? (
+                <motion.div
+                  key="cta-initial"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-col items-center justify-center gap-4 text-center"
+                >
+                  <span className="text-[10px] font-bold tracking-[0.4em] text-primary/60 uppercase">Start A</span>
+                  <span className="text-xs font-bold tracking-[0.2em] text-white uppercase flex items-center gap-2">
+                    Conversation <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="cta-expanded"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="w-full relative z-20"
+                >
+                  {/* Close Button */}
+                  <button 
+                    onClick={handleReset}
+                    className="absolute -top-4 -right-4 p-2 rounded-full glass border-white/5 hover:bg-white/5 transition-all group/close"
+                  >
+                    <X className="w-4 h-4 text-[#536878] group-hover/close:text-white" />
+                  </button>
+
+                  <div className="space-y-12">
+                    <div className="space-y-4">
+                      <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">Connect</p>
+                      <h4 className="text-4xl md:text-5xl font-headline font-black text-white tracking-tighter">
+                        {selectedTopic ? "How should we connect?" : "What would you like to discuss?"}
+                      </h4>
+                    </div>
+
+                    <div className="space-y-4">
+                      <AnimatePresence mode="wait">
+                        {!selectedTopic ? (
+                          <motion.div
+                            key="topics-grid"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            className="flex flex-col gap-2"
+                          >
+                            {TOPICS.map((topic, idx) => (
+                              <motion.button
+                                key={topic.id}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: idx * 0.05 }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedTopic(topic.label);
+                                }}
+                                className="group flex items-center justify-between p-6 rounded-2xl glass border-white/5 hover:border-primary/30 hover:bg-primary/[0.02] transition-all"
+                              >
+                                <div className="flex items-center gap-6">
+                                  <span className="text-[10px] font-mono font-bold text-[#536878]">{topic.id}</span>
+                                  <span className="text-xl font-light text-white/70 group-hover:text-white transition-colors">{topic.label}</span>
+                                </div>
+                                <ArrowRight className="w-4 h-4 text-[#536878] group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                              </motion.button>
+                            ))}
+                          </motion.div>
+                        ) : (
+                          <motion.div
+                            key="channels-reveal"
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            className="space-y-4"
+                          >
+                            <div className="flex items-center gap-3 mb-8">
+                               <button 
+                                 onClick={() => setSelectedTopic(null)}
+                                 className="text-[10px] font-bold tracking-[0.2em] text-primary/40 hover:text-primary uppercase flex items-center gap-2 transition-colors"
+                               >
+                                 <ArrowRight className="w-3 h-3 rotate-180" /> Back to topics
+                               </button>
+                            </div>
+                            
+                            {CHANNELS.map((channel, idx) => (
+                              <motion.a
+                                key={channel.label}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: idx * 0.1 }}
+                                href={channel.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group flex items-center justify-between p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/40 hover:bg-primary/[0.04] transition-all"
+                              >
+                                <span className="text-2xl font-headline font-bold text-white tracking-tight">{channel.label}</span>
+                                <div className="w-12 h-12 rounded-full glass border-white/10 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all">
+                                  <ArrowUpRight className="w-5 h-5" />
+                                </div>
+                              </motion.a>
+                            ))}
+
+                            <div className="pt-8 text-center">
+                               <p className="text-[9px] font-bold tracking-[0.4em] text-[#536878] uppercase">Expected Response Time: 24–48 Hours</p>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </LayoutGroup>
       </div>
     </section>
   );
