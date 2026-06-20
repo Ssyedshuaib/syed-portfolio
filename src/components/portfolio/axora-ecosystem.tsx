@@ -1,32 +1,56 @@
 
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
-import { MapPin, Layout, Compass, Sparkles } from "lucide-react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MapPin, Layout, Compass, Sparkles, BrainCircuit, ArrowUpRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const ECOSYSTEM_NODES = [
   {
+    id: "reverie",
     title: "REVERIE",
     description: "Place-based memory platform.",
     icon: MapPin,
-    position: "top-left",
+    slug: "/projects/reverie",
+    position: { x: 25, y: 25 },
+    delay: 0.2
   },
   {
+    id: "devnexus",
     title: "DEVNEXUS",
     description: "Student growth ecosystem.",
     icon: Layout,
-    position: "top-right",
+    slug: "/projects/devnexus",
+    position: { x: 75, y: 25 },
+    delay: 0.4
   },
   {
+    id: "ventures",
     title: "FUTURE VENTURES",
     description: "Emerging digital products.",
     icon: Compass,
-    position: "bottom-center",
+    slug: "#",
+    position: { x: 25, y: 75 },
+    delay: 0.6
+  },
+  {
+    id: "lab",
+    title: "INNOVATION LAB",
+    description: "R&D for next-gen tech.",
+    icon: BrainCircuit,
+    slug: "#",
+    position: { x: 75, y: 75 },
+    delay: 0.8
   },
 ];
 
 export function AxoraEcosystem() {
+  const router = useRouter();
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [isCoreHovered, setIsCoreHovered] = useState(false);
+
   return (
     <section id="axora" className="py-64 px-6 bg-[#050505] relative overflow-hidden">
       {/* Subtle background texture */}
@@ -35,7 +59,7 @@ export function AxoraEcosystem() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
           
-          {/* Text Content */}
+          {/* Text Content - Exactly as before */}
           <div className="lg:col-span-5 space-y-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -55,109 +79,148 @@ export function AxoraEcosystem() {
           </div>
 
           {/* Visualization Area */}
-          <div className="lg:col-span-7 relative aspect-square max-w-[600px] mx-auto flex items-center justify-center">
+          <div className="lg:col-span-7 relative aspect-square max-w-[700px] mx-auto flex items-center justify-center">
             
-            {/* Center Node: AXORA */}
+            {/* Connection Lines Layer */}
+            <div className="absolute inset-0 pointer-events-none z-0">
+              <svg className="w-full h-full" viewBox="0 0 100 100">
+                {ECOSYSTEM_NODES.map((node) => (
+                  <g key={`connection-${node.id}`}>
+                    <motion.line 
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      whileInView={{ pathLength: 1, opacity: 0.2 }}
+                      viewport={{ once: true }}
+                      animate={{ 
+                        opacity: isCoreHovered || hoveredNode === node.id ? 0.6 : 0.2,
+                        strokeWidth: isCoreHovered || hoveredNode === node.id ? 0.3 : 0.15
+                      }}
+                      transition={{ duration: 1.5, delay: node.delay }}
+                      x1="50" y1="50" 
+                      x2={node.position.x} 
+                      y2={node.position.y} 
+                      stroke="rgba(234, 224, 200, 1)" 
+                    />
+                    {/* Pulsing indicator on lines */}
+                    <motion.circle
+                      animate={{ 
+                        cx: [50, node.position.x],
+                        cy: [50, node.position.y],
+                        opacity: [0, 0.5, 0]
+                      }}
+                      transition={{ 
+                        duration: 3, 
+                        repeat: Infinity, 
+                        delay: node.delay,
+                        ease: "linear"
+                      }}
+                      r="0.5"
+                      fill="#EAE0C8"
+                    />
+                  </g>
+                ))}
+              </svg>
+            </div>
+
+            {/* Center Core: AXORA */}
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
-              className="relative z-20"
+              onMouseEnter={() => setIsCoreHovered(true)}
+              onMouseLeave={() => setIsCoreHovered(false)}
+              className="relative z-20 cursor-pointer"
             >
-              <div className="w-40 h-40 rounded-full glass border-[#EAE0C8]/10 flex flex-col items-center justify-center shadow-[0_0_80px_rgba(234,224,200,0.05)]">
-                <Sparkles className="w-6 h-6 text-[#536878] mb-3" />
+              <div className={cn(
+                "w-44 h-44 rounded-full glass border-[#EAE0C8]/10 flex flex-col items-center justify-center transition-all duration-700",
+                isCoreHovered ? "scale-110 border-[#EAE0C8]/30 shadow-[0_0_100px_rgba(234,224,200,0.1)]" : "shadow-[0_0_80px_rgba(234,224,200,0.05)]"
+              )}>
+                <Sparkles className={cn(
+                  "w-6 h-6 mb-3 transition-colors duration-700",
+                  isCoreHovered ? "text-white" : "text-[#536878]"
+                )} />
                 <span className="text-white font-headline font-bold text-xs tracking-[0.5em] uppercase">AXORA</span>
+                <p className={cn(
+                  "text-[8px] tracking-[0.3em] uppercase mt-2 transition-opacity duration-700",
+                  isCoreHovered ? "opacity-60" : "opacity-0"
+                )}>Venture Studio</p>
               </div>
               {/* Subtle ambient glow */}
               <div className="absolute inset-0 bg-[#EAE0C8]/5 blur-[60px] rounded-full -z-10" />
             </motion.div>
 
             {/* Satellite Nodes */}
-            <div className="absolute inset-0 pointer-events-none">
-              <svg className="w-full h-full" viewBox="0 0 100 100">
-                {/* Connection Lines */}
-                <motion.line 
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  whileInView={{ pathLength: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.5, delay: 0.5 }}
-                  x1="50" y1="50" x2="25" y2="30" 
-                  stroke="rgba(83,104,120,0.2)" strokeWidth="0.2" 
-                />
-                <motion.line 
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  whileInView={{ pathLength: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.5, delay: 0.7 }}
-                  x1="50" y1="50" x2="75" y2="30" 
-                  stroke="rgba(83,104,120,0.2)" strokeWidth="0.2" 
-                />
-                <motion.line 
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  whileInView={{ pathLength: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1.5, delay: 0.9 }}
-                  x1="50" y1="50" x2="50" y2="75" 
-                  stroke="rgba(83,104,120,0.2)" strokeWidth="0.2" 
-                />
-              </svg>
-            </div>
-
-            {/* Reverie Node */}
-            <div className="absolute top-[30%] left-[25%] -translate-x-1/2 -translate-y-1/2 group pointer-events-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.8 }}
-                className="flex flex-col items-center gap-6"
+            {ECOSYSTEM_NODES.map((node) => (
+              <div 
+                key={node.id}
+                className="absolute transition-transform duration-700"
+                style={{ 
+                  left: `${node.position.x}%`, 
+                  top: `${node.position.y}%`,
+                  transform: 'translate(-50%, -50%)'
+                }}
               >
-                <div className="w-14 h-14 rounded-2xl glass border-[#EAE0C8]/05 flex items-center justify-center group-hover:border-[#EAE0C8]/20 transition-all duration-700">
-                  <MapPin className="w-5 h-5 text-[#EAE0C8]/60 group-hover:text-white transition-colors" />
-                </div>
-                <div className="text-center space-y-2 opacity-0 group-hover:opacity-100 transition-all duration-700 -translate-y-2 group-hover:translate-y-0">
-                  <p className="text-[10px] font-bold tracking-[0.3em] text-white uppercase">REVERIE</p>
-                  <p className="text-[9px] text-[#536878] tracking-widest uppercase">Memory Platform</p>
-                </div>
-              </motion.div>
-            </div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: node.delay + 0.5 }}
+                  onMouseEnter={() => setHoveredNode(node.id)}
+                  onMouseLeave={() => setHoveredNode(null)}
+                  onClick={() => node.slug !== "#" && router.push(node.slug)}
+                  className="relative group cursor-pointer"
+                >
+                  {/* Floating Animation */}
+                  <motion.div
+                    animate={{ y: [0, -8, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, delay: node.delay }}
+                    className="flex flex-col items-center"
+                  >
+                    <div className={cn(
+                      "w-16 h-16 rounded-2xl glass border-[#EAE0C8]/05 flex items-center justify-center transition-all duration-700",
+                      hoveredNode === node.id || isCoreHovered ? "border-[#EAE0C8]/30 bg-[#536878]/10 scale-110" : "group-hover:border-[#EAE0C8]/20"
+                    )}>
+                      <node.icon className={cn(
+                        "w-6 h-6 transition-colors duration-700",
+                        hoveredNode === node.id || isCoreHovered ? "text-white" : "text-[#EAE0C8]/40"
+                      )} />
+                    </div>
 
-            {/* DevNexus Node */}
-            <div className="absolute top-[30%] right-[25%] translate-x-1/2 -translate-y-1/2 group pointer-events-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 1 }}
-                className="flex flex-col items-center gap-6"
-              >
-                <div className="w-14 h-14 rounded-2xl glass border-[#EAE0C8]/05 flex items-center justify-center group-hover:border-[#EAE0C8]/20 transition-all duration-700">
-                  <Layout className="w-5 h-5 text-[#EAE0C8]/60 group-hover:text-white transition-colors" />
-                </div>
-                <div className="text-center space-y-2 opacity-0 group-hover:opacity-100 transition-all duration-700 -translate-y-2 group-hover:translate-y-0">
-                  <p className="text-[10px] font-bold tracking-[0.3em] text-white uppercase">DEVNEXUS</p>
-                  <p className="text-[9px] text-[#536878] tracking-widest uppercase">Student Growth</p>
-                </div>
-              </motion.div>
-            </div>
+                    {/* Node Metadata Tooltip */}
+                    <div className={cn(
+                      "absolute top-full mt-6 text-center space-y-2 transition-all duration-700 w-48 pointer-events-none",
+                      hoveredNode === node.id ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+                    )}>
+                      <div className="px-4 py-3 glass rounded-2xl border-[#EAE0C8]/10">
+                        <div className="flex items-center justify-center gap-2 mb-1">
+                          <p className="text-[10px] font-bold tracking-[0.3em] text-white uppercase">{node.title}</p>
+                          {node.slug !== "#" && <ArrowUpRight className="w-3 h-3 text-[#EAE0C8]/40" />}
+                        </div>
+                        <p className="text-[9px] text-[#536878] tracking-widest uppercase leading-tight">{node.description}</p>
+                      </div>
+                    </div>
 
-            {/* Future Ventures Node */}
-            <div className="absolute bottom-[25%] left-1/2 -translate-x-1/2 translate-y-1/2 group pointer-events-auto">
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 1.2 }}
-                className="flex flex-col items-center gap-6"
-              >
-                <div className="w-14 h-14 rounded-2xl glass border-[#EAE0C8]/05 flex items-center justify-center group-hover:border-[#EAE0C8]/20 transition-all duration-700">
-                  <Compass className="w-5 h-5 text-[#EAE0C8]/60 group-hover:text-white transition-colors" />
-                </div>
-                <div className="text-center space-y-2 opacity-0 group-hover:opacity-100 transition-all duration-700 -translate-y-2 group-hover:translate-y-0">
-                  <p className="text-[10px] font-bold tracking-[0.3em] text-white uppercase">FUTURE VENTURES</p>
-                  <p className="text-[9px] text-[#536878] tracking-widest uppercase">Emerging Products</p>
-                </div>
-              </motion.div>
+                    {/* Minimal persistent label when not hovered but ecosystem highlighted */}
+                    <AnimatePresence>
+                      {isCoreHovered && hoveredNode !== node.id && (
+                        <motion.p
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 0.6 }}
+                          exit={{ opacity: 0 }}
+                          className="absolute -bottom-8 text-[8px] font-bold tracking-[0.4em] text-[#EAE0C8] uppercase"
+                        >
+                          {node.title}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                </motion.div>
+              </div>
+            ))}
+
+            {/* Ambient Background Glows */}
+            <div className="absolute inset-0 -z-10">
+              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-[#536878]/5 blur-[80px] rounded-full" />
+              <div className="absolute bottom-1/4 right-1/4 w-32 h-32 bg-[#EAE0C8]/5 blur-[80px] rounded-full" />
             </div>
 
           </div>
