@@ -29,11 +29,6 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const menuVariants = {
-    closed: { opacity: 0, scale: 0.95, y: -20 },
-    open: { opacity: 1, scale: 1, y: 0 },
-  };
-
   const itemVariants = {
     closed: { opacity: 0, y: 10 },
     open: (i: number) => ({
@@ -45,7 +40,7 @@ export function Navbar() {
 
   return (
     <>
-      <nav
+      <header
         className={cn(
           "fixed top-0 left-0 right-0 z-[100] transition-all duration-1000 flex justify-center px-4",
           scrolled ? "py-4 md:py-5" : "py-6 md:py-10"
@@ -62,7 +57,12 @@ export function Navbar() {
               : "bg-[#0F1317]/20 backdrop-blur-[10px] border-white/5 lg:bg-transparent lg:border-transparent lg:backdrop-blur-none"
           )}
         >
-          <Link href="/" className="flex items-center gap-4 md:gap-5 group cursor-pointer" onClick={() => setMobileMenuOpen(false)}>
+          <Link 
+            href="/" 
+            className="flex items-center gap-4 md:gap-5 group cursor-pointer" 
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Back to Homepage"
+          >
             <motion.div 
               whileHover={{ scale: 1.2, boxShadow: "0 0 25px rgba(234,224,200,0.8)" }}
               className="w-2 md:w-2.5 h-2 md:h-2.5 rounded-full bg-[#EAE0C8] shadow-[0_0_15px_rgba(234,224,200,0.4)]" 
@@ -74,7 +74,7 @@ export function Navbar() {
           
           <div className="h-4 w-px bg-white/5 hidden lg:block" />
 
-          <div className="hidden lg:flex items-center gap-10 text-[11.5px] font-bold tracking-[0.55em] text-[#EAE0C8]/70 uppercase">
+          <nav className="hidden lg:flex items-center gap-10 text-[11.5px] font-bold tracking-[0.55em] text-[#EAE0C8]/70 uppercase" aria-label="Main Navigation">
             {NAV_LINKS.map((link) => (
               <motion.div key={link.label} whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 400, damping: 25 }}>
                 <Link 
@@ -86,7 +86,7 @@ export function Navbar() {
                 </Link>
               </motion.div>
             ))}
-          </div>
+          </nav>
 
           <div className="flex items-center gap-4">
             <motion.div
@@ -97,6 +97,7 @@ export function Navbar() {
               <Link 
                 href="#contact"
                 className="bg-[#EAE0C8] text-[#0F1317] px-6 md:px-8 py-2 md:py-2.5 rounded-full text-[9px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] uppercase hover:bg-[#FFFFFF] hover:shadow-[0_15px_30px_rgba(234,224,200,0.3)] transition-all shadow-[0_10px_30px_rgba(234,224,200,0.15)]"
+                aria-label="Navigate to Contact Section"
               >
                 Contact
               </Link>
@@ -105,13 +106,15 @@ export function Navbar() {
             {/* Mobile Menu Toggle */}
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-white hover:text-primary transition-colors"
+              className="lg:hidden p-2 text-white hover:text-primary transition-colors focus:outline-none"
+              aria-expanded={mobileMenuOpen}
+              aria-label={mobileMenuOpen ? "Close Menu" : "Open Menu"}
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </motion.div>
-      </nav>
+      </header>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
@@ -122,7 +125,7 @@ export function Navbar() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[90] bg-[#050505]/95 backdrop-blur-2xl lg:hidden flex flex-col items-center justify-center p-8"
           >
-            <div className="space-y-8 text-center">
+            <nav className="space-y-8 text-center" aria-label="Mobile Navigation">
               {[...NAV_LINKS, { label: "Contact", href: "#contact" }].map((link, i) => (
                 <motion.div
                   key={link.label}
@@ -141,7 +144,7 @@ export function Navbar() {
                   </Link>
                 </motion.div>
               ))}
-            </div>
+            </nav>
 
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
