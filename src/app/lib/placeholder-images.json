@@ -26,6 +26,30 @@
       "imageHint": "mobile gallery"
     },
     {
+      "id": "novapu-onboarding",
+      "description": "NovaPU onboarding screen showing intelligent personalization",
+      "imageUrl": "https://picsum.photos/seed/novapu-onboarding/600/1200",
+      "imageHint": "education mobile"
+    },
+    {
+      "id": "novapu-dashboard",
+      "description": "NovaPU dashboard showing academic command center",
+      "imageUrl": "https://picsum.photos/seed/novapu-dashboard/600/1200",
+      "imageHint": "dashboard mobile"
+    },
+    {
+      "id": "novapu-ai-mentor",
+      "description": "NovaPU AI Mentor chat interface",
+      "imageUrl": "https://picsum.photos/seed/novapu-ai-mentor/600/1200",
+      "imageHint": "ai chat"
+    },
+    {
+      "id": "novapu-test-centre",
+      "description": "NovaPU test centre for practice exams",
+      "imageUrl": "https://picsum.photos/seed/novapu-test-centre/600/1200",
+      "imageHint": "quiz app"
+    },
+    {
       "id": "founder-portrait",
       "description": "Syed Sharfuddin Shuaib professional portrait",
       "imageUrl": "https://picsum.photos/seed/syed-portrait/800/1000",

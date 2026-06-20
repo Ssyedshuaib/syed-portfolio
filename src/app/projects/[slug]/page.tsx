@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ReverieShowcase } from "@/components/portfolio/reverie-showcase";
+import { NovaPUShowcase } from "@/components/portfolio/novapu-showcase";
 
 const PROJECT_DATA: Record<string, any> = {
   reverie: {
@@ -329,6 +330,7 @@ export default function ProjectPage() {
 
             {/* Custom Project-Specific Sections */}
             {slug === "reverie" && <ReverieShowcase />}
+            {slug === "novapu" && <NovaPUShowcase />}
           </motion.div>
         )}
       </AnimatePresence>
