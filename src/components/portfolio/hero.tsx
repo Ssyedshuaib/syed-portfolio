@@ -58,10 +58,8 @@ export function Hero() {
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-40 pb-20 px-6 overflow-hidden bg-background">
       {/* RICH ATMOSPHERIC ENVIRONMENT */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Central Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.06),transparent_70%)]" />
         
-        {/* Volumetric Light Beams (Moving Environment) */}
         <motion.div 
           animate={{ 
             opacity: [0.03, 0.07, 0.03],
@@ -83,7 +81,6 @@ export function Hero() {
         />
       </div>
 
-      {/* Floating Environmental Particles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.15]">
         {particles.map((particle) => (
           <motion.div
@@ -106,7 +103,7 @@ export function Hero() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center z-10"
+        className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-16 lg:gap-24 items-center z-10"
       >
         <div className="space-y-14 text-center lg:text-left">
           <motion.div 
@@ -170,7 +167,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.98, filter: "blur(40px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 2.5, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="hidden lg:block"
+          className="hidden lg:flex justify-end pr-12"
         >
           <OrbitalSystem />
         </motion.div>
