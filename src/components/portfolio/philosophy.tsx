@@ -1,65 +1,67 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import { Sparkles } from "lucide-react";
+import React from "react";
+import { motion } from "framer-motion";
 
 export function Philosophy() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    const elements = sectionRef.current?.querySelectorAll(".reveal-on-scroll");
-    elements?.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <section id="philosophy" className="py-64 px-6 relative bg-background" ref={sectionRef}>
-      <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[#536878]/10 blur-[150px] pointer-events-none" />
-      
-      <div className="max-w-6xl mx-auto space-y-48">
-        <div className="space-y-12 text-center reveal-on-scroll">
-          <h2 className="text-[11px] font-bold tracking-[0.6em] text-[#536878] uppercase">Why I Build</h2>
-          <h3 className="text-6xl md:text-8xl font-headline font-black leading-[0.9] tracking-tighter uppercase text-white">
-            Technology becomes <br />
-            meaningful when it solves <br />
-            <span className="text-[#EAE0C8] italic font-medium">real problems.</span>
-          </h3>
-        </div>
+    <section id="philosophy" className="py-64 px-6 relative bg-background overflow-hidden">
+      <div className="max-w-6xl mx-auto space-y-32">
+        {/* Section Label */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">WHY I BUILD</p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 reveal-on-scroll delay-300">
-          <div className="glass p-16 rounded-[4rem] border-white/5 space-y-10 flex flex-col justify-center">
-             <p className="text-2xl md:text-3xl text-[#EAE0C8]/70 leading-relaxed font-light">
-              I enjoy transforming ideas into products that help people learn, connect, remember, and grow. Every project begins with a simple question:
+        {/* Main Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <h2 className="text-6xl md:text-9xl font-headline font-black tracking-tighter text-white leading-[0.85]">
+            Technology Should <br />
+            <span className="text-primary italic font-medium">Create Meaning.</span>
+          </h2>
+        </motion.div>
+
+        {/* Body Text Content */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-16 pt-12"
+        >
+          <div className="space-y-12 text-3xl md:text-5xl lg:text-6xl font-light leading-[1.2] text-primary/70 tracking-tight max-w-5xl">
+            <p>
+              I believe great technology should <span className="text-white font-medium">simplify life</span> rather than complicate it.
+            </p>
+            <p>
+              Through Axora, I am building products designed around long-term value, meaningful experiences, and human-centered systems.
+            </p>
+            <p>
+              Whether helping students learn, preserving memories tied to places, or creating tools for deeper focus, the goal remains the same:
+            </p>
+            <p className="text-white font-headline font-bold italic text-4xl md:text-7xl lg:text-8xl tracking-tighter pt-8">
+              Build things that matter.
             </p>
           </div>
-          
-          <div className="glass p-16 rounded-[4rem] border-[#536878]/20 space-y-10 relative overflow-hidden group shadow-[0_40px_100px_rgba(83,104,120,0.1)]">
-            <div className="absolute top-0 right-0 p-12">
-              <Sparkles className="w-12 h-12 text-[#536878]/20 group-hover:text-[#EAE0C8] transition-colors duration-1000" />
-            </div>
-            <div className="space-y-8">
-              <p className="text-[11px] font-bold tracking-[0.4em] text-[#536878] uppercase">Core Principle</p>
-              <h4 className="text-5xl font-headline font-bold leading-none tracking-tighter italic text-[#EAE0C8]">
-                "What problem deserves solving?"
-              </h4>
-              <p className="text-[#EAE0C8]/70 text-xl leading-relaxed font-light">
-                This guiding philosophy is the lens through which I evaluate every product, experiment, and platform I architect.
-              </p>
-            </div>
-          </div>
-        </div>
+        </motion.div>
+
+        {/* Minimal architectural divider */}
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          whileInView={{ scaleX: 1, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="h-px w-24 bg-primary/10 origin-left"
+        />
       </div>
     </section>
   );
