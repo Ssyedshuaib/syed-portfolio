@@ -24,7 +24,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
-  // Prevent scrolling when loading
+  // Prevent scrolling when loading to maintain focus on the cinematic intro
   useEffect(() => {
     if (isLoading) {
       document.body.style.overflow = "hidden";
@@ -43,13 +43,16 @@ export default function Home() {
 
       <motion.main 
         className="min-h-screen relative overflow-x-hidden"
-        initial={{ opacity: 0.05 }} // Subconscious preview during loading
+        initial={{ opacity: 0.05 }} // Subconscious hero preview during Scene 4
         animate={{ 
           opacity: isLoading ? 0.05 : 1,
-          scale: isLoading ? 0.98 : 1,
-          filter: isLoading ? "blur(10px)" : "blur(0px)"
+          scale: isLoading ? 0.99 : 1,
+          filter: isLoading ? "blur(20px)" : "blur(0px)"
         }}
-        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ 
+          duration: 2.5, 
+          ease: [0.16, 1, 0.3, 1] 
+        }}
       >
         <div className="fixed inset-0 grain-overlay z-[100] pointer-events-none" />
         <div className="fixed inset-0 premium-glow pointer-events-none z-0" />
