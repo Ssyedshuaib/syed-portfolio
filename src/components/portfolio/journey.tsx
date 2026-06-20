@@ -6,32 +6,32 @@ import { cn } from "@/lib/utils";
 const STAGES = [
   { 
     stage: "Curiosity", 
-    desc: "Learning how technology works and understanding systems at their most fundamental level.",
+    desc: "Understanding technology and learning how systems work.",
     detail: "Core Logic & System Foundations"
   },
   { 
     stage: "Creation", 
-    desc: "Building projects, experimenting, and turning abstract ideas into digital reality.",
+    desc: "Building projects and turning ideas into reality.",
     detail: "Rapid Prototyping & Development"
   },
   { 
     stage: "Systems Thinking", 
-    desc: "Looking beyond code to understand complete product ecosystems and human friction points.",
+    desc: "Understanding products beyond code.",
     detail: "Structural Mapping & Architecture"
   },
   { 
     stage: "Product Architecture", 
-    desc: "Designing scalable products, high-impact experiences, and digital platforms with intention.",
+    desc: "Designing scalable platforms and experiences.",
     detail: "Ecosystem Design & Strategy"
   },
   { 
     stage: "Founder Mindset", 
-    desc: "Moving from building software to building companies that solve meaningful problems.",
+    desc: "Moving from software development to business creation.",
     detail: "Business Logic & Founder Vision"
   },
   { 
     stage: "Future Vision", 
-    desc: "Creating technology ecosystems capable of impacting and serving millions of people.",
+    desc: "Building ecosystems capable of serving millions.",
     detail: "Scalability & Long-term Impact"
   },
 ];
