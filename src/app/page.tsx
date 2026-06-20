@@ -23,34 +23,60 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    // Session-based persistence: Intro plays once per visit.
+    // Check sessionStorage to skip intro on internal navigation (back from projects).
+    const introPlayed = sessionStorage.getItem("axora_intro_played");
+    if (introPlayed === "true") {
+      setIsLoading(false);
+    }
+    
+    // Satisfy requirement: On browser refresh, intro should play again.
+    // We clear the flag on unload so a fresh load (refresh/new tab) triggers it.
+    const handleUnload = () => sessionStorage.removeItem("axora_intro_played");
+    window.addEventListener("beforeunload", handleUnload);
+    
+    setHasMounted(true);
+    return () => window.removeEventListener("beforeunload", handleUnload);
+  }, []);
 
   // Maintain lock on body scroll during the cinematic sequence
   useEffect(() => {
-    if (isLoading) {
+    if (isLoading && hasMounted) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-  }, [isLoading]);
+  }, [isLoading, hasMounted]);
+
+  const handleIntroComplete = () => {
+    sessionStorage.setItem("axora_intro_played", "true");
+    setIsLoading(false);
+  };
+
+  // Prevent hydration flicker: Only render preloader once client state is ready.
+  if (!hasMounted) return null;
 
   return (
     <>
       <AnimatePresence mode="wait">
         {isLoading && (
-          <Preloader key="preloader" onComplete={() => setIsLoading(false)} />
+          <Preloader key="preloader" onComplete={handleIntroComplete} />
         )}
       </AnimatePresence>
 
       <motion.main 
         className="min-h-screen relative overflow-x-hidden"
-        initial={{ opacity: 0.03 }} // Subconscious preview during intro (3%)
+        initial={{ opacity: 0 }}
         animate={{ 
-          opacity: isLoading ? 0.03 : 1,
+          opacity: isLoading ? 0.05 : 1, // Subconscious preview during intro (5%)
           scale: isLoading ? 0.99 : 1,
           filter: isLoading ? "blur(40px)" : "blur(0px)"
         }}
         transition={{ 
-          duration: 2, // Smooth emergence from Scene 5
+          duration: 1.5, // Cinematic emergence duration
           ease: [0.16, 1, 0.3, 1] 
         }}
       >

@@ -29,28 +29,33 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       duration: 3 + Math.random() * 2,
     })));
 
+    // Scene 1: Building Products (1.5s hold + 0.8s trans)
     const t0 = setTimeout(() => {
       setScene(1);
       lightIntensity.set(0.07);
       ambientScale.set(1.02);
     }, 800);
 
+    // Scene 2: Designing Systems (1.5s hold + 0.8s trans)
     const t1 = setTimeout(() => {
       setScene(2);
       lightIntensity.set(0.08);
     }, 3100);
 
+    // Scene 3: Creating Ecosystems (1.5s hold + 0.8s trans)
     const t2 = setTimeout(() => {
       setScene(3);
       lightIntensity.set(0.07);
     }, 5400);
 
+    // Scene 4: Founder Reveal (Emotional Peak: 2.5s hold)
     const t3 = setTimeout(() => {
       setScene(4);
       lightIntensity.set(0.12);
       ambientScale.set(1.06);
     }, 7700);
 
+    // Scene 5: Hero Emergence (Transition completion)
     const t4 = setTimeout(onComplete, 11000);
 
     return () => {
@@ -61,7 +66,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
   const textVariants = {
     initial: { 
       opacity: 0, 
-      y: 15, 
+      y: 20, 
       filter: "blur(20px)",
       scale: 1.05
     },
@@ -77,7 +82,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
     },
     exit: { 
       opacity: 0, 
-      y: -8, 
+      y: -10, 
       filter: "blur(15px)",
       transition: { 
         duration: 1, 
@@ -95,10 +100,11 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
         opacity: 0, 
         scale: 1.05, 
         filter: "blur(80px)",
-        transition: { duration: 2.2, ease: [0.16, 1, 0.3, 1] } 
+        transition: { duration: 1.5, ease: [0.16, 1, 0.3, 1] } 
       }}
       className="fixed inset-0 z-[9999] bg-[#050505] flex items-center justify-center overflow-hidden"
     >
+      {/* Cinematic Environment: Volumetric Light & Atmospheric Depth */}
       <motion.div 
         style={{ 
           opacity: smoothIntensity,
