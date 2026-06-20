@@ -45,11 +45,11 @@ const PRINCIPLES = [
 export function FounderPhilosophy() {
   const containerRef = useRef<HTMLDivElement>(null);
   const closingRef = useRef<HTMLDivElement>(null);
-  const principlesStartRef = useRef<HTMLDivElement>(null);
+  const principlesContainerRef = useRef<HTMLDivElement>(null);
   
-  // 1. Scroll progress for the entire philosophy section
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
+  // 1. Scroll progress for the principles container to track 01-05
+  const { scrollYProgress: principlesProgress } = useScroll({
+    target: principlesContainerRef,
     offset: ["start center", "end end"],
   });
 
@@ -60,27 +60,27 @@ export function FounderPhilosophy() {
   });
 
   // 3. Navigation Rail Entry/Exit Logic
+  // Rail appears when principles start and disappears when "Better Systems" arrives
   const railOpacity = useTransform(
-    [scrollYProgress, closingProgress],
+    [principlesProgress, closingProgress],
     ([prog, close]) => {
-      // Fade in quickly as the principles start
-      const fadeIn = (prog as number) * 12; 
+      // Fade in quickly as the principles start (triggered at start center)
+      const fadeIn = (prog as number) * 10; 
       // Fade out as the "Better Systems" closing section arrives
       const fadeOut = 1 - (close as number) * 5; 
       return Math.max(0, Math.min(1, fadeIn)) * Math.max(0, Math.min(1, fadeOut));
     }
   );
 
-  // Moves 20px left as closing section enters
+  // Rail slides left by 20px as closing section enters
   const railX = useTransform(closingProgress, [0, 0.3], [0, -20]);
   const pointerEvents = useTransform(railOpacity, (v) => v > 0.1 ? "auto" : "none");
 
   // 4. Progress Line: Completes when closing section enters
   const progressLine = useSpring(
-    useTransform([scrollYProgress, closingProgress], ([prog, close]) => {
+    useTransform([principlesProgress, closingProgress], ([prog, close]) => {
       if ((close as number) > 0.1) return 1;
-      // Scale progress to complete before the closing section
-      return Math.min(1, (prog as number) / 0.82);
+      return Math.min(1, prog as number);
     }),
     { stiffness: 100, damping: 30 }
   );
@@ -106,16 +106,16 @@ export function FounderPhilosophy() {
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-32 md:pb-48">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
-      {/* FIXED MANIFESTO NAVIGATION RAIL */}
+      {/* FIXED MANIFESTO NAVIGATION RAIL - RESTORED */}
       <motion.div 
         style={{ 
           opacity: railOpacity,
           x: railX,
           pointerEvents: pointerEvents as any
         }}
-        className="fixed left-8 md:left-16 top-1/2 -translate-y-1/2 flex flex-col items-center gap-10 z-[80] hidden lg:flex"
+        className="fixed left-8 md:left-24 top-1/2 -translate-y-1/2 flex flex-col items-center gap-10 z-[80] hidden lg:flex"
       >
-        <div className="text-[10px] font-bold tracking-[0.6em] text-primary/40 uppercase rotate-90 mb-20 whitespace-nowrap">
+        <div className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase rotate-90 mb-20 whitespace-nowrap">
           Manifesto
         </div>
         
@@ -126,17 +126,23 @@ export function FounderPhilosophy() {
           />
         </div>
 
-        <div className="flex flex-col gap-5 mt-10">
+        <div className="flex flex-col gap-6 mt-10">
           {PRINCIPLES.map((p, i) => {
-            const start = i * 0.16;
-            const end = (i + 1) * 0.16;
-            const isActive = useTransform(scrollYProgress, [start, start + 0.05, end - 0.05, end], [0.2, 1, 1, 0.2]);
+            const start = i * (1 / PRINCIPLES.length);
+            const end = (i + 1) * (1 / PRINCIPLES.length);
+            
+            // Principle is active/highlighted if we have scrolled past its threshold
+            const isActive = useTransform(
+              principlesProgress, 
+              [start - 0.1, start, end, end + 0.1], 
+              [0.2, 1, 1, 0.4]
+            );
             
             return (
               <motion.span 
                 key={p.id}
                 style={{ opacity: isActive }}
-                className="text-[11px] font-mono font-bold text-primary"
+                className="text-[12px] font-mono font-bold text-primary transition-shadow duration-500"
               >
                 {p.id}
               </motion.span>
@@ -146,6 +152,7 @@ export function FounderPhilosophy() {
       </motion.div>
 
       <div className="max-w-7xl mx-auto px-6">
+        {/* Intro Heading */}
         <div className="py-48 space-y-8 text-center lg:text-left">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -162,7 +169,7 @@ export function FounderPhilosophy() {
         </div>
 
         {/* Principles Narrative Blocks */}
-        <div ref={principlesStartRef} className="space-y-64 lg:space-y-[60vh]">
+        <div ref={principlesContainerRef} className="space-y-64 lg:space-y-[60vh]">
           {PRINCIPLES.map((principle, idx) => (
             <PrincipleChapter key={idx} principle={principle} idx={idx} />
           ))}
