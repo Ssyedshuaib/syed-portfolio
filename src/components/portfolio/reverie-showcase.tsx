@@ -4,20 +4,22 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { cn } from "@/lib/utils";
 
 const PRODUCT_FEATURES = [
   {
     id: "discover",
+    number: "01",
     label: "DISCOVER",
-    title: "Explore Stories Around You",
-    description: "Connect with the emotional history of your surroundings. Discover memories anchored to specific locations by a global community of storytellers.",
+    title: "Stories from places that moved people.",
+    description: "Explore emotional stories, places, and moments that inspire you.",
     imageId: "reverie-discover",
   },
   {
     id: "capture",
+    number: "02",
     label: "CAPTURE",
     title: "Preserve Meaningful Moments",
     description: "Move beyond the photo gallery. Capture the context, mood, and spirit of your experiences exactly where they happen.",
@@ -25,6 +27,7 @@ const PRODUCT_FEATURES = [
   },
   {
     id: "atlas",
+    number: "03",
     label: "MEMORY ATLAS",
     title: "A Living Emotional Map",
     description: "Visualize your life's journey through a geographical lens. See your growth and experiences mapped across the world in an elegant spatial interface.",
@@ -32,6 +35,7 @@ const PRODUCT_FEATURES = [
   },
   {
     id: "keepsakes",
+    number: "04",
     label: "KEEPSAKES",
     title: "Collect What Matters Most",
     description: "Organize your most precious memories into curated collections. A digital home for the stories that define who you are.",
@@ -50,7 +54,7 @@ const IPhoneMockup = ({ imageId }: { imageId: string }) => {
       <motion.div 
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="relative w-[280px] h-[600px] md:w-[340px] md:h-[720px] rounded-[3.5rem] border-[12px] border-[#1C1C1C] bg-[#000000] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.8),0_0_0_2px_rgba(255,255,255,0.05)] overflow-hidden"
+        className="relative w-[280px] h-[600px] md:w-[340px] md:h-[720px] rounded-[3.5rem] border-[12px] border-[#1C1C1C] bg-[#000000] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.8),0_0_0:2px_rgba(255,255,255,0.05)] overflow-hidden"
       >
         {/* Titanium Frame Highlights */}
         <div className="absolute inset-0 border-[1px] border-white/15 rounded-[2.8rem] pointer-events-none z-30" />
@@ -100,7 +104,7 @@ export function ReverieShowcase() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#EAE0C8]/10 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6">
-        {/* Section Header - Inspired by provided screenshot */}
+        {/* Section Header */}
         <div className="mb-64 space-y-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -133,7 +137,7 @@ export function ReverieShowcase() {
           </div>
         </div>
 
-        {/* Feature Sections - Alternating Layout */}
+        {/* Feature Sections */}
         <div className="space-y-64 md:space-y-[40rem]">
           {PRODUCT_FEATURES.map((feature, idx) => (
             <div 
@@ -149,13 +153,17 @@ export function ReverieShowcase() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                className="flex-1 space-y-10 text-center md:text-left"
+                className="flex-1 space-y-12 text-center md:text-left"
               >
-                <div className="space-y-6">
-                  <span className="text-[11px] font-bold tracking-[0.5em] text-[#536878] uppercase block">
-                    {feature.label}
-                  </span>
-                  <h3 className="text-5xl md:text-7xl font-headline font-black text-white tracking-tighter leading-none">
+                <div className="space-y-8">
+                  <div className="flex items-center justify-center md:justify-start gap-4 text-[#536878]">
+                    <span className="text-xs font-bold tracking-[0.4em]">{feature.number}</span>
+                    <div className="h-px w-8 bg-current opacity-30" />
+                    <span className="text-[11px] font-bold tracking-[0.5em] uppercase">
+                      {feature.label}
+                    </span>
+                  </div>
+                  <h3 className="text-5xl md:text-7xl lg:text-[5.5rem] font-headline font-black text-white tracking-tighter leading-[0.9]">
                     {feature.title}
                   </h3>
                   <p className="text-xl md:text-2xl text-[#EAE0C8]/60 font-light leading-relaxed max-w-xl mx-auto md:mx-0">
@@ -163,12 +171,21 @@ export function ReverieShowcase() {
                   </p>
                 </div>
                 
-                <div className="pt-8 flex justify-center md:justify-start">
-                  <div className="h-px w-16 bg-[#536878]/30" />
-                </div>
+                {feature.id === 'discover' && (
+                   <motion.div 
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="pt-8 flex justify-center md:justify-start"
+                   >
+                     <button className="w-14 h-14 rounded-full glass border-[#EAE0C8]/10 flex items-center justify-center text-[#EAE0C8] hover:bg-[#EAE0C8] hover:text-[#0F1317] transition-all duration-500 group">
+                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                     </button>
+                   </motion.div>
+                )}
               </motion.div>
 
-              {/* Visual Showcase - Mockup */}
+              {/* Visual Showcase */}
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9, y: 50 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}

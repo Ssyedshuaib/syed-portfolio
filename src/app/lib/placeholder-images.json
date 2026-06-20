@@ -3,7 +3,7 @@
   "placeholderImages": [
     {
       "id": "reverie-discover",
-      "description": "Reverie Discover screen showing location-based stories",
+      "description": "Reverie Discover screen showing stories from places that moved people",
       "imageUrl": "https://picsum.photos/seed/reverie-discover/600/1200",
       "imageHint": "mobile discover"
     },
