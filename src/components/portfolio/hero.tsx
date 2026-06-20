@@ -66,19 +66,12 @@ export function Hero() {
             <div className="overflow-visible">
               <motion.h1 
                 variants={lineVariants}
-                className="text-4xl md:text-7xl lg:text-[clamp(2.5rem,5.5vw,5.8rem)] font-headline font-black tracking-tighter leading-tight text-white uppercase whitespace-nowrap"
+                className="text-4xl md:text-7xl lg:text-[clamp(2.5rem,5.5vw,5.8rem)] font-headline font-black tracking-tighter leading-[0.95] text-white uppercase"
               >
-                Syed Sharfuddin Shuaib
+                Building Products. <br />
+                Building Systems. <br />
+                <span className="text-primary italic font-medium">Building The Future.</span>
               </motion.h1>
-            </div>
-            
-            <div className="space-y-2">
-              <motion.p 
-                variants={lineVariants}
-                className="text-xl md:text-3xl font-headline font-light tracking-tight italic text-primary/40"
-              >
-                Building products. Systems. The Future.
-              </motion.p>
             </div>
             
             <motion.p 
@@ -104,7 +97,7 @@ export function Hero() {
 
         <motion.div 
           initial={{ opacity: 0, scale: 0.9, filter: "blur(20px)" }}
-          animate={{ opacity: 0.25, scale: 1, filter: "blur(0px)" }}
+          animate={{ opacity: 0.2, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 2.5, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
           className="hidden lg:flex justify-end pr-8"
         >
