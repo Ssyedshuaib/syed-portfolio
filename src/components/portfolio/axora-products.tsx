@@ -138,9 +138,15 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
       viewport={{ once: true, margin: "-10%" }}
       className="relative group"
     >
-      {/* Background Accent Glow */}
-      <div 
-        className="absolute -inset-40 blur-[150px] rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-1000 pointer-events-none"
+      {/* Background Ambient Accent Glow */}
+      <motion.div 
+        animate={{ 
+          scale: [1, 1.1, 1], 
+          opacity: [0.05, 0.12, 0.05],
+          x: [0, 10, 0]
+        }}
+        transition={{ duration: 15 + idx * 2, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -inset-40 blur-[150px] rounded-full pointer-events-none"
         style={{ background: product.accent }}
       />
 
@@ -191,9 +197,11 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
           </div>
         </div>
 
-        {/* Visual Mockup Area with Inertia */}
+        {/* Visual Mockup Area with Inertia & Ambient Float */}
         <motion.div 
           style={{ y: springY }}
+          animate={{ y: [0, -4, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           className="relative px-4 lg:px-0"
         >
           <LaptopMockup imageId={product.imageId} />

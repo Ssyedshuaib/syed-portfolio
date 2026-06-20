@@ -66,7 +66,11 @@ export function FounderProfile() {
   return (
     <section id="founder" className="py-80 px-6 relative bg-background overflow-hidden">
       {/* Background Ambience */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-primary/5 blur-[180px] rounded-full pointer-events-none" />
+      <motion.div 
+        animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-primary/5 blur-[180px] rounded-full pointer-events-none" 
+      />
       
       <motion.div 
         variants={containerVariants}
@@ -113,7 +117,7 @@ export function FounderProfile() {
                   {["Product Architecture", "Systems Design", "Venture Building", "Digital Ecosystems"].map((item) => (
                     <div key={item} className="flex items-center gap-3 group">
                       <div className="w-1 h-1 rounded-full bg-primary/20 group-hover:bg-primary transition-colors" />
-                      <p className="text-[11px] font-bold tracking-[0.2em] text-[#EAE0C8]/60 uppercase group-hover:text-white transition-colors">
+                      <p className="text-[11px] font-bold tracking-[0.2em] text-[#EAE0C8]/60 uppercase group-hover:text-white transition-all">
                         {item}
                       </p>
                     </div>
@@ -131,7 +135,11 @@ export function FounderProfile() {
 
           {/* CENTER COLUMN: Hero Card & Metrics */}
           <motion.div variants={revealVariants} className="lg:col-span-4 space-y-12">
-            <div className="relative aspect-[4/5.2] w-full glass rounded-[4.5rem] border-white/10 overflow-hidden shadow-2xl group cursor-default">
+            <motion.div 
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+              className="relative aspect-[4/5.2] w-full glass rounded-[4.5rem] border-white/10 overflow-hidden shadow-2xl group cursor-default"
+            >
               {portrait && (
                 <motion.div
                   initial={{ scale: 1.05, filter: "blur(12px)" }}
@@ -168,7 +176,7 @@ export function FounderProfile() {
               <div className="absolute top-10 right-10 opacity-20 group-hover:opacity-60 transition-opacity">
                 <Sparkles className="w-6 h-6 text-primary" />
               </div>
-            </div>
+            </motion.div>
 
             <div className="flex justify-between items-center px-4 py-8 glass rounded-[2.5rem] border-white/5">
               {METRICS.map((metric) => (

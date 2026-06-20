@@ -85,7 +85,7 @@ export function FounderPhilosophy() {
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-32 md:pb-64">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
-      {/* Progress Rail - Optimized for all screens */}
+      {/* Progress Rail - Optimized for all screens with Ambient Glow Sweep */}
       <motion.div 
         style={{ opacity: railOpacity }}
         className="fixed left-4 md:left-12 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 md:gap-6 z-50 pointer-events-none"
@@ -95,6 +95,12 @@ export function FounderPhilosophy() {
           <motion.div 
             style={{ scaleY: progressLine }}
             className="absolute top-0 left-0 w-full h-full bg-primary origin-top shadow-[0_0_15px_rgba(234,224,200,0.5)]"
+          />
+          {/* Ambient Glow Sweep */}
+          <motion.div 
+            animate={{ top: ["-100%", "200%"] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+            className="absolute left-0 w-full h-1/2 bg-white/30 blur-sm pointer-events-none"
           />
         </div>
         <div className="flex flex-col gap-3 md:gap-4 mt-8 md:mt-12">
@@ -228,17 +234,20 @@ function PrincipleChapter({ principle, idx }: { principle: any, idx: number }) {
     >
       <motion.div 
         style={{ y: numberY }}
+        animate={{ 
+          x: [0, 2, 0],
+          y: [0, -2, 0],
+          opacity: isInView ? [0.04, 0.05, 0.04] : 0.01 
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} // Ambient shift
         className={cn(
           "absolute -top-16 md:-top-64 pointer-events-none select-none z-0",
           isRight ? "-left-4 lg:-left-24" : "-right-4 lg:-right-24"
         )}
       >
-        <motion.span 
-          animate={{ opacity: isInView ? 0.04 : 0.01 }}
-          className="text-[10rem] md:text-[40rem] font-headline font-black text-white tracking-tighter block leading-none"
-        >
+        <span className="text-[10rem] md:text-[40rem] font-headline font-black text-white tracking-tighter block leading-none">
           {principle.id}
-        </motion.span>
+        </span>
       </motion.div>
 
       <div className="flex-1 space-y-8 md:space-y-16 relative z-10 w-full">

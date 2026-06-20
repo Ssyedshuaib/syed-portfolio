@@ -107,7 +107,7 @@ export function AxoraEcosystem() {
             >
               <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass border-white/5">
                 <motion.div 
-                  animate={{ opacity: [1, 0.4, 1] }}
+                  animate={{ opacity: [1, 0.4, 1], scale: [1, 1.2, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                   className="w-1.5 h-1.5 rounded-full bg-primary" 
                 />
@@ -135,7 +135,11 @@ export function AxoraEcosystem() {
           >
             {/* Background Energy Field */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="absolute w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.08),transparent_70%)] opacity-40" />
+              <motion.div 
+                animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.05, 1] }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.08),transparent_70%)] opacity-40" 
+              />
               
               {/* Concentric Circles */}
               {[450, 550, 650].map((size, i) => (
@@ -171,22 +175,22 @@ export function AxoraEcosystem() {
                         strokeWidth="0.1"
                       />
                       
-                      {/* Traveling Pulse - Part of micro interaction system */}
+                      {/* Traveling Ambient Particles */}
                       <motion.circle
                         animate={{ 
                           cx: [50, node.position.x],
                           cy: [50, node.position.y],
-                          opacity: [0, 1, 0]
+                          opacity: [0, 0.8, 0]
                         }}
                         transition={{ 
-                          duration: 3 + node.delay * 2, 
+                          duration: 5 + node.delay * 3, // Slower ambient travel
                           repeat: Infinity, 
-                          delay: node.delay * 5,
+                          delay: node.delay * 8,
                           ease: "linear"
                         }}
-                        r="0.4"
+                        r="0.3"
                         fill="#EAE0C8"
-                        style={{ filter: 'blur(1px)' }}
+                        style={{ filter: 'blur(0.5px)' }}
                       />
                     </motion.g>
                   ))}
@@ -285,7 +289,7 @@ export function AxoraEcosystem() {
                 >
                   <motion.div
                     animate={{ y: [0, -8, 0] }}
-                    transition={{ duration: 6 + node.delay * 10, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{ duration: 8 + node.delay * 10, repeat: Infinity, ease: "easeInOut" }} // Slower breathing
                   >
                     <div className={cn(
                       "relative glass p-6 rounded-[2rem] border-white/5 w-64 transition-all duration-700 ease-premium",

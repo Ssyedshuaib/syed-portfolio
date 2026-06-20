@@ -93,21 +93,40 @@
   animation: float 12s ease-in-out infinite;
 }
 
+/* Ambient Breathing Animations */
+@keyframes breathing {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.002); }
+}
+
+.animate-breathing {
+  animation: breathing 15s ease-in-out infinite;
+}
+
+@keyframes slow-opacity-pulse {
+  0%, 100% { opacity: 0.015; }
+  50% { opacity: 0.04; }
+}
+
+.animate-opacity-pulse {
+  animation: slow-opacity-pulse 8s ease-in-out infinite;
+}
+
 .dust-particle {
   position: absolute;
   width: 2px;
   height: 2px;
   background: #EAE0C8;
   border-radius: 50%;
-  opacity: 0.1;
+  opacity: 0.05;
   pointer-events: none;
   animation: drift var(--duration) linear infinite;
 }
 
 @keyframes drift {
   from { transform: translateY(0) translateX(0); opacity: 0; }
-  20% { opacity: 0.2; }
-  80% { opacity: 0.2; }
+  20% { opacity: 0.1; }
+  80% { opacity: 0.1; }
   to { transform: translateY(-100vh) translateX(50px); opacity: 0; }
 }
 

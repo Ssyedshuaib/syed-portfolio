@@ -98,11 +98,17 @@ export function Journey() {
         </motion.div>
 
         <div className="relative">
-          {/* Central Vertical Line */}
+          {/* Central Vertical Line with Ambient Energy */}
           <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-white/5 md:-translate-x-1/2">
             <motion.div 
               style={{ scaleY: pathLength }}
               className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary via-primary/50 to-transparent origin-top shadow-[0_0_20px_rgba(234,224,200,0.3)]"
+            />
+            {/* Ambient Energy Pulse */}
+            <motion.div 
+              animate={{ top: ["0%", "100%"], opacity: [0, 1, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+              className="absolute left-0 w-full h-32 bg-gradient-to-b from-transparent via-primary/40 to-transparent pointer-events-none"
             />
           </div>
 
@@ -135,15 +141,17 @@ function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
         isLeft ? "md:flex-row" : "md:flex-row-reverse"
       )}
     >
-      {/* Background Year */}
+      {/* Background Year with Ambient Opacity Breathing */}
       <motion.div 
         style={{ y: yearY }}
+        animate={{ opacity: [0.015, 0.04, 0.015] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         className={cn(
           "absolute -top-16 md:-top-32 pointer-events-none select-none z-0",
           isLeft ? "left-0 md:-left-20" : "right-0 md:-right-20"
         )}
       >
-        <span className="text-[8rem] md:text-[22rem] font-headline font-black text-white/[0.02] tracking-tighter block leading-none">
+        <span className="text-[8rem] md:text-[22rem] font-headline font-black text-white tracking-tighter block leading-none">
           {chapter.year}
         </span>
       </motion.div>
@@ -189,7 +197,7 @@ function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
                 <motion.div
                   key={chip}
                   whileHover={{ scale: 1.05, borderColor: "rgba(234,224,200,0.3)" }}
-                  className="px-4 md:px-6 py-2 md:py-2.5 rounded-full glass border-white/5 text-[8px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-primary/70 cursor-default transition-colors"
+                  className="px-4 md:px-6 py-2 md:py-2.5 rounded-full glass border-white/5 text-[8px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-primary/70 cursor-default transition-all"
                 >
                   {chip}
                 </motion.div>

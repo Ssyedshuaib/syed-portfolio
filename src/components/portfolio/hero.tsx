@@ -29,8 +29,8 @@ export function Hero() {
     const newParticles = [...Array(15)].map((_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
-      duration: 20 + Math.random() * 20,
-      delay: Math.random() * 10,
+      duration: 25 + Math.random() * 25, // Slower ambient movement
+      delay: Math.random() * 15,
     }));
     setParticles(newParticles);
   }, []);
@@ -73,11 +73,12 @@ export function Hero() {
           <motion.div
             key={particle.id}
             initial={{ opacity: 0, y: 0 }}
-            animate={{ opacity: [0, 0.15, 0], y: -800 }}
+            animate={{ opacity: [0, 0.1, 0], y: -900 }}
             transition={{
               duration: particle.duration,
               repeat: Infinity,
               delay: particle.delay,
+              ease: "linear"
             }}
             className="dust-particle absolute w-0.5 h-0.5 bg-[#EAE0C8] rounded-full"
             style={{
@@ -109,6 +110,8 @@ export function Hero() {
               <motion.h1 
                 style={{ y: y1 }}
                 variants={lineVariants}
+                animate={{ scale: [1, 1.002, 1] }}
+                transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
                 className="text-5xl md:text-7xl lg:text-[7.5rem] font-headline font-black tracking-tighter leading-[0.85] text-white"
               >
                 Building Products.
@@ -119,6 +122,8 @@ export function Hero() {
               <motion.span 
                 variants={lineVariants}
                 style={{ y: y2 }}
+                animate={{ scale: [1, 1.0015, 1] }}
+                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
                 className="text-4xl md:text-6xl lg:text-[6rem] text-[#536878] block font-headline font-black tracking-tighter leading-[0.9]"
               >
                 Building Systems.
@@ -129,6 +134,8 @@ export function Hero() {
               <motion.span 
                 variants={lineVariants}
                 style={{ y: y3 }}
+                animate={{ scale: [1, 1.002, 1] }}
+                transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                 className="text-4xl md:text-6xl lg:text-[6.5rem] italic font-medium text-[#EAE0C8] block font-headline tracking-tighter leading-[0.9]"
               >
                 Building The Future.

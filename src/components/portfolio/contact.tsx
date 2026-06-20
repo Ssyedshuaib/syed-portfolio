@@ -161,7 +161,7 @@ export function Contact() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-5 md:gap-6 glass w-fit px-6 md:px-8 py-3 md:py-4 rounded-2xl border-white/5 group hover:border-primary/20 transition-colors">
+              <div className="flex items-center gap-5 md:gap-6 glass w-fit px-6 md:px-8 py-3 md:py-4 rounded-2xl border-white/5 group hover:border-primary/20 transition-all">
                 <motion.div 
                   animate={{ opacity: [1, 0.4, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
@@ -184,8 +184,12 @@ export function Contact() {
               data-cursor="email"
               className="glass p-10 md:p-16 rounded-[3rem] md:rounded-[4rem] border-white/10 space-y-12 md:space-y-16 relative overflow-hidden group cursor-pointer hover:border-primary/20 transition-all duration-700 hover:bg-primary/[0.02]"
             >
-              {/* Internal Spotlight */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(234,224,200,0.05),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+              {/* Internal Spotlight with Ambient Movement */}
+              <motion.div 
+                animate={{ x: [-20, 20, -20], y: [-20, 20, -20] }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_70%)] pointer-events-none" 
+              />
               
               <div className="space-y-10 md:space-y-12 relative z-10">
                 <div className="space-y-3 md:space-y-4">
@@ -249,6 +253,13 @@ export function Contact() {
                 : "h-40 w-40 md:h-64 md:w-64 rounded-full hover:border-primary/40 hover:bg-primary/[0.02] group transition-all duration-700"
             )}
           >
+            {/* Ambient Glass Reflections */}
+            <motion.div 
+              animate={{ rotate: 360 }}
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent,rgba(234,224,200,0.02),transparent)] pointer-events-none"
+            />
+
             <AnimatePresence mode="wait">
               {!isExpanded ? (
                 <motion.div key="cta-initial" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-center justify-center gap-3 md:gap-4 text-center">
@@ -280,6 +291,9 @@ export function Contact() {
                           <motion.div key="topics-grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, x: -20 }} className="flex flex-col gap-3">
                             {TOPICS.map((topic, idx) => (
                               <button key={topic.id} onClick={(e) => { e.stopPropagation(); setSelectedTopic(topic.label); }} className="group relative flex items-center justify-between p-5 md:p-6 rounded-2xl glass border-white/5 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-500 overflow-hidden text-left">
+                                {/* Ambient Hover Light Sweep */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.02] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                                
                                 <div className="flex items-center gap-4 md:gap-6">
                                   <span className="text-[9px] md:text-[10px] font-mono font-bold text-[#536878] group-hover:text-primary transition-colors">{topic.id}</span>
                                   <div className="space-y-0.5 group-hover:translate-x-1 transition-transform duration-500">
