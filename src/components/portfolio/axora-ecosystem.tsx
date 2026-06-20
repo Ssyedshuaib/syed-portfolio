@@ -55,7 +55,7 @@ const AXORA_PRODUCTS = [
     name: "Global Group of Schools", 
     icon: Layers, 
     x: 50, 
-    y: 12, // Adjusted upward to avoid center hub overlap and improve visibility
+    y: 12, 
     category: "Education Technology", 
     status: "Completed",
     desc: "A modern digital platform for educational institutions focused on admissions and parent engagement." 
@@ -174,23 +174,28 @@ export function AxoraEcosystem() {
                     boxShadow: activeProduct === product.name ? '0 0 30px rgba(83,104,120,0.3)' : 'none'
                   }}
                 >
-                  <product.icon className="w-6 h-6 text-[#EAE0C8]/85 group-hover:text-[#FFFFFF] transition-colors" />
+                  <product.icon className="w-6 h-6 text-[#EAE0C8] brightness-125 group-hover:text-[#FFFFFF] transition-colors" />
                 </motion.div>
                 
                 <AnimatePresence>
                   {activeProduct === product.name && (
                     <motion.div 
-                      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                      initial={{ opacity: 0, y: product.y > 70 ? -20 : 20, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 20, scale: 0.95 }}
-                      className="absolute top-full mt-6 left-1/2 -translate-x-1/2 w-72 glass p-6 rounded-3xl border-[#EAE0C8]/20 text-center z-50 shadow-2xl backdrop-blur-3xl"
+                      exit={{ opacity: 0, y: product.y > 70 ? -20 : 20, scale: 0.95 }}
+                      className={cn(
+                        "absolute left-1/2 -translate-x-1/2 w-72 bg-[#161C21]/80 backdrop-blur-3xl p-6 rounded-3xl border-[#EAE0C8]/30 text-center z-50 shadow-2xl",
+                        product.y > 70 ? "bottom-full mb-8" : "top-full mt-8"
+                      )}
                     >
-                      <div className="space-y-3">
-                        <p className="text-[#536878] font-bold tracking-[0.5em] text-[8px] uppercase">{product.category}</p>
-                        <p className="text-[#FFFFFF] font-bold tracking-[0.2em] uppercase text-xs">{product.name}</p>
-                        <p className="text-[#EAE0C8]/70 text-[10px] font-light leading-relaxed">{product.desc}</p>
-                        <div className="pt-3 border-t border-white/5">
-                          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 text-[8px] font-bold text-[#EAE0C8] uppercase">
+                      <div className="space-y-4">
+                        <div className="space-y-1">
+                          <p className="text-[#536878] font-bold tracking-[0.5em] text-[8px] uppercase">{product.category}</p>
+                          <p className="text-white font-black tracking-[0.2em] uppercase text-sm">{product.name}</p>
+                        </div>
+                        <p className="text-[#EAE0C8]/80 text-[10px] font-light leading-relaxed">{product.desc}</p>
+                        <div className="pt-4 border-t border-white/10">
+                          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 text-[8px] font-bold text-[#EAE0C8] uppercase tracking-wider">
                             <span className="w-1.5 h-1.5 rounded-full bg-[#536878] animate-pulse" />
                             {product.status}
                           </span>
