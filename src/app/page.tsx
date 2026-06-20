@@ -43,14 +43,14 @@ export default function Home() {
 
       <motion.main 
         className="min-h-screen relative overflow-x-hidden"
-        initial={{ opacity: 0.05 }} // Subconscious preview during intro
+        initial={{ opacity: 0.03 }} // Subconscious preview during intro (3%)
         animate={{ 
-          opacity: isLoading ? 0.05 : 1,
+          opacity: isLoading ? 0.03 : 1,
           scale: isLoading ? 0.99 : 1,
-          filter: isLoading ? "blur(30px)" : "blur(0px)"
+          filter: isLoading ? "blur(40px)" : "blur(0px)"
         }}
         transition={{ 
-          duration: 1.5, // Hero Emergence Duration (Scene 5)
+          duration: 2, // Smooth emergence from Scene 5
           ease: [0.16, 1, 0.3, 1] 
         }}
       >
