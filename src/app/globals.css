@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --card: 351 10% 69% / 0.08;
-    --card-foreground: 28 47% 93%;
-    --popover: 0 0% 0%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 28 47% 93%;
-    --primary-foreground: 0 0% 0%;
-    --secondary: 13 14% 50%;
-    --secondary-foreground: 28 47% 93%;
-    --muted: 351 10% 69%;
-    --muted-foreground: 351 5% 65%;
-    --accent: 13 14% 50% / 0.12;
-    --accent-foreground: 28 47% 93%;
+    --background: 210 21% 7%;
+    --foreground: 42 33% 85%;
+    --card: 208 18% 40% / 0.10;
+    --card-foreground: 0 0% 100%;
+    --popover: 210 21% 7%;
+    --popover-foreground: 42 33% 85%;
+    --primary: 42 33% 85%;
+    --primary-foreground: 210 21% 7%;
+    --secondary: 208 18% 40%;
+    --secondary-foreground: 42 33% 85%;
+    --muted: 208 18% 40%;
+    --muted-foreground: 42 10% 70%;
+    --accent: 208 18% 40% / 0.12;
+    --accent-foreground: 42 33% 85%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 38% 97%;
-    --border: 28 47% 93% / 0.08;
-    --input: 13 14% 50% / 0.2;
-    --ring: 13 14% 50%;
+    --border: 42 33% 85% / 0.08;
+    --input: 208 18% 40% / 0.2;
+    --ring: 208 18% 40%;
     --radius: 1.5rem;
   }
 }
@@ -34,7 +34,7 @@
   body {
     @apply bg-background text-foreground font-body antialiased selection:bg-secondary/30 selection:text-primary;
     scroll-behavior: smooth;
-    background: #000000;
+    background: linear-gradient(180deg, #0F1317 0%, #161C21 100%);
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-headline tracking-tight;
@@ -42,11 +42,11 @@
 }
 
 .glass {
-  @apply bg-[#111111]/60 backdrop-blur-[30px] border border-white/[0.04] transition-all duration-700;
+  @apply bg-[#161C21]/60 backdrop-blur-[30px] border border-[#EAE0C8]/[0.08] transition-all duration-700;
 }
 
 .premium-glow {
-  background: radial-gradient(circle at 50% 50%, rgba(145, 118, 110, 0.12) 0%, transparent 80%);
+  background: radial-gradient(circle at 50% 50%, rgba(83, 104, 120, 0.12) 0%, transparent 80%);
 }
 
 .grain-overlay {
@@ -90,7 +90,7 @@
   position: absolute;
   width: 2px;
   height: 2px;
-  background: #F6ECE3;
+  background: #EAE0C8;
   border-radius: 50%;
   opacity: 0.1;
   pointer-events: none;
