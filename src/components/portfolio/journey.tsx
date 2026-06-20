@@ -51,30 +51,30 @@ export function Journey() {
       { threshold: 0.1 }
     );
 
-    const cards = sectionRef.current?.querySelectorAll(".journey-card");
+    const cards = sectionRef.current?.querySelectorAll(".reveal-on-scroll");
     cards?.forEach((card) => observer.observe(card));
 
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section id="journey" className="py-32 px-6 bg-secondary/20" ref={sectionRef}>
-      <div className="max-w-5xl mx-auto space-y-24">
-        <div className="text-center space-y-4">
-          <h2 className="text-sm font-bold tracking-[0.4em] text-primary uppercase">Storytelling</h2>
-          <h3 className="text-5xl font-headline font-bold">The Journey So Far</h3>
+    <section id="journey" className="py-48 px-6 bg-secondary/20 overflow-hidden" ref={sectionRef}>
+      <div className="max-w-5xl mx-auto space-y-32">
+        <div className="text-center space-y-6 reveal-on-scroll">
+          <h2 className="text-sm font-bold tracking-[0.5em] text-primary uppercase">Storytelling</h2>
+          <h3 className="text-5xl md:text-6xl font-headline font-bold">The Journey So Far</h3>
         </div>
 
         <div className="relative">
           {/* Main Connector */}
-          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary/50 via-primary/5 to-transparent -translate-x-1/2" />
+          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-primary/60 via-primary/5 to-transparent -translate-x-1/2" />
 
-          <div className="space-y-32">
+          <div className="space-y-48">
             {TIMELINE.map((item, idx) => (
               <div 
                 key={idx} 
                 className={cn(
-                  "relative flex flex-col md:flex-row items-start md:items-center gap-12 journey-card fade-in-section",
+                  "relative flex flex-col md:flex-row items-start md:items-center gap-12 reveal-on-scroll",
                   idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                 )}
               >
@@ -84,25 +84,25 @@ export function Journey() {
                     "flex flex-col",
                     idx % 2 === 0 ? "items-end text-right" : "items-start text-left"
                   )}>
-                    <span className="text-8xl font-headline font-black text-white/[0.03] select-none leading-none">
+                    <span className="text-[12rem] font-headline font-black text-white/[0.02] select-none leading-none transition-transform duration-1000 hover:scale-105 block">
                       {item.year}
                     </span>
                   </div>
                 </div>
 
                 {/* Dot */}
-                <div className="absolute left-[20px] md:left-1/2 top-0 md:top-auto w-10 h-10 rounded-full glass border-primary/50 flex items-center justify-center -translate-x-1/2 z-10 bg-background shadow-[0_0_20px_rgba(215,178,157,0.2)]">
-                  <div className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
+                <div className="absolute left-[20px] md:left-1/2 top-0 md:top-auto w-12 h-12 rounded-full glass border-primary/40 flex items-center justify-center -translate-x-1/2 z-10 bg-background shadow-[0_0_30px_rgba(215,178,157,0.15)] transition-all duration-700">
+                  <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
                 </div>
 
                 {/* Content Side */}
                 <div className="flex-1 w-full pl-16 md:pl-0 md:px-16">
-                  <div className="glass p-10 rounded-[2rem] border-white/10 hover:border-primary/30 transition-all duration-500 hover:shadow-2xl group">
-                    <span className="md:hidden text-primary font-bold tracking-widest mb-2 block">{item.year}</span>
-                    <h4 className="text-2xl font-headline font-bold mb-4 group-hover:text-primary transition-colors">{item.title}</h4>
-                    <p className="text-muted-foreground text-lg leading-relaxed mb-6 font-light">{item.desc}</p>
-                    <div className="pt-6 border-t border-white/5">
-                      <p className="text-xs uppercase tracking-widest text-primary/60 font-bold">{item.detail}</p>
+                  <div className="glass p-12 rounded-[3rem] border-white/5 hover:border-primary/30 transition-all duration-700 hover:shadow-2xl hover:scale-[1.02] group group-hover:translate-y-[-8px]">
+                    <span className="md:hidden text-primary font-bold tracking-widest mb-4 block text-lg">{item.year}</span>
+                    <h4 className="text-3xl font-headline font-bold mb-6 group-hover:text-primary transition-colors duration-500">{item.title}</h4>
+                    <p className="text-muted-foreground text-xl leading-relaxed mb-8 font-light">{item.desc}</p>
+                    <div className="pt-8 border-t border-white/5">
+                      <p className="text-xs uppercase tracking-[0.3em] text-primary/70 font-bold">{item.detail}</p>
                     </div>
                   </div>
                 </div>

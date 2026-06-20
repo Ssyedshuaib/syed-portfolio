@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const ORBITS = [
@@ -15,26 +15,32 @@ const ORBITS = [
 ];
 
 export function OrbitalSystem() {
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+
   return (
     <div className="relative w-full aspect-square max-w-[600px] flex items-center justify-center">
       {/* Central Node */}
-      <div className="relative z-20 group">
-        <div className="w-32 h-32 rounded-full glass flex items-center justify-center border-primary/30 shadow-[0_0_50px_rgba(215,178,157,0.15)] group-hover:scale-110 transition-transform duration-500">
+      <div className="relative z-20 group cursor-none">
+        <div className="w-36 h-36 rounded-full glass flex items-center justify-center border-primary/30 shadow-[0_0_80px_rgba(215,178,157,0.2)] group-hover:scale-110 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
           <div className="text-center">
-            <span className="text-primary font-headline font-bold text-2xl tracking-widest uppercase">Syed</span>
-            <div className="h-0.5 w-8 bg-primary/40 mx-auto mt-1 rounded-full" />
+            <span className="text-primary font-headline font-bold text-2xl tracking-widest uppercase block">Syed</span>
+            <div className="h-0.5 w-8 bg-primary/40 mx-auto mt-2 rounded-full group-hover:w-12 transition-all duration-700" />
           </div>
         </div>
         {/* Glow behind center */}
-        <div className="absolute inset-0 bg-primary/10 blur-3xl rounded-full -z-10 animate-pulse" />
+        <div className="absolute inset-0 bg-primary/15 blur-3xl rounded-full -z-10 animate-pulse group-hover:bg-primary/25 transition-all duration-700" />
       </div>
 
       {/* Orbit Rings */}
-      {[130, 170, 210, 250].map((r) => (
+      {[130, 150, 170, 190, 210, 230, 250, 270].map((r) => (
         <div
           key={r}
-          className="absolute rounded-full border border-white/[0.03]"
-          style={{ width: r * 2, height: r * 2 }}
+          className="absolute rounded-full border border-white/[0.04] transition-colors duration-500"
+          style={{ 
+            width: r * 2, 
+            height: r * 2,
+            borderColor: hoveredNode ? 'rgba(215, 178, 157, 0.08)' : 'rgba(255, 255, 255, 0.03)'
+          }}
         />
       ))}
 
@@ -47,9 +53,17 @@ export function OrbitalSystem() {
             "--radius": orbit.radius,
             "--duration": orbit.duration,
             animationDelay: orbit.delay,
+            "--play-state": hoveredNode ? 'paused' : 'running'
           } as React.CSSProperties}
+          onMouseEnter={() => setHoveredNode(orbit.label)}
+          onMouseLeave={() => setHoveredNode(null)}
         >
-          <div className="px-5 py-2.5 glass rounded-full text-[11px] font-bold tracking-[0.15em] uppercase text-muted-foreground hover:text-primary hover:border-primary/50 hover:scale-110 transition-all cursor-default pointer-events-auto shadow-xl">
+          <div className={cn(
+            "px-6 py-3 glass rounded-full text-[11px] font-bold tracking-[0.2em] uppercase transition-all duration-500 cursor-pointer pointer-events-auto",
+            hoveredNode === orbit.label 
+              ? "text-primary border-primary/60 scale-125 shadow-[0_0_30px_rgba(215,178,157,0.3)] bg-primary/10" 
+              : "text-muted-foreground opacity-60 hover:opacity-100"
+          )}>
             {orbit.label}
           </div>
         </div>
