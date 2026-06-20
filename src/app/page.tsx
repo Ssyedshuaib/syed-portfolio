@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Navbar } from "@/components/portfolio/navbar";
 import { Hero } from "@/components/portfolio/hero";
@@ -6,7 +5,6 @@ import { Philosophy } from "@/components/portfolio/philosophy";
 import { WhoIAm } from "@/components/portfolio/who-i-am";
 import { FounderManifesto } from "@/components/portfolio/founder-manifesto";
 import { WhatImBuilding } from "@/components/portfolio/what-im-building";
-import { ReverieShowcase } from "@/components/portfolio/reverie-showcase";
 import { Journey } from "@/components/portfolio/journey";
 import { AxoraEcosystem } from "@/components/portfolio/axora-ecosystem";
 import { ProductMetrics } from "@/components/portfolio/product-metrics";
@@ -29,7 +27,6 @@ export default function Home() {
       <Philosophy />
       <FounderManifesto />
       <WhatImBuilding />
-      <ReverieShowcase />
       <Journey />
       <WhoIAm />
       <BuilderPhilosophy />
