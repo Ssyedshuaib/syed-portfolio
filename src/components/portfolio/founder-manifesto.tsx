@@ -8,8 +8,18 @@ export function FounderManifesto() {
 
   return (
     <section className="py-64 px-6 relative overflow-hidden bg-background">
+      {/* Dynamic Environment Layers */}
       <div className="absolute inset-0 premium-glow pointer-events-none opacity-40" />
       
+      <motion.div 
+        animate={{ 
+          opacity: [0.03, 0.06, 0.03],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.1),transparent_80%)]"
+      />
+
       <div className="max-w-5xl mx-auto text-center space-y-32 relative z-10">
         <motion.div 
           initial={{ opacity: 0 }}
@@ -22,11 +32,11 @@ export function FounderManifesto() {
             {words.map((word, i) => (
               <motion.span
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, filter: "blur(15px)" }}
+                whileInView={{ opacity: 1, filter: "blur(0px)" }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: i * 0.1 }}
-                className="text-6xl md:text-[8rem] font-headline font-black tracking-tighter leading-none text-white italic odd:text-[#EAE0C8]/30 odd:not-italic"
+                transition={{ duration: 1.4, delay: i * 0.15 }}
+                className="text-6xl md:text-[8rem] font-headline font-black tracking-tighter leading-none text-white italic odd:text-[#EAE0C8]/30 odd:not-italic select-none"
               >
                 {word}
               </motion.span>
@@ -36,20 +46,20 @@ export function FounderManifesto() {
 
         <div className="space-y-24 text-xl md:text-3xl font-light leading-relaxed text-[#EAE0C8]/70 max-w-4xl mx-auto">
           <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, filter: "blur(0px)" }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.5 }}
+            transition={{ duration: 1.5, delay: 0.8 }}
           >
             I believe technology is most valuable when it <span className="text-[#EAE0C8] font-medium">solves real problems</span>. 
             Every product starts with understanding people. Every system starts with purpose.
           </motion.p>
           
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.8 }}
+            transition={{ duration: 2, delay: 1.2 }}
             className="flex flex-col gap-12 text-[#536878]"
           >
             <div className="h-px w-16 bg-[#536878]/20 mx-auto" />
@@ -60,10 +70,10 @@ export function FounderManifesto() {
           </motion.div>
 
           <motion.div 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, filter: "blur(0px)" }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: 1 }}
+            transition={{ duration: 2, delay: 1.5 }}
             className="space-y-12"
           >
             <p className="text-lg md:text-2xl font-light leading-relaxed">
