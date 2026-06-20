@@ -46,21 +46,25 @@ export function Hero() {
       <div className="absolute inset-0 pointer-events-none select-none z-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.08),transparent_70%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
+        
+        {/* Layered Cinematic Vignette */}
+        <div className="absolute inset-0 shadow-[inset_0_0_150px_rgba(0,0,0,0.8)] z-10" />
+
         <div className="absolute inset-0 opacity-20">
-          {[...Array(6)].map((_, i) => (
+          {[...Array(8)].map((_, i) => (
             <motion.div
               key={i}
               initial={{ x: Math.random() * 100 + "%", y: Math.random() * 100 + "%", opacity: 0 }}
               animate={{ 
                 y: ["-10%", "110%"],
-                opacity: [0, 1, 0],
+                opacity: [0, 0.8, 0],
                 x: (Math.random() - 0.5) * 20 + "%"
               }}
               transition={{ 
-                duration: 20 + Math.random() * 20, 
+                duration: 25 + Math.random() * 25, 
                 repeat: Infinity, 
                 ease: "linear",
-                delay: i * -5
+                delay: i * -8
               }}
               className="absolute w-0.5 h-0.5 bg-primary/40 rounded-full blur-[1px]"
             />
@@ -87,7 +91,7 @@ export function Hero() {
             <div className="overflow-visible">
               <motion.h1 
                 variants={lineVariants}
-                className="text-4xl md:text-7xl lg:text-[clamp(2.5rem,5.5vw,5.8rem)] font-headline font-black tracking-tighter leading-[0.95] text-white uppercase"
+                className="text-4xl md:text-7xl lg:text-[clamp(2.5rem,5.5vw,5.2rem)] font-headline font-black tracking-tighter leading-[0.95] text-white uppercase drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]"
               >
                 Building Products. <br />
                 Building Systems. <br />
@@ -104,7 +108,7 @@ export function Hero() {
           </div>
           
           <motion.div variants={lineVariants} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-10 pt-6">
-            <Button asChild size="lg" data-cursor="enter" className="h-14 px-10 rounded-full bg-primary text-[#0F1317] hover:bg-white transition-all duration-400 font-bold group shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_60px_rgba(234,224,200,0.2)] active:scale-[0.98]">
+            <Button asChild size="lg" data-cursor="enter" className="h-14 px-10 rounded-full bg-primary text-[#0F1317] hover:bg-white transition-all duration-400 font-bold group shadow-[0_20px_50px_rgba(0,0,0,0.4)] hover:shadow-[0_25px_60px_rgba(234,224,200,0.25)] active:scale-[0.98]">
               <Link href="#ecosystem">
                 Explore Work <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-400" />
               </Link>
@@ -117,10 +121,10 @@ export function Hero() {
         </div>
 
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9, filter: "blur(20px)" }}
-          animate={{ opacity: 0.9, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 2.5, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="hidden lg:flex justify-end pr-12"
+          initial={{ opacity: 0, scale: 0.95, filter: "blur(30px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          transition={{ duration: 2.5, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="hidden lg:flex justify-end lg:pr-8"
         >
           <OrbitalSystem />
         </motion.div>
