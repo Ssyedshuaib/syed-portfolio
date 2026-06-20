@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useRef } from "react";
@@ -72,7 +73,7 @@ export function AxoraProducts() {
                 <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">
                   AXORA ECOSYSTEM
                 </p>
-                <h2 className="text-4xl md:text-5xl lg:text-[clamp(2.5rem,5vw,3.5rem)] font-headline font-black tracking-tighter text-white leading-[0.95]">
+                <h2 className="text-4xl md:text-5xl lg:text-[clamp(2.25rem,4.5vw,3rem)] font-headline font-black tracking-tighter text-white leading-[0.95]">
                   Building <br />
                   Products <br />
                   <span className="text-primary italic font-medium">That Matter.</span>
@@ -92,7 +93,7 @@ export function AxoraProducts() {
           </div>
 
           {/* RIGHT SIDE: Vertical Scrolling Stories */}
-          <div className="lg:w-2/3 space-y-32 lg:space-y-56 pt-24 lg:pt-32 pb-48">
+          <div className="lg:w-2/3 space-y-32 lg:space-y-48 pt-24 lg:pt-32 pb-48">
             {PRODUCTS.map((product, idx) => (
               <ProductChapter key={product.id} product={product} idx={idx} />
             ))}
@@ -143,7 +144,7 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
             
             <div className="space-y-1.5">
               <p className="text-[9px] font-bold tracking-[0.6em] text-primary/40 uppercase">{product.category}</p>
-              <h3 className="text-4xl md:text-6xl lg:text-[clamp(3rem,7vw,5.5rem)] font-headline font-black text-white tracking-tighter leading-none transition-colors group-hover:text-primary">
+              <h3 className="text-4xl md:text-6xl lg:text-[clamp(2.75rem,6.5vw,5.1rem)] font-headline font-black text-white tracking-tighter leading-none transition-colors group-hover:text-primary">
                 {product.name}
               </h3>
               <p className="text-lg md:text-xl font-headline font-light text-primary/60 italic tracking-tight">

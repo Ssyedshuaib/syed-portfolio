@@ -18,7 +18,7 @@ export function OrbitalSystem() {
   const [hoveredNode, setHoveredNode] = useState<{label: string, desc: string} | null>(null);
 
   return (
-    <div className="relative w-full aspect-square max-w-[420px] flex items-center justify-center perspective-[1000px] opacity-70 hover:opacity-100 transition-opacity duration-1000">
+    <div className="relative w-full aspect-square max-w-[420px] flex items-center justify-center perspective-[1000px] opacity-90 hover:opacity-100 transition-opacity duration-1000">
       {/* Central Node */}
       <motion.div 
         whileHover={{ scale: 1.02 }}
@@ -48,11 +48,11 @@ export function OrbitalSystem() {
       {[100, 135, 155, 170, 210, 250].map((r) => (
         <div
           key={r}
-          className="absolute rounded-full border border-[#EAE0C8]/10 transition-colors duration-1000"
+          className="absolute rounded-full border border-[#EAE0C8]/15 transition-colors duration-1000"
           style={{ 
             width: r * 2, 
             height: r * 2,
-            borderColor: hoveredNode ? 'rgba(234, 224, 200, 0.12)' : 'rgba(234, 224, 200, 0.06)'
+            borderColor: hoveredNode ? 'rgba(234, 224, 200, 0.18)' : 'rgba(234, 224, 200, 0.1)'
           }}
         />
       ))}
@@ -76,8 +76,8 @@ export function OrbitalSystem() {
             className={cn(
               "px-4 py-1.5 glass rounded-full text-[8px] font-bold tracking-[0.3em] uppercase transition-all duration-700 cursor-default",
               hoveredNode?.label === orbit.label 
-                ? "text-white border-primary/40 bg-primary/[0.12] shadow-[0_0_20px_rgba(234,224,200,0.2)]" 
-                : "text-[#EAE0C8]/40 hover:text-white"
+                ? "text-white border-primary/40 bg-primary/[0.15] shadow-[0_0_20px_rgba(234,224,200,0.2)]" 
+                : "text-[#EAE0C8]/60 hover:text-white"
             )}
           >
             {orbit.label}
