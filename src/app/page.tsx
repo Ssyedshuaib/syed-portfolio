@@ -3,16 +3,17 @@ import { Navbar } from "@/components/portfolio/navbar";
 import { Hero } from "@/components/portfolio/hero";
 import { Philosophy } from "@/components/portfolio/philosophy";
 import { FounderProfile } from "@/components/portfolio/founder-profile";
+import { AxoraProducts } from "@/components/portfolio/axora-products";
 import { FounderManifesto } from "@/components/portfolio/founder-manifesto";
 import { WhatImBuilding } from "@/components/portfolio/what-im-building";
 import { Journey } from "@/components/portfolio/journey";
+import { BuilderPhilosophy } from "@/components/portfolio/builder-philosophy";
 import { AxoraEcosystem } from "@/components/portfolio/axora-ecosystem";
 import { Leadership } from "@/components/portfolio/leadership";
 import { ProductMetrics } from "@/components/portfolio/product-metrics";
 import { ProductEcosystem } from "@/components/portfolio/product-ecosystem";
 import { IdeasLab } from "@/components/portfolio/ideas-lab";
 import { SkillsClusters } from "@/components/portfolio/skills-clusters";
-import { BuilderPhilosophy } from "@/components/portfolio/builder-philosophy";
 import { Contact } from "@/components/portfolio/contact";
 import { Footer } from "@/components/portfolio/footer";
 
@@ -26,6 +27,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <FounderProfile />
+      <AxoraProducts />
       <Philosophy />
       <FounderManifesto />
       <WhatImBuilding />
