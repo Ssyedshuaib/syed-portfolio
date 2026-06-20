@@ -72,19 +72,19 @@ export function AxoraProducts() {
                 <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">
                   AXORA ECOSYSTEM
                 </p>
-                <h2 className="text-5xl md:text-6xl lg:text-[clamp(3rem,6vw,4.5rem)] font-headline font-black tracking-tighter text-white leading-[0.9]">
+                <h2 className="text-4xl md:text-5xl lg:text-[clamp(2.5rem,5vw,3.5rem)] font-headline font-black tracking-tighter text-white leading-[0.95]">
                   Building <br />
                   Products <br />
                   <span className="text-primary italic font-medium">That Matter.</span>
                 </h2>
-                <p className="text-base lg:text-lg text-primary/60 font-light leading-relaxed max-w-sm">
+                <p className="text-sm lg:text-base text-primary/60 font-light leading-relaxed max-w-sm">
                   Axora is a venture studio dedicated to architecting digital ecosystems across education, memory, and future technologies.
                 </p>
               </div>
               
               <div className="pt-10 border-t border-white/5 space-y-4">
                 <p className="text-[10px] font-bold tracking-[0.4em] text-primary/20 uppercase">Core Philosophy</p>
-                <p className="text-sm text-primary/40 leading-relaxed italic">
+                <p className="text-xs text-primary/40 leading-relaxed italic">
                   "We build for impact, ensuring every line of code serves a larger human purpose."
                 </p>
               </div>
@@ -92,7 +92,7 @@ export function AxoraProducts() {
           </div>
 
           {/* RIGHT SIDE: Vertical Scrolling Stories */}
-          <div className="lg:w-2/3 space-y-48 lg:space-y-72 pt-24 lg:pt-32 pb-48">
+          <div className="lg:w-2/3 space-y-32 lg:space-y-56 pt-24 lg:pt-32 pb-48">
             {PRODUCTS.map((product, idx) => (
               <ProductChapter key={product.id} product={product} idx={idx} />
             ))}
@@ -110,7 +110,7 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
     offset: ["start end", "end start"]
   });
 
-  const springY = useSpring(useTransform(scrollYProgress, [0, 1], [80, -80]), {
+  const springY = useSpring(useTransform(scrollYProgress, [0, 1], [40, -40]), {
     stiffness: 80,
     damping: 30
   });
@@ -118,52 +118,52 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
   return (
     <motion.div 
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
       className="relative group"
     >
-      <div className="space-y-16 relative z-10">
+      <div className="space-y-12 relative z-10">
         <div className={cn(
-          "flex flex-col gap-8",
+          "flex flex-col gap-6",
           idx % 2 === 0 ? "items-start" : "items-end text-right"
         )}>
-          <div className="space-y-6 max-w-xl">
+          <div className="space-y-5 max-w-xl">
             <div className={cn(
               "flex items-center gap-6",
               idx % 2 !== 0 && "flex-row-reverse"
             )}>
-               <span className="text-[14px] font-mono font-bold tracking-[0.4em] text-primary/20">{product.id}</span>
-               <div className="h-px w-10 bg-primary/10" />
-               <Badge variant="outline" className="text-[8px] font-bold uppercase tracking-[0.3em] border-primary/10 text-primary/40 px-4 py-1 rounded-full">
+               <span className="text-[12px] font-mono font-bold tracking-[0.4em] text-primary/20">{product.id}</span>
+               <div className="h-px w-8 bg-primary/10" />
+               <Badge variant="outline" className="text-[7px] font-bold uppercase tracking-[0.3em] border-primary/10 text-primary/40 px-3 py-0.5 rounded-full">
                  {product.status}
                </Badge>
             </div>
             
-            <div className="space-y-2">
-              <p className="text-[10px] font-bold tracking-[0.6em] text-primary/40 uppercase">{product.category}</p>
-              <h3 className="text-5xl md:text-7xl lg:text-[clamp(3.5rem,8vw,7rem)] font-headline font-black text-white tracking-tighter leading-none transition-colors group-hover:text-primary">
+            <div className="space-y-1.5">
+              <p className="text-[9px] font-bold tracking-[0.6em] text-primary/40 uppercase">{product.category}</p>
+              <h3 className="text-4xl md:text-6xl lg:text-[clamp(3rem,7vw,5.5rem)] font-headline font-black text-white tracking-tighter leading-none transition-colors group-hover:text-primary">
                 {product.name}
               </h3>
-              <p className="text-2xl md:text-3xl font-headline font-light text-primary/60 italic tracking-tight">
+              <p className="text-lg md:text-xl font-headline font-light text-primary/60 italic tracking-tight">
                 {product.mission}
               </p>
             </div>
 
-            <p className="text-lg lg:text-xl text-primary/40 font-light leading-relaxed">
+            <p className="text-base lg:text-lg text-primary/40 font-light leading-relaxed">
               {product.description}
             </p>
           </div>
 
           <div className={cn(
-            "flex gap-10 pt-8 border-t border-white/5 w-full",
+            "flex gap-8 pt-6 border-t border-white/5 w-full",
             idx % 2 !== 0 && "justify-end"
           )}>
             {product.metrics.map((metric: any) => (
-              <div key={metric.label} className="space-y-1">
-                <p className="text-2xl md:text-3xl font-headline font-black text-white">{metric.value}</p>
-                <p className="text-[8px] font-bold tracking-[0.4em] text-primary/20 uppercase">{metric.label}</p>
+              <div key={metric.label} className="space-y-0.5">
+                <p className="text-xl md:text-2xl font-headline font-black text-white">{metric.value}</p>
+                <p className="text-[7px] font-bold tracking-[0.4em] text-primary/20 uppercase">{metric.label}</p>
               </div>
             ))}
           </div>
@@ -171,7 +171,7 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
 
         <motion.div 
           style={{ y: springY }}
-          className="relative"
+          className="relative px-4 lg:px-0"
         >
           <LaptopMockup imageId={product.imageId} />
         </motion.div>
