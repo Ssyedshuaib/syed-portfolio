@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -26,7 +27,7 @@ const FEATURES = [
     label: "INTELLIGENT MENTOR",
     title: "AI-Powered Academic Guidance",
     description: "A 24/7 mentor that understands your curriculum and provides instant, context-aware support for your studies.",
-    imageId: "novapu-ai-mentor"
+    imageId: "devnexus-ai-mentor"
   },
   {
     number: "04",

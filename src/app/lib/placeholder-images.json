@@ -1,200 +1,213 @@
+
 {
   "placeholderImages": [
     {
       "id": "reverie-discover",
-      "description": "Reverie Discover screen showing stories from places that moved people",
+      "description": "Reverie Discover screen showing spatial stories from nearby physical locations",
       "imageUrl": "https://picsum.photos/seed/reverie-discover/600/1200",
       "imageHint": "mobile discover"
     },
     {
       "id": "reverie-capture",
-      "description": "Reverie Capture screen for preserving meaningful moments",
+      "description": "Reverie Capture interface for anchoring emotional memories to GPS coordinates",
       "imageUrl": "https://picsum.photos/seed/reverie-capture/600/1200",
       "imageHint": "mobile camera"
     },
     {
       "id": "reverie-atlas",
-      "description": "Reverie Memory Atlas showing a global map of experiences",
+      "description": "Reverie Memory Atlas featuring a 3D geographical map of life experiences",
       "imageUrl": "https://picsum.photos/seed/reverie-atlas/600/1200",
       "imageHint": "mobile map"
     },
     {
       "id": "reverie-keepsakes",
-      "description": "Reverie Keepsakes screen for curated digital collections",
+      "description": "Reverie Keepsakes gallery for curated digital memory collections",
       "imageUrl": "https://picsum.photos/seed/reverie-keepsakes/600/1200",
       "imageHint": "mobile gallery"
     },
     {
       "id": "novapu-onboarding",
-      "description": "NovaPU onboarding screen showing intelligent personalization",
+      "description": "NovaPU onboarding flow for personalized stream and exam goal setting",
       "imageUrl": "https://picsum.photos/seed/novapu-onboarding/600/1200",
       "imageHint": "education mobile"
     },
     {
       "id": "novapu-dashboard",
-      "description": "NovaPU dashboard showing academic command center",
+      "description": "NovaPU student dashboard with learning streaks and progress analytics",
       "imageUrl": "https://picsum.photos/seed/novapu-dashboard/600/1200",
       "imageHint": "dashboard mobile"
     },
     {
       "id": "novapu-ai-mentor",
-      "description": "NovaPU AI Mentor chat interface",
+      "description": "NovaPU AI Mentor chat interface providing real-time academic guidance",
       "imageUrl": "https://picsum.photos/seed/novapu-ai-mentor/600/1200",
       "imageHint": "ai chat"
     },
     {
       "id": "novapu-test-centre",
-      "description": "NovaPU test centre for practice exams",
+      "description": "NovaPU Test Centre interface with timed mock exams and performance feedback",
       "imageUrl": "https://picsum.photos/seed/novapu-test-centre/600/1200",
       "imageHint": "quiz app"
     },
     {
       "id": "devnexus-landing",
-      "description": "DevNexus landing experience for students",
+      "description": "DevNexus flagship landing page for the student operating system",
       "imageUrl": "https://picsum.photos/seed/devnexus-main/1600/1000",
-      "imageHint": "dashboard software"
+      "imageHint": "saas landing"
     },
     {
       "id": "devnexus-resources",
-      "description": "DevNexus academic resource library",
+      "description": "DevNexus Resource Library with organized academic notes and PYQs",
       "imageUrl": "https://picsum.photos/seed/devnexus-res/1600/1000",
       "imageHint": "files library"
     },
     {
       "id": "devnexus-marketplace",
-      "description": "DevNexus student marketplace for internships",
+      "description": "DevNexus Student Marketplace featuring internship and project opportunities",
       "imageUrl": "https://picsum.photos/seed/devnexus-market/1600/1000",
       "imageHint": "jobs portal"
     },
     {
       "id": "devnexus-overview",
-      "description": "DevNexus complete student ecosystem overview",
+      "description": "DevNexus centralized student identity and ecosystem command center",
       "imageUrl": "https://picsum.photos/seed/devnexus-over/1600/1000",
       "imageHint": "platform dashboard"
     },
     {
+      "id": "devnexus-ai-mentor",
+      "description": "DevNexus AI Academic Mentor interface for curriculum-specific support",
+      "imageUrl": "https://picsum.photos/seed/devnexus-ai/1600/1000",
+      "imageHint": "ai dashboard"
+    },
+    {
       "id": "schools-landing",
-      "description": "Global Group of Schools landing page",
+      "description": "Global Group of Schools modern educational landing experience",
       "imageUrl": "https://picsum.photos/seed/schools-main/1600/1000",
       "imageHint": "education website"
     },
     {
       "id": "schools-admissions",
-      "description": "Global Group of Schools admissions portal",
+      "description": "Global Group of Schools high-intent digital admissions portal",
       "imageUrl": "https://picsum.photos/seed/schools-adm/1600/1000",
       "imageHint": "enrollment form"
     },
     {
       "id": "schools-academic",
-      "description": "Global Group of Schools academic programs",
+      "description": "Global Group of Schools academic methodology and curriculum showcase",
       "imageUrl": "https://picsum.photos/seed/schools-aca/1600/1000",
       "imageHint": "curriculum page"
     },
     {
       "id": "schools-campus",
-      "description": "Global Group of Schools campus showcase",
+      "description": "Global Group of Schools virtual campus tour and physical showcase",
       "imageUrl": "https://picsum.photos/seed/schools-cam/1600/1000",
       "imageHint": "school facilities"
     },
     {
       "id": "schools-parent",
-      "description": "Global Group of Schools parent engagement hub",
+      "description": "Global Group of Schools parent hub with engagement analytics",
       "imageUrl": "https://picsum.photos/seed/schools-par/1600/1000",
       "imageHint": "community portal"
     },
     {
       "id": "schools-contact",
-      "description": "Global Group of Schools communication center",
+      "description": "Global Group of Schools communication and institutional inquiry center",
       "imageUrl": "https://picsum.photos/seed/schools-con/1600/1000",
       "imageHint": "contact center"
     },
     {
       "id": "schools-ecosystem",
-      "description": "Global Group of Schools digital ecosystem overview",
+      "description": "Global Group of Schools integrated school management ecosystem",
       "imageUrl": "https://picsum.photos/seed/schools-eco/1600/1000",
       "imageHint": "integrated system"
     },
     {
       "id": "campus-landing",
-      "description": "Campus Connect landing experience",
+      "description": "Campus Connect hyper-local student networking landing page",
       "imageUrl": "https://picsum.photos/seed/campus-main/1600/1000",
       "imageHint": "social network"
     },
     {
       "id": "campus-feed",
-      "description": "Campus Connect community feed",
+      "description": "Campus Connect real-time student discussion and interaction feed",
       "imageUrl": "https://picsum.photos/seed/campus-feed/1600/1000",
       "imageHint": "activity stream"
     },
     {
       "id": "campus-groups",
-      "description": "Campus Connect project groups",
+      "description": "Campus Connect purpose-driven project groups and hubs",
       "imageUrl": "https://picsum.photos/seed/campus-grp/1600/1000",
       "imageHint": "collaborative teams"
     },
     {
       "id": "campus-events",
-      "description": "Campus Connect local events",
+      "description": "Campus Connect local campus event discovery and mapping",
       "imageUrl": "https://picsum.photos/seed/campus-evnt/1600/1000",
       "imageHint": "event calendar"
     },
     {
       "id": "campus-networking",
-      "description": "Campus Connect peer networking",
+      "description": "Campus Connect intelligent peer discovery and skill matching",
       "imageUrl": "https://picsum.photos/seed/campus-net/1600/1000",
       "imageHint": "user profiles"
     },
     {
       "id": "campus-collaboration",
-      "description": "Campus Connect collaboration tools",
+      "description": "Campus Connect cross-departmental collaboration tools",
       "imageUrl": "https://picsum.photos/seed/campus-collab/1600/1000",
       "imageHint": "project board"
     },
     {
       "id": "campus-overview",
-      "description": "Campus Connect ecosystem overview",
+      "description": "Campus Connect digital heartbeat and ecosystem dashboard",
       "imageUrl": "https://picsum.photos/seed/campus-over/1600/1000",
       "imageHint": "network graph"
     },
     {
       "id": "zappy-landing",
-      "description": "Zappy productivity platform landing",
+      "description": "Zappy minimalist productivity engine landing page",
       "imageUrl": "https://picsum.photos/seed/zappy-main/1600/1000",
       "imageHint": "minimal software"
     },
     {
       "id": "zappy-tasks",
-      "description": "Zappy high-speed task management",
+      "description": "Zappy zero-latency task management and organization interface",
       "imageUrl": "https://picsum.photos/seed/zappy-tsk/1600/1000",
       "imageHint": "tasks list"
     },
     {
+      "id": "zappy-dashboard",
+      "description": "Zappy minimalist command center for deep work cycles",
+      "imageUrl": "https://picsum.photos/seed/zappy-dash/1600/1000",
+      "imageHint": "minimalist dashboard"
+    },
+    {
       "id": "zappy-workflow",
-      "description": "Zappy integrated workflow systems",
+      "description": "Zappy high-speed integrated workflow system mapping",
       "imageUrl": "https://picsum.photos/seed/zappy-work/1600/1000",
       "imageHint": "process diagram"
     },
     {
       "id": "zappy-tools",
-      "description": "Zappy productivity tools command center",
+      "description": "Zappy productivity toolkit with notes and scheduling integration",
       "imageUrl": "https://picsum.photos/seed/zappy-tool/1600/1000",
       "imageHint": "toolkit dashboard"
     },
     {
       "id": "zappy-analytics",
-      "description": "Zappy focus and deep work analytics",
+      "description": "Zappy focus and productivity cycle visual analytics",
       "imageUrl": "https://picsum.photos/seed/zappy-ana/1600/1000",
       "imageHint": "productivity charts"
     },
     {
       "id": "zappy-overview",
-      "description": "Zappy complete personal OS overview",
+      "description": "Zappy ultimate personal OS and workflow overview",
       "imageUrl": "https://picsum.photos/seed/zappy-over/1600/1000",
-      "imageHint": "minimalist dashboard"
+      "imageHint": "software ecosystem"
     },
     {
       "id": "founder-portrait",
-      "description": "Syed Sharfuddin Shuaib professional portrait",
+      "description": "Syed Sharfuddin Shuaib professional portrait in architectural studio",
       "imageUrl": "https://picsum.photos/seed/syed-portrait/800/1000",
       "imageHint": "founder professional portrait"
     }
