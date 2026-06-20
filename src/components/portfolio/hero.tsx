@@ -6,7 +6,7 @@ import { OrbitalSystem } from "./orbital-system";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 interface Particle {
   id: number;
@@ -18,6 +18,12 @@ interface Particle {
 export function Hero() {
   const [isMounted, setIsMounted] = useState(false);
   const [particles, setParticles] = useState<Particle[]>([]);
+  const { scrollY } = useScroll();
+
+  // Typography Parallax Layers
+  const y1 = useTransform(scrollY, [0, 500], [0, -100]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -50]);
+  const y3 = useTransform(scrollY, [0, 500], [0, -150]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -86,19 +92,24 @@ export function Hero() {
         className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center z-10"
       >
         <div className="space-y-8 md:space-y-12 text-center lg:text-left">
-          <motion.div variants={itemVariants} className="inline-flex items-center gap-3 md:gap-4 px-5 md:px-6 py-2 rounded-full glass border-[#EAE0C8]/5 text-[9px] md:text-[10px] font-bold text-[#EAE0C8] tracking-[0.4em] md:tracking-[0.5em] uppercase">
+          <motion.div 
+            variants={itemVariants} 
+            whileHover={{ scale: 1.02, x: 5 }}
+            className="inline-flex items-center gap-3 md:gap-4 px-5 md:px-6 py-2 rounded-full glass border-[#EAE0C8]/5 text-[9px] md:text-[10px] font-bold text-[#EAE0C8] tracking-[0.4em] md:tracking-[0.5em] uppercase cursor-default"
+          >
             <Sparkles className="w-3 md:w-3.5 h-3 md:h-3.5 text-[#536878] animate-pulse" />
             Founder • Product Builder
           </motion.div>
           
           <div className="space-y-6 md:space-y-8">
             <motion.h1 
+              style={{ y: y1 }}
               variants={itemVariants}
               className="text-5xl md:text-7xl lg:text-[7rem] font-headline font-black tracking-tighter leading-[0.9] text-white"
             >
               Building Products.<br />
-              <span className="text-[#536878]">Building Systems.</span><br />
-              <span className="italic font-medium text-[#EAE0C8]">Building The Future.</span>
+              <motion.span style={{ y: y2 }} className="text-[#536878] block">Building Systems.</motion.span>
+              <motion.span style={{ y: y3 }} className="italic font-medium text-[#EAE0C8] block">Building The Future.</motion.span>
             </motion.h1>
             
             <motion.p 
@@ -110,9 +121,9 @@ export function Hero() {
           </div>
           
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-8 md:gap-10">
-            <Button asChild size="lg" className="w-full sm:w-auto h-14 md:h-16 px-10 md:px-12 rounded-full bg-[#EAE0C8] text-[#0F1317] hover:bg-[#FFFFFF] transition-all font-bold text-base md:text-lg group shadow-[0_10px_30px_rgba(234,224,200,0.15)]">
+            <Button asChild size="lg" className="w-full sm:w-auto h-14 md:h-16 px-10 md:px-12 rounded-full bg-[#EAE0C8] text-[#0F1317] hover:bg-[#FFFFFF] hover:scale-105 transition-all duration-500 font-bold text-base md:text-lg group shadow-[0_10px_30px_rgba(234,224,200,0.15)]">
               <Link href="#ecosystem">
-                Explore Work <ArrowRight className="ml-3 w-4 md:w-5 h-4 md:h-5 group-hover:translate-x-2 transition-transform" />
+                Explore Work <ArrowRight className="ml-3 w-4 md:w-5 h-4 md:h-5 group-hover:translate-x-2 transition-transform duration-500" />
               </Link>
             </Button>
             <Link href="#philosophy" className="text-[#EAE0C8]/70 hover:text-white transition-all font-bold text-base md:text-lg relative group">
@@ -123,8 +134,8 @@ export function Hero() {
         </div>
 
         <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 0.9, rotateY: 10 }}
+          animate={{ opacity: 1, scale: 1, rotateY: 0 }}
           transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="hidden lg:block relative"
         >

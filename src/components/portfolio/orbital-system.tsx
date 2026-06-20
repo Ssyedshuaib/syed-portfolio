@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 const ORBITS = [
   { label: "Observe", radius: "140px", duration: "18s", delay: "0s", desc: "Understanding the problem space deeply." },
@@ -16,18 +17,28 @@ export function OrbitalSystem() {
   const [hoveredNode, setHoveredNode] = useState<{label: string, desc: string} | null>(null);
 
   return (
-    <div className="relative w-full aspect-square max-w-[650px] flex items-center justify-center">
+    <div className="relative w-full aspect-square max-w-[650px] flex items-center justify-center perspective-[1000px]">
       {/* Central Node */}
-      <div className="relative z-20 group">
-        <div className="w-40 h-40 rounded-full glass flex items-center justify-center border-white/5 shadow-[0_0_100px_rgba(83,104,120,0.1)] group-hover:scale-110 transition-transform duration-1000">
+      <motion.div 
+        whileHover={{ scale: 1.05 }}
+        className="relative z-20 group"
+      >
+        <div className="w-40 h-40 rounded-full glass flex items-center justify-center border-white/5 shadow-[0_0_100px_rgba(83,104,120,0.1)] group-hover:shadow-[0_0_120px_rgba(234,224,200,0.2)] transition-all duration-1000">
           <div className="text-center">
             <span className="text-white font-headline font-bold text-2xl tracking-[0.3em] uppercase block">SYED</span>
-            <div className="h-px w-8 bg-[#536878]/40 mx-auto mt-3 rounded-full group-hover:w-14 transition-all duration-1000" />
+            <motion.div 
+              animate={{ width: hoveredNode ? "3.5rem" : "2rem" }}
+              className="h-px bg-[#536878]/40 mx-auto mt-3 rounded-full" 
+            />
           </div>
         </div>
         {/* Glow behind center */}
-        <div className="absolute inset-0 bg-[#536878]/10 blur-[80px] rounded-full -z-10 animate-pulse" />
-      </div>
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1], opacity: [0.05, 0.1, 0.05] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute inset-0 bg-[#536878]/10 blur-[80px] rounded-full -z-10" 
+        />
+      </motion.div>
 
       {/* Orbit Rings */}
       {[140, 180, 200, 220, 260, 300].map((r) => (
@@ -37,7 +48,7 @@ export function OrbitalSystem() {
           style={{ 
             width: r * 2, 
             height: r * 2,
-            borderColor: hoveredNode ? 'rgba(234, 224, 200, 0.15)' : 'rgba(234, 224, 200, 0.05)'
+            borderColor: hoveredNode ? 'rgba(234, 224, 200, 0.12)' : 'rgba(234, 224, 200, 0.05)'
           }}
         />
       ))}
@@ -56,24 +67,35 @@ export function OrbitalSystem() {
           onMouseEnter={() => setHoveredNode({label: orbit.label, desc: orbit.desc})}
           onMouseLeave={() => setHoveredNode(null)}
         >
-          <div className={cn(
-            "px-6 py-3 glass rounded-full text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-700 cursor-default",
-            hoveredNode?.label === orbit.label 
-              ? "text-white border-[#EAE0C8]/40 scale-125 bg-[#536878]/10 shadow-[0_0_30px_rgba(83,104,120,0.3)]" 
-              : "text-[#EAE0C8]/50 hover:text-white"
-          )}>
+          <motion.div 
+            whileHover={{ scale: 1.1, y: -2 }}
+            className={cn(
+              "px-6 py-3 glass rounded-full text-[10px] font-bold tracking-[0.2em] uppercase transition-all duration-700 cursor-default",
+              hoveredNode?.label === orbit.label 
+                ? "text-white border-[#EAE0C8]/40 bg-[#536878]/15 shadow-[0_0_30px_rgba(83,104,120,0.3)]" 
+                : "text-[#EAE0C8]/50 hover:text-white"
+            )}
+          >
             {orbit.label}
-          </div>
+          </motion.div>
         </div>
       ))}
 
       {/* Tooltip */}
-      {hoveredNode && (
-        <div className="absolute bottom-[0%] glass p-8 rounded-3xl border-[#EAE0C8]/20 w-80 text-center animate-in fade-in zoom-in-95 duration-700 shadow-2xl">
-          <p className="text-[#536878] font-bold tracking-[0.4em] uppercase text-[10px] mb-4">{hoveredNode.label}</p>
-          <p className="text-[#EAE0C8]/70 text-base font-light leading-relaxed">{hoveredNode.desc}</p>
-        </div>
-      )}
+      <AnimatePresence>
+        {hoveredNode && (
+          <motion.div 
+            initial={{ opacity: 0, y: 10, scale: 0.95, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: 10, scale: 0.95, filter: "blur(10px)" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute bottom-[0%] glass p-8 rounded-3xl border-[#EAE0C8]/20 w-80 text-center shadow-2xl z-50"
+          >
+            <p className="text-[#536878] font-bold tracking-[0.4em] uppercase text-[10px] mb-4">{hoveredNode.label}</p>
+            <p className="text-[#EAE0C8]/70 text-base font-light leading-relaxed">{hoveredNode.desc}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

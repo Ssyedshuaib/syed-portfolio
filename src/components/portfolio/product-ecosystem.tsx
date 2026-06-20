@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from "react";
@@ -141,35 +140,38 @@ export function ProductEcosystem() {
               <Link
                 href={`/projects/${product.slug}`}
                 className={cn(
-                  "group relative h-full w-full bg-[#536878]/05 rounded-[3rem] p-10 border border-[#EAE0C8]/05 flex flex-col justify-between overflow-hidden transition-all duration-700 hover:bg-[#536878]/10 hover:border-[#EAE0C8]/25 hover:-translate-y-2",
+                  "group relative h-full w-full bg-[#536878]/05 rounded-[3rem] p-10 border border-[#EAE0C8]/05 flex flex-col justify-between overflow-hidden transition-all duration-700 ease-premium hover:bg-[#536878]/10 hover:border-[#EAE0C8]/25 hover:-translate-y-2",
                   product.isFlagship && "bg-[#536878]/08 border-[#EAE0C8]/15 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)]"
                 )}
               >
                 <VisualIdentity type={product.visualHint} />
                 
                 {/* Spotlight effect */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.1),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.12),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
 
                 <div className="flex justify-between items-start relative z-10 mb-8">
                   <div className="space-y-1">
                     <p className="text-[9px] font-bold tracking-[0.4em] text-[#536878] uppercase">{product.category}</p>
                     <h4 className={cn(
-                      "font-headline font-black text-white tracking-tight leading-none group-hover:text-[#EAE0C8] transition-colors",
+                      "font-headline font-black text-white tracking-tight leading-none group-hover:text-[#EAE0C8] transition-colors duration-500",
                       product.isFlagship ? "text-4xl md:text-6xl" : "text-2xl md:text-3xl"
                     )}>
                       {product.title}
                     </h4>
                   </div>
                   <div className="flex flex-col items-end gap-2">
-                    <div className="px-3 py-1 rounded-full glass border-white/5 text-[7px] font-bold tracking-[0.2em] uppercase text-[#EAE0C8]/60">
+                    <motion.div 
+                      whileHover={{ scale: 1.05 }}
+                      className="px-3 py-1 rounded-full glass border-white/5 text-[7px] font-bold tracking-[0.2em] uppercase text-[#EAE0C8]/60"
+                    >
                       {product.status}
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
                 
                 <div className="space-y-8 relative z-10">
                   <p className={cn(
-                    "text-[#EAE0C8]/70 leading-relaxed font-light transition-all duration-700",
+                    "text-[#EAE0C8]/70 leading-relaxed font-light transition-all duration-700 group-hover:text-white/90",
                     product.isFlagship ? "text-xl max-w-lg" : "text-base"
                   )}>
                     {product.mission}
@@ -180,13 +182,17 @@ export function ProductEcosystem() {
                       Explore Experience
                       <span className="absolute -bottom-1 left-0 w-0 h-px bg-current group-hover:w-full transition-all duration-500" />
                     </span>
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1.5 transition-transform duration-500" />
                   </div>
                 </div>
 
                 {/* Flagship Indicator Glow */}
                 {product.isFlagship && (
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#EAE0C8]/[0.02] blur-3xl pointer-events-none" />
+                  <motion.div 
+                    animate={{ opacity: [0.02, 0.05, 0.02] }}
+                    transition={{ duration: 5, repeat: Infinity }}
+                    className="absolute top-0 right-0 w-48 h-48 bg-[#EAE0C8]/10 blur-3xl pointer-events-none" 
+                  />
                 )}
               </Link>
             </motion.div>

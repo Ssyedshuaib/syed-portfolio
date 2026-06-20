@@ -64,7 +64,7 @@ export function Navbar() {
         >
           <Link href="/" className="flex items-center gap-4 md:gap-5 group cursor-pointer" onClick={() => setMobileMenuOpen(false)}>
             <motion.div 
-              whileHover={{ scale: 1.2 }}
+              whileHover={{ scale: 1.2, boxShadow: "0 0 25px rgba(234,224,200,0.8)" }}
               className="w-2 md:w-2.5 h-2 md:h-2.5 rounded-full bg-[#EAE0C8] shadow-[0_0_15px_rgba(234,224,200,0.4)]" 
             />
             <span className="text-[#FFFFFF] font-headline font-bold text-[11px] md:text-[13px] tracking-[0.5em] md:tracking-[0.65em] uppercase group-hover:text-[#EAE0C8] transition-colors">
@@ -76,13 +76,13 @@ export function Navbar() {
 
           <div className="hidden lg:flex items-center gap-10 text-[11.5px] font-bold tracking-[0.55em] text-[#EAE0C8]/70 uppercase">
             {NAV_LINKS.map((link) => (
-              <motion.div key={link.label} whileHover={{ y: -1 }}>
+              <motion.div key={link.label} whileHover={{ y: -2 }} transition={{ type: "spring", stiffness: 400, damping: 25 }}>
                 <Link 
                   href={link.href} 
                   className="hover:text-white transition-all relative group"
                 >
                   {link.label}
-                  <span className="absolute -bottom-2 left-0 w-0 h-px bg-[#536878] transition-all duration-700 group-hover:w-full" />
+                  <span className="absolute -bottom-2 left-0 w-0 h-[1.5px] bg-[#536878] transition-all duration-500 ease-premium group-hover:w-full" />
                 </Link>
               </motion.div>
             ))}
@@ -90,13 +90,13 @@ export function Navbar() {
 
           <div className="flex items-center gap-4">
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.05, y: -1 }}
+              whileTap={{ scale: 0.98 }}
               className="hidden md:block"
             >
               <Link 
                 href="#contact"
-                className="bg-[#EAE0C8] text-[#0F1317] px-6 md:px-8 py-2 md:py-2.5 rounded-full text-[9px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] uppercase hover:bg-[#FFFFFF] transition-all shadow-[0_10px_30px_rgba(234,224,200,0.15)]"
+                className="bg-[#EAE0C8] text-[#0F1317] px-6 md:px-8 py-2 md:py-2.5 rounded-full text-[9px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] uppercase hover:bg-[#FFFFFF] hover:shadow-[0_15px_30px_rgba(234,224,200,0.3)] transition-all shadow-[0_10px_30px_rgba(234,224,200,0.15)]"
               >
                 Contact
               </Link>

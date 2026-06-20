@@ -76,8 +76,8 @@ export function Contact() {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - (rect.left + rect.width / 2);
     const y = e.clientY - (rect.top + rect.height / 2);
-    mouseX.set(x * 0.3);
-    mouseY.set(y * 0.3);
+    mouseX.set(x * 0.2);
+    mouseY.set(y * 0.2);
   }
 
   function handleMouseLeave() {
@@ -89,6 +89,10 @@ export function Contact() {
     e?.stopPropagation();
     setIsExpanded(false);
     setSelectedTopic(null);
+  };
+
+  const emailAction = () => {
+    window.location.href = "mailto:syedshuaib2429@gmail.com?subject=Inquiry%20from%20Axora%20Website";
   };
 
   return (
@@ -108,8 +112,8 @@ export function Contact() {
       <motion.div
         animate={{ 
           scale: isExpanded ? 0.98 : 1,
-          filter: isExpanded ? "blur(10px)" : "blur(0px)",
-          opacity: isExpanded ? 0.4 : 1
+          filter: isExpanded ? "blur(15px)" : "blur(0px)",
+          opacity: isExpanded ? 0.3 : 1
         }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="relative z-10"
@@ -154,13 +158,17 @@ export function Contact() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-5 md:gap-6 glass w-fit px-6 md:px-8 py-3 md:py-4 rounded-2xl border-white/5">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              <div className="flex items-center gap-5 md:gap-6 glass w-fit px-6 md:px-8 py-3 md:py-4 rounded-2xl border-white/5 group hover:border-primary/20 transition-colors">
+                <motion.div 
+                  animate={{ opacity: [1, 0.4, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-1.5 h-1.5 rounded-full bg-primary" 
+                />
                 <div className="space-y-0.5">
                   <p className="text-[8px] md:text-[9px] font-bold tracking-[0.3em] text-primary/40 uppercase">Bangalore, IN</p>
                   <p className="text-base md:text-lg font-mono font-medium text-white tracking-widest">{time}</p>
                 </div>
-                <Clock className="w-3.5 md:w-4 h-3.5 md:h-4 text-primary/20 ml-2 md:ml-4" />
+                <Clock className="w-3.5 md:w-4 h-3.5 md:h-4 text-primary/20 ml-2 md:ml-4 group-hover:text-primary transition-colors" />
               </div>
             </motion.div>
 
@@ -169,11 +177,18 @@ export function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-              className="glass p-10 md:p-16 rounded-[3rem] md:rounded-[4rem] border-white/10 space-y-12 md:space-y-16 relative overflow-hidden"
+              onClick={emailAction}
+              className="glass p-10 md:p-16 rounded-[3rem] md:rounded-[4rem] border-white/10 space-y-12 md:space-y-16 relative overflow-hidden group cursor-pointer hover:border-primary/20 transition-all duration-700 hover:bg-primary/[0.02]"
             >
+              {/* Internal Spotlight */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(234,224,200,0.05),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+              
               <div className="space-y-10 md:space-y-12 relative z-10">
                 <div className="space-y-3 md:space-y-4">
-                  <p className="text-[8px] md:text-[10px] font-bold tracking-[0.5em] text-primary/40 uppercase">Direct Email</p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-[8px] md:text-[10px] font-bold tracking-[0.5em] text-primary/40 uppercase">Direct Email</p>
+                    <ArrowUpRight className="w-4 h-4 text-primary/20 group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-500" />
+                  </div>
                   <p className="text-xl md:text-3xl font-headline font-bold text-white group-hover:text-primary transition-colors truncate">
                     syedshuaib2429@gmail.com
                   </p>
@@ -191,9 +206,13 @@ export function Contact() {
                   <p className="text-[8px] md:text-[10px] font-bold tracking-[0.5em] text-primary/40 uppercase">Current Focus</p>
                   <div className="flex flex-wrap gap-2 md:gap-3">
                     {["Axora Studio", "DevNexus", "Reverie"].map(focus => (
-                      <span key={focus} className="px-4 md:px-5 py-1.5 md:py-2 rounded-full glass border-white/5 text-[8px] md:text-[9px] font-bold tracking-[0.2em] uppercase text-white/60">
+                      <motion.span 
+                        key={focus} 
+                        whileHover={{ y: -2, borderColor: "rgba(234,224,200,0.3)" }}
+                        className="px-4 md:px-5 py-1.5 md:py-2 rounded-full glass border-white/5 text-[8px] md:text-[9px] font-bold tracking-[0.2em] uppercase text-white/60 transition-all"
+                      >
                         {focus}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                 </div>
@@ -217,6 +236,7 @@ export function Contact() {
               damping: 20,
               layout: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
             }}
+            whileHover={!isExpanded ? { scale: 1.05 } : {}}
             className={cn(
               "relative z-[100] glass border-white/10 flex flex-col items-center justify-center cursor-pointer overflow-hidden",
               isExpanded 
@@ -229,13 +249,13 @@ export function Contact() {
                 <motion.div key="cta-initial" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-center justify-center gap-3 md:gap-4 text-center">
                   <span className="text-[8px] md:text-[10px] font-bold tracking-[0.4em] text-primary/60 uppercase">Start A</span>
                   <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-white uppercase flex items-center gap-2">
-                    Conversation <ArrowRight className="w-3.5 md:w-4 h-3.5 md:h-4 group-hover:translate-x-1 transition-transform" />
+                    Conversation <ArrowRight className="w-3.5 md:w-4 h-3.5 md:h-4 group-hover:translate-x-1.5 transition-transform duration-500" />
                   </span>
                 </motion.div>
               ) : (
                 <motion.div key="cta-expanded" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} className="w-full relative z-20">
-                  <button onClick={(e) => { e.stopPropagation(); handleReset(); }} className="absolute -top-4 -right-4 p-2 rounded-full glass border-white/5 hover:bg-white/5 transition-all">
-                    <X className="w-4 h-4 text-[#536878]" />
+                  <button onClick={(e) => { e.stopPropagation(); handleReset(); }} className="absolute -top-4 -right-4 p-2 rounded-full glass border-white/5 hover:bg-white/5 transition-all group">
+                    <X className="w-4 h-4 text-[#536878] group-hover:rotate-90 transition-transform duration-500" />
                   </button>
 
                   <div className="space-y-10 md:space-y-12">
@@ -256,34 +276,34 @@ export function Contact() {
                             {TOPICS.map((topic, idx) => (
                               <button key={topic.id} onClick={(e) => { e.stopPropagation(); setSelectedTopic(topic.label); }} className="group relative flex items-center justify-between p-5 md:p-6 rounded-2xl glass border-white/5 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-500 overflow-hidden text-left">
                                 <div className="flex items-center gap-4 md:gap-6">
-                                  <span className="text-[9px] md:text-[10px] font-mono font-bold text-[#536878]">{topic.id}</span>
-                                  <div className="space-y-0.5">
+                                  <span className="text-[9px] md:text-[10px] font-mono font-bold text-[#536878] group-hover:text-primary transition-colors">{topic.id}</span>
+                                  <div className="space-y-0.5 group-hover:translate-x-1 transition-transform duration-500">
                                     <span className="text-lg md:text-xl font-bold text-white group-hover:text-primary transition-colors">{topic.label}</span>
                                     <p className="text-[8px] md:text-[10px] text-[#536878] font-light uppercase tracking-widest">{topic.description}</p>
                                   </div>
                                 </div>
-                                <ArrowRight className="w-3.5 md:w-4 h-3.5 md:h-4 text-[#536878] group-hover:text-primary group-hover:rotate-[-45deg] transition-all" />
+                                <ArrowRight className="w-3.5 md:w-4 h-3.5 md:h-4 text-[#536878] group-hover:text-primary group-hover:rotate-[-45deg] transition-all duration-500" />
                               </button>
                             ))}
                           </motion.div>
                         ) : (
                           <motion.div key="channels-reveal" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-3 md:space-y-4">
-                            <button onClick={(e) => { e.stopPropagation(); setSelectedTopic(null); }} className="text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-primary/40 hover:text-primary uppercase flex items-center gap-2 mb-6">
-                              <ArrowRight className="w-3 h-3 rotate-180" /> Back to topics
+                            <button onClick={(e) => { e.stopPropagation(); setSelectedTopic(null); }} className="text-[9px] md:text-[10px] font-bold tracking-[0.2em] text-primary/40 hover:text-primary uppercase flex items-center gap-2 mb-6 group">
+                              <ArrowRight className="w-3 h-3 rotate-180 group-hover:-translate-x-1 transition-transform" /> Back to topics
                             </button>
                             {CHANNELS.map((channel, idx) => (
                               <a key={channel.label} href={channel.href} target={channel.label === "LinkedIn" ? "_blank" : undefined} rel={channel.label === "LinkedIn" ? "noopener noreferrer" : undefined} className="group relative flex items-center justify-between p-6 md:p-8 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-700 overflow-hidden">
                                 <div className="flex items-center gap-4 md:gap-6">
-                                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl glass border-white/5 flex items-center justify-center text-[#536878] group-hover:text-primary transition-colors">
+                                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-2xl glass border-white/5 flex items-center justify-center text-[#536878] group-hover:text-primary group-hover:scale-110 transition-all duration-500">
                                     <channel.icon className="w-4 md:w-5 h-4 md:h-5" />
                                   </div>
-                                  <div className="space-y-0.5">
+                                  <div className="space-y-0.5 group-hover:translate-x-1 transition-transform duration-500">
                                     <span className="text-xl md:text-2xl font-headline font-bold text-white tracking-tight">{channel.label}</span>
                                     <p className="text-[8px] md:text-[10px] text-[#536878] font-light uppercase tracking-widest">{channel.description}</p>
                                   </div>
                                 </div>
-                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full glass border-white/10 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all">
-                                  <ArrowUpRight className="w-4 md:w-5 h-4 md:h-5" />
+                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full glass border-white/10 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all duration-500">
+                                  <ArrowUpRight className="w-4 md:w-5 h-4 md:h-5 group-hover:scale-110 transition-transform" />
                                 </div>
                               </a>
                             ))}

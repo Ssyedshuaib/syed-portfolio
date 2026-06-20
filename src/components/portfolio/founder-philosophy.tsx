@@ -190,8 +190,8 @@ function ManifestoLine({ text, progress, range, offset, direction, className, it
   const blurValue = useTransform(progress, range, [20, 0]);
   const springX = useSpring(xBase, { stiffness: 60, damping: 20 });
   const springY = useSpring(yBase, { stiffness: 60, damping: 20 });
-  const mouseMoveX = useTransform(mouseX, [-0.5, 0.5], [isBackground ? 1 : -1, isBackground ? -1 : 1]);
-  const mouseMoveY = useTransform(mouseY, [-0.5, 0.5], [isBackground ? 1 : -1, isBackground ? -1 : 1]);
+  const mouseMoveX = useTransform(mouseX, [-0.5, 0.5], [isBackground ? 2 : -2, isBackground ? -2 : 2]);
+  const mouseMoveY = useTransform(mouseY, [-0.5, 0.5], [isBackground ? 2 : -2, isBackground ? -2 : 2]);
 
   return (
     <motion.div
@@ -212,6 +212,8 @@ function PrincipleChapter({ principle, idx }: { principle: any, idx: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { margin: "-20% 0px -20% 0px" });
   const isRight = idx % 2 === 0;
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const numberY = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
   return (
     <motion.div
@@ -224,23 +226,26 @@ function PrincipleChapter({ principle, idx }: { principle: any, idx: number }) {
         isRight ? "lg:flex-row" : "lg:flex-row-reverse"
       )}
     >
-      <div className={cn(
-        "absolute -top-16 md:-top-64 pointer-events-none select-none z-0",
-        isRight ? "-left-4 lg:-left-24" : "-right-4 lg:-right-24"
-      )}>
+      <motion.div 
+        style={{ y: numberY }}
+        className={cn(
+          "absolute -top-16 md:-top-64 pointer-events-none select-none z-0",
+          isRight ? "-left-4 lg:-left-24" : "-right-4 lg:-right-24"
+        )}
+      >
         <motion.span 
           animate={{ opacity: isInView ? 0.04 : 0.01 }}
           className="text-[10rem] md:text-[40rem] font-headline font-black text-white tracking-tighter block leading-none"
         >
           {principle.id}
         </motion.span>
-      </div>
+      </motion.div>
 
       <div className="flex-1 space-y-8 md:space-y-16 relative z-10 w-full">
         <div className={cn("space-y-8 md:space-y-12 max-w-2xl", isRight ? "lg:mr-auto" : "lg:ml-auto")}>
           <motion.div
             animate={{ x: isInView ? 0 : (isRight ? -20 : 20), opacity: isInView ? 1 : 0 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-4 md:space-y-6"
           >
             <div className="flex items-center gap-4 md:gap-6">
@@ -250,14 +255,14 @@ function PrincipleChapter({ principle, idx }: { principle: any, idx: number }) {
                  {principle.label}
                </span>
             </div>
-            <h3 className="text-4xl md:text-8xl font-headline font-black text-white tracking-tighter leading-none">
+            <h3 className="text-4xl md:text-8xl font-headline font-black text-white tracking-tighter leading-none group-hover:text-primary transition-colors duration-500">
               {principle.title}
             </h3>
           </motion.div>
 
           <motion.div
             animate={{ y: isInView ? 0 : 20, opacity: isInView ? 1 : 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-6 md:space-y-8"
           >
             <p className="text-xl md:text-4xl font-light text-primary/70 italic leading-tight">
@@ -271,9 +276,13 @@ function PrincipleChapter({ principle, idx }: { principle: any, idx: number }) {
       </div>
 
       <div className="hidden lg:flex flex-1 items-center justify-center">
-        <motion.div animate={{ scale: isInView ? 1 : 0.8, opacity: isInView ? 0.2 : 0 }} className="w-96 h-96 border border-primary/20 rounded-[4rem] relative flex items-center justify-center">
-          <div className="absolute inset-0 bg-primary/5 blur-3xl rounded-full" />
-          <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+        <motion.div animate={{ scale: isInView ? 1 : 0.8, opacity: isInView ? 0.2 : 0 }} className="w-96 h-96 border border-primary/20 rounded-[4rem] relative flex items-center justify-center transition-all duration-1000">
+          <motion.div 
+            animate={{ opacity: [0.05, 0.1, 0.05], scale: [1, 1.1, 1] }}
+            transition={{ duration: 4, repeat: Infinity }}
+            className="absolute inset-0 bg-primary/5 blur-3xl rounded-full" 
+          />
+          <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-[0_0_10px_rgba(234,224,200,0.5)]" />
         </motion.div>
       </div>
     </motion.div>

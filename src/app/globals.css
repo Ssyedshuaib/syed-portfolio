@@ -32,7 +32,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body antialiased selection:bg-secondary/30 selection:text-primary;
+    @apply bg-background text-foreground font-body antialiased selection:bg-primary/20 selection:text-primary;
     scroll-behavior: smooth;
     background: linear-gradient(180deg, #0F1317 0%, #161C21 100%);
   }
@@ -115,3 +115,8 @@
 .stagger-2 { transition-delay: 300ms; }
 .stagger-3 { transition-delay: 450ms; }
 .stagger-4 { transition-delay: 600ms; }
+
+/* Custom Premium Easing */
+.ease-premium {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}

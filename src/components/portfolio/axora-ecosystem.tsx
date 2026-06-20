@@ -1,8 +1,7 @@
-
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { MapPin, Layout, Compass, Sparkles, ArrowUpRight, GraduationCap, Zap } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -107,7 +106,11 @@ export function AxoraEcosystem() {
               className="space-y-8"
             >
               <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass border-white/5">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                <motion.div 
+                  animate={{ opacity: [1, 0.4, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-1.5 h-1.5 rounded-full bg-primary" 
+                />
                 <p className="text-[10px] font-bold tracking-[0.6em] text-[#536878] uppercase">Axora Ecosystem</p>
               </div>
               <h2 className="text-6xl md:text-8xl font-headline font-black tracking-tighter text-white leading-none">
@@ -168,7 +171,7 @@ export function AxoraEcosystem() {
                         strokeWidth="0.1"
                       />
                       
-                      {/* Traveling Pulse */}
+                      {/* Traveling Pulse - Part of micro interaction system */}
                       <motion.circle
                         animate={{ 
                           cx: [50, node.position.x],
@@ -176,12 +179,12 @@ export function AxoraEcosystem() {
                           opacity: [0, 1, 0]
                         }}
                         transition={{ 
-                          duration: 2.5, 
+                          duration: 3 + node.delay * 2, 
                           repeat: Infinity, 
-                          delay: node.delay,
+                          delay: node.delay * 5,
                           ease: "linear"
                         }}
-                        r="0.5"
+                        r="0.4"
                         fill="#EAE0C8"
                         style={{ filter: 'blur(1px)' }}
                       />
@@ -201,13 +204,14 @@ export function AxoraEcosystem() {
               animate={{ 
                 scale: isEcosystemOpen ? 1.05 : 1,
               }}
+              whileHover={{ y: -2 }}
             >
               <motion.div
                 animate={{ 
-                  scale: [1, 1.1, 1],
-                  opacity: [0.1, 0.2, 0.1]
+                  scale: [1, 1.15, 1],
+                  opacity: [0.1, 0.25, 0.1]
                 }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute inset-0 bg-primary blur-[60px] rounded-full"
               />
 
@@ -219,7 +223,7 @@ export function AxoraEcosystem() {
                   animate={{ 
                     rotate: isEcosystemOpen ? 360 : 0,
                   }}
-                  transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
                 >
                   <Sparkles className={cn(
                     "w-8 h-8 mb-4 transition-all duration-700",
@@ -284,7 +288,7 @@ export function AxoraEcosystem() {
                     transition={{ duration: 6 + node.delay * 10, repeat: Infinity, ease: "easeInOut" }}
                   >
                     <div className={cn(
-                      "relative glass p-6 rounded-[2rem] border-white/5 w-64 transition-all duration-700",
+                      "relative glass p-6 rounded-[2rem] border-white/5 w-64 transition-all duration-700 ease-premium",
                       activeNode === node.id 
                         ? "border-primary/40 bg-primary/[0.06] -translate-y-2 shadow-[0_30px_60px_rgba(0,0,0,0.6)]" 
                         : "group-hover:border-white/15"
@@ -292,7 +296,7 @@ export function AxoraEcosystem() {
                       <div className="flex items-start justify-between mb-5">
                         <div className={cn(
                           "w-10 h-10 rounded-xl glass border-white/5 flex items-center justify-center transition-all duration-700",
-                          activeNode === node.id ? "text-white scale-110" : "text-[#536878]"
+                          activeNode === node.id ? "text-white scale-110 shadow-[0_0_20px_rgba(234,224,200,0.3)]" : "text-[#536878]"
                         )}>
                           <node.icon className="w-5 h-5" />
                         </div>
@@ -315,7 +319,7 @@ export function AxoraEcosystem() {
                         activeNode === node.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                       )}>
                         <span className="text-[8px] font-bold tracking-[0.3em] text-primary uppercase">Explore Ecosystem</span>
-                        <ArrowUpRight className="w-3 h-3 text-primary" />
+                        <ArrowUpRight className="w-3 h-3 text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </div>
                     </div>
                   </motion.div>

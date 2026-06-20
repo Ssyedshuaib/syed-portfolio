@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const CHAPTERS = [
@@ -103,9 +103,13 @@ export function Journey() {
 
 function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
   const isLeft = chapter.side === "left";
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const yearY = useTransform(scrollYProgress, [0, 1], [30, -30]);
   
   return (
     <motion.div 
+      ref={ref}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10%" }}
@@ -115,24 +119,31 @@ function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
         isLeft ? "md:flex-row" : "md:flex-row-reverse"
       )}
     >
-      {/* Background Year */}
-      <div className={cn(
-        "absolute -top-16 md:-top-32 pointer-events-none select-none z-0",
-        isLeft ? "left-0 md:-left-20" : "right-0 md:-right-20"
-      )}>
-        <span className="text-[8rem] md:text-[22rem] font-headline font-black text-white/[0.02] tracking-tighter block">
+      {/* Background Year - Micro interaction: soft parallax */}
+      <motion.div 
+        style={{ y: yearY }}
+        className={cn(
+          "absolute -top-16 md:-top-32 pointer-events-none select-none z-0",
+          isLeft ? "left-0 md:-left-20" : "right-0 md:-right-20"
+        )}
+      >
+        <span className="text-[8rem] md:text-[22rem] font-headline font-black text-white/[0.02] tracking-tighter block leading-none">
           {chapter.year}
         </span>
-      </div>
+      </motion.div>
 
       <div className={cn(
         "flex-1 w-full relative z-10",
         isLeft ? "md:text-right" : "md:text-left"
       )}>
-        <div className={cn(
-          "space-y-6 md:space-y-8 max-w-xl",
-          isLeft ? "md:ml-auto" : "md:mr-auto"
-        )}>
+        <motion.div 
+          whileHover={{ x: isLeft ? -5 : 5 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className={cn(
+            "space-y-6 md:space-y-8 max-w-xl",
+            isLeft ? "md:ml-auto" : "md:mr-auto"
+          )}
+        >
           <div className={cn(
             "flex items-center gap-4 md:gap-6",
             isLeft ? "md:flex-row-reverse" : "md:flex-row"
@@ -145,7 +156,7 @@ function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
           </div>
 
           <div className="space-y-4 md:space-y-6">
-            <h3 className="text-4xl md:text-7xl font-headline font-black text-white tracking-tight leading-none">
+            <h3 className="text-4xl md:text-7xl font-headline font-black text-white tracking-tight leading-none group-hover:text-primary transition-colors duration-500">
               {chapter.title}
             </h3>
             <p className="text-xl md:text-3xl font-light text-[#EAE0C8]/60 leading-relaxed italic">
@@ -159,12 +170,13 @@ function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
               isLeft ? "md:justify-end" : "justify-start"
             )}>
               {chapter.chips.map((chip: string) => (
-                <div
+                <motion.div
                   key={chip}
-                  className="px-4 md:px-6 py-2 md:py-2.5 rounded-full glass border-white/5 text-[8px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-primary/70 cursor-default"
+                  whileHover={{ scale: 1.05, borderColor: "rgba(234,224,200,0.3)" }}
+                  className="px-4 md:px-6 py-2 md:py-2.5 rounded-full glass border-white/5 text-[8px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-primary/70 cursor-default transition-colors"
                 >
                   {chip}
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
@@ -175,11 +187,15 @@ function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
               {chapter.details}
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       <div className="hidden md:flex relative w-12 items-center justify-center">
-        <div className="w-4 h-4 rounded-full bg-black border-2 border-primary/40 z-20 shadow-[0_0_15px_rgba(234,224,200,0.2)]" />
+        <motion.div 
+          whileInView={{ scale: [1, 1.2, 1], boxShadow: ["0 0 0px transparent", "0 0 15px rgba(234,224,200,0.4)", "0 0 0px transparent"] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="w-4 h-4 rounded-full bg-black border-2 border-primary/40 z-20" 
+        />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="w-12 h-12 bg-primary/5 blur-xl rounded-full" />
         </div>
