@@ -57,11 +57,11 @@ const PRODUCTS = [
     className: "md:col-span-1 md:row-span-1",
   },
   {
-    title: "Global Group Schools",
-    category: "Digital Branding",
+    title: "Global Group of Schools",
+    category: "Education Technology",
     type: "Digital Presence",
     status: "Completed",
-    desc: "A high-performance web experience focused on school branding, information architecture, and modern admissions.",
+    desc: "A modern digital platform designed for educational institutions with a focus on admissions, academic information, parent engagement, and school branding.",
     icon: Layers,
     slug: "global-group-schools",
     className: "md:col-span-2 md:row-span-1",
@@ -122,7 +122,7 @@ export function ProductEcosystem() {
                   <div className="px-5 py-2 rounded-full glass border-white/5 text-[9px] font-bold tracking-[0.4em] uppercase text-[#B7A7A9] group-hover:text-[#F6ECE3] transition-all">
                     {product.status}
                   </div>
-                  <span className="text-[8px] font-bold tracking-[0.3em] text-[#91766E] uppercase">{product.type}</span>
+                  <span className="text-[8px] font-bold tracking-[0.3em] text-[#91766E] uppercase">{product.category}</span>
                 </div>
               </div>
               

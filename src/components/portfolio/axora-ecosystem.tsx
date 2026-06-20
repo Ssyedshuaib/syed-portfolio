@@ -51,13 +51,13 @@ const AXORA_PRODUCTS = [
     desc: "Productivity and workflow simplification platform." 
   },
   { 
-    name: "Global Group Schools", 
+    name: "Global Group of Schools", 
     icon: Layers, 
     x: 50, 
     y: 40, 
-    category: "Digital Branding",
+    category: "Education Technology", 
     status: "Completed",
-    desc: "Premium school website architecture and Parent engagement." 
+    desc: "A modern digital platform designed for educational institutions with a focus on admissions, academic information, parent engagement, and school branding." 
   },
 ];
 

@@ -60,12 +60,12 @@ const PROJECT_DATA: Record<string, any> = {
     vision: "The simplest way to organize a modern life."
   },
   "global-group-schools": {
-    title: "Global Group Schools",
-    tag: "Digital Experience",
-    status: "Live",
+    title: "Global Group of Schools",
+    tag: "Education Technology",
+    status: "Completed",
     problem: "Educational institutions often have outdated digital presences that fail to engage parents and students effectively.",
-    solution: "A modern, high-performance web experience focused on school branding, admissions, and information architecture.",
-    features: ["Information Hub", "Admissions Portal", "Modern UI Architecture"],
+    solution: "A modern digital platform focused on admissions, academic information, parent engagement, and school branding.",
+    features: ["Information Hub", "Admissions Portal", "Modern UI Architecture", "Parent Engagement System"],
     tech: ["React", "Tailwind", "Vercel"],
     vision: "Modernizing the educational narrative through design-first digital experiences."
   }
