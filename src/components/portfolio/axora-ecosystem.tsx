@@ -55,7 +55,7 @@ const AXORA_PRODUCTS = [
     name: "Global Group of Schools", 
     icon: Layers, 
     x: 50, 
-    y: 40, 
+    y: 12, // Adjusted upward to avoid center hub overlap and improve visibility
     category: "Education Technology", 
     status: "Completed",
     desc: "A modern digital platform for educational institutions focused on admissions and parent engagement." 
@@ -164,13 +164,17 @@ export function AxoraEcosystem() {
             >
               <div className="relative group cursor-pointer -translate-x-1/2 -translate-y-1/2">
                 <motion.div 
-                  whileHover={{ scale: 1.2, borderColor: "rgba(234,224,200,0.5)" }}
+                  whileHover={{ 
+                    scale: 1.2, 
+                    borderColor: "rgba(234,224,200,0.5)",
+                    boxShadow: "0 0 25px rgba(83,104,120,0.4)" 
+                  }}
                   className="w-16 h-16 rounded-2xl glass border-white/10 flex items-center justify-center transition-all shadow-xl"
                   style={{
                     boxShadow: activeProduct === product.name ? '0 0 30px rgba(83,104,120,0.3)' : 'none'
                   }}
                 >
-                  <product.icon className="w-6 h-6 text-[#EAE0C8]/70 group-hover:text-[#FFFFFF]" />
+                  <product.icon className="w-6 h-6 text-[#EAE0C8]/85 group-hover:text-[#FFFFFF] transition-colors" />
                 </motion.div>
                 
                 <AnimatePresence>
