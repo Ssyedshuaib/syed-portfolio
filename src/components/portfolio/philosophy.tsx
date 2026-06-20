@@ -26,40 +26,30 @@ export function Philosophy() {
 
   return (
     <section id="philosophy" className="py-48 px-6" ref={sectionRef}>
-      <div className="max-w-4xl mx-auto space-y-24">
-        <div className="flex items-center gap-6 opacity-40 reveal-on-scroll">
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent to-primary/40" />
-          <Sparkles className="w-6 h-6 text-primary" />
-          <div className="h-px flex-1 bg-gradient-to-l from-transparent to-primary/40" />
+      <div className="max-w-5xl mx-auto space-y-32">
+        <div className="space-y-12 text-center reveal-on-scroll">
+          <h2 className="text-[10px] font-bold tracking-[0.5em] text-muted-foreground uppercase">Philosophy</h2>
+          <h3 className="text-5xl md:text-7xl font-headline font-bold leading-tight">
+            Technology becomes meaningful when it solves <span className="text-primary/60 italic">real problems.</span>
+          </h3>
         </div>
 
-        <div className="space-y-16 text-center">
-          <h2 className="text-sm font-bold tracking-[0.5em] text-primary uppercase reveal-on-scroll stagger-1">Why I Build</h2>
-          
-          <div className="space-y-12">
-            <p className="text-5xl md:text-7xl font-headline font-bold leading-[1.1] text-gradient reveal-on-scroll stagger-2">
-              Technology becomes meaningful when it solves real problems.
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 reveal-on-scroll delay-200">
+          <div className="glass p-12 rounded-[2.5rem] border-white/5 space-y-8 flex flex-col justify-center">
+             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-light">
+              I believe great products are not built by adding features. They're built by removing friction, understanding people, and solving problems that genuinely matter.
             </p>
-            
-            <div className="max-w-2xl mx-auto space-y-10 text-xl md:text-2xl text-muted-foreground leading-relaxed font-light reveal-on-scroll stagger-3">
-              <p>
-                I enjoy transforming ideas into products that help people learn, connect, grow, and achieve more.
-              </p>
-              
-              <div className="relative py-16 group">
-                 <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] select-none transition-transform duration-1000 group-hover:scale-110">
-                    <span className="text-[12rem] font-headline font-black uppercase tracking-tighter">Problem</span>
-                 </div>
-                 <div className="relative z-10 glass p-10 rounded-[3rem] border-white/5 group-hover:border-primary/20 transition-all duration-700">
-                   <p className="text-foreground text-2xl md:text-3xl font-medium leading-tight">
-                    Every project begins with a simple question: <br />
-                    <span className="italic text-primary block mt-4 text-4xl font-headline">"What problem am I solving?"</span>
-                  </p>
-                 </div>
-              </div>
-
-              <p className="reveal-on-scroll stagger-4">
-                This philosophy guides every product, experiment, and platform I create. I don't just build code; I architect solutions.
+          </div>
+          
+          <div className="glass p-12 rounded-[2.5rem] border-white/10 space-y-8 relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-8">
+              <Sparkles className="w-8 h-8 text-white/10 group-hover:text-primary/40 transition-colors" />
+            </div>
+            <div className="space-y-6">
+              <p className="text-[10px] font-bold tracking-[0.3em] text-primary uppercase">Core Principle</p>
+              <h4 className="text-3xl font-headline font-bold">"What problem deserves solving?"</h4>
+              <p className="text-muted-foreground leading-relaxed">
+                This question guides every product, experiment, and platform I create. I don't just build code; I architect solutions that scale human capability.
               </p>
             </div>
           </div>

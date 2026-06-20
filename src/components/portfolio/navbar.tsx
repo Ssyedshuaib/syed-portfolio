@@ -6,10 +6,8 @@ import Link from "next/link";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    setVisible(true);
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
@@ -20,46 +18,35 @@ export function Navbar() {
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-1000 px-6",
-        scrolled ? "py-6" : "py-10",
-        visible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-700 flex justify-center",
+        scrolled ? "py-4" : "py-8"
       )}
     >
       <div
         className={cn(
-          "max-w-5xl mx-auto flex items-center justify-between px-10 py-4 rounded-full transition-all duration-1000 border border-transparent",
-          scrolled ? "glass shadow-2xl border-white/5 bg-card/60" : "bg-transparent"
+          "flex items-center gap-8 px-8 py-3 rounded-full transition-all duration-700 border border-white/5",
+          scrolled ? "glass shadow-2xl bg-card/80 scale-95" : "bg-white/[0.02]"
         )}
       >
-        <div className="flex items-center gap-3 group cursor-pointer">
-          <div className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
-          <span className="text-foreground font-headline font-bold text-xl tracking-widest uppercase group-hover:text-primary transition-colors duration-500">
-            S.S.S
+        <Link href="/" className="flex items-center gap-2 group cursor-pointer">
+          <div className="w-2 h-2 rounded-full bg-primary" />
+          <span className="text-foreground font-headline font-bold text-sm tracking-widest uppercase group-hover:text-primary transition-colors">
+            SYED
           </span>
-        </div>
+        </Link>
         
-        <div className="hidden md:flex items-center gap-12 text-[10px] font-bold tracking-[0.4em] text-muted-foreground uppercase">
-          <Link href="#philosophy" className="hover:text-primary transition-all duration-500 relative group">
-            Philosophy
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-500 group-hover:w-full" />
-          </Link>
-          <Link href="#journey" className="hover:text-primary transition-all duration-500 relative group">
-            Journey
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-500 group-hover:w-full" />
-          </Link>
-          <Link href="#ecosystem" className="hover:text-primary transition-all duration-500 relative group">
-            Products
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-500 group-hover:w-full" />
-          </Link>
-          <Link href="#ideas" className="hover:text-primary transition-all duration-500 relative group">
-            Ideas
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary transition-all duration-500 group-hover:w-full" />
-          </Link>
+        <div className="h-4 w-px bg-white/10 hidden md:block" />
+
+        <div className="hidden md:flex items-center gap-8 text-[10px] font-bold tracking-[0.3em] text-muted-foreground uppercase">
+          <Link href="#philosophy" className="hover:text-foreground transition-all">Philosophy</Link>
+          <Link href="#journey" className="hover:text-foreground transition-all">Journey</Link>
+          <Link href="#ecosystem" className="hover:text-foreground transition-all">Products</Link>
+          <Link href="#ideas" className="hover:text-foreground transition-all">Ideas</Link>
         </div>
 
         <Link 
           href="#contact"
-          className="bg-primary text-primary-foreground px-8 py-3 rounded-full text-[10px] font-bold tracking-[0.3em] uppercase hover:scale-105 active:scale-95 transition-all duration-500 shadow-xl shadow-primary/20 hover:shadow-primary/40"
+          className="bg-primary text-primary-foreground px-6 py-2 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase hover:scale-105 active:scale-95 transition-all"
         >
           Contact
         </Link>

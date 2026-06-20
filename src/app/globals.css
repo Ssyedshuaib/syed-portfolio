@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: 20 40% 2%;
-    --foreground: 30 22% 96%;
-    --card: 20 19% 9%;
-    --card-foreground: 30 22% 96%;
-    --popover: 20 40% 2%;
-    --popover-foreground: 30 22% 96%;
-    --primary: 20 36% 73%;
-    --primary-foreground: 20 40% 2%;
-    --secondary: 20 24% 6%;
-    --secondary-foreground: 30 22% 96%;
-    --muted: 25 15% 66%;
-    --muted-foreground: 25 15% 50%;
-    --accent: 20 26% 53%;
-    --accent-foreground: 30 22% 96%;
+    --background: 0 0% 2%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 2%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 0 0% 84%;
+    --primary-foreground: 0 0% 2%;
+    --secondary: 0 0% 6%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 61%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 0 0% 12%;
+    --accent-foreground: 0 0% 96%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 30 22% 96%;
-    --border: 20 15% 12%;
-    --input: 20 15% 12%;
-    --ring: 20 36% 73%;
-    --radius: 1rem;
+    --destructive-foreground: 0 0% 96%;
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
+    --ring: 0 0% 84%;
+    --radius: 0.75rem;
   }
 }
 
@@ -32,7 +32,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body antialiased selection:bg-primary/30 selection:text-primary;
+    @apply bg-background text-foreground font-body antialiased selection:bg-primary/20 selection:text-primary;
     scroll-behavior: smooth;
   }
   h1, h2, h3, h4, h5, h6 {
@@ -41,23 +41,21 @@
 }
 
 .glass {
-  @apply bg-card/40 backdrop-blur-xl border border-white/5 transition-all duration-500;
+  @apply bg-card/60 backdrop-blur-xl border border-white/[0.08] transition-all duration-500;
 }
 
 .premium-gradient {
-  background: radial-gradient(circle at 50% 50%, hsla(20, 36%, 73%, 0.05) 0%, transparent 80%);
+  background: radial-gradient(circle at 50% 50%, hsla(0, 0%, 100%, 0.02) 0%, transparent 80%);
+}
+
+.grain-overlay {
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  filter: contrast(150%) brightness(100%) invert(1);
+  opacity: 0.03;
 }
 
 .text-reveal {
   @apply inline-block overflow-hidden align-top;
-}
-
-.text-reveal > span {
-  @apply inline-block transition-transform duration-700 ease-out translate-y-full;
-}
-
-.text-reveal.visible > span {
-  @apply translate-y-0;
 }
 
 .orbit-animation {
@@ -72,8 +70,8 @@
 
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(40px);
-  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(30px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-on-scroll.visible {
@@ -82,20 +80,21 @@
 }
 
 .magnetic-hover {
-  @apply transition-transform duration-500 ease-out;
+  @apply transition-all duration-500 ease-out;
 }
 
 .magnetic-hover:hover {
-  transform: scale(1.02) translateY(-4px);
-}
-
-.floating {
-  animation: float 8s ease-in-out infinite;
+  transform: translateY(-4px);
+  @apply border-white/20 shadow-2xl shadow-white/5;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(1deg); }
+  50% { transform: translateY(-15px) rotate(0.5deg); }
+}
+
+.animate-float {
+  animation: float 10s ease-in-out infinite;
 }
 
 .stagger-1 { transition-delay: 100ms; }
@@ -103,10 +102,10 @@
 .stagger-3 { transition-delay: 300ms; }
 .stagger-4 { transition-delay: 400ms; }
 
-.interactive-spotlight {
+.spotlight {
   background: radial-gradient(
-    800px circle at var(--x) var(--y),
-    rgba(215, 178, 157, 0.05),
+    600px circle at var(--x) var(--y),
+    rgba(255, 255, 255, 0.06),
     transparent 40%
   );
 }
