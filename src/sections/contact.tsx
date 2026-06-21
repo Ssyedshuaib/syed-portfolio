@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -117,28 +118,7 @@ export function Contact() {
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         className="relative z-10"
       >
-        <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center space-y-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-8"
-          >
-            <p className="text-[10px] font-bold tracking-[1em] text-primary/30 uppercase">THE MISSION</p>
-            <h2 className="text-5xl md:text-8xl lg:text-[clamp(4rem,9vw,9.5rem)] font-headline font-black tracking-tighter text-white leading-[0.8] uppercase italic">
-              Building Systems <br />
-              <span className="text-primary not-italic opacity-80">That Outlive Trends.</span>
-            </h2>
-            <div className="max-w-2xl mx-auto pt-8">
-               <p className="text-xl md:text-3xl text-primary/50 font-light leading-relaxed">
-                 Technology changes. Principles remain. Products evolve. The mission stays the same.
-               </p>
-            </div>
-          </motion.div>
-        </div>
-
-        <div className="max-w-[1440px] mx-auto px-6 py-32">
+        <div className="max-w-[1440px] mx-auto px-6 pt-64 pb-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-end">
             <div className="space-y-16">
               <div className="space-y-8">

@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
@@ -97,29 +98,32 @@ export function AxoraEcosystem() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
           
           {/* Left Content Column */}
-          <div className="lg:col-span-5 space-y-12 relative z-50">
+          <div className="lg:col-span-5 space-y-16 relative z-50">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-8"
+              className="space-y-12"
             >
-              <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full glass border-white/5">
-                <motion.div 
-                  animate={{ opacity: [1, 0.4, 1], scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-1.5 h-1.5 rounded-full bg-primary" 
-                />
-                <p className="text-[10px] font-bold tracking-[0.6em] text-[#536878] uppercase">Axora Ecosystem</p>
+              <div className="space-y-6">
+                <p className="text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase">THE MISSION</p>
+                <h2 className="text-5xl md:text-7xl font-headline font-black tracking-tighter text-white leading-[0.95] uppercase">
+                  Building Systems <br />
+                  <span className="text-primary italic font-medium">That Outlive Trends.</span>
+                </h2>
               </div>
-              <h2 className="text-6xl md:text-8xl font-headline font-black tracking-tighter text-white leading-none">
-                One Vision.<br />
-                <span className="text-[#EAE0C8] italic font-medium">Multiple Products.</span>
-              </h2>
-              <p className="text-xl md:text-2xl text-[#EAE0C8]/50 font-light leading-relaxed max-w-lg">
-                Axora is a venture studio focused on building digital ecosystems across education, memory preservation, productivity, and future technologies.
-              </p>
+              
+              <div className="space-y-10 pt-4">
+                <div className="space-y-2">
+                  <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">Technology changes.</p>
+                  <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">Principles remain.</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">Products evolve.</p>
+                  <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">The mission stays the same.</p>
+                </div>
+              </div>
               
               <div className="pt-8 flex items-center gap-6 text-[#536878]">
                 <div className="h-px w-12 bg-current opacity-20" />
