@@ -94,7 +94,7 @@ export function OrbitalSystem() {
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         className="relative w-full h-full flex items-center justify-center"
       >
-        {/* Central Premium Identity Node */}
+        {/* Central Identity Module - Unchanged as per requirements */}
         <motion.div 
           style={{ translateZ: 80 }}
           animate={{ 
@@ -104,7 +104,6 @@ export function OrbitalSystem() {
           className="relative z-50 group"
         >
           <div className="w-44 h-44 rounded-full glass border-white/[0.08] shadow-[0_0_80px_rgba(0,0,0,0.5)] relative overflow-hidden transition-all duration-1000 group-hover:border-primary/30 flex items-center justify-center">
-            {/* Interior Depth Layers */}
             <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.02] via-transparent to-white/[0.08] pointer-events-none" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,0.08),transparent_65%)] pointer-events-none" />
             
@@ -116,15 +115,12 @@ export function OrbitalSystem() {
               />
             </div>
             
-            {/* Inner Core Breathing Illumination */}
             <motion.div 
               animate={{ opacity: [0.03, 0.1, 0.03] }}
               transition={{ duration: 6, repeat: Infinity }}
               className="absolute inset-0 bg-primary/10 blur-2xl"
             />
           </div>
-          
-          {/* Volumetric Glow Field */}
           <motion.div 
             animate={{ scale: [1, 1.15, 1], opacity: [0.05, 0.1, 0.05] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -132,56 +128,63 @@ export function OrbitalSystem() {
           />
         </motion.div>
 
-        {/* Concept Labels Moving on Invisible Paths */}
-        {ORBITS.map((orbit, idx) => (
-          <motion.div
-            key={idx}
-            className="absolute z-10"
-            initial={{ rotate: orbit.delay * 10 }}
-            animate={{ rotate: 360 }}
-            transition={{
-              duration: orbit.duration,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            style={{ width: orbit.radius * 2, height: orbit.radius * 2, transformStyle: "preserve-3d" }}
-          >
-            <motion.div 
-              style={{ 
-                x: orbit.radius * 2, 
-                y: orbit.radius, 
-                translateZ: idx * 25, 
-                transformStyle: "preserve-3d"
-              }}
-              className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2"
-              animate={{ rotate: -360 }}
+        {/* Concept Labels as Pure Floating Typography */}
+        {ORBITS.map((orbit, idx) => {
+          const depth = idx * 30;
+          const blurAmount = Math.max(0, (idx - 2) * 1.5);
+          const opacityVal = 1 - (idx * 0.12);
+          const scaleVal = 1 - (idx * 0.05);
+
+          return (
+            <motion.div
+              key={idx}
+              className="absolute z-10"
+              initial={{ rotate: orbit.delay * 10 }}
+              animate={{ rotate: 360 }}
               transition={{
                 duration: orbit.duration,
                 repeat: Infinity,
                 ease: "linear",
               }}
+              style={{ width: orbit.radius * 2, height: orbit.radius * 2, transformStyle: "preserve-3d" }}
             >
-              <motion.div
-                onMouseEnter={() => setHoveredNode({label: orbit.label, desc: orbit.desc})}
-                onMouseLeave={() => setHoveredNode(null)}
-                whileHover={{ 
-                  scale: 1.1, 
-                  backgroundColor: "rgba(234, 224, 200, 0.12)",
-                  translateZ: 120,
-                  transition: { duration: 0.4 }
+              <motion.div 
+                style={{ 
+                  x: orbit.radius * 2, 
+                  y: orbit.radius, 
+                  translateZ: depth, 
+                  transformStyle: "preserve-3d"
                 }}
-                className={cn(
-                  "px-8 py-3.5 glass rounded-full text-[10px] font-bold tracking-[0.4em] uppercase transition-all duration-700 cursor-default shadow-2xl border-white/[0.04]",
-                  hoveredNode?.label === orbit.label 
-                    ? "text-white border-primary/40 bg-primary/[0.08] shadow-[0_0_40px_rgba(234,224,200,0.15)]" 
-                    : "text-[#EAE0C8]/40"
-                )}
+                className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2"
+                animate={{ rotate: -360 }}
+                transition={{
+                  duration: orbit.duration,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
               >
-                {orbit.label}
+                <motion.div
+                  onMouseEnter={() => setHoveredNode({label: orbit.label, desc: orbit.desc})}
+                  onMouseLeave={() => setHoveredNode(null)}
+                  whileHover={{ scale: 1.1, opacity: 1, filter: "blur(0px)", translateZ: 100 }}
+                  style={{ 
+                    opacity: opacityVal, 
+                    scale: scaleVal,
+                    filter: `blur(${blurAmount}px)`
+                  }}
+                  className={cn(
+                    "text-[10px] font-bold tracking-[0.4em] uppercase transition-all duration-700 cursor-default select-none",
+                    hoveredNode?.label === orbit.label 
+                      ? "text-primary text-shadow-glow" 
+                      : "text-[#EAE0C8]/70"
+                  )}
+                >
+                  {orbit.label}
+                </motion.div>
               </motion.div>
             </motion.div>
-          </motion.div>
-        ))}
+          );
+        })}
       </motion.div>
 
       {/* Floating System Narrative Module */}
