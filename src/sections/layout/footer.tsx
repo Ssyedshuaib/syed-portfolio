@@ -15,14 +15,14 @@ import { ArrowUpRight } from "lucide-react";
 export function Footer() {
   return (
     <footer className="relative bg-background pt-64 pb-20 px-6 overflow-hidden" role="contentinfo">
-      {/* GIANT BACKGROUND SIGNATURE - ARCHITECTURAL WATERMARK */}
+      {/* 00. GIANT BACKGROUND SIGNATURE - ARCHITECTURAL WATERMARK */}
       <div 
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
       >
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ 
-            opacity: 0.025,
+            opacity: 1,
             scale: [1, 1.015, 1],
           }}
           transition={{ 
@@ -30,10 +30,10 @@ export function Footer() {
             scale: { duration: 30, repeat: Infinity, ease: "easeInOut" }
           }}
           style={{
-            fontSize: 'min(90vw, 1400px)',
+            fontSize: 'min(65vw, 1100px)',
             fontWeight: 900,
             letterSpacing: '-0.08em',
-            color: 'white',
+            color: 'rgba(255, 255, 255, 0.025)',
             lineHeight: 1,
             whiteSpace: 'nowrap'
           }}
