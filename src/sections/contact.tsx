@@ -1,7 +1,8 @@
+
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { motion, useSpring, useMotionValue, AnimatePresence, LayoutGroup } from "framer-motion";
+import { motion, useSpring, useMotionValue, AnimatePresence, LayoutGroup, useTransform } from "framer-motion";
 import { 
   ArrowRight, 
   Clock, 
@@ -12,58 +13,63 @@ import {
   Linkedin,
   MoveLeft,
   Sparkles,
-  Command,
-  Activity,
-  Cpu,
+  Zap,
   Target,
-  Zap
+  Cpu,
+  Layers,
+  Activity
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TOPICS = [
   { 
     id: "01", 
-    label: "Building Products", 
-    description: "From concept to market-ready ecosystem.",
-    fullDescription: "Let's talk about product design, user experience, execution, systems thinking, and building products that solve real problems.",
+    label: "Build Products", 
+    description: "Design systems, ventures, and scalable experiences.",
+    fullDescription: "Deep dives into product design, execution strategies, and building digital artifacts that solve categories of problems.",
     ctaLabel: "Build Together"
   },
   { 
     id: "02", 
-    label: "Ventures & Startups", 
-    description: "Discussing scaling and venture strategy.",
-    fullDescription: "Exploring new ventures, ecosystem creation, business strategy, and long-term value building.",
+    label: "Ventures", 
+    description: "Explore startup ideas and ecosystem opportunities.",
+    fullDescription: "Discussing scaling, venture building, business model architecture, and long-term value compounding.",
     ctaLabel: "Schedule Discussion"
   },
   { 
     id: "03", 
     label: "Collaboration", 
-    description: "Strategic partnerships and joint ventures.",
-    fullDescription: "Open to partnerships, creative collaborations, product opportunities, and ambitious projects.",
+    description: "Discuss meaningful partnerships.",
+    fullDescription: "Open to strategic joint ventures, creative partnerships, and high-impact project collaborations.",
     ctaLabel: "Collaborate"
   },
   { 
     id: "04", 
-    label: "Ideas & Strategy", 
-    description: "Deep dives into product architecture.",
-    fullDescription: "Discussing systems, future technologies, digital ecosystems, product thinking, and institutional design.",
-    ctaLabel: "Explore Ideas"
-  },
-  { 
-    id: "05", 
-    label: "Just Say Hello", 
-    description: "General inquiries and professional greetings.",
-    fullDescription: "No agenda needed. Sometimes great opportunities begin with a simple conversation.",
+    label: "Ideas", 
+    description: "Exchange thoughts on products and future systems.",
+    fullDescription: "A no-agenda dialogue about technology trends, product-led growth, and the future of human-centered systems.",
     ctaLabel: "Say Hello"
   },
 ];
 
+const PRINCIPLES = [
+  "BUILD FOR DECADES",
+  "SYSTEMS OVER FEATURES",
+  "CLARITY OVER COMPLEXITY",
+  "LONG TERM THINKING"
+];
+
+const STATUS_ITEMS = [
+  "CURRENTLY BUILDING: AXORA",
+  "CURRENTLY DESIGNING: REVERIE",
+  "CURRENTLY RESEARCHING: DIGITAL ECOSYSTEMS"
+];
+
 const TRANSITION_MESSAGES = [
-  "Preparing The Conversation...",
-  "Connecting Ideas...",
-  "Opening The Studio...",
-  "Initializing Dialogue...",
-  "Preparing The Next Step...",
+  "PREPARING THE CONVERSATION",
+  "OPENING THE STUDIO",
+  "CONNECTING IDEAS",
+  "INITIALIZING DIALOGUE"
 ];
 
 export function Contact() {
@@ -71,18 +77,9 @@ export function Contact() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedTopicId, setSelectedTopicId] = useState<string | null>(null);
   const [isExiting, setIsExiting] = useState(false);
-  const [exitMessage, setExitMessage] = useState("");
+  const [statusIndex, setStatusIndex] = useState(0);
 
-  const selectedTopic = useMemo(() => 
-    TOPICS.find(t => t.id === selectedTopicId), 
-    [selectedTopicId]
-  );
-
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 80, damping: 25 });
-  const springY = useSpring(mouseY, { stiffness: 80, damping: 25 });
-
+  // Time & Status Logic
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -95,363 +92,332 @@ export function Contact() {
       setTime(new Intl.DateTimeFormat("en-GB", options).format(now));
     };
     updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
+    const tInterval = setInterval(updateTime, 1000);
+    const sInterval = setInterval(() => setStatusIndex(prev => (prev + 1) % STATUS_ITEMS.length), 4000);
+    return () => { clearInterval(tInterval); clearInterval(sInterval); };
   }, []);
 
-  function handleTriggerMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 40, damping: 20 });
+  const springY = useSpring(mouseY, { stiffness: 40, damping: 20 });
+
+  function handleTriggerMouseMove(e: React.MouseEvent) {
     if (isExpanded) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - (rect.left + rect.width / 2)) * 0.08;
-    const y = (e.clientY - (rect.top + rect.height / 2)) * 0.08;
+    const x = (e.clientX - (rect.left + rect.width / 2)) * 0.15;
+    const y = (e.clientY - (rect.top + rect.height / 2)) * 0.15;
     mouseX.set(x);
     mouseY.set(y);
   }
 
-  function handleTriggerMouseLeave() {
-    mouseX.set(0);
-    mouseY.set(0);
-  }
-
-  const handleReset = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    setIsExpanded(false);
-    setSelectedTopicId(null);
-  };
-
-  const handleExternalNavigation = (href: string) => {
-    setExitMessage(TRANSITION_MESSAGES[Math.floor(Math.random() * TRANSITION_MESSAGES.length)]);
+  const handleExternalNav = (href: string) => {
     setIsExiting(true);
-    
     setTimeout(() => {
       window.open(href, '_blank');
       setIsExiting(false);
-    }, 950);
+    }, 1200);
   };
 
-  return (
-    <section id="contact" className="relative bg-background overflow-hidden py-48 md:py-64">
-      {/* Cinematic Background Layering */}
-      <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-primary/5 blur-[150px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none translate-x-1/2 translate-y-1/2" />
+  const selectedTopic = useMemo(() => TOPICS.find(t => t.id === selectedTopicId), [selectedTopicId]);
 
-      {/* Modal / Portal Backdrop */}
+  return (
+    <section id="contact" className="relative bg-background overflow-hidden py-64">
+      {/* 1. INSTITUTIONAL BACKGROUND ELEMENTS */}
+      <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
+      
+      {/* Floating Principles (Filling Dead Space) */}
+      <div className="absolute inset-0 pointer-events-none select-none">
+        {PRINCIPLES.map((p, i) => (
+          <motion.p
+            key={p}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.03 }}
+            className="absolute text-[10vw] font-headline font-black tracking-tighter text-white uppercase whitespace-nowrap"
+            style={{ 
+              top: `${15 + (i * 20)}%`, 
+              left: i % 2 === 0 ? '-5%' : 'auto',
+              right: i % 2 !== 0 ? '-5%' : 'auto'
+            }}
+          >
+            {p}
+          </motion.p>
+        ))}
+      </div>
+
       <AnimatePresence>
         {isExpanded && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[80] bg-[#050505]/95 backdrop-blur-[12px] pointer-events-auto"
-            onClick={() => handleReset()}
+            className="fixed inset-0 z-[100] bg-[#050505]/95 backdrop-blur-[25px] flex items-center justify-center p-6"
+            onClick={() => { setIsExpanded(false); setSelectedTopicId(null); }}
           >
-             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.1),transparent_80%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.1),transparent_80%)]" />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Premium Exit Transition Screen */}
       <AnimatePresence>
         {isExiting && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-[#050505] flex flex-col items-center justify-center pointer-events-auto"
+            className="fixed inset-0 z-[300] bg-[#050505] flex flex-col items-center justify-center"
           >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_70%)]" />
-            <motion.div
-              initial={{ y: 20, opacity: 0, filter: "blur(10px)" }}
-              animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="text-center space-y-8 relative z-10"
-            >
-              <div className="w-1.5 h-1.5 rounded-full bg-primary mx-auto animate-pulse" />
-              <h2 className="text-2xl md:text-3xl font-headline font-light text-white tracking-widest uppercase italic">
-                {exitMessage}
+            <div className="space-y-8 text-center relative z-10">
+              <motion.div animate={{ rotate: 360 }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }}>
+                <Sparkles className="w-8 h-8 text-primary/40 mx-auto" />
+              </motion.div>
+              <h2 className="text-2xl md:text-3xl font-headline font-light text-white tracking-[0.3em] uppercase italic">
+                {TRANSITION_MESSAGES[Math.floor(Math.random() * TRANSITION_MESSAGES.length)]}
               </h2>
               <div className="h-px w-12 bg-primary/20 mx-auto" />
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className="max-w-[1440px] mx-auto px-6 relative z-10">
-        {/* Supporting Architectural Elements (The "Studio" Environment) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
-          
-          {/* Left Column: Contextual Scaffolding */}
-          <div className="lg:col-span-4 space-y-24 order-2 lg:order-1">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-12"
-            >
-              <div className="space-y-6">
-                <p className="text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase">Institutional Note</p>
-                <div className="h-px w-12 bg-primary/10" />
-                <h4 className="text-xl md:text-2xl font-headline font-bold text-white tracking-tight leading-relaxed max-w-xs">
-                  "I build for a future where technology simplifies the human experience."
-                </h4>
-              </div>
+      <div className="max-w-[1440px] mx-auto px-6 relative z-10 flex flex-col items-center gap-32">
+        {/* TOP METADATA ROW */}
+        <div className="w-full flex flex-col md:flex-row justify-between items-center gap-12 border-b border-white/5 pb-12 opacity-40">
+           <div className="flex items-center gap-8">
+             <div className="space-y-1">
+               <p className="text-[8px] font-bold tracking-[0.5em] text-primary uppercase">Studio Hub</p>
+               <p className="text-[10px] text-white font-medium">BANGALORE, IN • {time}</p>
+             </div>
+             <div className="w-px h-6 bg-white/10" />
+             <div className="space-y-1">
+               <p className="text-[8px] font-bold tracking-[0.5em] text-primary uppercase">Response Time</p>
+               <p className="text-[10px] text-white font-medium">USUALLY WITHIN 24H</p>
+             </div>
+           </div>
 
-              <div className="space-y-8">
-                <div className="space-y-4">
-                  <p className="text-[9px] font-bold tracking-[0.4em] text-primary/30 uppercase">Currently Focused On</p>
-                  <div className="flex flex-wrap gap-3">
-                    {["Education Systems", "Memory Platforms", "Product Architecture"].map((focus) => (
-                      <span key={focus} className="px-4 py-2 rounded-full glass border-white/5 text-[9px] font-bold tracking-widest text-[#EAE0C8]/60 uppercase">
-                        {focus}
-                      </span>
-                    ))}
+           <AnimatePresence mode="wait">
+             <motion.p
+               key={statusIndex}
+               initial={{ opacity: 0, y: 5 }}
+               animate={{ opacity: 1, y: 0 }}
+               exit={{ opacity: 0, y: -5 }}
+               className="text-[9px] font-bold tracking-[0.4em] text-primary uppercase italic"
+             >
+               {STATUS_ITEMS[statusIndex]}
+             </motion.p>
+           </AnimatePresence>
+        </div>
+
+        {/* INTERACTION CORE: THE ORB */}
+        <LayoutGroup>
+          <motion.div
+            layout
+            layoutId="studio-portal"
+            onMouseMove={handleTriggerMouseMove}
+            onMouseLeave={() => { mouseX.set(0); mouseY.set(0); }}
+            onClick={() => !isExpanded && setIsExpanded(true)}
+            transition={{ 
+              type: "spring", 
+              stiffness: 60, 
+              damping: 20,
+              layout: { duration: 0.9, ease: [0.16, 1, 0.3, 1] }
+            }}
+            className={cn(
+              "relative cursor-pointer group flex items-center justify-center overflow-hidden",
+              isExpanded 
+                ? "fixed inset-0 m-auto z-[200] w-full max-w-[900px] h-[90vh] md:h-[800px] rounded-[4rem] bg-[#0A0A0A] border border-white/10 shadow-[0_100px_200px_-50px_rgba(0,0,0,1)]" 
+                : "w-80 h-80 rounded-full glass border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.6)]"
+            )}
+          >
+            {/* THE LIVING ORB COMPONENTS (Visible only in closed state) */}
+            <AnimatePresence>
+              {!isExpanded && (
+                <motion.div 
+                  initial={{ opacity: 0 }} 
+                  animate={{ opacity: 1 }} 
+                  exit={{ opacity: 0, scale: 2, filter: "blur(40px)" }}
+                  className="absolute inset-0 flex items-center justify-center"
+                >
+                  {/* Outer Rotating Ring */}
+                  <motion.div 
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute w-[110%] h-[110%] border border-dashed border-primary/10 rounded-full"
+                  />
+                  
+                  {/* Glass Shell */}
+                  <div className="absolute inset-4 rounded-full border border-white/5 glass shadow-[inset_0_0_40px_rgba(255,255,255,0.02)]" />
+
+                  {/* Energy Core */}
+                  <motion.div 
+                    style={{ x: springX, y: springY }}
+                    animate={{ 
+                      scale: [1, 1.05, 1],
+                      opacity: [0.2, 0.3, 0.2]
+                    }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute w-48 h-48 bg-primary/40 blur-[80px] rounded-full"
+                  />
+
+                  {/* Core Content */}
+                  <div className="relative z-10 text-center space-y-4">
+                     <span className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">Open Portal</span>
+                     <h4 className="text-2xl font-headline font-black text-white tracking-[0.2em] uppercase italic leading-tight">
+                       ENTER THE <br /> STUDIO
+                     </h4>
+                     <div className="w-px h-10 bg-gradient-to-b from-primary/30 to-transparent mx-auto group-hover:h-14 transition-all duration-700" />
                   </div>
-                </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-                <div className="space-y-4">
-                  <p className="text-[9px] font-bold tracking-[0.4em] text-primary/30 uppercase">Open For</p>
-                  <div className="flex flex-wrap gap-3">
-                    {["Ventures", "Consulting", "Strategic Design"].map((collab) => (
-                      <div key={collab} className="flex items-center gap-2">
-                        <div className="w-1 h-1 rounded-full bg-primary/40" />
-                        <span className="text-[10px] font-bold tracking-widest text-white/40 uppercase">{collab}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+            {/* THE STUDIO WORKSPACE (Revealed upon expansion) */}
+            <AnimatePresence>
+              {isExpanded && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="w-full h-full p-12 md:p-24 relative overflow-hidden flex flex-col justify-between"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Glass Close Control */}
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); setIsExpanded(false); setSelectedTopicId(null); }}
+                    className="absolute top-10 right-10 z-50 p-5 rounded-full glass border-white/5 hover:border-white/20 transition-all duration-700 hover:rotate-90 group/close"
+                  >
+                    <X className="w-6 h-6 text-white/40 group-hover/close:text-white" />
+                  </button>
 
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className="pt-12 border-t border-white/5 space-y-6"
-            >
-              <div className="flex items-center gap-4 text-primary/40">
-                <MapPin className="w-4 h-4" />
-                <p className="text-[10px] font-bold tracking-[0.5em] uppercase">Bangalore, India</p>
-              </div>
-              <div className="flex items-center gap-4 text-primary/40">
-                <Clock className="w-4 h-4" />
-                <p className="text-[10px] font-bold tracking-[0.5em] uppercase">Local Time: {time}</p>
-              </div>
-            </motion.div>
-          </div>
+                  <div className="relative z-10 h-full flex flex-col justify-between">
+                    <AnimatePresence mode="wait">
+                      {!selectedTopicId ? (
+                        <motion.div 
+                          key="topic-selection"
+                          initial={{ opacity: 0, y: 30 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, x: -50, filter: "blur(20px)" }}
+                          className="space-y-16"
+                        >
+                          <div className="space-y-6">
+                            <div className="flex items-center gap-4 text-primary/40">
+                              <span className="text-[10px] font-bold tracking-[0.6em] uppercase">01</span>
+                              <div className="h-px w-8 bg-current opacity-20" />
+                              <span className="text-[10px] font-bold tracking-[0.6em] uppercase">STUDIO WORKSPACE</span>
+                            </div>
+                            <h3 className="text-5xl md:text-7xl font-headline font-black text-white tracking-tighter uppercase italic leading-none">
+                              Select a category <br />
+                              <span className="text-primary/20 not-italic">for discussion.</span>
+                            </h3>
+                          </div>
 
-          {/* Right Column: Interaction Core */}
-          <div className="lg:col-span-8 flex flex-col items-center lg:items-end justify-center gap-20 order-1 lg:order-2">
-            <motion.div
-              animate={{ 
-                opacity: isExpanded ? 0.05 : 1,
-                scale: isExpanded ? 0.98 : 1,
-                filter: isExpanded ? "blur(20px)" : "blur(0px)"
-              }}
-              transition={{ duration: 1 }}
-              className="text-center lg:text-right space-y-8 max-w-xl"
-            >
-              <p className="text-[10px] font-bold tracking-[1em] text-primary/30 uppercase">Dialogue Hub</p>
-              <h3 className="text-4xl md:text-7xl font-headline font-black text-white tracking-tighter leading-[1.05] italic uppercase">
-                Let's Build <br />
-                <span className="text-primary/20 not-italic">The Future.</span>
-              </h3>
-            </motion.div>
-
-            <LayoutGroup>
-              <motion.div
-                layout
-                layoutId="portal-object"
-                onMouseMove={handleTriggerMouseMove}
-                onMouseLeave={handleTriggerMouseLeave}
-                onClick={() => !isExpanded && setIsExpanded(true)}
-                transition={{ 
-                  type: "spring", 
-                  stiffness: 70, 
-                  damping: 20,
-                  layout: { duration: 0.9, ease: [0.16, 1, 0.3, 1] }
-                }}
-                className={cn(
-                  "relative cursor-pointer group flex items-center justify-center overflow-hidden",
-                  isExpanded 
-                    ? "fixed inset-0 m-auto z-[100] w-full max-w-[850px] h-[90vh] md:h-[750px] rounded-[3.5rem] bg-[#0A0A0A] border border-white/10 shadow-[0_100px_200px_-50px_rgba(0,0,0,1)]" 
-                    : "w-72 h-72 md:w-80 md:h-80 rounded-full glass border-white/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)]"
-                )}
-              >
-                {!isExpanded && (
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <motion.div 
-                      style={{ x: springX, y: springY }}
-                      animate={{ scale: [1, 1.05, 1], opacity: [0.1, 0.15, 0.1] }}
-                      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                      className="absolute w-[140%] h-[140%] bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.4),transparent_60%)] blur-[60px]"
-                    />
-                    <motion.div 
-                      style={{ x: springX, y: springY }}
-                      className="w-48 h-48 rounded-full border border-primary/20 flex items-center justify-center relative overflow-hidden"
-                    >
-                       <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-transparent" />
-                       <Sparkles className="w-10 h-10 text-primary/40 group-hover:scale-110 group-hover:text-primary transition-all duration-700" />
-                    </motion.div>
-                  </div>
-                )}
-
-                <AnimatePresence mode="wait">
-                  {!isExpanded ? (
-                    <motion.div 
-                      key="portal-label"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
-                      className="relative z-10 text-center space-y-4 px-10"
-                    >
-                      <span className="text-[10px] font-bold tracking-[1em] text-primary/40 uppercase">Open Portal</span>
-                      <h4 className="text-xl md:text-2xl font-headline font-black text-white tracking-[0.3em] uppercase leading-tight italic">
-                        Enter The <br /> Studio
-                      </h4>
-                      <div className="w-px h-8 bg-gradient-to-b from-primary/40 to-transparent mx-auto mt-4 group-hover:h-12 transition-all duration-700" />
-                    </motion.div>
-                  ) : (
-                    <motion.div 
-                      key="studio-workspace"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="w-full h-full flex flex-col p-12 md:p-20 relative overflow-hidden"
-                    >
-                      <button 
-                        onClick={(e) => { e.stopPropagation(); handleReset(); }} 
-                        className="absolute top-8 right-8 z-50 p-4 rounded-full glass border-white/5 hover:border-white/20 hover:rotate-90 transition-all duration-700 group/close"
-                      >
-                        <X className="w-6 h-6 text-[#536878] group-hover/close:text-white" />
-                      </button>
-
-                      <div className="relative z-10 h-full flex flex-col justify-between">
-                        <AnimatePresence mode="wait">
-                          {!selectedTopicId ? (
-                            <motion.div 
-                              key="menu-view"
-                              initial={{ opacity: 0, y: 20 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, x: -30, filter: "blur(10px)" }}
-                              className="space-y-16"
-                            >
-                              <div className="space-y-6">
-                                <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">Founder Dialogue</p>
-                                <h4 className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter italic uppercase">
-                                  Select a category <br />
-                                  <span className="text-[#536878] not-italic opacity-40">for discussion.</span>
-                                </h4>
-                              </div>
-
-                              <div className="grid grid-cols-1 gap-3">
-                                {TOPICS.map((topic, i) => (
-                                  <motion.button
-                                    key={topic.id}
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: i * 0.08 }}
-                                    onClick={(e) => { e.stopPropagation(); setSelectedTopicId(topic.id); }}
-                                    className="group relative flex items-center justify-between p-7 rounded-[2rem] bg-white/[0.01] border border-white/5 hover:border-primary/20 hover:bg-white/[0.03] transition-all duration-500 text-left"
-                                  >
-                                    <div className="flex items-center gap-8">
-                                      <span className="text-[11px] font-mono font-bold text-primary/20 group-hover:text-primary transition-colors">{topic.id}</span>
-                                      <div className="space-y-1">
-                                        <p className="text-xl font-bold text-white/80 group-hover:text-white transition-all">{topic.label}</p>
-                                        <p className="text-[10px] tracking-widest text-[#536878] uppercase">{topic.description}</p>
-                                      </div>
-                                    </div>
-                                    <div className="w-12 h-12 rounded-full glass border-white/5 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all duration-500">
-                                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1" />
-                                    </div>
-                                  </motion.button>
-                                ))}
-                              </div>
-                            </motion.div>
-                          ) : (
-                            <motion.div 
-                              key="context-view"
-                              initial={{ opacity: 0, x: 30, filter: "blur(10px)" }}
-                              animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                              exit={{ opacity: 0, scale: 0.95 }}
-                              className="space-y-12"
-                            >
-                              <div className="space-y-8">
-                                <button 
-                                  onClick={(e) => { e.stopPropagation(); setSelectedTopicId(null); }}
-                                  className="group flex items-center gap-4 text-[11px] font-bold tracking-[0.5em] text-primary/40 hover:text-primary uppercase transition-all"
-                                >
-                                  <MoveLeft className="w-4 h-4 group-hover:-translate-x-2 transition-transform" /> 
-                                  Back to Studio
-                                </button>
-
-                                <div className="space-y-4">
-                                  <p className="text-[9px] font-bold tracking-[0.8em] text-primary/30 uppercase">Discussion Workspace</p>
-                                  <h4 className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter italic uppercase leading-none">
-                                    {selectedTopic?.label}
-                                  </h4>
-                                  <p className="text-lg md:text-xl text-[#EAE0C8]/50 font-light leading-relaxed max-w-xl">
-                                    {selectedTopic?.fullDescription}
-                                  </p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {TOPICS.map((topic, i) => (
+                              <motion.button
+                                key={topic.id}
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: i * 0.1 }}
+                                onClick={() => setSelectedTopicId(topic.id)}
+                                className="group relative flex flex-col justify-between p-8 rounded-[2.5rem] bg-white/[0.01] border border-white/5 hover:border-primary/30 hover:bg-white/[0.03] transition-all duration-500 text-left min-h-[180px]"
+                              >
+                                <div className="flex justify-between items-start">
+                                  <span className="text-[11px] font-mono font-bold text-primary/20 group-hover:text-primary transition-colors">{topic.id}</span>
+                                  <ArrowUpRight className="w-5 h-5 text-white/10 group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
                                 </div>
-                              </div>
+                                <div className="space-y-2">
+                                  <p className="text-2xl font-headline font-black text-white uppercase italic">{topic.label}</p>
+                                  <p className="text-[10px] tracking-widest text-[#536878] uppercase">{topic.description}</p>
+                                </div>
+                                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity" />
+                              </motion.button>
+                            ))}
+                          </div>
+                        </motion.div>
+                      ) : (
+                        <motion.div 
+                          key="topic-briefing"
+                          initial={{ opacity: 0, x: 50, filter: "blur(20px)" }}
+                          animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                          exit={{ opacity: 0, scale: 0.95 }}
+                          className="space-y-16"
+                        >
+                          <div className="space-y-10">
+                            <button 
+                              onClick={() => setSelectedTopicId(null)}
+                              className="group flex items-center gap-4 text-[10px] font-bold tracking-[0.5em] text-primary/40 hover:text-primary uppercase transition-all"
+                            >
+                              <MoveLeft className="w-4 h-4 group-hover:-translate-x-2 transition-transform" /> 
+                              Back to categories
+                            </button>
 
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {[
-                                  { label: "Email", icon: Mail, sub: "Direct partnership inquiry.", href: `mailto:syedshuaib2429@gmail.com?subject=${selectedTopic?.label}` },
-                                  { label: "LinkedIn", icon: Linkedin, sub: "Professional networking.", href: "https://www.linkedin.com/in/syedshuaib485/" },
-                                  { label: selectedTopic?.ctaLabel, icon: Activity, sub: "System action required.", href: "mailto:syedshuaib2429@gmail.com" },
-                                  { label: "Studio Hub", icon: Command, sub: "Institutional resources.", href: "https://axora.in" }
-                                ].map((action, i) => (
-                                  <motion.button
-                                    key={action.label}
-                                    initial={{ opacity: 0, y: 15 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.2 + (i * 0.08) }}
-                                    onClick={() => handleExternalNavigation(action.href)}
-                                    className="group flex items-center justify-between p-6 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-primary/20 hover:bg-white/[0.04] transition-all duration-500 text-left w-full"
-                                  >
-                                    <div className="flex items-center gap-6">
-                                      <div className="w-12 h-12 rounded-2xl glass border-white/5 flex items-center justify-center text-primary/30 group-hover:text-primary transition-all duration-500">
-                                        <action.icon className="w-5 h-5" />
-                                      </div>
-                                      <div className="space-y-0.5">
-                                        <p className="text-lg font-headline font-bold text-white uppercase italic">{action.label}</p>
-                                        <p className="text-[9px] tracking-widest text-[#536878] uppercase">{action.sub}</p>
-                                      </div>
-                                    </div>
-                                    <ArrowUpRight className="w-5 h-5 text-primary/20 group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-500" />
-                                  </motion.button>
-                                ))}
+                            <div className="space-y-6">
+                              <div className="flex items-center gap-4 text-primary/40">
+                                <span className="text-[10px] font-bold tracking-[0.6em] uppercase">DISCUSSION BRIEFING</span>
                               </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                              <h3 className="text-5xl md:text-7xl font-headline font-black text-white tracking-tighter uppercase italic leading-[0.9]">
+                                {selectedTopic?.label}
+                              </h3>
+                              <p className="text-xl md:text-2xl text-[#EAE0C8]/50 font-light leading-relaxed max-w-2xl">
+                                {selectedTopic?.fullDescription}
+                              </p>
+                            </div>
+                          </div>
 
-                        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 opacity-40">
-                           <div className="flex items-center gap-8">
-                              <div className="space-y-1">
-                                <p className="text-[8px] font-bold tracking-[0.4em] text-primary uppercase">Status</p>
-                                <p className="text-[10px] text-white font-medium">AVAILABLE FOR DISCUSSION</p>
-                              </div>
-                              <div className="w-px h-6 bg-white/10 hidden md:block" />
-                              <div className="space-y-1">
-                                <p className="text-[8px] font-bold tracking-[0.4em] text-primary uppercase">Response</p>
-                                <p className="text-[10px] text-white font-medium">USUALLY WITHIN 24H</p>
-                              </div>
-                           </div>
-                           <p className="text-[9px] tracking-[0.2em] text-[#EAE0C8] uppercase font-light text-center md:text-right">
-                             Meaningful conversations create meaningful outcomes.
-                           </p>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            </LayoutGroup>
-          </div>
+                          <div className="grid grid-cols-1 gap-3 max-w-2xl">
+                             {[
+                               { label: "Direct Email", icon: Mail, sub: "Direct communication for partnerships.", href: `mailto:syedshuaib2429@gmail.com?subject=${selectedTopic?.label}` },
+                               { label: "LinkedIn", icon: Linkedin, sub: "Professional dialogue.", href: "https://www.linkedin.com/in/syedshuaib485/" },
+                               { label: selectedTopic?.ctaLabel, icon: Activity, sub: "Institutional action required.", href: "mailto:syedshuaib2429@gmail.com" }
+                             ].map((action, i) => (
+                               <motion.button
+                                 key={action.label}
+                                 initial={{ opacity: 0, y: 15 }}
+                                 animate={{ opacity: 1, y: 0 }}
+                                 transition={{ delay: 0.3 + (i * 0.1) }}
+                                 onClick={() => handleExternalNav(action.href)}
+                                 className="group flex items-center justify-between p-7 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-primary/30 transition-all duration-500 w-full text-left"
+                               >
+                                 <div className="flex items-center gap-8">
+                                   <div className="w-12 h-12 rounded-2xl glass border-white/5 flex items-center justify-center text-primary/30 group-hover:text-primary transition-all">
+                                      <action.icon className="w-5 h-5" />
+                                   </div>
+                                   <div className="space-y-1">
+                                      <p className="text-xl font-headline font-bold text-white uppercase italic">{action.label}</p>
+                                      <p className="text-[9px] tracking-widest text-[#536878] uppercase">{action.sub}</p>
+                                   </div>
+                                 </div>
+                                 <ArrowRight className="w-5 h-5 text-white/10 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                               </motion.button>
+                             ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    <div className="pt-12 border-t border-white/5 flex justify-between items-center opacity-30">
+                       <p className="text-[9px] tracking-[0.3em] text-[#EAE0C8] uppercase font-bold">
+                         Meaningful conversations create meaningful outcomes.
+                       </p>
+                       <div className="flex items-center gap-4 text-[9px] font-bold tracking-[0.5em] text-primary uppercase">
+                         <div className="w-1 h-1 rounded-full bg-primary animate-pulse" />
+                         Studio Live
+                       </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </LayoutGroup>
+
+        {/* BOTTOM PHILOSOPHY ROW */}
+        <div className="w-full text-center space-y-8 opacity-20">
+           <div className="h-px w-24 bg-primary/20 mx-auto" />
+           <p className="text-xl md:text-3xl font-headline font-light text-white tracking-tight italic">
+             "I build products designed for long-term impact."
+           </p>
+           <p className="text-[10px] font-bold tracking-[1em] text-white uppercase">Final Chapter</p>
         </div>
       </div>
     </section>
