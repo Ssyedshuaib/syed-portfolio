@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { ArrowUpRight, X, Sparkles, Calendar, Mail, Linkedin, ChevronRight, ArrowLeft } from "lucide-react";
+import { ArrowUpRight, Sparkles, Calendar, Mail, Linkedin, ArrowLeft } from "lucide-react";
 
 /**
  * THE FOUNDER SIGNATURE & STUDIO EXPERIENCE
@@ -46,7 +46,15 @@ export function Footer({ onStudioStateChange }: FooterProps) {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 0.035 }}
           viewport={{ once: true }}
-          className="text-[80vw] font-headline font-black text-white tracking-tighter leading-none text-center animate-breathing whitespace-nowrap"
+          animate={{ 
+            scale: [1, 1.015, 1],
+          }}
+          transition={{ 
+            duration: 30, 
+            repeat: Infinity, 
+            ease: "easeInOut" 
+          }}
+          className="text-[80vw] font-headline font-black text-white tracking-tighter leading-none text-center whitespace-nowrap"
         >
           SYED
         </motion.h2>
@@ -126,7 +134,11 @@ export function Footer({ onStudioStateChange }: FooterProps) {
       {/* CINEMATIC STUDIO MODE OVERLAY */}
       <AnimatePresence>
         {isStudioOpen && (
-          <StudioExperience onClose={handleCloseStudio} />
+          <StudioExperience 
+            onClose={handleCloseStudio} 
+            activeView={activeView}
+            setActiveHubView={setActiveHubView}
+          />
         )}
       </AnimatePresence>
 
@@ -216,23 +228,29 @@ const STUDIO_INTRO_STEPS = [
   "Let's build something that matters."
 ];
 
-function StudioExperience({ onClose }: { onClose: () => void }) {
-  const [view, setView] = useState<"intro" | "hub" | "build" | "explore" | "scheduling">("intro");
+function StudioExperience({ 
+  onClose, 
+  activeView, 
+  setActiveHubView 
+}: { 
+  onClose: () => void;
+  activeView: "intro" | "hub" | "build" | "explore" | "scheduling";
+  setActiveHubView: (view: "intro" | "hub" | "build" | "explore" | "scheduling") => void;
+}) {
   const [introIndex, setIntroIndex] = useState(0);
 
   useEffect(() => {
-    if (view === "intro") {
-      const timer = setInterval(() => {
-        setIntroIndex((prev) => {
-          if (prev < STUDIO_INTRO_STEPS.length - 1) return prev + 1;
-          clearInterval(timer);
-          setTimeout(() => setView("hub"), 2000);
-          return prev;
-        });
-      }, 3000); // 1.5s display + 1.5s pause
-      return () => clearInterval(timer);
+    if (activeView === "intro") {
+      const sequence = async () => {
+        for (let i = 0; i < STUDIO_INTRO_STEPS.length; i++) {
+          setIntroIndex(i);
+          await new Promise(resolve => setTimeout(resolve, 3000));
+        }
+        setActiveHubView("hub");
+      };
+      sequence();
     }
-  }, [view]);
+  }, [activeView, setActiveHubView]);
 
   return (
     <motion.div
@@ -254,7 +272,7 @@ function StudioExperience({ onClose }: { onClose: () => void }) {
       </button>
 
       <AnimatePresence mode="wait">
-        {view === "intro" && (
+        {activeView === "intro" && (
           <motion.div 
             key="intro"
             initial={{ opacity: 0 }}
@@ -277,7 +295,7 @@ function StudioExperience({ onClose }: { onClose: () => void }) {
           </motion.div>
         )}
 
-        {view === "hub" && (
+        {activeView === "hub" && (
           <motion.div 
             key="hub"
             initial={{ opacity: 0 }}
@@ -285,9 +303,9 @@ function StudioExperience({ onClose }: { onClose: () => void }) {
             className="flex flex-col items-center justify-center gap-16 md:gap-32 w-full"
           >
             <div className="flex flex-col items-center gap-12 md:gap-20">
-              <HubAction label="BUILD SOMETHING" onClick={() => setView("build")} />
-              <HubAction label="EXPLORE AXORA" onClick={() => setView("explore")} />
-              <HubAction label="SCHEDULE DISCUSSION" onClick={() => setView("scheduling")} highlight />
+              <HubAction label="BUILD SOMETHING" onClick={() => setActiveHubView("build")} />
+              <HubAction label="EXPLORE AXORA" onClick={() => setActiveHubView("explore")} />
+              <HubAction label="SCHEDULE DISCUSSION" onClick={() => setActiveHubView("scheduling")} highlight />
             </div>
             
             <motion.div 
@@ -301,14 +319,14 @@ function StudioExperience({ onClose }: { onClose: () => void }) {
           </motion.div>
         )}
 
-        {view === "build" && (
+        {activeView === "build" && (
           <motion.div 
             key="build"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             className="flex flex-col items-center gap-16 w-full max-w-5xl"
           >
-            <button onClick={() => setView("hub")} className="text-[9px] font-bold tracking-[0.6em] text-white/30 hover:text-white uppercase">← Back to Hub</button>
+            <button onClick={() => setActiveHubView("hub")} className="text-[9px] font-bold tracking-[0.6em] text-white/30 hover:text-white uppercase">← Back to Hub</button>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-16 text-left w-full px-12">
               {[
                 { title: "Product Strategy", desc: "Long-term architecture and market alignment." },
@@ -322,7 +340,7 @@ function StudioExperience({ onClose }: { onClose: () => void }) {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  onClick={() => setView("scheduling")}
+                  onClick={() => setActiveHubView("scheduling")}
                   className="group cursor-pointer space-y-4"
                 >
                   <h4 className="text-3xl md:text-5xl font-headline font-black text-white italic group-hover:text-primary transition-colors tracking-tighter uppercase">{item.title}</h4>
@@ -333,17 +351,17 @@ function StudioExperience({ onClose }: { onClose: () => void }) {
           </motion.div>
         )}
 
-        {view === "explore" && (
+        {activeView === "explore" && (
           <motion.div 
             key="explore"
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             className="flex flex-col items-center gap-16 w-full max-w-4xl text-center px-12"
           >
-            <button onClick={() => setView("hub")} className="text-[9px] font-bold tracking-[0.6em] text-white/30 hover:text-white uppercase">← Back to Hub</button>
-            <div className="space-y-16">
+            <button onClick={() => setActiveHubView("hub")} className="text-[9px] font-bold tracking-[0.6em] text-white/30 hover:text-white uppercase">← Back to Hub</button>
+            <div className="space-y-16 w-full">
               <h3 className="text-4xl md:text-7xl font-headline font-black text-white italic uppercase tracking-tighter">The Journal</h3>
-              <div className="flex flex-col gap-12">
+              <div className="flex flex-col gap-12 w-full">
                 {[
                   "Why Axora Exists",
                   "Founder Philosophy",
@@ -366,27 +384,33 @@ function StudioExperience({ onClose }: { onClose: () => void }) {
           </motion.div>
         )}
 
-        {view === "scheduling" && (
+        {activeView === "scheduling" && (
           <motion.div 
             key="scheduling"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center w-full h-full max-w-6xl py-20"
           >
-            <button onClick={() => setView("hub")} className="text-[9px] font-bold tracking-[0.6em] text-white/30 hover:text-white uppercase mb-16">← Back to Hub</button>
+            <button onClick={() => setActiveHubView("hub")} className="text-[9px] font-bold tracking-[0.6em] text-white/30 hover:text-white uppercase mb-16">← Back to Hub</button>
             <div className="text-center space-y-6 mb-20">
               <h3 className="text-4xl md:text-8xl font-headline font-black text-white italic uppercase tracking-tighter">Schedule Session</h3>
               <p className="text-white/40 text-xl font-light italic">Opening institutional booking sequence...</p>
             </div>
             
-            {/* Calendly Anchor Point */}
             <div className="flex-1 w-full bg-white/[0.02] border border-white/5 rounded-[4rem] flex flex-col items-center justify-center p-12 text-center relative overflow-hidden">
                <div className="space-y-8 relative z-10">
                   <div className="w-24 h-24 rounded-full border border-primary/20 flex items-center justify-center mx-auto mb-12">
                     <Calendar className="w-8 h-8 text-primary animate-pulse" />
                   </div>
-                  <p className="text-white font-headline font-bold text-3xl uppercase tracking-tighter">Booking Interface Locked</p>
-                  <p className="text-white/30 max-w-md mx-auto italic">This area is architected to embed your native scheduling environment without redirects or popups.</p>
+                  <p className="text-white font-headline font-bold text-3xl uppercase tracking-tighter">Booking Interface Ready</p>
+                  <p className="text-white/30 max-w-md mx-auto italic">This area is architected to embed your native scheduling environment. Choose a path below to begin.</p>
+                  <div className="flex flex-wrap justify-center gap-4 pt-8">
+                     {["Discovery Call", "Product Deep-Dive", "Strategic Partnership"].map((t) => (
+                       <button key={t} className="px-8 py-3 rounded-full border border-white/10 hover:border-primary/40 hover:text-primary transition-all text-[10px] font-bold tracking-widest uppercase">
+                         {t}
+                       </button>
+                     ))}
+                  </div>
                </div>
                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.02),transparent_70%)]" />
             </div>
@@ -412,3 +436,4 @@ function HubAction({ label, onClick, highlight = false }: { label: string, onCli
     </motion.button>
   );
 }
+
