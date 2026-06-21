@@ -1,28 +1,30 @@
-
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Navbar } from "@/components/portfolio/navbar";
-import { Hero } from "@/components/portfolio/hero";
-import { FounderProfile } from "@/components/portfolio/founder-profile";
-import { AxoraProducts } from "@/components/portfolio/axora-products";
-import { FounderPhilosophy } from "@/components/portfolio/founder-philosophy";
-import { FounderManifesto } from "@/components/portfolio/founder-manifesto";
-import { WhatImBuilding } from "@/components/portfolio/what-im-building";
-import { Journey } from "@/components/portfolio/journey";
-import { BuilderPhilosophy } from "@/components/portfolio/builder-philosophy";
-import { AxoraEcosystem } from "@/components/portfolio/axora-ecosystem";
-import { Leadership } from "@/components/portfolio/leadership";
-import { ProductMetrics } from "@/components/portfolio/product-metrics";
-import { ProductEcosystem } from "@/components/portfolio/product-ecosystem";
-import { IdeasLab } from "@/components/portfolio/ideas-lab";
-import { SkillsClusters } from "@/components/portfolio/skills-clusters";
-import { Contact } from "@/components/portfolio/contact";
-import { Footer } from "@/components/portfolio/footer";
-import { Preloader } from "@/components/portfolio/preloader";
+import { Navbar } from "@/components/layout/navbar";
+import { Hero } from "@/sections/hero";
+import { FounderProfile } from "@/sections/founder-profile";
+import { AxoraProducts } from "@/sections/axora-products";
+import { Philosophy } from "@/sections/philosophy";
+import { WhatImBuilding } from "@/sections/what-im-building";
+import { Journey } from "@/sections/journey";
+import { BuilderPhilosophy } from "@/sections/builder-philosophy";
+import { AxoraEcosystem } from "@/sections/axora-ecosystem";
+import { Leadership } from "@/sections/leadership";
+import { ProductMetrics } from "@/sections/product-metrics";
+import { ProductEcosystem } from "@/sections/product-ecosystem";
+import { IdeasLab } from "@/sections/ideas-lab";
+import { SkillsClusters } from "@/sections/skills-clusters";
+import { Contact } from "@/sections/contact";
+import { Footer } from "@/sections/layout/footer";
+import { Preloader } from "@/components/ui/preloader";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+/**
+ * Main Entry Page
+ * Optimized for stability and architectural consistency.
+ */
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [hasMounted, setHasMounted] = useState(false);
@@ -92,8 +94,7 @@ export default function Home() {
         <Hero />
         <FounderProfile />
         <AxoraProducts />
-        <FounderPhilosophy />
-        <FounderManifesto />
+        <Philosophy />
         <WhatImBuilding />
         <Journey />
         <BuilderPhilosophy />
