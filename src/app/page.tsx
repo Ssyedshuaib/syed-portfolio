@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Navbar } from "@/components/layout/navbar";
 import { Hero } from "@/sections/hero";
 import { FounderProfile } from "@/sections/founder-profile";
+import { Philosophy } from "@/sections/philosophy";
 import { Journey } from "@/sections/journey";
 import { AxoraEcosystem } from "@/sections/axora-ecosystem";
 import { ProductEcosystem } from "@/sections/product-ecosystem";
@@ -15,21 +16,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
- * Main Entry Page - Cleaned & Optimized
- * Removed Founder's Philosophy to streamline narrative flow.
+ * Main Entry Page - Optimized Architectural Flow
+ * Flow: Intro -> Hero -> Identity (Identity Cards) -> Manifesto (Philosophy) -> Journey -> Venture Hub -> Portfolio -> Research -> Engagement
  */
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
-    // Session-based persistence: Intro plays once per visit.
     const introPlayed = sessionStorage.getItem("axora_intro_played");
     if (introPlayed === "true") {
       setIsLoading(false);
     }
     
-    // On browser refresh, intro should play again (clear on unload)
     const handleUnload = () => sessionStorage.removeItem("axora_intro_played");
     window.addEventListener("beforeunload", handleUnload);
     
@@ -86,8 +85,11 @@ export default function Home() {
         
         <Hero />
         
-        {/* About Section */}
+        {/* Identity Section (Identity Cards) */}
         <FounderProfile />
+
+        {/* Manifesto Section */}
+        <Philosophy />
         
         {/* Experience & Growth */}
         <Journey />

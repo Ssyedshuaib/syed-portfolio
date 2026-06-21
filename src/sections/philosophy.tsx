@@ -1,302 +1,197 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const PRINCIPLES = [
   {
     id: "01",
     title: "CLARITY",
-    headline: "Solve Problems, Not Trends.",
-    description: "Meaningful products are born from understanding human friction, not following temporary hype cycles.",
-    visual: "light-beam",
+    subtitle: "Solve Problems, Not Trends.",
+    description: "Technology is only as valuable as the friction it removes from the human experience.",
   },
   {
     id: "02",
     title: "SYSTEMS",
-    headline: "Systems Create Ecosystems.",
-    description: "We don't build features. We build scalable frameworks that compound value through interconnectivity.",
-    visual: "network",
+    subtitle: "Systems Create Ecosystems.",
+    description: "We don't build isolated features. We build scalable frameworks that compound value through interconnectivity.",
   },
   {
     id: "03",
     title: "VALUE",
-    headline: "Utility Before Attention.",
-    description: "The metric of success is utility. Every pixel must serve a purpose that fundamentally improves the user experience.",
-    visual: "ripple",
+    subtitle: "Utility Before Attention.",
+    description: "The metric of success is utility. Every pixel must serve a purpose that fundamentally improves the user journey.",
   },
   {
     id: "04",
     title: "LONGEVITY",
-    headline: "Build For The Next Decade.",
+    subtitle: "Build For The Next Decade.",
     description: "Architecting digital artifacts designed to remain relevant as technology evolves over years, not months.",
-    visual: "orbit",
-  },
-  {
-    id: "05",
-    title: "ECOSYSTEMS",
-    headline: "Connected Products Compound Value.",
-    description: "Every Axora product strengthens the larger vision, creating an institutional layer of human experience.",
-    visual: "constellation",
   },
 ];
 
 export function Philosophy() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const storyRef = useRef<HTMLDivElement>(null);
-  const [activeChapter, setActiveChapter] = useState(0);
-
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  const { scrollYProgress: storyProgress } = useScroll({
-    target: storyRef,
-    offset: ["start start", "end end"],
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
   });
 
-  const navOpacity = useTransform(scrollYProgress, [0, 0.02, 0.98, 1], [0, 1, 1, 0]);
-  const finaleOpacity = useTransform(storyProgress, [0.6, 0.75, 1], [0, 1, 1]);
-  const finaleScale = useTransform(storyProgress, [0.6, 0.75], [0.95, 1]);
-  const blurVal = useTransform(storyProgress, [0.6, 0.73, 0.75], ["30px", "15px", "0px"]);
-  const finaleBlur = useTransform(blurVal, (v) => `blur(${v})`);
-
-  useEffect(() => {
-    return scrollYProgress.on("change", (val) => {
-      const chapter = Math.min(Math.floor(val * 5), 4);
-      if (chapter !== activeChapter) setActiveChapter(chapter);
-    });
-  }, [scrollYProgress, activeChapter]);
-
   return (
-    <section ref={containerRef} className="relative bg-background">
-      <AnimatePresence>
-        <motion.div 
-          style={{ opacity: navOpacity }}
-          className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[200]"
+    <section id="philosophy" ref={containerRef} className="relative bg-background">
+      {/* 1. Cinematic Entry */}
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-8"
         >
-          <div className="glass px-6 md:px-8 py-3 md:py-4 rounded-full border-white/10 flex items-center gap-6 md:gap-10 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5)]">
-            {PRINCIPLES.map((p, idx) => (
-              <div key={p.id} className="flex flex-col items-center gap-1 group relative">
-                <span className={cn(
-                  "text-[8px] font-bold tracking-[0.2em] transition-all duration-500",
-                  activeChapter === idx ? "text-primary opacity-100" : "text-white/20"
-                )}>
-                  {p.id}
-                </span>
-                <span className={cn(
-                  "text-[9px] font-bold tracking-[0.3em] uppercase transition-all duration-500",
-                  activeChapter === idx ? "text-white" : "hidden md:block text-white/10"
-                )}>
-                  {p.title}
-                </span>
-                {activeChapter === idx && (
-                  <motion.div layoutId="nav-glow" className="absolute -inset-x-2 -inset-y-1 bg-primary/5 blur-md rounded-full -z-10" />
-                )}
-              </div>
-            ))}
+          <p className="text-[10px] font-bold tracking-[1em] text-primary/30 uppercase">Founder's Philosophy</p>
+          <motion.h2 
+            initial={{ filter: "blur(20px)", opacity: 0 }}
+            whileInView={{ filter: "blur(0px)", opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 2, delay: 0.5, ease: "easeOut" }}
+            className="text-4xl md:text-7xl lg:text-[clamp(3.5rem,8vw,8rem)] font-headline font-black tracking-tighter text-white uppercase italic"
+          >
+            Every system begins <br />
+            <span className="text-primary not-italic opacity-80">With A Belief.</span>
+          </motion.h2>
+        </motion.div>
+      </div>
+
+      {/* 2. Principles Slides */}
+      <div className="space-y-[20vh] pb-[20vh]">
+        {PRINCIPLES.map((principle, idx) => (
+          <PrincipleSlide key={principle.id} principle={principle} idx={idx} />
+        ))}
+      </div>
+
+      {/* 3. Founder Quote Section */}
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center bg-gradient-to-b from-transparent to-black/20">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-4xl space-y-12"
+        >
+          <blockquote className="text-3xl md:text-5xl lg:text-6xl font-headline font-light tracking-tight text-white/90 leading-tight italic">
+            "The goal is not to build more products. <br />
+            The goal is to build products that <span className="text-primary font-medium">deserve to exist.</span>"
+          </blockquote>
+          <div className="flex flex-col items-center gap-4">
+             <div className="h-px w-12 bg-primary/20" />
+             <p className="text-sm font-bold tracking-[0.5em] text-primary/40 uppercase">— Syed</p>
           </div>
         </motion.div>
-      </AnimatePresence>
-
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-        <div className="w-full max-w-[1600px] px-6 md:px-12 h-[75vh] flex items-stretch gap-6">
-          {PRINCIPLES.map((principle, idx) => (
-            <ArchivePanel 
-              key={principle.id} 
-              principle={principle} 
-              active={activeChapter === idx} 
-            />
-          ))}
-        </div>
       </div>
 
-      <div ref={storyRef} className="relative h-[300vh] bg-background">
-        <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden px-6">
-          <div className="space-y-12 w-full max-w-4xl">
-            <StoryLine progress={storyProgress} range={[0.1, 0.25]} text="Products are temporary." />
-            <StoryLine progress={storyProgress} range={[0.3, 0.45]} text="Principles compound." />
-            
-            <motion.div
-              style={{
-                opacity: finaleOpacity,
-                scale: finaleScale,
-                filter: finaleBlur
-              }}
-              className="relative pt-24"
+      {/* 4. Final Transition */}
+      <div className="py-64 px-6 text-center space-y-32">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 2 }}
+          className="space-y-6"
+        >
+          {["Philosophy creates products.", "Products create ecosystems.", "Ecosystems create impact."].map((text, i) => (
+            <motion.p
+              key={i}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.4, duration: 1 }}
+              className={cn(
+                "text-2xl md:text-4xl font-headline font-bold tracking-tight",
+                i === 2 ? "text-primary" : "text-white/20"
+              )}
             >
-              <div className="absolute inset-0 bg-primary/10 blur-[100px] rounded-full opacity-30" />
-              <h4 className="relative text-5xl md:text-9xl font-headline font-black text-white tracking-tighter uppercase text-center">
-                That is Axora.
-              </h4>
-            </motion.div>
-          </div>
-        </div>
+              {text}
+            </motion.p>
+          ))}
+        </motion.div>
       </div>
+
+      {/* 5. Manifesto Rail (Navigator) */}
+      <ManifestoRail progress={smoothProgress} />
     </section>
   );
 }
 
-function ArchivePanel({ principle, active }: { principle: any; active: boolean }) {
+function PrincipleSlide({ principle, idx }: { principle: any; idx: number }) {
   return (
-    <motion.div
-      animate={{ 
-        flex: active ? 4 : 1,
-        opacity: active ? 1 : 0.4,
-      }}
-      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-      className={cn(
-        "relative rounded-[3rem] overflow-hidden border border-white/5 bg-[#0F1317]/80 backdrop-blur-3xl group cursor-crosshair"
-      )}
+    <div className="min-h-[120vh] relative flex flex-col items-center justify-center px-6 overflow-hidden">
+      {/* Subtle Background Number */}
+      <motion.span
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 0.03, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 2 }}
+        className="absolute text-[35vw] font-black font-headline text-white pointer-events-none select-none"
+      >
+        {principle.id}
+      </motion.span>
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-20%" }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 text-center space-y-8 max-w-3xl"
+      >
+        <p className="text-[11px] font-bold tracking-[0.8em] text-primary uppercase">{principle.title}</p>
+        <h3 className="text-5xl md:text-8xl font-headline font-black text-white tracking-tighter leading-[0.9]">
+          {principle.subtitle}
+        </h3>
+        <p className="text-xl md:text-2xl text-white/40 font-light leading-relaxed max-w-xl mx-auto">
+          {principle.description}
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
+function ManifestoRail({ progress }: { progress: any }) {
+  const activeIdx = useTransform(progress, [0, 0.25, 0.5, 0.75, 1], [0, 1, 2, 3, 3]);
+  const [current, setCurrent] = React.useState(0);
+
+  React.useEffect(() => {
+    return activeIdx.on("change", (v) => setCurrent(Math.floor(v)));
+  }, [activeIdx]);
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 1 }}
+      className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[200] hidden md:block"
     >
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <VisualArtifact type={principle.visual} active={active} />
-      </div>
-
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10" />
-
-      <div className="absolute inset-0 z-20 p-12 flex flex-col justify-between">
-        <div className="flex justify-between items-start">
-          <span className="text-[10px] font-mono font-bold text-primary/40 tracking-[0.5em]">
-            {principle.id}
-          </span>
-          <motion.div 
-            animate={{ scale: active ? 1.2 : 1, backgroundColor: active ? "#EAE0C8" : "rgba(234,224,200,0.2)" }}
-            className="w-2 h-2 rounded-full" 
-          />
-        </div>
-
-        <div className="space-y-8">
-          <div className="space-y-3">
-            <p className="text-[11px] font-bold tracking-[0.8em] text-primary uppercase">
-              {principle.title}
-            </p>
-            {active ? (
-              <motion.h4
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter leading-none"
-              >
-                {principle.headline}
-              </motion.h4>
-            ) : (
-              <h4 className="text-xl font-headline font-bold text-white/10 tracking-tighter uppercase rotate-[-90deg] origin-left translate-y-[-100%] ml-2 whitespace-nowrap">
-                {principle.title}
-              </h4>
+      <div className="glass px-10 py-4 rounded-full border-white/5 flex items-center gap-12 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)]">
+        {PRINCIPLES.map((p, i) => (
+          <div key={p.id} className="flex items-center gap-3">
+            <span className={cn(
+              "text-[9px] font-bold tracking-[0.4em] uppercase transition-all duration-700",
+              current === i ? "text-primary" : "text-white/10"
+            )}>
+              {p.title}
+            </span>
+            {i < PRINCIPLES.length - 1 && (
+              <div className="w-1.5 h-1.5 rounded-full bg-white/5" />
             )}
           </div>
-
-          <AnimatePresence>
-            {active && (
-              <motion.p
-                initial={{ opacity: 0, filter: "blur(10px)" }}
-                animate={{ opacity: 1, filter: "blur(0px)" }}
-                className="text-lg text-white/60 font-light leading-relaxed max-w-md"
-              >
-                {principle.description}
-              </motion.p>
-            )}
-          </AnimatePresence>
-        </div>
+        ))}
       </div>
     </motion.div>
   );
-}
-
-function StoryLine({ progress, range, text }: { progress: any; range: [number, number]; text: string }) {
-  const opacity = useTransform(progress, [range[0], range[0] + 0.05, range[1], range[1] + 0.05], [0, 1, 1, 0.25]);
-  const blurVal = useTransform(progress, [range[0], range[0] + 0.04, range[0] + 0.05], ["24px", "10px", "0px"]);
-  const y = useTransform(progress, [range[0], range[0] + 0.05], [20, 0]);
-  const filter = useTransform(blurVal, (v) => `blur(${v})`);
-
-  return (
-    <motion.h3
-      style={{ opacity, filter, y }}
-      className="text-3xl md:text-6xl font-headline font-bold text-white tracking-tight text-center"
-    >
-      {text}
-    </motion.h3>
-  );
-}
-
-function VisualArtifact({ type, active }: { type: string; active: boolean }) {
-  if (type === "light-beam") {
-    return (
-      <div className="absolute inset-0 flex items-center justify-center opacity-40">
-        <motion.div
-          animate={{ height: active ? ["40%", "100%", "40%"] : "20%" }}
-          transition={{ duration: 4, repeat: Infinity }}
-          className="w-1 bg-gradient-to-t from-transparent via-primary/50 to-transparent blur-2xl"
-        />
-      </div>
-    );
-  }
-
-  if (type === "network") {
-    return (
-      <svg className="w-full h-full p-20 opacity-20" viewBox="0 0 100 100">
-        {[...Array(6)].map((_, i) => (
-          <motion.circle
-            key={i}
-            cx={20 + i * 15}
-            cy={50 + Math.sin(i) * 20}
-            r="1"
-            fill="currentColor"
-            className="text-primary"
-            animate={active ? { cy: [50 + Math.sin(i) * 20, 50 - Math.sin(i) * 20, 50 + Math.sin(i) * 20] } : {}}
-            transition={{ duration: 5, repeat: Infinity, delay: i * 0.5 }}
-          />
-        ))}
-      </svg>
-    );
-  }
-
-  if (type === "ripple") {
-    return (
-      <div className="absolute inset-0 flex items-center justify-center opacity-30">
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={i}
-            animate={active ? { scale: [1, 2.5], opacity: [0.4, 0] } : { scale: 1, opacity: 0.1 }}
-            transition={{ duration: 4, repeat: Infinity, delay: i * 1.2 }}
-            className="absolute w-64 h-64 border border-primary/30 rounded-full"
-          />
-        ))}
-      </div>
-    );
-  }
-
-  if (type === "orbit") {
-    return (
-      <div className="absolute inset-0 flex items-center justify-center opacity-20">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="w-64 h-64 border border-white/5 rounded-full relative"
-        >
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-primary rounded-full blur-[1px]" />
-        </motion.div>
-      </div>
-    );
-  }
-
-  if (type === "constellation") {
-    return (
-      <div className="absolute inset-0 opacity-10">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ x: Math.random() * 100 + "%", y: Math.random() * 100 + "%" }}
-            animate={active ? { opacity: [0.2, 0.8, 0.2] } : {}}
-            transition={{ duration: 3 + Math.random() * 5, repeat: Infinity }}
-            className="absolute w-1 h-1 bg-primary rounded-full"
-          />
-        ))}
-      </div>
-    );
-  }
-
-  return null;
 }
