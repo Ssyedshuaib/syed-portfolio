@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -39,13 +40,13 @@ export function Footer({ onStudioStateChange }: FooterProps) {
   return (
     <footer className="relative bg-background pt-96 pb-24 px-6 overflow-hidden" role="contentinfo">
       
-      {/* 1. THE SIGNATURE BACKDROP (SYED Watermark) */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+      {/* GIANT BACKGROUND TYPOGRAPHY (The Signature Watermark) */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
         <motion.h2
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 0.03 }}
           viewport={{ once: true }}
-          className="text-[40vw] font-headline font-black text-white tracking-tighter leading-none text-center animate-breathing"
+          className="text-[35vw] font-headline font-black text-white tracking-tighter leading-none text-center animate-breathing"
         >
           SYED
         </motion.h2>
@@ -53,12 +54,12 @@ export function Footer({ onStudioStateChange }: FooterProps) {
 
       <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center text-center">
         
-        {/* 2. THE STUDIO PORTAL (Interactive Artifact) */}
+        {/* THE STUDIO PORTAL (Interactive Artifact) */}
         <div className="mb-48">
           <OrbitalPortal onClick={handleOpenStudio} />
         </div>
 
-        {/* 3. THE SIGNATURE BLOCK (Founder Identity) */}
+        {/* THE SIGNATURE BLOCK (Founder Identity) */}
         <div className="space-y-32 w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -99,21 +100,21 @@ export function Footer({ onStudioStateChange }: FooterProps) {
             Bangalore, India
           </motion.div>
 
-          {/* 4. PREMIUM EDITORIAL LINKS */}
+          {/* PREMIUM EDITORIAL LINKS */}
           <div className="flex flex-col md:flex-row items-center justify-center gap-16 pt-12">
             <EditorialLink label="Email" href="mailto:syedshuaib2429@gmail.com" />
             <EditorialLink label="LinkedIn" href="https://www.linkedin.com/in/syedshuaib485/" />
             <EditorialLink label="Schedule Discussion" href="#" isPrimary />
           </div>
 
-          {/* 5. SIGNATURE STATEMENT & COPYRIGHT */}
+          {/* SIGNATURE STATEMENT & COPYRIGHT */}
           <div className="pt-32 space-y-12 border-t border-white/5 w-full max-w-4xl mx-auto">
             <p className="text-[11px] font-bold tracking-[0.8em] text-white/20 uppercase italic">
               "Building systems that outlast trends."
             </p>
             <div className="flex flex-col md:flex-row justify-between items-center gap-8 opacity-20">
               <p className="text-[9px] font-bold tracking-[0.4em] text-white uppercase">
-                &copy; 2026 AXORA
+                &copy; {new Date().getFullYear()} AXORA
               </p>
               <p className="text-[9px] font-bold tracking-[0.5em] text-white uppercase italic">
                 Designed With Intention.
@@ -123,7 +124,7 @@ export function Footer({ onStudioStateChange }: FooterProps) {
         </div>
       </div>
 
-      {/* 6. CINEMATIC STUDIO MODE OVERLAY */}
+      {/* CINEMATIC STUDIO MODE OVERLAY */}
       <AnimatePresence>
         {isStudioOpen && (
           <StudioExperience onClose={handleCloseStudio} initialView={activeView} />
@@ -251,7 +252,6 @@ function StudioExperience({ onClose, initialView }: { onClose: () => void, initi
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[1000] bg-[#050505] overflow-hidden flex flex-col items-center justify-center p-6 md:p-12"
     >
-      {/* Background Ambience */}
       <div className="absolute inset-0 blueprint-grid opacity-[0.01]" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.06),transparent_75%)]" />
 
@@ -362,8 +362,6 @@ function StudioExperience({ onClose, initialView }: { onClose: () => void, initi
               <h3 className="text-4xl md:text-6xl font-headline font-black text-white italic uppercase tracking-tight">Schedule Discussion</h3>
               <p className="text-white/40 font-light">Confirming institutional availability.</p>
             </div>
-            
-            {/* Calendly Embed Placeholder */}
             <div className="flex-1 w-full glass rounded-[3rem] border-white/5 flex items-center justify-center relative overflow-hidden">
                <div className="text-center space-y-6">
                   <div className="w-16 h-16 rounded-full glass flex items-center justify-center mx-auto border-primary/20">
