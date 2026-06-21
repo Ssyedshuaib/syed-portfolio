@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -21,7 +22,6 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
 
   useEffect(() => {
     setIsMounted(true);
-    // Hydration fix for random values
     setParticles([...Array(20)].map((_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
@@ -29,34 +29,29 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       duration: 3 + Math.random() * 2,
     })));
 
-    // Scene 1: Building Products (1.5s hold + 0.8s trans)
+    // Snappier cinematic sequence (6 seconds total)
     const t0 = setTimeout(() => {
       setScene(1);
-      lightIntensity.set(0.07);
-      ambientScale.set(1.02);
-    }, 800);
+      lightIntensity.set(0.06);
+    }, 0);
 
-    // Scene 2: Designing Systems (1.5s hold + 0.8s trans)
     const t1 = setTimeout(() => {
       setScene(2);
       lightIntensity.set(0.08);
-    }, 3100);
+    }, 1500);
 
-    // Scene 3: Creating Ecosystems (1.5s hold + 0.8s trans)
     const t2 = setTimeout(() => {
       setScene(3);
-      lightIntensity.set(0.07);
-    }, 5400);
+      lightIntensity.set(0.09);
+    }, 3000);
 
-    // Scene 4: Founder Reveal (Emotional Peak: 2.5s hold)
     const t3 = setTimeout(() => {
       setScene(4);
-      lightIntensity.set(0.12);
-      ambientScale.set(1.06);
-    }, 7700);
+      lightIntensity.set(0.14);
+      ambientScale.set(1.05);
+    }, 4500);
 
-    // Scene 5: Hero Emergence (Transition completion)
-    const t4 = setTimeout(onComplete, 11000);
+    const t4 = setTimeout(onComplete, 6000);
 
     return () => {
       [t0, t1, t2, t3, t4].forEach(clearTimeout);
@@ -76,7 +71,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       filter: "blur(0px)",
       scale: 1,
       transition: { 
-        duration: 1.8, 
+        duration: 1.4, 
         ease: [0.16, 1, 0.3, 1] 
       }
     },
@@ -85,7 +80,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       y: -10, 
       filter: "blur(15px)",
       transition: { 
-        duration: 1, 
+        duration: 0.8, 
         ease: [0.16, 1, 0.3, 1] 
       }
     }
@@ -104,15 +99,14 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       }}
       className="fixed inset-0 z-[9999] bg-[#050505] flex items-center justify-center overflow-hidden"
     >
-      {/* Cinematic Environment: Volumetric Light & Atmospheric Depth */}
       <motion.div 
         style={{ 
           opacity: smoothIntensity,
           scale: smoothScale,
         }}
         animate={{ 
-          x: [-20, 20, -20],
-          y: [-15, 15, -15],
+          x: [-15, 15, -15],
+          y: [-10, 10, -10],
         }}
         transition={{ duration: 40, repeat: Infinity, ease: "easeInOut" }}
         className="absolute inset-[-30%] bg-[radial-gradient(circle_at_30%_30%,rgba(83,104,120,0.18),transparent_70%)] z-[-1]" 
@@ -120,7 +114,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
 
       <div className="fixed inset-0 grain-overlay z-[1] opacity-[0.025] pointer-events-none" />
 
-      <div className="absolute inset-0 z-[2] pointer-events-none opacity-20">
+      <div className="absolute inset-0 z-[2] pointer-events-none opacity-10">
         {particles.map((p) => (
           <motion.div
             key={p.id}
@@ -149,13 +143,13 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
               exit="exit"
               className="flex flex-col items-center justify-center"
             >
-              <h2 className="text-3xl md:text-5xl lg:text-[clamp(2rem,6vw,4.5rem)] font-headline font-black tracking-tighter text-white/90 uppercase italic leading-none select-none">
+              <h2 className="text-3xl md:text-5xl lg:text-7xl font-headline font-black tracking-tighter text-white/90 uppercase italic leading-none select-none">
                 {STATEMENTS[scene - 1]}
               </h2>
               <motion.div 
                 initial={{ width: 0 }}
                 animate={{ width: 60 }}
-                transition={{ delay: 1, duration: 2.2 }}
+                transition={{ delay: 0.5, duration: 1.5 }}
                 className="h-[1px] bg-primary/20 mt-12"
               />
             </motion.div>
@@ -166,7 +160,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
               key="final-reveal"
               initial={{ opacity: 0, filter: "blur(40px)", scale: 0.98 }}
               animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
-              transition={{ duration: 3, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
             >
               <div className="space-y-12 md:space-y-16">
@@ -182,7 +176,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 0.4, y: 0 }}
-                  transition={{ delay: 2.5, duration: 3 }}
+                  transition={{ delay: 1.5, duration: 2 }}
                   className="flex flex-col items-center gap-8"
                 >
                   <div className="h-px w-24 bg-primary/30" />

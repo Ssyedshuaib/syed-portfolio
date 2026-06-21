@@ -1,6 +1,7 @@
+
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Navbar } from "@/components/portfolio/navbar";
 import { Hero } from "@/components/portfolio/hero";
 import { FounderProfile } from "@/components/portfolio/founder-profile";
@@ -49,10 +50,10 @@ export default function Home() {
     }
   }, [isLoading, hasMounted]);
 
-  const handleIntroComplete = () => {
+  const handleIntroComplete = useCallback(() => {
     sessionStorage.setItem("axora_intro_played", "true");
     setIsLoading(false);
-  };
+  }, []);
 
   if (!hasMounted) return null;
 
@@ -77,15 +78,14 @@ export default function Home() {
         animate={{ 
           opacity: isLoading ? 0.05 : 1,
           scale: isLoading ? 0.99 : 1,
-          filter: isLoading ? "blur(40px)" : "none",
-          transform: isLoading ? "scale(0.99)" : "none"
+          filter: isLoading ? "blur(40px)" : "blur(0px)",
         }}
         transition={{ 
           duration: 1.5,
           ease: [0.16, 1, 0.3, 1] 
         }}
       >
-        <div className="fixed inset-0 grain-overlay z-[100] pointer-events-none" />
+        <div className="fixed inset-0 grain-overlay z-[1] pointer-events-none" />
         <div className="fixed inset-0 premium-glow pointer-events-none z-0" />
         <div className="fixed inset-0 blueprint-grid opacity-[0.02] pointer-events-none z-0" />
         
