@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -51,6 +51,7 @@ const PRINCIPLES = [
 export function FounderPhilosophy() {
   const containerRef = useRef<HTMLDivElement>(null);
   const storyRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
   
   const { scrollYProgress: mainProgress } = useScroll({
     target: containerRef,
@@ -64,23 +65,74 @@ export function FounderPhilosophy() {
 
   const isVisible = useInView(containerRef, { margin: "-10% 0px -10% 0px" });
 
+  // Manifesto Rail Fill logic
+  const progressFill = useSpring(mainProgress, { stiffness: 100, damping: 30 });
+
   return (
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-32">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
-      {/* FIXED BOTTOM NAVIGATOR */}
+      {/* MANIFESTO RAIL (Desktop) */}
       <AnimatePresence>
         {isVisible && (
           <motion.div 
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed left-10 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex items-center gap-8"
+          >
+            {/* Progress Track */}
+            <div className="relative w-px h-80 bg-white/5">
+              <motion.div 
+                style={{ height: useTransform(progressFill, [0, 1], ["0%", "100%"]) }}
+                className="absolute top-0 left-0 w-full bg-primary origin-top shadow-[0_0_15px_rgba(234,224,200,0.5)]"
+              />
+            </div>
+
+            {/* Labels Stack */}
+            <div className="flex flex-col gap-10">
+              {PRINCIPLES.map((p, i) => (
+                <motion.div
+                  key={p.id}
+                  animate={{ 
+                    opacity: activeIndex === i ? 1 : 0.2,
+                    scale: activeIndex === i ? 1.05 : 1,
+                    x: activeIndex === i ? 5 : 0
+                  }}
+                  className="group cursor-default"
+                >
+                  <p className="text-[10px] font-mono font-bold text-primary mb-1">{p.id}</p>
+                  <p className={cn(
+                    "text-[9px] font-bold tracking-[0.4em] uppercase transition-all duration-500",
+                    activeIndex === i ? "text-white text-shadow-glow" : "text-[#536878]"
+                  )}>
+                    {p.label}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* MOBILE MANIFESTO PILL */}
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[100] hidden lg:block"
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] lg:hidden"
           >
-            <div className="glass px-10 py-5 rounded-full border-white/5 flex items-center gap-10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] backdrop-blur-3xl">
-              {PRINCIPLES.map((p, i) => (
-                <PrincipleIndicator key={p.id} principle={p} index={i} progress={mainProgress} />
-              ))}
+            <div className="glass px-6 py-3 rounded-full border-white/10 flex items-center gap-4 backdrop-blur-xl">
+              <span className="text-[10px] font-mono font-bold text-primary">
+                0{activeIndex + 1} / 05
+              </span>
+              <div className="w-px h-3 bg-white/10" />
+              <span className="text-[9px] font-bold tracking-[0.3em] text-white uppercase">
+                {PRINCIPLES[activeIndex].label}
+              </span>
             </div>
           </motion.div>
         )}
@@ -107,7 +159,12 @@ export function FounderPhilosophy() {
         {/* Alternating Principles */}
         <div className="space-y-64 lg:space-y-[45vh] pb-64">
           {PRINCIPLES.map((principle, idx) => (
-            <PrincipleChapter key={idx} principle={principle} idx={idx} />
+            <PrincipleChapter 
+              key={idx} 
+              principle={principle} 
+              idx={idx} 
+              onActive={() => setActiveIndex(idx)}
+            />
           ))}
         </div>
 
@@ -130,7 +187,7 @@ export function FounderPhilosophy() {
                    style={{ 
                      opacity: useTransform(storyProgress, [0.9, 0.98], [0, 1]),
                      y: useTransform(storyProgress, [0.9, 0.98], [20, 0]),
-                     filter: useTransform(storyProgress, [0.9, 0.96, 0.98], ["blur(20px)", "blur(10px)", "blur(0px)"])
+                     filter: useTransform(storyProgress, [0.9, 0.96, 0.98], ["blur(24px)", "blur(12px)", "blur(0px)"])
                    }}
                    className="pt-24 space-y-12"
                 >
@@ -155,38 +212,13 @@ export function FounderPhilosophy() {
   );
 }
 
-function PrincipleIndicator({ principle, index, progress }: { principle: any, index: number, progress: any }) {
-  const start = index * (1 / PRINCIPLES.length);
-  const end = (index + 1) * (1 / PRINCIPLES.length);
-  
-  // Highlight indicator when the scroll is within the range of this principle
-  const isActive = useTransform(progress, [start - 0.05, start, end, end + 0.05], [0.3, 1, 1, 0.3]);
-  const scale = useTransform(progress, [start - 0.05, start, end, end + 0.05], [0.95, 1.05, 1.05, 0.95]);
-
-  return (
-    <motion.div 
-      style={{ opacity: isActive, scale }} 
-      className="flex flex-col items-center gap-2 group cursor-default min-w-[60px]"
-    >
-      <span className="text-[10px] font-mono font-bold text-primary">{principle.id}</span>
-      <span className="text-[8px] font-bold tracking-[0.2em] text-white uppercase opacity-60 group-hover:opacity-100 transition-opacity">
-        {principle.label}
-      </span>
-      <motion.div 
-        animate={{ height: isActive.get() > 0.8 ? "4px" : "0px" }}
-        className="w-1 bg-primary rounded-full mt-1"
-      />
-    </motion.div>
-  );
-}
-
 function StoryLine({ progress, range, text, className }: { progress: any, range: [number, number, number], text: string, className?: string }) {
-  // Use a strictly mapped scale to guarantee blur(0px) for the active and previous states
+  // Enhanced blur removal logic for absolute crispness
   const opacity = useTransform(progress, range, [0, 1, 0.25]);
   const y = useTransform(progress, range, [30, 0, -20]);
   
-  // High-fidelity blur logic: Ensure the 0px state is held for all indices after activation
-  const blurValue = useTransform(progress, [range[0], range[1], range[1] + 0.001, range[2]], ["24px", "0px", "0px", "0px"]);
+  // Explicit mapping ensures 0px blur at the active point and beyond
+  const blurValue = useTransform(progress, [range[0], range[1], range[1] + 0.01, range[2]], ["24px", "0px", "0px", "0px"]);
 
   return (
     <motion.p 
@@ -206,9 +238,16 @@ function StoryLine({ progress, range, text, className }: { progress: any, range:
   );
 }
 
-function PrincipleChapter({ principle, idx }: { principle: any, idx: number }) {
+function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: number, onActive: () => void }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { margin: "-20% 0px -20% 0px" });
+  const isInView = useInView(ref, { margin: "-45% 0px -45% 0px" });
+  
+  useEffect(() => {
+    if (isInView) {
+      onActive();
+    }
+  }, [isInView, onActive]);
+
   const isRight = idx % 2 === 0;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   
