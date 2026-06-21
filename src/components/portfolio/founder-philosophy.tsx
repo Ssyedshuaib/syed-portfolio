@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useInView, useScroll, useSpring, useTransform, AnimatePresence, MotionValue } from "framer-motion";
+import { motion, useInView, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const PRINCIPLES = [
@@ -53,6 +53,9 @@ export function FounderPhilosophy() {
   const storyRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   
+  // High-precision visibility for Manifesto Rail
+  const isVisible = useInView(containerRef, { margin: "-10% 0px -10% 0px" });
+
   const { scrollYProgress: mainProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end end"],
@@ -63,31 +66,30 @@ export function FounderPhilosophy() {
     offset: ["start start", "end end"],
   });
 
-  const isVisible = useInView(containerRef, { margin: "-20% 0px -20% 0px" });
-
+  // Top level hooks for Manifesto Rail
   const progressFill = useSpring(mainProgress, { stiffness: 100, damping: 30 });
   const railProgressHeight = useTransform(progressFill, [0, 0.8], ["0%", "100%"]);
 
-  // Finale Transforms declared at top level
-  const finaleOpacity = useTransform(storyProgress, [0.88, 0.95, 1], [0, 1, 1]);
-  const finaleY = useTransform(storyProgress, [0.88, 0.95], [40, 0]);
-  const finaleBlur = useTransform(storyProgress, [0.88, 0.93, 0.95], [30, 15, 0]);
+  // Finale Transforms
+  const theatricalDim = useTransform(storyProgress, [0.8, 1], [0, 0.7]);
+  const finaleOpacity = useTransform(storyProgress, [0.82, 0.9, 1], [0, 1, 1]);
+  const finaleY = useTransform(storyProgress, [0.82, 0.9], [20, 0]);
+  const finaleBlur = useTransform(storyProgress, [0.82, 0.88, 0.9], [20, 10, 0]);
   const finaleFilter = useTransform(finaleBlur, (v) => `blur(${v}px)`);
-  const theatricalDim = useTransform(storyProgress, [0.8, 1], [0, 0.6]);
 
   return (
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-x-hidden">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
-      {/* INSTITUTIONAL MANIFESTO RAIL (Fixed Desktop) */}
+      {/* INSTITUTIONAL MANIFESTO RAIL (Desktop) */}
       <AnimatePresence>
         {isVisible && (
           <motion.div 
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
+            exit={{ opacity: 0, x: -30 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed left-12 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex items-center gap-12"
+            className="fixed left-12 top-1/2 -translate-y-1/2 z-[200] hidden lg:flex items-center gap-12 pointer-events-none"
           >
             <div className="relative w-px h-80 bg-white/5">
               <motion.div 
@@ -103,10 +105,10 @@ export function FounderPhilosophy() {
                   animate={{ 
                     opacity: activeIndex === i ? 1 : 0.15,
                     scale: activeIndex === i ? 1.05 : 1,
-                    x: activeIndex === i ? 10 : 0
+                    x: activeIndex === i ? 15 : 0
                   }}
                   transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="group cursor-default"
+                  className="group"
                 >
                   <p className="text-[10px] font-mono font-bold text-primary mb-1">{p.id}</p>
                   <p className={cn(
@@ -126,12 +128,12 @@ export function FounderPhilosophy() {
       <AnimatePresence>
         {isVisible && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[100] lg:hidden"
+            exit={{ opacity: 0, y: 30 }}
+            className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[200] lg:hidden"
           >
-            <div className="glass px-10 py-5 rounded-full border-white/10 flex items-center gap-8 backdrop-blur-3xl bg-[#0F1317]/80">
+            <div className="glass px-10 py-5 rounded-full border-white/10 flex items-center gap-8 backdrop-blur-3xl bg-[#0F1317]/90">
               <span className="text-[11px] font-mono font-bold text-primary">
                 0{activeIndex + 1} / 05
               </span>
@@ -145,7 +147,7 @@ export function FounderPhilosophy() {
       </AnimatePresence>
 
       <div className="max-w-[1440px] mx-auto">
-        {/* Intro Header */}
+        {/* Cinematic Intro */}
         <div className="min-h-screen flex items-center justify-center text-center px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -163,7 +165,7 @@ export function FounderPhilosophy() {
           </motion.div>
         </div>
 
-        {/* Chapters: Presentation Slide Mode */}
+        {/* Presentation Slides */}
         <div className="relative space-y-0">
           {PRINCIPLES.map((principle, idx) => (
             <PrincipleChapter 
@@ -175,8 +177,8 @@ export function FounderPhilosophy() {
           ))}
         </div>
 
-        {/* FINAL CINEMATIC STORYTELLING SEQUENCE: Dead-Centered */}
-        <div ref={storyRef} className="relative h-[300vh]">
+        {/* PINNED CINEMATIC FINALE */}
+        <div ref={storyRef} className="relative h-[400vh]">
           <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
             <motion.div 
               style={{ 
@@ -186,11 +188,10 @@ export function FounderPhilosophy() {
               className="absolute inset-0 pointer-events-none z-0"
             />
             
-            <div className="space-y-24 w-full max-w-6xl mx-auto relative z-10 flex flex-col items-center justify-center px-6 h-full">
-               <StoryLine progress={storyProgress} range={[0.0, 0.15, 0.25]} text="Most companies build products." />
-               <StoryLine progress={storyProgress} range={[0.25, 0.40, 0.50]} text="We build systems." className="text-primary italic font-medium" />
-               <StoryLine progress={storyProgress} range={[0.50, 0.65, 0.75]} text="Systems create ecosystems." />
-               <StoryLine progress={storyProgress} range={[0.75, 0.85, 0.92]} text="Ecosystems create lasting value." />
+            <div className="space-y-16 w-full max-w-6xl mx-auto relative z-10 flex flex-col items-center justify-center px-6 h-full">
+               <StoryLine progress={storyProgress} range={[0.1, 0.2, 0.3]} text="Most companies build products." />
+               <StoryLine progress={storyProgress} range={[0.35, 0.45, 0.55]} text="We build systems." className="text-primary italic font-medium" />
+               <StoryLine progress={storyProgress} range={[0.6, 0.7, 0.8]} text="Systems create ecosystems." />
                
                <motion.div
                   style={{ 
@@ -198,23 +199,23 @@ export function FounderPhilosophy() {
                     y: finaleY,
                     filter: finaleFilter
                   }}
-                  className="pt-32 space-y-16 flex flex-col items-center"
+                  className="pt-16 space-y-12 flex flex-col items-center"
                >
-                  <div className="h-px w-48 bg-primary/20" />
+                  <div className="h-px w-32 bg-primary/20" />
                   <div className="relative">
                     <motion.div 
                       animate={{ 
-                        opacity: [0.1, 0.3, 0.1], 
-                        scale: [1, 1.1, 1] 
+                        opacity: [0.1, 0.2, 0.1], 
+                        scale: [1, 1.05, 1] 
                       }}
                       transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                       className="absolute inset-[-60px] bg-primary/10 blur-[100px] rounded-full pointer-events-none" 
                     />
-                    <h4 className="relative text-7xl md:text-[10rem] font-headline font-black text-white tracking-tighter italic">
+                    <h4 className="relative text-6xl md:text-[10rem] font-headline font-black text-white tracking-tighter italic text-center leading-none">
                       That is Axora.
                     </h4>
                   </div>
-                  <p className="text-[12px] font-bold tracking-[1.6em] text-primary/40 uppercase">A Product Venture Studio</p>
+                  <p className="text-[12px] font-bold tracking-[1.6em] text-primary/40 uppercase text-center">A Product Venture Studio</p>
                </motion.div>
             </div>
           </div>
@@ -225,9 +226,10 @@ export function FounderPhilosophy() {
 }
 
 function StoryLine({ progress, range, text, className }: { progress: any, range: [number, number, number], text: string, className?: string }) {
-  const opacity = useTransform(progress, range, [0, 1, 0.25]);
-  const y = useTransform(progress, range, [40, 0, -20]);
-  const blurValue = useTransform(progress, [range[0], range[1], range[2]], [24, 0, 0]);
+  const opacity = useTransform(progress, range, [0, 1, 0.3]);
+  const y = useTransform(progress, range, [20, 0, -20]);
+  // Strictly enforce blur(0px) for active and previous states
+  const blurValue = useTransform(progress, [range[0], range[1], range[2]], [20, 0, 0]);
   const filterStyle = useTransform(blurValue, (v) => `blur(${v}px)`);
 
   return (
@@ -260,9 +262,8 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
   const isRight = idx % 2 === 0;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   
-  // Chapter transforms declared at top level
   const opacity = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.95, 1, 1, 0.95]);
+  const scale = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.98, 1, 1, 0.98]);
 
   return (
     <motion.div
@@ -270,7 +271,7 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
       style={{ opacity, scale }}
       className="relative min-h-[110vh] flex items-center justify-center py-20 px-6 overflow-hidden bg-background"
     >
-      {/* Cinematic Watermark Number */}
+      {/* Background Watermark */}
       <div className={cn(
         "absolute pointer-events-none select-none z-0 opacity-[0.03] transition-all duration-1000",
         isRight ? "left-0" : "right-0"
@@ -281,9 +282,9 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
       </div>
 
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-20 lg:gap-32 items-center relative z-10">
-        <div className={cn("space-y-12", !isRight && "lg:order-2")}>
+        <div className={cn("space-y-12 text-center lg:text-left", !isRight && "lg:order-2")}>
           <div className="space-y-10">
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-center lg:justify-start gap-6">
                <span className="text-[14px] font-mono font-bold text-primary/40 tracking-[0.5em]">{principle.id}</span>
                <div className="h-px w-16 bg-primary/20" />
                <span className="text-[11px] font-bold tracking-[0.8em] text-primary/70 uppercase">
@@ -295,13 +296,13 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
               <h3 className="text-5xl md:text-7xl lg:text-8xl font-headline font-black text-white tracking-tighter leading-[0.9]">
                 {principle.title}
               </h3>
-              <p className="text-2xl md:text-4xl font-light text-[#EAE0C8]/80 italic leading-tight max-w-2xl">
+              <p className="text-2xl md:text-4xl font-light text-[#EAE0C8]/80 italic leading-tight max-w-2xl mx-auto lg:mx-0">
                 {principle.sub}
               </p>
             </div>
           </div>
 
-          <p className="text-lg md:text-xl text-white/40 font-light leading-relaxed max-w-xl">
+          <p className="text-lg md:text-xl text-white/40 font-light leading-relaxed max-w-xl mx-auto lg:mx-0">
             {principle.body}
           </p>
         </div>
@@ -428,3 +429,4 @@ function VisualEngine({ type, active }: { type: string, active: boolean }) {
     </div>
   );
 }
+
