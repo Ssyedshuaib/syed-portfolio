@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { motion, useSpring, useMotionValue, AnimatePresence, LayoutGroup } from "framer-motion";
 import { 
   ArrowRight, 
@@ -44,16 +44,26 @@ const CHANNELS = [
   },
 ];
 
+const LIVING_PHRASES = [
+  "LET'S BUILD SOMETHING MEANINGFUL",
+  "DISCUSS AN IDEA",
+  "START SOMETHING NEW",
+  "BUILD THE FUTURE",
+  "SHARE A VISION",
+  "CREATE AN ECOSYSTEM"
+];
+
 export function Contact() {
   const [time, setTime] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [currentPhrase, setCurrentPhrase] = useState(LIVING_PHRASES[0]);
 
-  // Parallax Values for the Trigger Circle
+  // Parallax / Magnetic Values
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 150, damping: 30 });
-  const springY = useSpring(mouseY, { stiffness: 150, damping: 30 });
+  const springX = useSpring(mouseX, { stiffness: 100, damping: 25 });
+  const springY = useSpring(mouseY, { stiffness: 100, damping: 25 });
 
   useEffect(() => {
     const updateTime = () => {
@@ -62,6 +72,7 @@ export function Contact() {
         timeZone: "Asia/Kolkata",
         hour: "2-digit",
         minute: "2-digit",
+        second: "2-digit",
         hour12: false,
       };
       setTime(new Intl.DateTimeFormat("en-GB", options).format(now));
@@ -74,8 +85,8 @@ export function Contact() {
   function handleTriggerMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (isExpanded) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - (rect.left + rect.width / 2)) * 0.15;
-    const y = (e.clientY - (rect.top + rect.height / 2)) * 0.15;
+    const x = (e.clientX - (rect.left + rect.width / 2)) * 0.12; // 8px-10px max influence
+    const y = (e.clientY - (rect.top + rect.height / 2)) * 0.12;
     mouseX.set(x);
     mouseY.set(y);
   }
@@ -85,22 +96,39 @@ export function Contact() {
     mouseY.set(0);
   }
 
+  function handleMouseEnter() {
+    if (isExpanded) return;
+    const randomPhrase = LIVING_PHRASES[Math.floor(Math.random() * LIVING_PHRASES.length)];
+    setCurrentPhrase(randomPhrase);
+  }
+
   const handleReset = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     setIsExpanded(false);
     setSelectedTopic(null);
   };
 
+  // Generate stable random values for particles
+  const particles = useMemo(() => {
+    return [...Array(6)].map((_, i) => ({
+      id: i,
+      x: (i * 30) - 90,
+      y: (i * 20) - 60,
+      delay: i * 0.5,
+      duration: 10 + i * 2
+    }));
+  }, []);
+
   return (
     <section id="contact" className="relative bg-background overflow-hidden py-32 md:py-48">
-      {/* Background Dim Layer */}
+      {/* Cinematic Backdrop Layer */}
       <AnimatePresence>
         {isExpanded && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[80] bg-black/90 backdrop-blur-[40px] pointer-events-auto"
+            className="fixed inset-0 z-[80] bg-black/95 backdrop-blur-[50px] pointer-events-auto"
             onClick={() => handleReset()}
           />
         )}
@@ -108,18 +136,18 @@ export function Contact() {
 
       <motion.div
         animate={{ 
-          scale: isExpanded ? 0.96 : 1,
-          filter: isExpanded ? "blur(40px)" : "blur(0px)",
-          opacity: isExpanded ? 0.2 : 1
+          scale: isExpanded ? 0.94 : 1,
+          filter: isExpanded ? "blur(30px)" : "blur(0px)",
+          opacity: isExpanded ? 0.1 : 1
         }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-[1440px] mx-auto px-6"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-end">
           {/* Narrative Column */}
           <div className="space-y-16">
             <div className="space-y-8 max-w-lg">
-              <p className="text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase">ENAGAGEMENT</p>
+              <p className="text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase">ENGAGEMENT</p>
               <h3 className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter leading-[1.05] italic uppercase">
                 Let's Build <br />
                 <span className="text-primary/20 not-italic">Something Meaningful.</span>
@@ -170,8 +198,8 @@ export function Contact() {
         </div>
       </motion.div>
 
-      {/* Interactive Conversation Hub */}
-      <div className="py-48 flex flex-col items-center justify-center relative min-h-[600px] px-6">
+      {/* The Conversation Room / Interactive Object */}
+      <div className="py-48 flex flex-col items-center justify-center relative min-h-[700px] px-6">
         <LayoutGroup>
           <motion.div
             layout
@@ -182,20 +210,44 @@ export function Contact() {
             }}
             onMouseMove={handleTriggerMouseMove}
             onMouseLeave={handleTriggerMouseLeave}
+            onMouseEnter={handleMouseEnter}
             onClick={() => !isExpanded && setIsExpanded(true)}
             transition={{ 
               type: "spring", 
-              stiffness: 100, 
+              stiffness: 120, 
               damping: 30,
               layout: { duration: 0.9, ease: [0.16, 1, 0.3, 1] }
             }}
             className={cn(
               "relative glass flex flex-col items-center justify-center cursor-pointer overflow-hidden transition-all duration-500",
               isExpanded 
-                ? "w-full max-w-xl min-h-[500px] rounded-[3.5rem] p-12 md:p-16 bg-[#0F1317]/98 border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)]" 
-                : "h-44 w-52 md:h-64 md:w-64 rounded-full hover:border-primary/20 hover:bg-primary/[0.02] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.4)] group"
+                ? "w-full max-w-xl min-h-[500px] rounded-[3.5rem] p-12 md:p-16 bg-[#0A0A0A] border-white/10 shadow-[0_80px_160px_-40px_rgba(0,0,0,0.9)]" 
+                : "h-48 w-56 md:h-72 md:w-72 rounded-full hover:border-primary/20 hover:bg-primary/[0.01] shadow-[0_20px_40px_-10px_rgba(0,0,0,0.4)] group"
             )}
           >
+            {/* Ambient Breathe Animation (Idle Only) */}
+            {!isExpanded && (
+              <motion.div 
+                animate={{ scale: [1, 1.015, 1] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 rounded-full bg-primary/[0.02] -z-10"
+              />
+            )}
+
+            {/* Micro Particles */}
+            {!isExpanded && particles.map((p) => (
+              <motion.div
+                key={p.id}
+                animate={{ 
+                  x: [p.x, p.x + 10, p.x],
+                  y: [p.y, p.y - 15, p.y],
+                  opacity: [0, 0.2, 0]
+                }}
+                transition={{ duration: p.duration, repeat: Infinity, delay: p.delay }}
+                className="absolute w-1 h-1 bg-primary rounded-full blur-[1px] pointer-events-none"
+              />
+            ))}
+
             <AnimatePresence mode="wait">
               {!isExpanded ? (
                 <motion.div 
@@ -203,12 +255,30 @@ export function Contact() {
                   initial={{ opacity: 0 }} 
                   animate={{ opacity: 1 }} 
                   exit={{ opacity: 0, scale: 0.9 }} 
-                  className="flex flex-col items-center justify-center gap-4 text-center"
+                  className="flex flex-col items-center justify-center text-center w-full px-12"
                 >
-                  <span className="text-[9px] font-bold tracking-[0.8em] text-primary/40 uppercase transition-colors group-hover:text-primary/60">Start A</span>
-                  <span className="text-sm font-bold tracking-[0.4em] text-white uppercase flex items-center gap-2 group-hover:scale-105 transition-transform">
-                    Conversation <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
+                  <motion.div 
+                    className="flex flex-col items-center gap-4"
+                    whileHover={{ scale: 1.03 }}
+                  >
+                    <span className="text-[9px] font-bold tracking-[1em] text-primary/30 uppercase">ENTER</span>
+                    
+                    <div className="relative h-12 overflow-hidden flex items-center justify-center w-64">
+                       <AnimatePresence mode="wait">
+                         <motion.div
+                           key={currentPhrase}
+                           initial={{ y: 30, opacity: 0, filter: "blur(10px)" }}
+                           animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                           exit={{ y: -30, opacity: 0, filter: "blur(10px)" }}
+                           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                           className="text-[11px] md:text-xs font-bold tracking-[0.5em] text-white uppercase flex flex-col items-center gap-3"
+                         >
+                           <span className="text-center leading-relaxed max-w-[200px]">{currentPhrase}</span>
+                           <ArrowRight className="w-3.5 h-3.5 text-primary/40 group-hover:translate-x-1.5 transition-transform" />
+                         </motion.div>
+                       </AnimatePresence>
+                    </div>
+                  </motion.div>
                 </motion.div>
               ) : (
                 <motion.div 
@@ -219,7 +289,6 @@ export function Contact() {
                   transition={{ delay: 0.2, duration: 0.8 }}
                   className="w-full relative"
                 >
-                  {/* Luxury Close Control */}
                   <button 
                     onClick={(e) => { e.stopPropagation(); handleReset(); }} 
                     className="absolute -top-4 -right-4 p-3 rounded-full glass border-white/5 hover:border-white/20 transition-all group/close"
@@ -229,7 +298,7 @@ export function Contact() {
 
                   <div className="space-y-12">
                     <div className="space-y-6">
-                      <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">WITH SYED</p>
+                      <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">CONVERSATION ROOM</p>
                       <h4 className="text-4xl md:text-5xl font-headline font-black text-white tracking-tighter italic">
                         {selectedTopic ? "Next Steps" : "Discuss..."}
                       </h4>
@@ -250,7 +319,7 @@ export function Contact() {
                               <button 
                                 key={topic.id} 
                                 onClick={(e) => { e.stopPropagation(); setSelectedTopic(topic.label); }} 
-                                className="group relative flex items-center justify-between p-6 rounded-2xl glass border-white/5 hover:bg-white/[0.02] hover:border-primary/20 transition-all text-left"
+                                className="group relative flex items-center justify-between p-6 rounded-2xl bg-white/[0.01] border border-white/5 hover:border-primary/20 hover:bg-white/[0.03] transition-all text-left"
                               >
                                 <div className="flex items-center gap-6">
                                   <span className="text-[11px] font-mono font-bold text-primary/20 group-hover:text-primary/40 transition-colors">{topic.id}</span>
@@ -265,7 +334,7 @@ export function Contact() {
                             key="channels-view" 
                             initial={{ opacity: 0, x: 20 }} 
                             animate={{ opacity: 1, x: 0 }} 
-                            exit={{ opacity: 0, x: -20 }}
+                            exit={{ opacity: 0, x: -20 }} 
                             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                             className="space-y-4"
                           >
