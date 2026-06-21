@@ -60,11 +60,10 @@ export function FounderPhilosophy() {
   });
 
   // 3. Navigation Rail Entry/Exit Logic
-  // Rail appears when principles start and disappears when "Better Systems" arrives
   const railOpacity = useTransform(
     [principlesProgress, closingProgress],
     ([prog, close]) => {
-      // Fade in quickly as the principles start (triggered at start center)
+      // Fade in quickly as the principles start
       const fadeIn = (prog as number) * 10; 
       // Fade out as the "Better Systems" closing section arrives
       const fadeOut = 1 - (close as number) * 5; 
@@ -106,14 +105,14 @@ export function FounderPhilosophy() {
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-32 md:pb-48">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
-      {/* FIXED MANIFESTO NAVIGATION RAIL - RESTORED */}
+      {/* FIXED MANIFESTO NAVIGATION RAIL */}
       <motion.div 
         style={{ 
           opacity: railOpacity,
           x: railX,
           pointerEvents: pointerEvents as any
         }}
-        className="fixed left-8 md:left-24 top-1/2 -translate-y-1/2 flex flex-col items-center gap-10 z-[80] hidden lg:flex"
+        className="fixed left-8 md:left-24 top-1/2 -translate-y-1/2 flex flex-col items-center gap-10 z-[100] hidden lg:flex"
       >
         <div className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase rotate-90 mb-20 whitespace-nowrap">
           Manifesto
@@ -132,7 +131,7 @@ export function FounderPhilosophy() {
             const end = (i + 1) * (1 / PRINCIPLES.length);
             
             // Principle is active/highlighted if we have scrolled past its threshold
-            const isActive = useTransform(
+            const isActiveValue = useTransform(
               principlesProgress, 
               [start - 0.1, start, end, end + 0.1], 
               [0.2, 1, 1, 0.4]
@@ -141,8 +140,11 @@ export function FounderPhilosophy() {
             return (
               <motion.span 
                 key={p.id}
-                style={{ opacity: isActive }}
-                className="text-[12px] font-mono font-bold text-primary transition-shadow duration-500"
+                style={{ 
+                  opacity: isActiveValue,
+                  textShadow: useTransform(isActiveValue, [0.5, 1], ["0 0 0px transparent", "0 0 10px rgba(234,224,200,0.5)"])
+                }}
+                className="text-[12px] font-mono font-bold text-primary transition-all duration-500"
               >
                 {p.id}
               </motion.span>

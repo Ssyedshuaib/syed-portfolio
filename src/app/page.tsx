@@ -64,11 +64,6 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* 
-        CRITICAL FIX: Navbar is moved outside the transformed motion.main 
-        to ensure 'position: fixed' remains anchored to the viewport.
-        We synchronize its emergence visibility with a dedicated wrapper.
-      */}
       <div className={cn(
         "fixed inset-x-0 top-0 z-[100] transition-all duration-[1.5s] ease-out",
         isLoading ? "opacity-[0.05] pointer-events-none blur-[10px]" : "opacity-100 blur-0"
@@ -80,12 +75,13 @@ export default function Home() {
         className="min-h-screen relative overflow-x-hidden"
         initial={{ opacity: 0 }}
         animate={{ 
-          opacity: isLoading ? 0.05 : 1, // Subconscious preview during intro (5%)
+          opacity: isLoading ? 0.05 : 1,
           scale: isLoading ? 0.99 : 1,
-          filter: isLoading ? "blur(40px)" : "blur(0px)"
+          filter: isLoading ? "blur(40px)" : "none",
+          transform: isLoading ? "scale(0.99)" : "none"
         }}
         transition={{ 
-          duration: 1.5, // Cinematic emergence duration
+          duration: 1.5,
           ease: [0.16, 1, 0.3, 1] 
         }}
       >
