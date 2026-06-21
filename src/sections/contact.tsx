@@ -10,10 +10,11 @@ import {
   Linkedin,
   Clock,
   Target,
-  Sparkles,
   ChevronRight,
   ShieldCheck,
-  MousePointer2
+  Sparkles,
+  MousePointer2,
+  Globe
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -199,10 +200,10 @@ export function Contact() {
               layoutId="studio-surface"
               className="max-w-[1200px] mx-auto glass border-white/10 rounded-[4rem] p-12 md:p-20 relative overflow-hidden"
             >
-              {/* Internal Studio Layout */}
+              {/* Studio Sidebar */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
                 
-                {/* Left Sidebar: Metadata */}
+                {/* Left Metadata Column */}
                 <div className="lg:col-span-3 space-y-16 border-r border-white/5 pr-12 hidden lg:block">
                   <div className="space-y-8">
                     <div className="space-y-1">
@@ -225,7 +226,7 @@ export function Contact() {
                   <div className="space-y-8 pt-8 border-t border-white/5">
                     <div className="space-y-1">
                       <p className="text-[9px] font-bold tracking-[0.3em] text-primary/30 uppercase">RESPONSE TIME</p>
-                      <p className="text-sm text-white/60">Usually within 24 hours</p>
+                      <p className="text-sm text-white/60">Within 24 Hours</p>
                     </div>
                     <div className="space-y-1">
                       <p className="text-[9px] font-bold tracking-[0.3em] text-primary/30 uppercase">AVAILABILITY</p>
@@ -244,20 +245,19 @@ export function Contact() {
                   </button>
                 </div>
 
-                {/* Main Content Area */}
+                {/* Main Workspace Area */}
                 <div className="lg:col-span-9 space-y-12">
                   <div className="flex justify-between items-center mb-8">
                     <div className="flex items-center gap-6">
                       <div className="flex items-center gap-2">
-                        <div className={cn("w-2 h-2 rounded-full transition-colors duration-500", step >= 1 ? "bg-primary" : "bg-white/10")} />
+                        <div className={cn("w-2 h-2 rounded-full transition-colors duration-500", step >= 1 ? "bg-primary shadow-[0_0_8px_rgba(234,224,200,0.6)]" : "bg-white/10")} />
                         <div className={cn("w-12 h-px transition-colors duration-500", step >= 2 ? "bg-primary/40" : "bg-white/10")} />
-                        <div className={cn("w-2 h-2 rounded-full transition-colors duration-500", step >= 2 ? "bg-primary" : "bg-white/10")} />
+                        <div className={cn("w-2 h-2 rounded-full transition-colors duration-500", step >= 2 ? "bg-primary shadow-[0_0_8px_rgba(234,224,200,0.6)]" : "bg-white/10")} />
                         <div className={cn("w-12 h-px transition-colors duration-500", step >= 3 ? "bg-primary/40" : "bg-white/10")} />
-                        <div className={cn("w-2 h-2 rounded-full transition-colors duration-500", step >= 3 ? "bg-primary" : "bg-white/10")} />
+                        <div className={cn("w-2 h-2 rounded-full transition-colors duration-500", step >= 3 ? "bg-primary shadow-[0_0_8px_rgba(234,224,200,0.6)]" : "bg-white/10")} />
                       </div>
                       <span className="text-[9px] font-bold tracking-[0.5em] text-primary/40 uppercase">STEP 0{step} OF 03</span>
                     </div>
-                    <button onClick={resetState} className="lg:hidden text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase">Exit</button>
                   </div>
 
                   <AnimatePresence mode="wait">
@@ -270,8 +270,8 @@ export function Contact() {
                         className="space-y-6"
                       >
                         <h3 className="text-3xl font-headline font-bold text-white tracking-tight uppercase italic">Conversation Path</h3>
-                        <div className="grid grid-cols-1 gap-3">
-                          {CATEGORIES.map((cat, idx) => (
+                        <div className="grid grid-cols-1 gap-3 max-w-[800px]">
+                          {CATEGORIES.map((cat) => (
                             <button
                               key={cat.id}
                               onClick={() => {
@@ -309,18 +309,20 @@ export function Contact() {
                           <h3 className="text-3xl font-headline font-bold text-white tracking-tight uppercase italic">{selectedCategory?.label}</h3>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {selectedCategory?.topics.map((topic, idx) => (
+                        {/* Step 2 Grid Redesign */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-[900px]">
+                          {selectedCategory?.topics.map((topic) => (
                             <button
                               key={topic}
                               onClick={() => setStep(3)}
-                              className="group p-10 rounded-[2.5rem] glass border-white/5 text-left transition-all duration-700 hover:border-primary/30 hover:bg-primary/[0.03] flex items-center justify-between"
+                              className="group p-10 min-h-[160px] rounded-[2.5rem] glass border-white/5 text-left transition-all duration-700 hover:border-primary/30 hover:bg-primary/[0.03] flex items-center justify-between relative overflow-hidden"
                             >
-                              <div className="space-y-2">
-                                <span className="text-sm font-medium text-white/70 group-hover:text-white transition-colors">{topic}</span>
+                              <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.01] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <div className="space-y-2 relative z-10">
+                                <span className="text-base font-bold text-white/70 group-hover:text-white transition-colors uppercase tracking-tight">{topic}</span>
                                 <div className="h-px w-0 bg-primary/20 group-hover:w-full transition-all duration-700" />
                               </div>
-                              <ArrowUpRight className="w-4 h-4 text-white/0 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                              <ArrowUpRight className="w-4 h-4 text-white/0 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all relative z-10" />
                             </button>
                           ))}
                         </div>
@@ -342,32 +344,33 @@ export function Contact() {
                           <h3 className="text-3xl font-headline font-bold text-white tracking-tight uppercase italic">Institutional Dialogue</h3>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Step 3 Grid Redesign - 2x2 Layout */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[900px]">
                           {ACTIONS.map((action) => (
                             <button
                               key={action.label}
                               onClick={() => handleExternalClick(action.href)}
-                              className="group p-10 rounded-[3rem] glass border-white/10 transition-all duration-1000 hover:border-primary/40 hover:bg-primary/[0.04] text-left relative overflow-hidden"
+                              className="group p-10 min-h-[220px] rounded-[3rem] glass border-white/10 transition-all duration-1000 hover:border-primary/40 hover:bg-primary/[0.04] text-left relative overflow-hidden flex flex-col justify-between"
                             >
                               <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                               
-                              <div className="flex items-start justify-between mb-8 relative z-10">
-                                <div className="w-12 h-12 rounded-2xl glass border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:rotate-3 transition-all duration-700">
-                                  <action.icon className="w-6 h-6" />
+                              <div className="flex items-start justify-between relative z-10">
+                                <div className="w-14 h-14 rounded-2xl glass border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:rotate-3 transition-all duration-700">
+                                  <action.icon className="w-7 h-7" />
                                 </div>
                                 <ArrowUpRight className="w-5 h-5 text-white/10 group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
                               </div>
 
-                              <div className="space-y-2 relative z-10">
-                                <p className="text-xl font-headline font-black text-white italic uppercase tracking-tight">{action.label}</p>
-                                <p className="text-[11px] text-[#536878] uppercase font-bold tracking-widest">{action.sub}</p>
+                              <div className="space-y-3 relative z-10 mt-8">
+                                <p className="text-xl font-headline font-black text-white italic uppercase tracking-tight leading-none">{action.label}</p>
+                                <p className="text-[11px] text-[#EAE0C8]/40 uppercase font-bold tracking-widest leading-relaxed max-w-[280px]">{action.sub}</p>
                               </div>
                             </button>
                           ))}
                         </div>
 
-                        <div className="pt-12 text-center">
-                          <p className="text-[9px] font-bold tracking-[0.5em] text-primary/30 uppercase">
+                        <div className="pt-12 text-center max-w-[900px]">
+                          <p className="text-[9px] font-bold tracking-[0.6em] text-primary/30 uppercase">
                             Meaningful partnerships begin with meaningful conversations.
                           </p>
                         </div>
