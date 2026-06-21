@@ -5,12 +5,12 @@ import { cn } from "@/lib/utils";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 const ORBITS = [
-  { label: "OBSERVE", radius: 155, duration: 35, delay: 0, desc: "Deeply understanding the human problem space." },
-  { label: "UNDERSTAND", radius: 205, duration: 40, delay: -5, desc: "Mapping friction points and hidden user needs." },
-  { label: "DESIGN", radius: 255, duration: 45, delay: -10, desc: "Architecting high-intent digital ecosystems." },
-  { label: "BUILD", radius: 310, duration: 50, delay: -15, desc: "Engineering for performance and scalability." },
-  { label: "LAUNCH", radius: 360, duration: 55, delay: -20, desc: "Deploying systems that generate real value." },
-  { label: "SCALE", radius: 220, duration: 42, delay: -8, desc: "Iterating for global growth and system depth." },
+  { label: "OBSERVE", radius: 120, duration: 35, delay: 0, desc: "Deeply understanding the human problem space." },
+  { label: "UNDERSTAND", radius: 160, duration: 40, delay: -5, desc: "Mapping friction points and hidden user needs." },
+  { label: "DESIGN", radius: 170, duration: 45, delay: -10, desc: "Architecting high-intent digital ecosystems." },
+  { label: "BUILD", radius: 200, duration: 50, delay: -15, desc: "Engineering for performance and scalability." },
+  { label: "LAUNCH", radius: 240, duration: 55, delay: -20, desc: "Deploying systems that generate real value." },
+  { label: "SCALE", radius: 280, duration: 42, delay: -8, desc: "Iterating for global growth and system depth." },
 ];
 
 export function OrbitalSystem() {
@@ -48,12 +48,12 @@ export function OrbitalSystem() {
 
   // Prevent Hydration Mismatch
   if (!mounted) {
-    return <div className="relative w-full aspect-square max-w-[700px] flex items-center justify-center opacity-0" />;
+    return <div className="relative w-full aspect-square max-w-[600px] flex items-center justify-center opacity-0" />;
   }
 
   return (
     <div 
-      className="relative w-full aspect-square max-w-[700px] flex items-center justify-center"
+      className="relative w-full aspect-square max-w-[600px] flex items-center justify-center"
       style={{ perspective: 1200 }}
     >
       {/* Cinematic Ambient Glow (Inner illumination) */}
@@ -72,7 +72,7 @@ export function OrbitalSystem() {
         className="relative w-full h-full flex items-center justify-center"
       >
         {/* Dimensional Blueprint Orbit Rings */}
-        {[155, 205, 220, 255, 310, 360].map((r, i) => (
+        {[120, 160, 170, 200, 240, 280].map((r, i) => (
           <motion.div
             key={r}
             initial={{ opacity: 0, scale: 0.9 }}

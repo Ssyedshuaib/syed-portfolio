@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -41,7 +40,7 @@ export function Hero() {
   if (!isMounted) return null;
 
   return (
-    <section className="relative min-h-[90vh] lg:min-h-screen flex flex-col items-center justify-center pt-28 pb-16 px-6 overflow-hidden bg-background">
+    <section className="relative min-h-[90vh] lg:min-h-screen flex flex-col items-center justify-center pt-28 pb-16 px-6 lg:px-12 overflow-hidden bg-background">
       {/* PREMIUM ATMOSPHERIC ENVIRONMENT */}
       <div className="absolute inset-0 pointer-events-none select-none z-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.08),transparent_70%)]" />
@@ -76,7 +75,7 @@ export function Hero() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-16 lg:gap-24 items-center z-10"
+        className="max-w-[1400px] w-full grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20 items-center z-10 mx-auto"
       >
         <div className="space-y-10 text-center lg:text-left">
           <motion.div 
@@ -124,7 +123,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.95, filter: "blur(30px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 2.5, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="hidden lg:flex justify-end lg:pr-4"
+          className="hidden lg:flex justify-center lg:justify-end"
         >
           <OrbitalSystem />
         </motion.div>
@@ -142,4 +141,3 @@ export function Hero() {
     </section>
   );
 }
-
