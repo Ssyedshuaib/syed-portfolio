@@ -62,44 +62,29 @@ export function FounderPhilosophy() {
     offset: ["start end", "end center"],
   });
 
-  // Rail Visibility Logic
-  const railOpacity = useTransform(
-    [mainProgress, storyProgress],
-    ([prog, storyProg]) => {
-      const fadeIn = (prog as number) * 20;
-      const fadeOut = 1 - (storyProg as number) * 4;
-      return Math.max(0, Math.min(1, fadeIn)) * Math.max(0, Math.min(1, fadeOut));
-    }
-  );
-
-  const progressLine = useSpring(mainProgress, { stiffness: 80, damping: 25 });
+  const isVisible = useInView(containerRef, { margin: "-20% 0px -20% 0px" });
 
   return (
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-32">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
-      {/* MANIFESTO PROGRESS RAIL (Restored) */}
-      <motion.div 
-        style={{ opacity: railOpacity }}
-        className="fixed left-8 md:left-16 top-1/2 -translate-y-1/2 flex flex-col items-center gap-10 z-[80] hidden lg:flex pointer-events-none"
-      >
-        <div className="text-[9px] font-bold tracking-[0.8em] text-primary/30 uppercase rotate-90 mb-20 whitespace-nowrap">
-          Manifesto
-        </div>
-        
-        <div className="relative h-64 w-[1px] bg-white/5 overflow-hidden rounded-full">
+      {/* FIXED BOTTOM NAVIGATOR */}
+      <AnimatePresence>
+        {isVisible && (
           <motion.div 
-            style={{ scaleY: progressLine }}
-            className="absolute top-0 left-0 w-full h-full bg-primary origin-top shadow-[0_0_15px_rgba(234,224,200,0.5)]"
-          />
-        </div>
-
-        <div className="flex flex-col gap-6 mt-8">
-          {PRINCIPLES.map((p, i) => (
-            <PrincipleMarker key={p.id} principle={p} index={i} progress={mainProgress} />
-          ))}
-        </div>
-      </motion.div>
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[100] hidden lg:block"
+          >
+            <div className="glass px-10 py-5 rounded-full border-white/5 flex items-center gap-10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] backdrop-blur-3xl">
+              {PRINCIPLES.map((p, i) => (
+                <PrincipleIndicator key={p.id} principle={p} index={i} progress={mainProgress} />
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="max-w-[1440px] mx-auto px-6">
         {/* Intro Header */}
@@ -126,21 +111,21 @@ export function FounderPhilosophy() {
           ))}
         </div>
 
-        {/* FINAL STORYTELLING SEQUENCE (Redesigned) */}
+        {/* FINAL STORYTELLING SEQUENCE - FIXED BLUR BUG */}
         <div ref={storyRef} className="min-h-screen flex flex-col items-center justify-center text-center relative px-4 py-32">
-          <div className="space-y-16 w-full max-w-4xl mx-auto">
-             <div className="flex flex-col items-center gap-12">
-                <StoryLine progress={storyProgress} range={[0, 0.2]} text="Most companies build products." />
-                <StoryLine progress={storyProgress} range={[0.2, 0.4]} text="We build systems." className="text-primary italic" />
-                <StoryLine progress={storyProgress} range={[0.4, 0.6]} text="Systems create ecosystems." />
-                <StoryLine progress={storyProgress} range={[0.6, 0.8]} text="Ecosystems create lasting value." />
+          <div className="space-y-20 w-full max-w-4xl mx-auto">
+             <div className="flex flex-col items-center gap-16">
+                <StoryLine progress={storyProgress} range={[0, 0.15, 0.25]} text="Most companies build products." />
+                <StoryLine progress={storyProgress} range={[0.25, 0.4, 0.5]} text="We build systems." className="text-primary italic" />
+                <StoryLine progress={storyProgress} range={[0.5, 0.65, 0.75]} text="Systems create ecosystems." />
+                <StoryLine progress={storyProgress} range={[0.75, 0.9, 1.0]} text="Ecosystems create lasting value." />
                 
                 <motion.div
-                   style={{ opacity: useTransform(storyProgress, [0.8, 0.95], [0, 1]) }}
-                   className="pt-16 space-y-6"
+                   style={{ opacity: useTransform(storyProgress, [0.9, 0.98], [0, 1]) }}
+                   className="pt-24 space-y-8"
                 >
-                   <div className="h-px w-24 bg-primary/20 mx-auto" />
-                   <h4 className="text-5xl md:text-8xl font-headline font-black text-white tracking-tighter italic">
+                   <div className="h-px w-32 bg-primary/20 mx-auto" />
+                   <h4 className="text-5xl md:text-9xl font-headline font-black text-white tracking-tighter italic">
                      That is Axora.
                    </h4>
                 </motion.div>
@@ -152,33 +137,53 @@ export function FounderPhilosophy() {
   );
 }
 
-function PrincipleMarker({ principle, index, progress }: { principle: any, index: number, progress: any }) {
+function PrincipleIndicator({ principle, index, progress }: { principle: any, index: number, progress: any }) {
   const start = index * (1 / PRINCIPLES.length);
   const end = (index + 1) * (1 / PRINCIPLES.length);
   
-  const opacity = useTransform(progress, [start - 0.05, start, end, end + 0.05], [0.15, 1, 1, 0.15]);
-  const scale = useTransform(progress, [start - 0.05, start, end, end + 0.05], [0.9, 1.05, 1.05, 0.9]);
+  // Highlight indicator when the scroll is within the range of this principle
+  const isActive = useTransform(progress, [start - 0.05, start, end, end + 0.05], [0.3, 1, 1, 0.3]);
+  const scale = useTransform(progress, [start - 0.05, start, end, end + 0.05], [0.95, 1.05, 1.05, 0.95]);
 
   return (
-    <motion.div style={{ opacity, scale }} className="flex items-center gap-4 group cursor-default">
+    <motion.div 
+      style={{ opacity: isActive, scale }} 
+      className="flex flex-col items-center gap-2 group cursor-default min-w-[60px]"
+    >
       <span className="text-[10px] font-mono font-bold text-primary">{principle.id}</span>
-      <span className="text-[8px] font-bold tracking-[0.3em] text-white uppercase hidden xl:block opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+      <span className="text-[8px] font-bold tracking-[0.2em] text-white uppercase opacity-60 group-hover:opacity-100 transition-opacity">
         {principle.label}
       </span>
+      <motion.div 
+        animate={{ height: isActive.get() > 0.8 ? "4px" : "0px" }}
+        className="w-1 bg-primary rounded-full mt-1"
+      />
     </motion.div>
   );
 }
 
-function StoryLine({ progress, range, text, className }: { progress: any, range: [number, number], text: string, className?: string }) {
-  const opacity = useTransform(progress, range, [0, 1]);
-  const y = useTransform(progress, range, [20, 0]);
-  const blur = useTransform(progress, range, ["10px", "0px"]);
+function StoryLine({ progress, range, text, className }: { progress: any, range: [number, number, number], text: string, className?: string }) {
+  // Use a 3-point scale to handle: 
+  // 1. Initial State (Hidden/Blurred)
+  // 2. Active State (Opaque/Sharp)
+  // 3. Previous State (Dimmed/Sharp)
+  const opacity = useTransform(progress, range, [0, 1, 0.3]);
+  const y = useTransform(progress, range, [40, 0, -20]);
+  
+  // Explicitly mapping blur to 0 at the active point and keeping it at 0 for the previous state
+  const blurValue = useTransform(progress, [range[0], range[1], range[1] + 0.01, range[2]], ["20px", "0px", "0px", "0px"]);
 
   return (
     <motion.p 
-      style={{ opacity, y, filter: `blur(${blur.get()})` }}
+      style={{ 
+        opacity, 
+        y, 
+        filter: useTransform(blurValue, (v) => `blur(${v})`),
+        // Critical: Ensure blur is completely off when we reach the active threshold
+        WebkitFilter: useTransform(blurValue, (v) => `blur(${v})`)
+      }}
       className={cn(
-        "text-2xl md:text-4xl font-light text-[#EAE0C8]/60 tracking-tight",
+        "text-3xl md:text-5xl font-light text-[#EAE0C8] tracking-tight leading-tight",
         className
       )}
     >
@@ -210,7 +215,7 @@ function PrincipleChapter({ principle, idx }: { principle: any, idx: number }) {
       <motion.div 
         style={{ y: numberY }}
         className={cn(
-          "absolute -top-24 lg:-top-32 pointer-events-none select-none z-0 opacity-[0.03] transition-opacity duration-1000",
+          "absolute -top-24 lg:-top-32 pointer-events-none select-none z-0 transition-opacity duration-1000",
           isInView ? "opacity-[0.03]" : "opacity-0",
           isRight ? "left-0 lg:-left-20" : "right-0 lg:-right-20"
         )}
@@ -255,8 +260,6 @@ function PrincipleChapter({ principle, idx }: { principle: any, idx: number }) {
       <div className="flex-1 w-full flex items-center justify-center relative">
         <div className="w-full max-w-md aspect-square relative flex items-center justify-center group">
            <VisualEngine type={principle.visual} active={isInView} />
-           
-           {/* Soft Ambient Glow Overlay */}
            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
         </div>
       </div>
