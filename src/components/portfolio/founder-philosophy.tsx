@@ -1,7 +1,8 @@
+
 "use client";
 
-import React, { useRef, useEffect } from "react";
-import { motion, useInView, useScroll, useSpring, useTransform, useMotionValue, AnimatePresence } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useInView, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const PRINCIPLES = [
@@ -49,25 +50,24 @@ const PRINCIPLES = [
 
 export function FounderPhilosophy() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const closingRef = useRef<HTMLDivElement>(null);
-  const principlesContainerRef = useRef<HTMLDivElement>(null);
+  const storyRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress: mainProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end end"],
   });
 
-  const { scrollYProgress: closingProgress } = useScroll({
-    target: closingRef,
+  const { scrollYProgress: storyProgress } = useScroll({
+    target: storyRef,
     offset: ["start end", "end center"],
   });
 
   // Rail Visibility Logic
   const railOpacity = useTransform(
-    [mainProgress, closingProgress],
-    ([prog, close]) => {
+    [mainProgress, storyProgress],
+    ([prog, storyProg]) => {
       const fadeIn = (prog as number) * 20;
-      const fadeOut = 1 - (close as number) * 4;
+      const fadeOut = 1 - (storyProg as number) * 4;
       return Math.max(0, Math.min(1, fadeIn)) * Math.max(0, Math.min(1, fadeOut));
     }
   );
@@ -78,12 +78,12 @@ export function FounderPhilosophy() {
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-32">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
-      {/* MANIFESTO PROGRESS RAIL */}
+      {/* MANIFESTO PROGRESS RAIL (Restored) */}
       <motion.div 
         style={{ opacity: railOpacity }}
         className="fixed left-8 md:left-16 top-1/2 -translate-y-1/2 flex flex-col items-center gap-10 z-[80] hidden lg:flex pointer-events-none"
       >
-        <div className="text-[9px] font-bold tracking-[0.8em] text-primary/30 uppercase rotate-90 mb-16 whitespace-nowrap">
+        <div className="text-[9px] font-bold tracking-[0.8em] text-primary/30 uppercase rotate-90 mb-20 whitespace-nowrap">
           Manifesto
         </div>
         
@@ -96,22 +96,23 @@ export function FounderPhilosophy() {
 
         <div className="flex flex-col gap-6 mt-8">
           {PRINCIPLES.map((p, i) => (
-            <PrincipleMarker key={p.id} id={p.id} index={i} progress={mainProgress} />
+            <PrincipleMarker key={p.id} principle={p} index={i} progress={mainProgress} />
           ))}
         </div>
       </motion.div>
 
       <div className="max-w-[1440px] mx-auto px-6">
         {/* Intro Header */}
-        <div className="py-48 space-y-8 text-center">
+        <div className="py-64 space-y-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-8"
           >
             <p className="text-[10px] font-bold tracking-[1em] text-primary/30 uppercase">FOUNDER PHILOSOPHY</p>
-            <h2 className="text-5xl md:text-8xl lg:text-[clamp(3.5rem,8vw,7.5rem)] font-headline font-black tracking-tighter text-white leading-[0.85]">
+            <h2 className="text-4xl md:text-7xl lg:text-[clamp(3rem,6vw,5.5rem)] font-headline font-black tracking-tighter text-white leading-[0.85]">
               Principles Over <br />
               <span className="text-primary italic font-medium">Shortcuts.</span>
             </h2>
@@ -119,59 +120,31 @@ export function FounderPhilosophy() {
         </div>
 
         {/* Alternating Principles */}
-        <div ref={principlesContainerRef} className="space-y-48 lg:space-y-[40vh] pb-64">
+        <div className="space-y-64 lg:space-y-[45vh] pb-64">
           {PRINCIPLES.map((principle, idx) => (
             <PrincipleChapter key={idx} principle={principle} idx={idx} />
           ))}
         </div>
 
-        {/* FINAL MANIFESTO SEQUENCE */}
-        <div ref={closingRef} className="min-h-screen flex flex-col items-center justify-center text-center relative px-4">
-          <div className="space-y-24 w-full max-w-5xl mx-auto">
-            <div className="space-y-8">
-               <motion.p 
-                 style={{ opacity: useTransform(closingProgress, [0.1, 0.3], [0, 1]) }}
-                 className="text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase"
-               >
-                 Core Belief
-               </motion.p>
-               
-               <div className="relative h-[400px] flex flex-col items-center justify-center">
-                 <AnimatePresence mode="wait">
-                   {closingProgress.get() < 0.6 ? (
-                     <motion.div
-                       key="state-1"
-                       initial={{ opacity: 0, filter: "blur(20px)", y: 20 }}
-                       animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                       exit={{ opacity: 0, filter: "blur(20px)", y: -20 }}
-                       transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                       className="space-y-4"
-                     >
-                       <h3 className="text-4xl md:text-6xl font-headline font-light text-primary/40 uppercase tracking-tighter">The Goal Is Not To Build</h3>
-                       <h4 className="text-6xl md:text-[8rem] font-headline font-black text-white tracking-tighter leading-none italic">More Products.</h4>
-                     </motion.div>
-                   ) : (
-                     <motion.div
-                       key="state-2"
-                       initial={{ opacity: 0, filter: "blur(20px)", y: 20 }}
-                       animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                       transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                       className="space-y-4"
-                     >
-                       <h3 className="text-4xl md:text-6xl font-headline font-light text-primary/40 uppercase tracking-tighter">The Goal Is To Build</h3>
-                       <h4 className="text-6xl md:text-[8rem] font-headline font-black text-primary tracking-tighter leading-none italic">Better Systems.</h4>
-                     </motion.div>
-                   )}
-                 </AnimatePresence>
-               </div>
-            </div>
-
-            <motion.p 
-              style={{ opacity: useTransform(closingProgress, [0.8, 0.95], [0, 0.4]) }}
-              className="text-xl md:text-2xl font-light text-white leading-relaxed italic"
-            >
-              "Building systems that outlive trends and create lasting impact."
-            </motion.p>
+        {/* FINAL STORYTELLING SEQUENCE (Redesigned) */}
+        <div ref={storyRef} className="min-h-screen flex flex-col items-center justify-center text-center relative px-4 py-32">
+          <div className="space-y-16 w-full max-w-4xl mx-auto">
+             <div className="flex flex-col items-center gap-12">
+                <StoryLine progress={storyProgress} range={[0, 0.2]} text="Most companies build products." />
+                <StoryLine progress={storyProgress} range={[0.2, 0.4]} text="We build systems." className="text-primary italic" />
+                <StoryLine progress={storyProgress} range={[0.4, 0.6]} text="Systems create ecosystems." />
+                <StoryLine progress={storyProgress} range={[0.6, 0.8]} text="Ecosystems create lasting value." />
+                
+                <motion.div
+                   style={{ opacity: useTransform(storyProgress, [0.8, 0.95], [0, 1]) }}
+                   className="pt-16 space-y-6"
+                >
+                   <div className="h-px w-24 bg-primary/20 mx-auto" />
+                   <h4 className="text-5xl md:text-8xl font-headline font-black text-white tracking-tighter italic">
+                     That is Axora.
+                   </h4>
+                </motion.div>
+             </div>
           </div>
         </div>
       </div>
@@ -179,17 +152,38 @@ export function FounderPhilosophy() {
   );
 }
 
-function PrincipleMarker({ id, index, progress }: { id: string, index: number, progress: any }) {
+function PrincipleMarker({ principle, index, progress }: { principle: any, index: number, progress: any }) {
   const start = index * (1 / PRINCIPLES.length);
   const end = (index + 1) * (1 / PRINCIPLES.length);
   
   const opacity = useTransform(progress, [start - 0.05, start, end, end + 0.05], [0.15, 1, 1, 0.15]);
-  const scale = useTransform(progress, [start - 0.05, start, end, end + 0.05], [0.95, 1.1, 1.1, 0.95]);
+  const scale = useTransform(progress, [start - 0.05, start, end, end + 0.05], [0.9, 1.05, 1.05, 0.9]);
 
   return (
-    <motion.span style={{ opacity, scale }} className="text-[10px] font-mono font-bold text-primary">
-      {id}
-    </motion.span>
+    <motion.div style={{ opacity, scale }} className="flex items-center gap-4 group cursor-default">
+      <span className="text-[10px] font-mono font-bold text-primary">{principle.id}</span>
+      <span className="text-[8px] font-bold tracking-[0.3em] text-white uppercase hidden xl:block opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        {principle.label}
+      </span>
+    </motion.div>
+  );
+}
+
+function StoryLine({ progress, range, text, className }: { progress: any, range: [number, number], text: string, className?: string }) {
+  const opacity = useTransform(progress, range, [0, 1]);
+  const y = useTransform(progress, range, [20, 0]);
+  const blur = useTransform(progress, range, ["10px", "0px"]);
+
+  return (
+    <motion.p 
+      style={{ opacity, y, filter: `blur(${blur.get()})` }}
+      className={cn(
+        "text-2xl md:text-4xl font-light text-[#EAE0C8]/60 tracking-tight",
+        className
+      )}
+    >
+      {text}
+    </motion.p>
   );
 }
 
@@ -198,14 +192,15 @@ function PrincipleChapter({ principle, idx }: { principle: any, idx: number }) {
   const isInView = useInView(ref, { margin: "-20% 0px -20% 0px" });
   const isRight = idx % 2 === 0;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const numberY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const numberY = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1.5 }}
+      style={{ opacity, y }}
       className={cn(
         "relative flex flex-col lg:flex-row items-center gap-16 lg:gap-32 min-h-[70vh]",
         !isRight && "lg:flex-row-reverse"
@@ -215,47 +210,54 @@ function PrincipleChapter({ principle, idx }: { principle: any, idx: number }) {
       <motion.div 
         style={{ y: numberY }}
         className={cn(
-          "absolute -top-24 lg:-top-48 pointer-events-none select-none z-0 opacity-[0.03] transition-opacity duration-1000",
+          "absolute -top-24 lg:-top-32 pointer-events-none select-none z-0 opacity-[0.03] transition-opacity duration-1000",
           isInView ? "opacity-[0.03]" : "opacity-0",
-          isRight ? "left-0 lg:-left-24" : "right-0 lg:-right-24"
+          isRight ? "left-0 lg:-left-20" : "right-0 lg:-right-20"
         )}
       >
-        <span className="text-[12rem] lg:text-[clamp(15rem,25vw,30rem)] font-headline font-black text-white tracking-tighter block leading-none">
+        <span className="text-[12rem] lg:text-[clamp(12rem,20vw,24rem)] font-headline font-black text-white tracking-tighter block leading-none">
           {principle.id}
         </span>
       </motion.div>
 
       {/* Content Column */}
       <div className="flex-1 space-y-12 relative z-10 w-full">
-        <div className={cn("space-y-8 max-w-2xl", isRight ? "lg:mr-auto" : "lg:ml-auto")}>
+        <div className={cn("space-y-8 max-w-xl", isRight ? "lg:mr-auto" : "lg:ml-auto")}>
           <div className="space-y-6">
-            <div className="flex items-center gap-6">
+            <div className={cn("flex items-center gap-6", !isRight && "flex-row-reverse")}>
                <span className="text-[11px] font-mono font-bold text-primary/30 tracking-[0.4em]">{principle.id}</span>
                <div className="h-px w-8 bg-primary/10" />
-               <span className="text-[10px] font-bold tracking-[0.6em] text-primary uppercase">
+               <span className="text-[10px] font-bold tracking-[0.6em] text-primary/60 uppercase">
                  {principle.label}
                </span>
             </div>
-            <h3 className="text-5xl md:text-7xl lg:text-[clamp(3rem,6vw,5.5rem)] font-headline font-black text-white tracking-tighter leading-[0.9]">
+            <h3 className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter leading-[0.95]">
               {principle.title}
             </h3>
           </div>
 
           <div className="space-y-6">
-            <p className="text-xl md:text-2xl font-light text-primary/70 italic leading-tight">
+            <p className="text-xl md:text-2xl font-light text-[#EAE0C8]/70 italic leading-tight">
               {principle.sub}
             </p>
-            <p className="text-lg md:text-xl text-white/40 font-light leading-relaxed">
+            <p className="text-base md:text-lg text-white/40 font-light leading-relaxed max-w-lg">
               {principle.body}
             </p>
+          </div>
+          
+          <div className="pt-8">
+             <div className="h-px w-12 bg-white/5" />
           </div>
         </div>
       </div>
 
       {/* Visual Column */}
       <div className="flex-1 w-full flex items-center justify-center relative">
-        <div className="w-full max-w-md aspect-square relative flex items-center justify-center">
+        <div className="w-full max-w-md aspect-square relative flex items-center justify-center group">
            <VisualEngine type={principle.visual} active={isInView} />
+           
+           {/* Soft Ambient Glow Overlay */}
+           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
         </div>
       </div>
     </motion.div>
@@ -264,39 +266,41 @@ function PrincipleChapter({ principle, idx }: { principle: any, idx: number }) {
 
 function VisualEngine({ type, active }: { type: string, active: boolean }) {
   return (
-    <div className="relative w-full h-full glass rounded-[3rem] border-white/5 overflow-hidden group">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-      
-      <div className="absolute inset-0 flex items-center justify-center scale-90">
+    <div className="relative w-full h-full glass rounded-[3.5rem] border-white/5 overflow-hidden transition-all duration-1000 hover:border-white/10">
+      <div className="absolute inset-0 flex items-center justify-center scale-75 lg:scale-90">
         {type === "clarity" && (
           <div className="relative w-48 h-48 flex items-center justify-center">
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
                 animate={{ 
-                  scale: active ? [1, 1.2, 1] : 1,
-                  rotate: active ? (i * 120) : 0,
-                  opacity: active ? [0.1, 0.3, 0.1] : 0.1
+                  scale: active ? [1, 1.15, 1] : 1,
+                  rotate: active ? (i * 120 + 360) : (i * 120),
+                  opacity: active ? [0.1, 0.25, 0.1] : 0.1
                 }}
-                transition={{ duration: 8, repeat: Infinity, delay: i * 2 }}
-                className="absolute inset-0 border border-primary/40 rounded-full"
+                transition={{ duration: 12, repeat: Infinity, delay: i * 2, ease: "linear" }}
+                className="absolute inset-0 border border-primary/30 rounded-full"
               />
             ))}
-            <div className="w-2 h-2 bg-primary rounded-full shadow-[0_0_20px_rgba(234,224,200,0.8)]" />
+            <motion.div 
+              animate={{ opacity: [0.4, 0.8, 0.4], scale: [1, 1.2, 1] }}
+              transition={{ duration: 4, repeat: Infinity }}
+              className="w-2 h-2 bg-primary rounded-full shadow-[0_0_20px_rgba(234,224,200,0.8)]" 
+            />
           </div>
         )}
 
         {type === "systems" && (
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-3 gap-8">
             {[...Array(9)].map((_, i) => (
               <motion.div
                 key={i}
                 animate={{ 
-                  opacity: active ? [0.1, 0.4, 0.1] : 0.1,
+                  opacity: active ? [0.1, 0.35, 0.1] : 0.1,
                   scale: active ? [1, 1.1, 1] : 1
                 }}
-                transition={{ duration: 4, repeat: Infinity, delay: i * 0.4 }}
-                className="w-4 h-4 rounded bg-primary/20 border border-primary/40"
+                transition={{ duration: 5, repeat: Infinity, delay: i * 0.5 }}
+                className="w-5 h-5 rounded-lg bg-primary/15 border border-primary/30"
               />
             ))}
           </div>
@@ -304,15 +308,15 @@ function VisualEngine({ type, active }: { type: string, active: boolean }) {
 
         {type === "value" && (
           <div className="relative w-48 h-48">
-            {[...Array(4)].map((_, i) => (
+            {[...Array(5)].map((_, i) => (
               <motion.div
                 key={i}
                 animate={{ 
-                  scale: active ? [0.5, 1.5] : 0.5,
-                  opacity: active ? [0.5, 0] : 0
+                  scale: active ? [0.2, 1.8] : 0.2,
+                  opacity: active ? [0.6, 0] : 0
                 }}
-                transition={{ duration: 4, repeat: Infinity, delay: i * 1 }}
-                className="absolute inset-0 border-2 border-primary/20 rounded-full"
+                transition={{ duration: 6, repeat: Infinity, delay: i * 1.2, ease: "easeOut" }}
+                className="absolute inset-0 border border-primary/20 rounded-full"
               />
             ))}
           </div>
@@ -322,30 +326,41 @@ function VisualEngine({ type, active }: { type: string, active: boolean }) {
           <div className="relative w-48 h-48 border border-white/5 rounded-full flex items-center justify-center">
             <motion.div
               animate={{ rotate: active ? 360 : 0 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
               className="absolute inset-0"
             >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-primary rounded-full" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-primary/60 rounded-full" />
             </motion.div>
-            <div className="w-24 h-24 border border-primary/20 rounded-full flex items-center justify-center">
-               <div className="w-1.5 h-1.5 bg-primary/40 rounded-full" />
+            <div className="w-32 h-32 border border-primary/15 rounded-full flex items-center justify-center">
+               <motion.div 
+                 animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.5, 0.3] }}
+                 transition={{ duration: 8, repeat: Infinity }}
+                 className="w-2 h-2 bg-primary/40 rounded-full" 
+               />
             </div>
           </div>
         )}
 
         {type === "ecosystems" && (
           <div className="relative w-48 h-48">
-             <svg viewBox="0 0 100 100" className="w-full h-full opacity-30">
+             <svg viewBox="0 0 100 100" className="w-full h-full opacity-20">
                <motion.path
                  d="M20,50 L50,20 L80,50 L50,80 Z"
                  fill="none"
                  stroke="currentColor"
                  strokeWidth="0.5"
                  className="text-primary"
-                 animate={{ pathLength: active ? [0, 1, 0] : 0 }}
-                 transition={{ duration: 10, repeat: Infinity }}
+                 animate={{ pathLength: active ? [0, 1] : 0 }}
+                 transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
                />
-               <motion.circle cx="50" cy="50" r="10" stroke="currentColor" fill="none" className="text-primary" animate={{ r: [10, 12, 10] }} transition={{ duration: 5, repeat: Infinity }} />
+               <motion.circle 
+                 cx="50" cy="50" r="12" 
+                 stroke="currentColor" 
+                 fill="none" 
+                 className="text-primary" 
+                 animate={{ r: [12, 15, 12], strokeWidth: [0.5, 1, 0.5] }} 
+                 transition={{ duration: 6, repeat: Infinity }} 
+               />
              </svg>
           </div>
         )}
