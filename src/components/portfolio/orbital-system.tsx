@@ -17,7 +17,7 @@ export function OrbitalSystem() {
   const [hoveredNode, setHoveredNode] = useState<{label: string, desc: string} | null>(null);
   const [mounted, setMounted] = useState(false);
 
-  // Parallax Values
+  // Parallax Values - Declared at top level
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -25,9 +25,13 @@ export function OrbitalSystem() {
   const smoothMouseX = useSpring(mouseX, springConfig);
   const smoothMouseY = useSpring(mouseY, springConfig);
 
-  // 3D rotations based on mouse
+  // 3D rotations based on mouse - Declared at top level
   const rotateX = useTransform(smoothMouseY, [-0.5, 0.5], [10, -10]);
   const rotateY = useTransform(smoothMouseX, [-0.5, 0.5], [-10, 10]);
+
+  // Glow Parallax - Declared at top level
+  const glowX = useTransform(smoothMouseX, [-0.5, 0.5], [-30, 30]);
+  const glowY = useTransform(smoothMouseY, [-0.5, 0.5], [-30, 30]);
 
   useEffect(() => {
     setMounted(true);
@@ -42,7 +46,10 @@ export function OrbitalSystem() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
-  if (!mounted) return null;
+  // Safety Return: Still call hooks, but return a placeholder if not mounted
+  if (!mounted) return (
+    <div className="relative w-full aspect-square max-w-[700px] flex items-center justify-center" />
+  );
 
   return (
     <div className="relative w-full aspect-square max-w-[700px] flex items-center justify-center perspective-[1200px]">
@@ -50,8 +57,8 @@ export function OrbitalSystem() {
       {/* Cinematic Ambient Glow (Internal Illumination) */}
       <motion.div 
         style={{ 
-          x: useTransform(smoothMouseX, [-0.5, 0.5], [-30, 30]),
-          y: useTransform(smoothMouseY, [-0.5, 0.5], [-30, 30])
+          x: glowX,
+          y: glowY
         }}
         animate={{ 
           opacity: [0.03, 0.08, 0.03],
@@ -66,7 +73,7 @@ export function OrbitalSystem() {
         className="relative w-full h-full flex items-center justify-center"
       >
         
-        {/* Blueprint Orbit Rings - Proportional Radii with Depth */}
+        {/* Blueprint Orbit Rings */}
         {[155, 205, 220, 255, 310, 360].map((r, i) => (
           <motion.div
             key={r}
@@ -84,7 +91,7 @@ export function OrbitalSystem() {
           />
         ))}
 
-        {/* Central Identity Node - Layered System Core */}
+        {/* Central Identity Node */}
         <motion.div 
           style={{ translateZ: 50 }}
           animate={{ 
@@ -98,9 +105,7 @@ export function OrbitalSystem() {
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           className="relative z-20 group"
         >
-          {/* Layered Glass Core */}
           <div className="w-36 h-32 rounded-full glass flex flex-col items-center justify-center border-white/[0.08] shadow-2xl relative overflow-hidden transition-all duration-1000 group-hover:border-primary/40">
-            {/* Inner Refraction Effect */}
             <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.02] via-transparent to-white/[0.05]" />
             
             <div className="text-center relative z-10">
@@ -111,7 +116,6 @@ export function OrbitalSystem() {
               />
             </div>
             
-            {/* Core Glow Pulse */}
             <motion.div 
               animate={{ opacity: [0.1, 0.3, 0.1] }}
               transition={{ duration: 4, repeat: Infinity }}
@@ -119,7 +123,6 @@ export function OrbitalSystem() {
             />
           </div>
           
-          {/* Outer Atmospheric Aura */}
           <motion.div 
             animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
