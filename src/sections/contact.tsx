@@ -1,356 +1,326 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import React, { useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence, LayoutGroup, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { 
   ArrowRight, 
-  ArrowUpRight,
-  Mail,
-  Linkedin,
-  Clock,
-  Target,
-  ChevronRight,
-  Sparkles,
-  MousePointer2,
-  Globe,
-  Plus
+  Mail, 
+  Linkedin, 
+  Clock, 
+  Target, 
+  Cpu, 
+  Boxes, 
+  Sparkles, 
+  ChevronLeft,
+  Calendar,
+  MessageSquare
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const CATEGORIES = [
+/**
+ * THE STRATEGY ROOM
+ * A cinematic, high-fidelity interaction experience.
+ * Replaces the traditional contact form with a private studio dialogue.
+ */
+
+type ViewState = "entrance" | "refinement" | "communication" | "transition";
+
+const PORTALS = [
   {
-    id: "01",
-    label: "Building Products",
-    description: "Designing scalable digital systems and long-term ecosystems.",
-    topics: [
-      { title: "Product Architecture", desc: "Developing the structural foundations of digital ecosystems." },
-      { title: "MVP Strategy", desc: "Prioritizing core value for rapid market validation." },
-      { title: "Ecosystem Design", desc: "Architecting interconnected products that compound value." },
-      { title: "System Design", desc: "Building scalable and maintainable infrastructure." }
-    ]
+    id: "systems",
+    title: "BUILD SYSTEMS",
+    icon: Cpu,
+    desc: "Designing scalable digital ecosystems and long-term product foundations.",
+    options: ["Startup Product", "SaaS Platform", "Student Ecosystem", "Internal Tool", "Institutional Architecture"]
   },
   {
-    id: "02",
-    label: "Ventures & Startups",
-    description: "Exploring new ventures and long-term value building.",
-    topics: [
-      { title: "Startup Ideas", desc: "Exploring zero-to-one opportunities." },
-      { title: "Validation", desc: "Pressure testing concepts against market realities." },
-      { title: "Funding Readiness", desc: "Preparing ventures for institutional investment." },
-      { title: "Venture Strategy", desc: "Designing long-term growth and impact models." }
-    ]
+    id: "ventures",
+    title: "VENTURE IDEAS",
+    icon: Boxes,
+    desc: "Exploring zero-to-one opportunities and future market ecosystems.",
+    options: ["Ecosystem Creation", "Validation Strategy", "Funding Readiness", "Joint Ventures", "Market Shifts"]
   },
   {
-    id: "03",
-    label: "Collaboration",
-    description: "Open to partnerships and ambitious projects.",
-    topics: [
-      { title: "Partnerships", desc: "Long-term strategic alignments with shared goals." },
-      { title: "Joint Ventures", desc: "Building new entities through collaborative effort." },
-      { title: "Product Building", desc: "Expert execution for ambitious digital products." },
-      { title: "Consulting", desc: "Strategic advice on product and technology direction." }
-    ]
+    id: "collab",
+    title: "COLLABORATION",
+    icon: Target,
+    desc: "Strategic partnerships focused on high-intent product building.",
+    options: ["Joint Projects", "Strategic Partnership", "Creative Research", "Product Opportunity", "Expert Consulting"]
   },
   {
-    id: "04",
-    label: "Ideas & Strategy",
-    description: "Systems thinking and future product direction.",
-    topics: [
-      { title: "Systems Thinking", desc: "Applying holistic logic to complex problems." },
-      { title: "Future Tech", desc: "Exploring the impact of emerging technologies." },
-      { title: "Institutional Design", desc: "Building products that outlive temporary trends." },
-      { title: "Market Trends", desc: "Analyzing shifts in human and digital behavior." }
-    ]
-  },
-  {
-    id: "05",
-    label: "Just Say Hello",
-    description: "No agenda needed. Sometimes great opportunities begin with a conversation.",
-    topics: [
-      { title: "Networking", desc: "Connecting with like-minded builders and founders." },
-      { title: "Casual Chat", desc: "General discussions about technology and design." },
-      { title: "Portfolio Review", desc: "Discussing the architecture and craft of projects." },
-      { title: "Collaboration", desc: "General interest in working together on future ideas." }
-    ]
+    id: "dialogue",
+    title: "OPEN DIALOGUE",
+    icon: MessageSquare,
+    desc: "A direct channel for meaningful inquiries and networking.",
+    options: ["General Inquiry", "Portfolio Review", "Networking", "Knowledge Exchange", "Just Say Hello"]
   }
 ];
 
 const ACTIONS = [
-  { 
-    label: "Direct Dialogue", 
-    sub: "Direct communication for focused discussions.", 
-    href: "mailto:syedshuaib2429@gmail.com", 
-    icon: Mail 
-  },
-  { 
-    label: "Professional Network", 
-    sub: "Connect through my professional network on LinkedIn.", 
-    href: "https://www.linkedin.com/in/syedshuaib485/", 
-    icon: Linkedin 
-  },
-  { 
-    label: "Build Together", 
-    sub: "For founders, ventures, and long-term collaborations.", 
-    href: "mailto:syedshuaib2429@gmail.com?subject=Build Together", 
-    icon: Target 
-  },
-  { 
-    label: "Schedule Session", 
-    sub: "Book a private session for dedicated consultation.", 
-    href: "mailto:syedshuaib2429@gmail.com?subject=Schedule Session", 
-    icon: Clock 
-  },
+  { label: "DIRECT DIALOGUE", sub: "Direct communication for focused discussions.", href: "mailto:syedshuaib2429@gmail.com", icon: Mail },
+  { label: "PROFESSIONAL NETWORK", sub: "Connect through my institutional network.", href: "https://www.linkedin.com/in/syedshuaib485/", icon: Linkedin },
+  { label: "PRIVATE SESSION", sub: "Schedule a dedicated strategy conversation.", href: "mailto:syedshuaib2429@gmail.com?subject=Private Session", icon: Calendar },
+  { label: "BUILD TOGETHER", sub: "For founders, ventures, and collaborations.", href: "mailto:syedshuaib2429@gmail.com?subject=Build Together", icon: Sparkles },
 ];
 
 export function Contact() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [step, setStep] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState<typeof CATEGORIES[0] | null>(null);
-  const [transitionState, setTransitionState] = useState<"idle" | "phase1" | "phase2">("idle");
+  const [view, setView] = useState<ViewState>("entrance");
+  const [selectedPortal, setSelectedPortal] = useState<typeof PORTALS[0] | null>(null);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [transitionMsg, setTransitionMsg] = useState("");
 
-  const resetState = () => {
-    setIsOpen(false);
-    setTimeout(() => {
-      setStep(1);
-      setSelectedCategory(null);
-    }, 500);
-  };
+  const msgs = ["Preparing Communication...", "Analyzing Context...", "Opening Dialogue...", "Initializing Secure Channel..."];
 
-  const handleExternalClick = (href: string) => {
-    setTransitionState("phase1");
+  const handleAction = (href: string) => {
+    setTransitionMsg(msgs[Math.floor(Math.random() * msgs.length)]);
+    setView("transition");
     setTimeout(() => {
-      setTransitionState("phase2");
-      setTimeout(() => {
-        window.open(href, '_blank');
-        setTransitionState("idle");
-      }, 500);
-    }, 800);
+      window.open(href, '_blank');
+      setView("entrance");
+      setSelectedPortal(null);
+      setSelectedOption(null);
+    }, 1200);
   };
 
   return (
-    <section id="contact" className="relative bg-[#050505] overflow-hidden py-48 px-6 min-h-screen flex flex-col justify-center">
+    <section id="contact" className="relative bg-[#050505] overflow-hidden min-h-screen py-32 px-6 flex flex-col justify-center">
       {/* Background Architectural Grid */}
-      <div className="absolute inset-0 blueprint-grid opacity-[0.01] pointer-events-none" />
-      
-      {/* Cinematic Transition Overlay */}
-      <AnimatePresence>
-        {transitionState !== "idle" && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-[40px] flex flex-col items-center justify-center"
-          >
-            <div className="space-y-6 text-center">
-              <motion.p 
-                key={transitionState}
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                className="text-2xl font-headline font-light text-white tracking-[0.2em] italic uppercase"
+      <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.05),transparent_70%)] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto w-full relative z-10">
+        <LayoutGroup>
+          <AnimatePresence mode="wait">
+            {view === "entrance" && (
+              <motion.div 
+                key="entrance"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, scale: 0.95, filter: "blur(20px)" }}
+                className="space-y-24"
               >
-                {transitionState === "phase1" ? "Preparing Conversation..." : "Opening Communication Channel..."}
-              </motion.p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="max-w-[1440px] mx-auto w-full relative z-10">
-        {!isOpen ? (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col items-center text-center space-y-16"
-          >
-            <div className="space-y-8">
-              <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">Private Studio</p>
-              <h2 className="text-5xl md:text-8xl font-headline font-black tracking-tighter text-white uppercase italic">
-                What Shall <br />We Discuss?
-              </h2>
-              <p className="text-xl md:text-2xl text-[#EAE0C8]/40 font-light max-w-2xl mx-auto leading-relaxed">
-                Every meaningful ecosystem begins with a meaningful conversation. <br />
-                Choose the nature of the discussion.
-              </p>
-            </div>
-
-            <motion.button
-              onClick={() => setIsOpen(true)}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="group relative px-12 py-6 rounded-full glass border-white/10 overflow-hidden"
-            >
-              <span className="relative z-10 text-[11px] font-bold tracking-[0.4em] text-white uppercase flex items-center gap-4">
-                Enter The Studio <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </span>
-            </motion.button>
-          </motion.div>
-        ) : (
-          <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
-            
-            {/* Left Institutional Sidebar */}
-            <div className="lg:col-span-3 space-y-12 hidden lg:block border-r border-white/5 pr-12">
-              <div className="space-y-8">
-                <div className="space-y-2">
-                  <p className="text-[9px] font-bold tracking-[0.3em] text-primary/30 uppercase">Selection</p>
-                  <p className="text-sm text-white font-medium italic">{selectedCategory?.label || "Institutional Dialogue"}</p>
+                <div className="text-center space-y-8 max-w-3xl mx-auto">
+                  <motion.div 
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    className="space-y-4"
+                  >
+                    <p className="text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase">The Strategy Room</p>
+                    <h2 className="text-5xl md:text-7xl font-headline font-black tracking-tighter text-white uppercase italic">
+                      What Shall <br />We Build?
+                    </h2>
+                    <p className="text-xl text-[#EAE0C8]/40 font-light leading-relaxed">
+                      Enter a private dialogue space designed for systems thinking, <br />
+                      product architecture, and long-term ventures.
+                    </p>
+                  </motion.div>
                 </div>
-                <div className="space-y-1">
-                  <p className="text-[9px] font-bold tracking-[0.3em] text-primary/30 uppercase">Response Time</p>
-                  <p className="text-sm text-white/60">Within 24 Hours</p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {PORTALS.map((portal) => (
+                    <PortalCard 
+                      key={portal.id} 
+                      portal={portal} 
+                      onClick={() => {
+                        setSelectedPortal(portal);
+                        setView("refinement");
+                      }} 
+                    />
+                  ))}
                 </div>
-                <div className="space-y-1">
-                  <p className="text-[9px] font-bold tracking-[0.3em] text-primary/30 uppercase">Availability</p>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                    <p className="text-sm text-white/60">Open to Dialogue</p>
+              </motion.div>
+            )}
+
+            {view === "refinement" && selectedPortal && (
+              <motion.div 
+                key="refinement"
+                initial={{ opacity: 0, scale: 1.1, filter: "blur(30px)" }}
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0, x: -50 }}
+                className="space-y-16"
+              >
+                <div className="flex items-center justify-between border-b border-white/5 pb-12">
+                  <div className="space-y-4">
+                    <button 
+                      onClick={() => setView("entrance")}
+                      className="group flex items-center gap-2 text-[10px] font-bold tracking-[0.4em] text-primary/30 uppercase hover:text-white transition-colors"
+                    >
+                      <ChevronLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" /> 
+                      Return to Portals
+                    </button>
+                    <h3 className="text-4xl md:text-6xl font-headline font-black text-white italic uppercase tracking-tight">
+                      {selectedPortal.title}
+                    </h3>
+                  </div>
+                  <div className="hidden md:block text-right">
+                    <p className="text-[10px] font-bold tracking-[0.3em] text-primary/30 uppercase mb-1">Context</p>
+                    <p className="text-sm text-white/40 italic max-w-xs">{selectedPortal.desc}</p>
                   </div>
                 </div>
-              </div>
 
-              <div className="pt-12 border-t border-white/5">
-                <button 
-                  onClick={resetState}
-                  className="text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase hover:text-white transition-colors flex items-center gap-2"
-                >
-                  ← Exit Studio
-                </button>
-              </div>
-            </div>
-
-            {/* Main Workspace Area */}
-            <div className="lg:col-span-9">
-              <div className="mb-12 flex items-center gap-8">
-                <div className="flex items-center gap-2">
-                  <div className={cn("w-2 h-2 rounded-full transition-colors", step >= 1 ? "bg-primary" : "bg-white/10")} />
-                  <div className={cn("w-12 h-px", step >= 2 ? "bg-primary/40" : "bg-white/10")} />
-                  <div className={cn("w-2 h-2 rounded-full transition-colors", step >= 2 ? "bg-primary" : "bg-white/10")} />
-                  <div className={cn("w-12 h-px", step >= 3 ? "bg-primary/40" : "bg-white/10")} />
-                  <div className={cn("w-2 h-2 rounded-full transition-colors", step >= 3 ? "bg-primary" : "bg-white/10")} />
-                </div>
-                <span className="text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase">Step 0{step} of 03</span>
-              </div>
-
-              <AnimatePresence mode="wait">
-                {step === 1 && (
-                  <motion.div 
-                    key="step1"
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.4 }}
-                    className="space-y-8"
-                  >
-                    <h3 className="text-4xl font-headline font-black text-white tracking-tight uppercase italic">Conversation Path</h3>
-                    <div className="grid grid-cols-1 gap-4 max-w-[800px]">
-                      {CATEGORIES.map((cat) => (
-                        <button
-                          key={cat.id}
-                          onClick={() => {
-                            setSelectedCategory(cat);
-                            setStep(2);
-                          }}
-                          className="group w-full flex items-center justify-between p-10 rounded-[2.5rem] glass border-white/5 hover:border-primary/20 hover:bg-primary/[0.02] transition-all duration-500"
-                        >
-                          <div className="text-left space-y-2">
-                            <p className="text-2xl font-headline font-bold text-white uppercase tracking-tight group-hover:text-primary transition-colors">{cat.label}</p>
-                            <p className="text-sm text-[#EAE0C8]/30 font-light">{cat.description}</p>
-                          </div>
-                          <ChevronRight className="w-6 h-6 text-white/10 group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                        </button>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-
-                {step === 2 && (
-                  <motion.div 
-                    key="step2"
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
-                    transition={{ duration: 0.5 }}
-                    className="space-y-8"
-                  >
-                    <div className="space-y-4">
-                      <button onClick={() => setStep(1)} className="text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase hover:text-white transition-colors flex items-center gap-2">
-                        ← Back to paths
-                      </button>
-                      <h3 className="text-4xl font-headline font-black text-white tracking-tight uppercase italic">{selectedCategory?.label}</h3>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {selectedCategory?.topics.map((topic) => (
-                        <button
-                          key={topic.title}
-                          onClick={() => setStep(3)}
-                          className="group p-12 min-h-[220px] rounded-[2rem] glass border-white/5 text-left transition-all duration-700 hover:border-primary/30 hover:bg-primary/[0.03] hover:-translate-y-2 flex flex-col justify-between"
-                        >
-                          <div className="space-y-4">
-                            <p className="text-2xl font-headline font-bold text-white/90 group-hover:text-white transition-colors uppercase tracking-tight">{topic.title}</p>
-                            <p className="text-sm text-[#EAE0C8]/40 leading-relaxed font-light">{topic.desc}</p>
-                          </div>
-                          <div className="flex justify-end">
-                            <ArrowUpRight className="w-5 h-5 text-white/0 group-hover:text-primary transition-all" />
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-
-                {step === 3 && (
-                  <motion.div 
-                    key="step3"
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -50 }}
-                    transition={{ duration: 0.5 }}
-                    className="space-y-12"
-                  >
-                    <div className="space-y-4">
-                      <button onClick={() => setStep(2)} className="text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase hover:text-white transition-colors flex items-center gap-2">
-                        ← Change topic
-                      </button>
-                      <h3 className="text-4xl font-headline font-black text-white tracking-tight uppercase italic">Dialogue Channels</h3>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {ACTIONS.map((action) => (
-                        <button
-                          key={action.label}
-                          onClick={() => handleExternalClick(action.href)}
-                          className="group p-12 min-h-[240px] w-full max-w-[420px] rounded-[2.5rem] glass border-white/10 transition-all duration-1000 hover:border-primary/40 hover:bg-primary/[0.04] text-left flex flex-col justify-between relative overflow-hidden"
-                        >
-                          <div className="flex items-start justify-between relative z-10">
-                            <div className="w-16 h-16 rounded-2xl glass border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary transition-all duration-700">
-                              <action.icon className="w-8 h-8" />
-                            </div>
-                            <ArrowUpRight className="w-6 h-6 text-white/10 group-hover:text-primary transition-all" />
-                          </div>
-
-                          <div className="space-y-3 relative z-10">
-                            <p className="text-2xl font-headline font-black text-white italic uppercase tracking-tight">{action.label}</p>
-                            <p className="text-xs text-[#EAE0C8]/40 uppercase font-bold tracking-widest leading-relaxed">{action.sub}</p>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="pt-12 text-center border-t border-white/5 max-w-[860px]">
-                      <p className="text-[10px] font-bold tracking-[0.6em] text-primary/20 uppercase">
-                        Meaningful partnerships begin with meaningful conversations.
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {selectedPortal.options.map((opt, i) => (
+                    <motion.button
+                      key={opt}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.05 }}
+                      onClick={() => {
+                        setSelectedOption(opt);
+                        setView("communication");
+                      }}
+                      className="group relative p-10 h-64 rounded-[2.5rem] glass border-white/5 flex flex-col justify-between items-start text-left hover:border-primary/30 hover:bg-primary/[0.03] transition-all duration-700"
+                    >
+                      <span className="text-[10px] font-mono font-bold text-primary/20">0{i+1}</span>
+                      <p className="text-xl font-headline font-bold text-white tracking-tight group-hover:text-primary transition-colors">
+                        {opt}
                       </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        )}
+                      <ArrowRight className="w-5 h-5 text-white/0 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {view === "communication" && (
+              <motion.div 
+                key="communication"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, filter: "blur(40px)" }}
+                className="space-y-16"
+              >
+                <div className="text-center space-y-6 max-w-2xl mx-auto">
+                  <button 
+                    onClick={() => setView("refinement")}
+                    className="text-[10px] font-bold tracking-[0.4em] text-primary/30 uppercase hover:text-white transition-colors"
+                  >
+                    ← Adjust Context
+                  </button>
+                  <h3 className="text-4xl md:text-6xl font-headline font-black text-white italic uppercase tracking-tight">
+                    Select Channel
+                  </h3>
+                  <p className="text-lg text-[#EAE0C8]/40 font-light italic">
+                    Initiating dialogue for <span className="text-primary font-medium">{selectedOption}</span>.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                  {ACTIONS.map((action, i) => (
+                    <motion.button
+                      key={action.label}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      onClick={() => handleAction(action.href)}
+                      className="group relative p-12 rounded-[3rem] glass border-white/10 text-left overflow-hidden flex flex-col gap-8 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-1000"
+                    >
+                      <div className="flex justify-between items-start">
+                        <div className="w-16 h-16 rounded-2xl glass border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:scale-110 transition-all duration-700">
+                          <action.icon className="w-8 h-8" />
+                        </div>
+                        <Sparkles className="w-5 h-5 text-primary/0 group-hover:text-primary group-hover:animate-pulse transition-all" />
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-2xl font-headline font-black text-white italic uppercase tracking-tight">{action.label}</p>
+                        <p className="text-sm text-[#EAE0C8]/30 font-light leading-relaxed">{action.sub}</p>
+                      </div>
+                    </motion.button>
+                  ))}
+                </div>
+
+                <div className="pt-12 text-center opacity-20">
+                  <p className="text-[10px] font-bold tracking-[1em] text-white uppercase">Meaningful Partnerships Begin Here</p>
+                </div>
+              </motion.div>
+            )}
+
+            {view === "transition" && (
+              <motion.div 
+                key="transition"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-[60px] flex flex-col items-center justify-center"
+              >
+                <div className="space-y-8 text-center relative">
+                  <motion.div 
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full"
+                  />
+                  <p className="relative text-3xl md:text-5xl font-headline font-light text-white tracking-[0.1em] italic uppercase">
+                    {transitionMsg}
+                  </p>
+                  <div className="flex items-center justify-center gap-4 relative">
+                    <div className="h-px w-12 bg-white/20" />
+                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    <div className="h-px w-12 bg-white/20" />
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </LayoutGroup>
       </div>
     </section>
+  );
+}
+
+function PortalCard({ portal, onClick }: { portal: typeof PORTALS[0], onClick: () => void }) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springConfig = { stiffness: 150, damping: 20 };
+  const dx = useSpring(mouseX, springConfig);
+  const dy = useSpring(mouseY, springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    mouseX.set(x * 20);
+    mouseY.set(y * 20);
+  };
+
+  return (
+    <motion.button
+      onClick={onClick}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => { mouseX.set(0); mouseY.set(0); }}
+      className="group relative aspect-[3/4] rounded-[3.5rem] glass border-white/5 overflow-hidden flex flex-col items-center justify-center p-12 text-center hover:border-primary/40 transition-all duration-1000"
+    >
+      {/* Background Refractive Layers */}
+      <motion.div 
+        style={{ x: dx, y: dy }}
+        className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.1),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" 
+      />
+      
+      <motion.div 
+        style={{ x: dx, y: dy, rotate: dx }}
+        className="relative z-10 space-y-8 flex flex-col items-center"
+      >
+        <div className="w-24 h-24 rounded-3xl glass border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-1000">
+          <portal.icon className="w-10 h-10" />
+        </div>
+        
+        <div className="space-y-4">
+          <h4 className="text-2xl md:text-3xl font-headline font-black text-white tracking-tighter uppercase italic leading-none group-hover:text-primary transition-colors">
+            {portal.title}
+          </h4>
+          <p className="text-xs text-[#EAE0C8]/30 font-light leading-relaxed px-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700">
+            {portal.desc}
+          </p>
+        </div>
+
+        <div className="pt-4 opacity-20 group-hover:opacity-100 transition-all duration-700">
+          <div className="w-10 h-px bg-primary/40" />
+        </div>
+      </motion.div>
+
+      {/* Decorative Corner Details */}
+      <div className="absolute top-10 left-10 w-2 h-2 border-t border-l border-white/10 group-hover:border-primary/40 transition-colors" />
+      <div className="absolute bottom-10 right-10 w-2 h-2 border-b border-r border-white/10 group-hover:border-primary/40 transition-colors" />
+    </motion.button>
   );
 }
 
