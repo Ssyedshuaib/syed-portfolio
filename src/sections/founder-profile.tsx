@@ -1,0 +1,257 @@
+"use client";
+
+import React from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { MapPin, Sparkles, Target, Zap, Cpu } from "lucide-react";
+
+const METRICS = [
+  { label: "Products Built", value: "5+" },
+  { label: "Venture Studio", value: "1" },
+  { label: "Axora Founded", value: "2025" },
+];
+
+const ECOSYSTEM = [
+  {
+    id: "01",
+    title: "Reverie",
+    category: "Place-Based Memory Platform",
+    desc: "Capturing memories, emotions, and stories through places.",
+    icon: MapPin,
+  },
+  {
+    id: "02",
+    title: "DevNexus",
+    category: "Student Learning Ecosystem",
+    desc: "Helping students learn, earn, and grow.",
+    icon: Target,
+  },
+  {
+    id: "03",
+    title: "Axora",
+    category: "Venture Studio",
+    desc: "Building meaningful digital ecosystems and future products.",
+    icon: Zap,
+  },
+];
+
+export function FounderProfile() {
+  const portrait = PlaceHolderImages.find((img) => img.id === "founder-portrait");
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const revealVariants = {
+    hidden: { opacity: 0, y: 40, filter: "blur(20px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 1.6,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+
+  return (
+    <section id="founder" className="py-64 px-6 relative bg-background overflow-hidden">
+      <motion.div 
+        animate={{ scale: [1, 1.08, 1], opacity: [0.2, 0.4, 0.2] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1400px] h-[1400px] bg-primary/5 blur-[200px] rounded-full pointer-events-none" 
+      />
+      
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-10%" }}
+        className="max-w-[1440px] mx-auto relative z-10"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-12 lg:gap-20 items-start">
+          
+          <motion.div variants={revealVariants} className="lg:col-span-3 space-y-20">
+            <div className="space-y-12">
+              <div className="space-y-8">
+                <p className="text-[11px] font-bold tracking-[1em] text-primary/30 uppercase">
+                  The Architect
+                </p>
+                <div className="space-y-2">
+                  <h3 className="text-4xl md:text-5xl font-headline font-black text-white tracking-tighter uppercase leading-tight italic">
+                    Syed Sharfuddin Shuaib
+                  </h3>
+                </div>
+                <div className="space-y-6 pt-4">
+                  <p className="text-[13px] font-bold tracking-[0.5em] text-primary uppercase flex items-center gap-4">
+                    <span className="w-8 h-px bg-primary/40" />
+                    Founder • Product Builder
+                  </p>
+                  <p className="text-xl text-[#EAE0C8]/40 leading-relaxed font-light">
+                    Architecting digital ecosystems focused on education, memory preservation, and future technologies.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 pt-4">
+                <div className="w-10 h-px bg-white/10" />
+                <p className="text-[11px] font-bold tracking-[0.5em] text-white/30 uppercase flex items-center gap-3">
+                  <MapPin className="w-4 h-4 text-primary/40" /> Bangalore, India
+                </p>
+              </div>
+            </div>
+
+            <div className="pt-20 border-t border-white/5 space-y-16">
+              <div className="space-y-8">
+                <p className="text-[11px] font-bold tracking-[0.6em] text-primary/20 uppercase">
+                  Specialization
+                </p>
+                <div className="grid grid-cols-1 gap-6">
+                  {["Product Architecture", "Systems Design", "Venture Building", "Digital Ecosystems"].map((item) => (
+                    <div key={item} className="flex items-center gap-4 group cursor-default">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary/20 group-hover:bg-primary transition-all duration-700 group-hover:scale-125" />
+                      <p className="text-[12px] font-bold tracking-[0.3em] text-[#EAE0C8]/50 uppercase group-hover:text-white transition-all duration-700">
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <p className="text-[11px] font-bold tracking-[0.6em] text-primary/20 uppercase">Building Since</p>
+                <p className="text-4xl font-headline font-black text-white italic">2025</p>
+                <p className="text-[10px] font-bold tracking-[0.4em] text-primary/30 uppercase">Institutional Foundation</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div variants={revealVariants} className="lg:col-span-3 flex flex-col gap-6">
+            <motion.div 
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="group flex flex-col w-full"
+            >
+              <div className="relative aspect-[4/5.5] w-full glass rounded-t-[4.5rem] rounded-b-3xl border-white/10 overflow-hidden shadow-2xl transition-all duration-1000 group-hover:border-primary/20">
+                {portrait && (
+                  <motion.div
+                    initial={{ scale: 1.1, filter: "blur(30px)" }}
+                    whileInView={{ scale: 1, filter: "blur(0px)" }}
+                    transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="absolute inset-0"
+                  >
+                    <Image 
+                      src={portrait.imageUrl} 
+                      alt={portrait.description} 
+                      fill 
+                      className="object-cover opacity-90 grayscale group-hover:grayscale-0 group-hover:scale-[1.05] transition-all duration-[3000ms]"
+                      data-ai-hint={portrait.imageHint}
+                    />
+                  </motion.div>
+                )}
+                
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-90" />
+                
+                <div className="absolute bottom-12 left-12 right-12">
+                  <div className="glass p-8 rounded-[2.5rem] border-white/10 backdrop-blur-[50px] space-y-4 transform transition-transform group-hover:translate-y-[-5px] duration-1000">
+                    <div className="flex items-center justify-between">
+                      <span className="text-white font-headline font-bold text-[10px] tracking-[0.8em] uppercase">AXORA</span>
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_15px_rgba(234,224,200,0.6)] animate-pulse" />
+                    </div>
+                    <div className="h-px w-full bg-white/10" />
+                    <div className="space-y-1">
+                      <p className="text-[10px] font-bold tracking-[0.5em] text-white uppercase">Founder</p>
+                      <p className="text-[9px] font-bold tracking-[0.4em] text-primary/40 uppercase">Architecting Impact</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="absolute top-10 right-10 opacity-30 group-hover:opacity-100 transition-opacity duration-1000">
+                  <Sparkles className="w-6 h-6 text-primary" />
+                </div>
+              </div>
+
+              <div className="flex justify-between items-center px-10 py-12 glass rounded-b-[4.5rem] rounded-t-3xl border-t-0 border-white/5 shadow-2xl transition-all duration-1000 group-hover:border-primary/20 bg-gradient-to-b from-transparent to-primary/[0.02]">
+                {METRICS.map((metric, idx) => (
+                  <div key={metric.label} className="text-center space-y-3 relative">
+                    <p className="text-3xl font-headline font-black text-white leading-none tracking-tighter">{metric.value}</p>
+                    <p className="text-[8px] font-bold tracking-[0.5em] text-primary/30 uppercase">{metric.label}</p>
+                    {idx < METRICS.length - 1 && (
+                      <div className="absolute top-1/2 -right-1/2 h-8 w-px bg-white/5 -translate-y-1/2" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+
+          <motion.div variants={revealVariants} className="lg:col-span-4 space-y-20">
+            <div className="glass p-16 rounded-[4.5rem] border-white/5 space-y-12 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none group-hover:opacity-[0.08] transition-opacity duration-1000">
+                <Cpu className="w-32 h-32 text-white" />
+              </div>
+
+              <div className="space-y-10 relative z-10">
+                <div className="space-y-6">
+                  <p className="text-[11px] font-bold tracking-[0.8em] text-primary/30 uppercase">Philosophy</p>
+                  <h4 className="text-4xl md:text-5xl font-headline font-black text-white tracking-tight leading-[0.9] italic">
+                    Building systems <br />that outlive trends.
+                  </h4>
+                </div>
+                
+                <div className="space-y-8 text-xl text-[#EAE0C8]/60 font-light leading-relaxed">
+                  <p>
+                    Technology should create meaningful value, 
+                    <span className="text-white font-medium italic"> not temporary attention.</span>
+                  </p>
+                  <p className="text-lg opacity-60">
+                    Every product should solve a real problem and contribute to a larger institutional ecosystem.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-10 px-4">
+              <p className="text-[11px] font-bold tracking-[0.8em] text-primary/20 uppercase">Current Ecosystem</p>
+              <div className="grid grid-cols-1 gap-8">
+                {ECOSYSTEM.map((item, idx) => (
+                  <motion.div 
+                    key={item.title}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1, delay: 0.5 + (idx * 0.1), ease: [0.16, 1, 0.3, 1] }}
+                    viewport={{ once: true }}
+                    className="flex flex-col gap-6 glass p-10 rounded-[3rem] border-white/5 hover:border-primary/20 transition-all duration-1000 group cursor-default"
+                  >
+                    <div className="flex items-center gap-8">
+                      <div className="w-14 h-14 rounded-[1.25rem] glass border-white/5 flex items-center justify-center text-primary/30 group-hover:text-primary transition-all duration-1000 group-hover:scale-110">
+                        <item.icon className="w-6 h-6" />
+                      </div>
+                      <div className="space-y-1">
+                        <p className="text-[10px] font-bold tracking-[0.5em] text-primary/20 uppercase">{item.id}</p>
+                        <p className="text-lg font-bold tracking-[0.4em] text-white uppercase group-hover:text-primary transition-colors duration-1000">{item.title}</p>
+                        <p className="text-[10px] font-bold tracking-[0.3em] text-primary/40 uppercase">{item.category}</p>
+                      </div>
+                    </div>
+                    <p className="text-[#EAE0C8]/30 text-sm font-light leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </motion.div>
+    </section>
+  );
+}

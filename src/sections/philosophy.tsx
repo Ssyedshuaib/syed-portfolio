@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const PRINCIPLES = [
@@ -57,13 +57,12 @@ export function Philosophy() {
     offset: ["start start", "end end"],
   });
 
-  // Top-level hooks for production stability
-  const navOpacity = useTransform(scrollYProgress, [0, 0.05, 0.95, 1], [0, 1, 1, 0]);
+  const navOpacity = useTransform(scrollYProgress, [0, 0.02, 0.98, 1], [0, 1, 1, 0]);
   const finaleOpacity = useTransform(storyProgress, [0.6, 0.75, 1], [0, 1, 1]);
   const finaleScale = useTransform(storyProgress, [0.6, 0.75], [0.95, 1]);
-  const finaleBlur = useTransform(storyProgress, [0.6, 0.73, 0.75], ["blur(30px)", "blur(15px)", "blur(0px)"]);
+  const blurVal = useTransform(storyProgress, [0.6, 0.73, 0.75], ["30px", "15px", "0px"]);
+  const finaleBlur = useTransform(blurVal, (v) => `blur(${v})`);
 
-  // Track active chapter
   useEffect(() => {
     return scrollYProgress.on("change", (val) => {
       const chapter = Math.min(Math.floor(val * 5), 4);
@@ -73,13 +72,12 @@ export function Philosophy() {
 
   return (
     <section ref={containerRef} className="relative bg-background">
-      {/* CHAPTER NAVIGATOR */}
       <AnimatePresence>
         <motion.div 
           style={{ opacity: navOpacity }}
-          className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[200] hidden md:block"
+          className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[200]"
         >
-          <div className="glass px-8 py-4 rounded-full border-white/10 flex items-center gap-10 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5)]">
+          <div className="glass px-6 md:px-8 py-3 md:py-4 rounded-full border-white/10 flex items-center gap-6 md:gap-10 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5)]">
             {PRINCIPLES.map((p, idx) => (
               <div key={p.id} className="flex flex-col items-center gap-1 group relative">
                 <span className={cn(
@@ -90,7 +88,7 @@ export function Philosophy() {
                 </span>
                 <span className={cn(
                   "text-[9px] font-bold tracking-[0.3em] uppercase transition-all duration-500",
-                  activeChapter === idx ? "text-white" : "text-white/10"
+                  activeChapter === idx ? "text-white" : "hidden md:block text-white/10"
                 )}>
                   {p.title}
                 </span>
@@ -103,7 +101,6 @@ export function Philosophy() {
         </motion.div>
       </AnimatePresence>
 
-      {/* HORIZONTAL PANELS */}
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
         <div className="w-full max-w-[1600px] px-6 md:px-12 h-[75vh] flex items-stretch gap-6">
           {PRINCIPLES.map((principle, idx) => (
@@ -116,7 +113,6 @@ export function Philosophy() {
         </div>
       </div>
 
-      {/* CINEMATIC FINALE */}
       <div ref={storyRef} className="relative h-[300vh] bg-background">
         <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden px-6">
           <div className="space-y-12 w-full max-w-4xl">
@@ -213,8 +209,6 @@ function StoryLine({ progress, range, text }: { progress: any; range: [number, n
   const opacity = useTransform(progress, [range[0], range[0] + 0.05, range[1], range[1] + 0.05], [0, 1, 1, 0.25]);
   const blurVal = useTransform(progress, [range[0], range[0] + 0.04, range[0] + 0.05], ["24px", "10px", "0px"]);
   const y = useTransform(progress, [range[0], range[0] + 0.05], [20, 0]);
-  
-  // Create a combined filter string at top level
   const filter = useTransform(blurVal, (v) => `blur(${v})`);
 
   return (
