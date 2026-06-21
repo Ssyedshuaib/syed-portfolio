@@ -108,20 +108,24 @@ export function AxoraEcosystem() {
             >
               <div className="space-y-6">
                 <p className="text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase">THE MISSION</p>
-                <h2 className="text-5xl md:text-7xl font-headline font-black tracking-tighter text-white leading-[0.95] uppercase">
-                  Building Systems <br />
-                  <span className="text-primary italic font-medium">That Outlive Trends.</span>
-                </h2>
+                <div className="max-w-md">
+                  <h2 className="text-4xl md:text-6xl font-headline font-black tracking-tighter text-white leading-[0.95] uppercase">
+                    Building Systems <br />
+                    <span className="text-primary italic font-medium">That Outlive Trends.</span>
+                  </h2>
+                </div>
               </div>
               
               <div className="space-y-10 pt-4">
-                <div className="space-y-2">
-                  <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">Technology changes.</p>
-                  <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">Principles remain.</p>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">Products evolve.</p>
-                  <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">The mission stays the same.</p>
+                <div className="space-y-4">
+                  <div className="space-y-1">
+                    <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">Technology changes.</p>
+                    <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">Principles remain.</p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">Products evolve.</p>
+                    <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">The mission stays the same.</p>
+                  </div>
                 </div>
               </div>
               

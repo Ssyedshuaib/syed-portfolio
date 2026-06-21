@@ -119,14 +119,14 @@ export function Contact() {
         className="relative z-10"
       >
         <div className="max-w-[1440px] mx-auto px-6 pt-64 pb-32">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-end">
             <div className="space-y-16">
-              <div className="space-y-8">
-                <h3 className="text-5xl md:text-7xl lg:text-[clamp(3.5rem,8vw,8.5rem)] font-headline font-black text-white tracking-tighter leading-none italic uppercase">
+              <div className="space-y-8 max-w-lg">
+                <h3 className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter leading-[1.05] italic uppercase">
                   Let's Build <br />
                   <span className="text-primary/20 not-italic">Something Meaningful.</span>
                 </h3>
-                <p className="text-lg md:text-2xl text-[#EAE0C8]/40 font-light leading-relaxed max-w-lg">
+                <p className="text-lg md:text-xl text-[#EAE0C8]/40 font-light leading-relaxed">
                   Whether it's a product, venture, ecosystem, or ambitious idea. I'm always interested in meaningful problems.
                 </p>
               </div>
@@ -155,7 +155,7 @@ export function Contact() {
                     <p className="text-[10px] font-bold tracking-[0.6em] text-primary/30 uppercase">Direct Email</p>
                     <ArrowUpRight className="w-5 h-5 text-primary/20" />
                   </div>
-                  <p className="text-xl md:text-4xl lg:text-[clamp(2rem,4vw,3.5rem)] font-headline font-black text-white italic truncate">
+                  <p className="text-xl md:text-3xl font-headline font-black text-white italic truncate">
                     syedshuaib2429@gmail.com
                   </p>
                 </div>
@@ -164,7 +164,7 @@ export function Contact() {
                   <p className="text-[10px] font-bold tracking-[0.6em] text-primary/30 uppercase">Location</p>
                   <div className="flex items-center gap-4">
                     <MapPin className="w-5 h-5 text-primary" />
-                    <p className="text-lg md:text-2xl text-[#EAE0C8]/70 font-light">Bangalore, India</p>
+                    <p className="text-lg md:text-xl text-[#EAE0C8]/70 font-light">Bangalore, India</p>
                   </div>
                 </div>
               </div>
@@ -212,7 +212,7 @@ export function Contact() {
                   <div className="space-y-12">
                     <div className="space-y-6">
                       <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">With Syed</p>
-                      <h4 className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter italic">
+                      <h4 className="text-4xl md:text-5xl font-headline font-black text-white tracking-tighter italic">
                         {selectedTopic ? "Next Steps" : "Discuss..."}
                       </h4>
                     </div>
