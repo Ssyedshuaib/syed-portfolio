@@ -10,35 +10,35 @@ const PRINCIPLES = [
     id: "01",
     label: "CLARITY",
     title: "Solve Problems, Not Trends.",
-    body: "Technology changes constantly, but meaningful problems remain. We focus on building solutions that stay valuable long after trends disappear, solving the friction of today rather than chasing the hype of tomorrow.",
+    body: "Technology changes constantly, but meaningful problems remain. We focus on building solutions that stay valuable long after trends disappear.",
     visual: "clarity"
   },
   {
     id: "02",
     label: "SYSTEMS",
     title: "Systems Create Ecosystems.",
-    body: "Strong systems create consistent outcomes. Rather than chasing quick wins, we design modular frameworks that scale. A well-built system compounds value while a shortcut creates technical debt.",
+    body: "Strong systems create consistent outcomes. We design modular frameworks that scale, compounding value while avoiding technical debt.",
     visual: "systems"
   },
   {
     id: "03",
     label: "VALUE",
     title: "Utility Before Attention.",
-    body: "Impact is measured by utility, not engagement metrics. Every feature must fundamentally improve the human experience. If a product doesn't create real value for the user, it shouldn't exist.",
+    body: "Impact is measured by utility, not engagement metrics. Every feature must fundamentally improve the human experience.",
     visual: "value"
   },
   {
     id: "04",
     label: "LONGEVITY",
     title: "Build For The Next Decade.",
-    body: "We build with a long-term perspective. In a world of fast software, we choose to architect digital products that remain relevant and continue to grow as user needs evolve over years, not months.",
+    body: "In a world of fast software, we architect digital products that remain relevant as user needs evolve over years, not months.",
     visual: "longevity"
   },
   {
     id: "05",
     label: "ECOSYSTEMS",
     title: "Connected Products Compound Value.",
-    body: "Interconnectivity is a feature, not an afterthought. Every Axora product is designed to strengthen the larger vision, working together to simplify the digital life of the modern student.",
+    body: "Interconnectivity is a feature. Every product strengthens the larger vision, working together to simplify the digital life.",
     visual: "ecosystems"
   },
 ];
@@ -48,33 +48,35 @@ export function FounderPhilosophy() {
   const [activeIndex, setActiveIndex] = useState(0);
   const isVisible = useInView(containerRef, { margin: "-20% 0px -20% 0px" });
 
-  const { scrollYProgress: mainProgress } = useScroll({
+  const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start center", "end end"],
+    offset: ["start start", "end end"],
   });
 
   return (
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-x-hidden">
-      {/* SECTION HEADER */}
-      <div className="pt-32 pb-16 text-center space-y-4">
-        <motion.p 
-          initial={{ opacity: 0, y: 10 }}
+      {/* 1. CINEMATIC HERO */}
+      <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 sticky top-0 z-0">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase"
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-6"
         >
-          Institutional Framework
-        </motion.p>
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-5xl font-headline font-black tracking-tighter text-white uppercase italic"
-        >
-          Founder's Philosophy
-        </motion.h2>
+          <p className="text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase">Institutional Framework</p>
+          <h2 className="text-6xl md:text-[8rem] lg:text-[10rem] font-headline font-black tracking-tighter text-white uppercase leading-[0.85]">
+            FOUNDER <br />
+            <span className="text-primary italic font-medium">PHILOSOPHY.</span>
+          </h2>
+          <div className="pt-12">
+             <p className="text-xl md:text-3xl text-white/40 font-light italic tracking-tight">"Principles Over Shortcuts."</p>
+          </div>
+        </motion.div>
       </div>
 
-      {/* CHAPTERS */}
-      <div className="relative">
+      {/* 2. THE CHAPTERS */}
+      <div className="relative z-10 space-y-[20vh] pb-[20vh]">
         {PRINCIPLES.map((principle, idx) => (
           <PrincipleChapter 
             key={idx} 
@@ -85,38 +87,37 @@ export function FounderPhilosophy() {
         ))}
       </div>
 
-      {/* CINEMATIC FINALE */}
+      {/* 3. CINEMATIC FINALE */}
       <PhilosophyFinale />
 
-      {/* FLOATING NAVIGATOR */}
+      {/* 4. FLOATING NAVIGATOR */}
       <AnimatePresence>
         {isVisible && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] hidden md:block"
+            className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[200]"
           >
-            <div className="glass px-8 py-4 rounded-full border-white/5 flex items-center gap-8 shadow-2xl">
+            <div className="glass px-6 md:px-8 py-3.5 rounded-full border-white/5 flex items-center gap-6 md:gap-8 shadow-2xl backdrop-blur-3xl">
               {PRINCIPLES.map((p, i) => (
                 <button
                   key={p.id}
                   onClick={() => {
                     const el = document.getElementById(`principle-${p.id}`);
-                    el?.scrollIntoView({ behavior: 'smooth' });
+                    el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
                   }}
-                  className="group flex flex-col items-center gap-1"
+                  className="group flex items-center gap-3"
                 >
                   <span className={cn(
-                    "text-[8px] font-bold tracking-widest transition-all duration-500",
+                    "text-[9px] font-bold tracking-widest transition-all duration-500",
                     activeIndex === i ? "text-primary" : "text-white/20 group-hover:text-white/40"
                   )}>
                     {p.label}
                   </span>
-                  <div className={cn(
-                    "h-0.5 rounded-full transition-all duration-500",
-                    activeIndex === i ? "w-4 bg-primary shadow-[0_0_10px_rgba(234,224,200,0.5)]" : "w-1 bg-white/10"
-                  )} />
+                  {i < PRINCIPLES.length - 1 && (
+                    <div className="w-1 h-1 rounded-full bg-white/5" />
+                  )}
                 </button>
               ))}
             </div>
@@ -135,18 +136,18 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
     if (isInView) onActive();
   }, [isInView, onActive]);
 
-  const isRight = idx % 2 === 0;
+  const isEven = idx % 2 === 0;
 
   return (
     <div
       id={`principle-${principle.id}`}
       ref={ref}
-      className="relative min-h-[90vh] flex items-center justify-center py-20 px-6"
+      className="relative min-h-[90vh] flex items-center justify-center py-32 px-6"
     >
       {/* Background Watermark */}
       <div className={cn(
-        "absolute pointer-events-none select-none z-0 opacity-[0.02] transition-all duration-1000",
-        isRight ? "right-10" : "left-10"
+        "absolute pointer-events-none select-none z-0 opacity-[0.02]",
+        isEven ? "right-10" : "left-10"
       )}>
         <span className="text-[20rem] md:text-[30rem] font-headline font-black text-white leading-none">
           {principle.id}
@@ -154,7 +155,7 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
       </div>
 
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center relative z-10">
-        <div className={cn("space-y-10", !isRight && "lg:order-2")}>
+        <div className={cn("space-y-10", !isEven && "lg:order-2")}>
           <div className="space-y-6">
             <div className="flex items-center gap-4">
                <span className="text-[12px] font-mono font-bold text-primary/40 tracking-[0.4em]">{principle.id}</span>
@@ -163,16 +164,16 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
                  {principle.label}
                </span>
             </div>
-            <h3 className="text-4xl md:text-5xl lg:text-[clamp(3rem,5vw,5rem)] font-headline font-black tracking-tighter text-white leading-[0.95] max-w-[90%]">
+            <h3 className="text-4xl md:text-6xl font-headline font-black tracking-tighter text-white leading-[0.95] max-w-xl">
               {principle.title}
             </h3>
-            <p className="text-lg md:text-xl text-white/40 font-light leading-relaxed max-w-xl">
+            <p className="text-lg md:text-xl text-white/40 font-light leading-relaxed max-w-lg">
               {principle.body}
             </p>
           </div>
         </div>
 
-        <div className={cn("flex justify-center", !isRight && "lg:order-1")}>
+        <div className={cn("flex justify-center", !isEven && "lg:order-1")}>
           <div className="w-full max-w-md aspect-square relative group">
              <VisualEngine type={principle.visual} active={isInView} />
           </div>
@@ -272,64 +273,86 @@ function PhilosophyFinale() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end end"]
+    offset: ["start start", "end end"]
   });
 
   return (
     <div ref={containerRef} className="relative h-[300vh] bg-background">
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center px-6 overflow-hidden">
-        <motion.p 
-          style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1]) }}
-          className="text-[10px] font-bold tracking-[1em] text-primary/40 uppercase mb-12"
-        >
-          Core Belief
-        </motion.p>
-        
-        <div className="relative space-y-4 text-center">
-          <FinaleLine progress={scrollYProgress} range={[0.1, 0.25, 0.35]} text="The Goal Is Not To Build" />
-          <FinaleLine progress={scrollYProgress} range={[0.3, 0.45, 0.55]} text="More Products." className="text-white/40" />
-          <FinaleLine progress={scrollYProgress} range={[0.5, 0.65, 0.75]} text="Build Better Systems." className="text-primary italic" />
-          <FinaleLine progress={scrollYProgress} range={[0.7, 0.85, 0.95]} text="Create Meaningful Value." />
-          
-          <motion.div
-            style={{ 
-              opacity: useTransform(scrollYProgress, [0.9, 0.95], [0, 1]),
-              scale: useTransform(scrollYProgress, [0.9, 0.95], [0.95, 1]),
-              filter: useTransform(scrollYProgress, [0.9, 0.95], ["blur(10px)", "blur(0px)"])
-            }}
-            className="pt-20"
-          >
-            <h4 className="text-6xl md:text-8xl font-headline font-black text-white tracking-tighter">
-              THAT IS AXORA.
-            </h4>
-            <div className="h-px w-24 bg-primary/30 mx-auto mt-8" />
-          </motion.div>
-        </div>
-
-        {/* Atmospheric Ambient Glow */}
+        {/* Background Atmosphere */}
         <motion.div 
           style={{ 
-            opacity: useTransform(scrollYProgress, [0.8, 0.95], [0, 0.15]),
-            scale: useTransform(scrollYProgress, [0.8, 0.95], [0.8, 1.2])
+            opacity: useTransform(scrollYProgress, [0.6, 0.9], [0, 0.2]),
+            scale: useTransform(scrollYProgress, [0.6, 1], [0.8, 1.2])
           }}
           className="absolute inset-0 bg-primary blur-[150px] rounded-full pointer-events-none -z-10" 
         />
+        
+        <div className="relative space-y-16 text-center w-full max-w-5xl">
+          <motion.p 
+            style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [0, 1]) }}
+            className="text-[10px] font-bold tracking-[1em] text-primary/40 uppercase mb-8"
+          >
+            Core Belief
+          </motion.p>
+          
+          <div className="space-y-12">
+            <StoryLine 
+              progress={scrollYProgress} 
+              range={[0.1, 0.25, 0.35]} 
+              text="Technology changes." 
+              subtext="Principles endure." 
+            />
+            <StoryLine 
+              progress={scrollYProgress} 
+              range={[0.4, 0.55, 0.65]} 
+              text="Products come and go." 
+              subtext="Systems compound." 
+              className="text-white/40"
+            />
+            <StoryLine 
+              progress={scrollYProgress} 
+              range={[0.7, 0.85, 0.95]} 
+              text="Attention is temporary." 
+              subtext="Impact is permanent." 
+              className="text-primary"
+            />
+          </div>
+          
+          <motion.div
+            style={{ 
+              opacity: useTransform(scrollYProgress, [0.88, 0.95], [0, 1]),
+              scale: useTransform(scrollYProgress, [0.88, 0.95], [0.95, 1]),
+              filter: useTransform(scrollYProgress, [0.88, 0.95], ["blur(20px)", "blur(0px)"])
+            }}
+            className="pt-24"
+          >
+            <h4 className="text-6xl md:text-9xl font-headline font-black text-white tracking-tighter drop-shadow-[0_0_30px_rgba(234,224,200,0.3)]">
+              THAT IS AXORA.
+            </h4>
+            <div className="h-px w-24 bg-primary/30 mx-auto mt-12" />
+          </motion.div>
+        </div>
       </div>
     </div>
   );
 }
 
-function FinaleLine({ progress, range, text, className }: { progress: any, range: [number, number, number], text: string, className?: string }) {
+function StoryLine({ progress, range, text, subtext, className }: { progress: any, range: [number, number, number], text: string, subtext: string, className?: string }) {
   const opacity = useTransform(progress, range, [0, 1, 0.2]);
   const y = useTransform(progress, range, [20, 0, -20]);
-  const blur = useTransform(progress, [range[0], range[1]], [10, 0]);
+  const blurValue = useTransform(progress, [range[0], range[1]], [20, 0]);
+  const blur = useTransform(blurValue, (v) => `blur(${v}px)`);
 
   return (
-    <motion.h3 
-      style={{ opacity, y, filter: useTransform(blur, b => `blur(${b}px)`) }}
-      className={cn("text-3xl md:text-6xl font-headline font-bold text-white tracking-tight", className)}
+    <motion.div 
+      style={{ opacity, y, filter: blur }}
+      className="space-y-2"
     >
-      {text}
-    </motion.h3>
+      <h3 className={cn("text-2xl md:text-5xl font-headline font-bold text-white tracking-tight", className)}>
+        {text}
+      </h3>
+      <p className="text-lg md:text-2xl text-white/20 font-light italic">{subtext}</p>
+    </motion.div>
   );
 }
