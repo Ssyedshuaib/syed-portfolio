@@ -111,7 +111,7 @@ export function ProductEcosystem() {
     <section id="ecosystem" className="py-48 px-6 bg-background relative overflow-hidden">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto space-y-24">
+      <div className="max-w-[1440px] mx-auto space-y-24">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

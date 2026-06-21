@@ -27,7 +27,7 @@ export function SkillsClusters() {
     <section className="py-48 px-6 bg-[#0F1317] relative overflow-hidden">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto space-y-32">
+      <div className="max-w-[1440px] mx-auto space-y-32">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -35,7 +35,7 @@ export function SkillsClusters() {
           className="text-center space-y-8"
         >
           <h2 className="text-[10px] font-bold tracking-[0.6em] text-[#536878] uppercase">Capabilities</h2>
-          <h3 className="text-5xl md:text-7xl font-headline font-bold text-white tracking-tighter">Systems I Build With</h3>
+          <h3 className="text-5xl md:text-7xl font-headline font-black tracking-tighter text-white">Systems I Build With</h3>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

@@ -138,7 +138,7 @@ export function Contact() {
           </motion.div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 py-32">
+        <div className="max-w-[1440px] mx-auto px-6 py-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-end">
             <div className="space-y-16">
               <div className="space-y-8">

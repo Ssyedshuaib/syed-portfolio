@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from "react";
@@ -77,12 +76,12 @@ export function FounderProfile() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-10%" }}
-        className="max-w-7xl mx-auto relative z-10"
+        className="max-w-[1440px] mx-auto relative z-10"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-32 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-12 lg:gap-20 items-start">
           
-          {/* Left Column: Info */}
-          <motion.div variants={revealVariants} className="lg:col-span-4 space-y-20">
+          {/* Left Column: Info (30% Balance) */}
+          <motion.div variants={revealVariants} className="lg:col-span-3 space-y-20">
             <div className="space-y-12">
               <div className="space-y-8">
                 <p className="text-[11px] font-bold tracking-[1em] text-primary/30 uppercase">
@@ -137,8 +136,8 @@ export function FounderProfile() {
             </div>
           </motion.div>
 
-          {/* Center Column: Portrait + Unified Stats Dashboard */}
-          <motion.div variants={revealVariants} className="lg:col-span-4 flex flex-col gap-6">
+          {/* Center Column: Portrait (30% Balance) */}
+          <motion.div variants={revealVariants} className="lg:col-span-3 flex flex-col gap-6">
             <motion.div 
               animate={{ y: [0, -5, 0] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -199,7 +198,7 @@ export function FounderProfile() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Philosophy & Ecosystem */}
+          {/* Right Column: Philosophy & Ecosystem (40% Balance) */}
           <motion.div variants={revealVariants} className="lg:col-span-4 space-y-20">
             <div className="glass p-16 rounded-[4.5rem] border-white/5 space-y-12 relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none group-hover:opacity-[0.08] transition-opacity duration-1000">

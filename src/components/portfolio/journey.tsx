@@ -61,7 +61,7 @@ export function Journey() {
     >
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-[1440px] mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

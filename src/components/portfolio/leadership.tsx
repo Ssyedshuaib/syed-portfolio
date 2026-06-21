@@ -37,7 +37,7 @@ export function Leadership() {
       <div className="absolute top-0 left-1/4 w-px h-full bg-white/[0.02] pointer-events-none" />
       <div className="absolute top-0 right-1/4 w-px h-full bg-white/[0.02] pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto space-y-32">
+      <div className="max-w-[1440px] mx-auto space-y-32">
         {/* Header Section */}
         <div className="max-w-3xl space-y-8">
           <motion.div

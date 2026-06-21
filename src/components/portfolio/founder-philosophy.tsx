@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useRef, useEffect } from "react";
@@ -102,7 +101,7 @@ export function FounderPhilosophy() {
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-32 md:pb-48">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
-      {/* FIXED MANIFESTO NAVIGATION RAIL - RESTORED & OPTIMIZED */}
+      {/* FIXED MANIFESTO NAVIGATION RAIL */}
       <motion.div 
         style={{ 
           opacity: railOpacity,
@@ -129,7 +128,7 @@ export function FounderPhilosophy() {
         </div>
       </motion.div>
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-[1440px] mx-auto px-6">
         <div className="py-48 space-y-8 text-center lg:text-left">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

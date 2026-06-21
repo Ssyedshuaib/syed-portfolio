@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -20,7 +21,7 @@ export function Footer() {
         </motion.h2>
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-[1440px] mx-auto relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end gap-16">
           
           {/* Credits Area */}
@@ -60,5 +61,3 @@ export function Footer() {
     </footer>
   );
 }
-
-import Link from "next/link";

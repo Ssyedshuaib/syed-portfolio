@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useRef } from "react";
@@ -57,11 +56,11 @@ export function AxoraProducts() {
 
   return (
     <section id="ecosystem" ref={containerRef} className="relative bg-background overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
+      <div className="max-w-[1440px] mx-auto px-6">
+        <div className="flex flex-col lg:flex-row justify-center gap-12 lg:gap-20">
           
-          {/* LEFT SIDE: Sticky Narrative */}
-          <div className="lg:w-1/3 pt-24 lg:pt-32">
+          {/* LEFT SIDE: Sticky Narrative (30% Balance) */}
+          <div className="lg:w-[30%] pt-24 lg:pt-32">
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -92,8 +91,8 @@ export function AxoraProducts() {
             </motion.div>
           </div>
 
-          {/* RIGHT SIDE: Vertical Scrolling Stories */}
-          <div className="lg:w-2/3 space-y-32 lg:space-y-48 pt-24 lg:pt-32 pb-48">
+          {/* RIGHT SIDE: Vertical Scrolling Stories (62% Balance - Pulled Inward) */}
+          <div className="lg:w-[62%] space-y-32 lg:space-y-48 pt-24 lg:pt-32 pb-48">
             {PRODUCTS.map((product, idx) => (
               <ProductChapter key={product.id} product={product} idx={idx} />
             ))}
