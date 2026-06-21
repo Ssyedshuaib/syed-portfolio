@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -14,17 +15,17 @@ export function LaptopMockup({ imageId }: LaptopMockupProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50, scale: 0.95 }}
+      initial={{ opacity: 0, y: 40, scale: 0.98 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-      className="relative z-20 group w-full max-w-4xl mx-auto"
+      className="relative z-20 group w-full max-w-[720px] mx-auto"
     >
       {/* Ambient Lighting Behind Device */}
-      <div className="absolute -inset-40 bg-primary/5 blur-[150px] rounded-full opacity-40 pointer-events-none group-hover:bg-primary/10 transition-colors duration-1000" />
+      <div className="absolute -inset-20 bg-primary/5 blur-[100px] rounded-full opacity-40 pointer-events-none group-hover:bg-primary/10 transition-colors duration-1000" />
 
       <motion.div
-        animate={{ y: [0, -10, 0] }}
+        animate={{ y: [0, -8, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         className="relative pt-[56.25%] w-full"
       >
@@ -61,7 +62,7 @@ export function LaptopMockup({ imageId }: LaptopMockupProps) {
       </motion.div>
 
       {/* Ground Shadow */}
-      <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-[80%] h-12 bg-black/60 blur-[40px] rounded-full -z-10" />
+      <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[80%] h-10 bg-black/60 blur-[35px] rounded-full -z-10" />
     </motion.div>
   );
 }

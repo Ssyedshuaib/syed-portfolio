@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useRef } from "react";
@@ -52,51 +53,30 @@ const PRODUCTS = [
 ];
 
 export function AxoraProducts() {
-  const containerRef = useRef(null);
-
   return (
-    <section id="ecosystem" ref={containerRef} className="relative bg-background overflow-hidden">
+    <section id="ecosystem" className="relative bg-background overflow-hidden py-32">
       <div className="max-w-[1440px] mx-auto px-6">
-        <div className="flex flex-col lg:flex-row justify-center gap-12 lg:gap-20">
-          
-          {/* LEFT SIDE: Sticky Narrative (30% Balance) */}
-          <div className="lg:w-[30%] pt-24 lg:pt-32">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              viewport={{ once: true }}
-              className="lg:sticky lg:top-32 space-y-8"
-            >
-              <div className="space-y-6">
-                <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">
-                  AXORA ECOSYSTEM
-                </p>
-                <h2 className="text-4xl md:text-5xl lg:text-[clamp(2.25rem,4.5vw,3rem)] font-headline font-black tracking-tighter text-white leading-[0.95]">
-                  Building <br />
-                  Products <br />
-                  <span className="text-primary italic font-medium">That Matter.</span>
-                </h2>
-                <p className="text-sm lg:text-base text-primary/60 font-light leading-relaxed max-w-sm">
-                  Axora is a venture studio dedicated to architecting digital ecosystems across education, memory, and future technologies.
-                </p>
-              </div>
-              
-              <div className="pt-10 border-t border-white/5 space-y-4">
-                <p className="text-[10px] font-bold tracking-[0.4em] text-primary/20 uppercase">Core Philosophy</p>
-                <p className="text-xs text-primary/40 leading-relaxed italic">
-                  "We build for impact, ensuring every line of code serves a larger human purpose."
-                </p>
-              </div>
-            </motion.div>
+        {/* Section Header */}
+        <div className="mb-32 text-center max-w-4xl mx-auto space-y-8">
+          <div className="space-y-6">
+            <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">
+              AXORA ECOSYSTEM
+            </p>
+            <h2 className="text-5xl md:text-7xl font-headline font-black tracking-tighter text-white uppercase italic">
+              Building Products <br />
+              <span className="text-primary not-italic opacity-80">That Matter.</span>
+            </h2>
+            <p className="text-base text-primary/40 font-light leading-relaxed max-w-xl mx-auto">
+              A venture studio dedicated to architecting digital ecosystems across education, memory, and future technologies.
+            </p>
           </div>
+        </div>
 
-          {/* RIGHT SIDE: Vertical Scrolling Stories (62% Balance - Pulled Inward) */}
-          <div className="lg:w-[62%] space-y-32 lg:space-y-48 pt-24 lg:pt-32 pb-48">
-            {PRODUCTS.map((product, idx) => (
-              <ProductChapter key={product.id} product={product} idx={idx} />
-            ))}
-          </div>
+        {/* Product Split-Layout Rows */}
+        <div className="space-y-24 lg:space-y-32">
+          {PRODUCTS.map((product, idx) => (
+            <ProductChapter key={product.id} product={product} idx={idx} />
+          ))}
         </div>
       </div>
     </section>
@@ -110,7 +90,7 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
     offset: ["start end", "end start"]
   });
 
-  const springY = useSpring(useTransform(scrollYProgress, [0, 1], [40, -40]), {
+  const springY = useSpring(useTransform(scrollYProgress, [0, 1], [30, -30]), {
     stiffness: 80,
     damping: 30
   });
@@ -124,16 +104,12 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
       transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
       className="relative group"
     >
-      <div className="space-y-12 relative z-10">
-        <div className={cn(
-          "flex flex-col gap-6",
-          idx % 2 === 0 ? "items-start" : "items-end text-right"
-        )}>
-          <div className="space-y-5 max-w-xl">
-            <div className={cn(
-              "flex items-center gap-6",
-              idx % 2 !== 0 && "flex-row-reverse"
-            )}>
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-24 min-h-[60vh]">
+        
+        {/* LEFT SIDE: Content (45% Width) */}
+        <div className="w-full lg:w-[45%] space-y-12 order-2 lg:order-1">
+          <div className="space-y-8">
+            <div className="flex items-center gap-6">
                <span className="text-[12px] font-mono font-bold tracking-[0.4em] text-primary/20">{product.id}</span>
                <div className="h-px w-8 bg-primary/10" />
                <Badge variant="outline" className="text-[7px] font-bold uppercase tracking-[0.3em] border-primary/10 text-primary/40 px-3 py-0.5 rounded-full">
@@ -141,39 +117,41 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
                </Badge>
             </div>
             
-            <div className="space-y-1.5">
+            <div className="space-y-3">
               <p className="text-[9px] font-bold tracking-[0.6em] text-primary/40 uppercase">{product.category}</p>
-              <h3 className="text-4xl md:text-6xl lg:text-[clamp(2.75rem,6.5vw,5.1rem)] font-headline font-black text-white tracking-tighter leading-none transition-colors group-hover:text-primary">
+              <h3 className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter leading-none transition-colors group-hover:text-primary">
                 {product.name}
               </h3>
-              <p className="text-lg md:text-xl font-headline font-light text-primary/60 italic tracking-tight">
-                {product.mission}
-              </p>
             </div>
 
-            <p className="text-base lg:text-lg text-primary/40 font-light leading-relaxed">
-              {product.description}
-            </p>
+            <div className="space-y-6">
+              <p className="text-xl md:text-2xl font-headline font-light text-primary/60 italic tracking-tight">
+                {product.mission}
+              </p>
+              <p className="text-base lg:text-lg text-primary/30 font-light leading-relaxed max-w-xl">
+                {product.description}
+              </p>
+            </div>
           </div>
 
-          <div className={cn(
-            "flex gap-8 pt-6 border-t border-white/5 w-full",
-            idx % 2 !== 0 && "justify-end"
-          )}>
+          <div className="flex gap-12 pt-10 border-t border-white/5 w-full">
             {product.metrics.map((metric: any) => (
-              <div key={metric.label} className="space-y-0.5">
-                <p className="text-xl md:text-2xl font-headline font-black text-white">{metric.value}</p>
-                <p className="text-[7px] font-bold tracking-[0.4em] text-primary/20 uppercase">{metric.label}</p>
+              <div key={metric.label} className="space-y-1">
+                <p className="text-2xl md:text-3xl font-headline font-black text-white">{metric.value}</p>
+                <p className="text-[8px] font-bold tracking-[0.4em] text-primary/20 uppercase">{metric.label}</p>
               </div>
             ))}
           </div>
         </div>
 
+        {/* RIGHT SIDE: Mockup (55% Width) */}
         <motion.div 
           style={{ y: springY }}
-          className="relative px-4 lg:px-0"
+          className="w-full lg:w-[55%] flex justify-end order-1 lg:order-2"
         >
-          <LaptopMockup imageId={product.imageId} />
+          <div className="w-full max-w-[760px]">
+            <LaptopMockup imageId={product.imageId} />
+          </div>
         </motion.div>
       </div>
     </motion.div>
