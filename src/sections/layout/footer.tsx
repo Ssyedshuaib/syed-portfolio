@@ -1,170 +1,149 @@
 
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
-import { StudioExperience } from "@/components/portfolio/StudioExperience";
 
-interface FooterProps {
-  onStudioStateChange?: (isOpen: boolean) => void;
-}
+/**
+ * THE FINAL SIGNATURE
+ * A calm, intentional, and premium conclusion to the digital ecosystem.
+ * Focuses on institutional restraint and professional authority.
+ */
 
-export function Footer({ onStudioStateChange }: FooterProps) {
-  const [isStudioOpen, setIsStudioOpen] = useState(false);
-
-  const handleOpenStudio = () => {
-    setIsStudioOpen(true);
-    onStudioStateChange?.(true);
-  };
-
-  const handleCloseStudio = () => {
-    setIsStudioOpen(false);
-    onStudioStateChange?.(false);
-  };
-
+export function Footer() {
   return (
-    <footer className="relative bg-background pt-96 pb-24 px-6 overflow-hidden" role="contentinfo">
-      {/* GIANT BACKGROUND SYED - RECALIBRATED SIZE & ALIGNMENT */}
+    <footer className="relative bg-background pt-64 pb-20 px-6 overflow-hidden" role="contentinfo">
+      {/* GIANT BACKGROUND SIGNATURE - ARCHITECTURAL WATERMARK */}
       <div 
-        className="footer-background-word"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: 'clamp(250px, 32vw, 600px)',
-          fontWeight: 900,
-          letterSpacing: '-0.08em',
-          color: 'rgba(255, 255, 255, 0.02)',
-          zIndex: 0,
-          pointerEvents: 'none',
-          userSelect: 'none',
-          lineHeight: 1,
-        }}
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
       >
         <motion.span
-          animate={{ scale: [1, 1.015, 1] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
+          initial={{ opacity: 0 }}
+          animate={{ 
+            opacity: 0.025,
+            scale: [1, 1.015, 1],
+          }}
+          transition={{ 
+            opacity: { duration: 2 },
+            scale: { duration: 30, repeat: Infinity, ease: "easeInOut" }
+          }}
+          style={{
+            fontSize: 'min(90vw, 1400px)',
+            fontWeight: 900,
+            letterSpacing: '-0.08em',
+            color: 'white',
+            lineHeight: 1,
+            whiteSpace: 'nowrap'
+          }}
         >
           SYED
         </motion.span>
       </div>
 
-      {/* FOOTER CONTENT WRAPPER */}
-      <div className="footer-content relative z-10 max-w-7xl mx-auto flex flex-col items-center text-center">
+      {/* FOOTER CONTENT - PRECISION CENTERED COMPOSITION */}
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col items-center">
         
-        {/* THE STUDIO PORTAL */}
-        <div className="mb-48">
-          <OrbitalPortal onClick={handleOpenStudio} />
-        </div>
-
-        {/* THE SIGNATURE BLOCK */}
-        <div className="space-y-32 w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.5 }}
-            className="space-y-6"
-          >
-            <div className="space-y-2">
-              <h3 className="text-2xl font-headline font-bold text-white tracking-tight">SYED SHUAIB</h3>
-              <div className="flex flex-col gap-1 text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">
-                <span>Founder • Product Builder • System Architect</span>
+        {/* 01. THE FOUNDER SIGNATURE */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-32"
+        >
+          <div className="space-y-10">
+            <div className="space-y-6">
+              <h3 className="text-3xl md:text-4xl font-headline font-bold text-white tracking-tight">SYED SHUAIB</h3>
+              <div className="flex flex-col gap-3 text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">
+                <span>Founder</span>
+                <span>Product Builder</span>
+                <span>System Architect</span>
               </div>
             </div>
-            <div className="h-px w-12 bg-white/5 mx-auto" />
-          </motion.div>
+            <div className="h-px w-10 bg-white/10 mx-auto" />
+          </div>
+        </motion.div>
 
-          <div className="text-lg md:text-xl font-light tracking-[0.4em] text-[#EAE0C8] uppercase opacity-50">
+        {/* 02. IDENTITY & PHILOSOPHY */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, delay: 0.4 }}
+          className="text-center space-y-4 mb-20"
+        >
+          <div className="text-xl font-light tracking-[0.5em] text-[#EAE0C8] uppercase">
             AXORA
           </div>
+          <p className="text-[10px] font-bold tracking-[0.4em] text-white/20 uppercase italic">
+            "Building systems that outlast trends."
+          </p>
+        </motion.div>
 
-          <div className="text-[11px] font-bold tracking-[0.6em] text-white uppercase opacity-30">
-            Bangalore, India
-          </div>
+        {/* 03. QUIET INFO */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, delay: 0.6 }}
+          className="text-[10px] font-bold tracking-[0.6em] text-white/30 uppercase mb-24"
+        >
+          Bangalore, India
+        </motion.div>
 
-          {/* EDITORIAL LINKS */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-16 pt-12">
-            <EditorialLink label="Email" href="mailto:syedshuaib2429@gmail.com" />
-            <EditorialLink label="LinkedIn" href="https://www.linkedin.com/in/syedshuaib485/" />
-            <EditorialLink label="Schedule Discussion" href="#" isPrimary onClick={handleOpenStudio} />
-          </div>
+        {/* 04. EDITORIAL LINKS - REFINED DIALOGUE PATHS */}
+        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-24 mb-48">
+          <EditorialLink label="Email" href="mailto:syedshuaib2429@gmail.com" />
+          <EditorialLink label="LinkedIn" href="https://www.linkedin.com/in/syedshuaib485/" />
+          <EditorialLink label="Schedule Discussion" href="https://calendly.com/your-link" isPrimary />
+        </div>
 
-          {/* SIGNATURE STATEMENT */}
-          <div className="pt-32 space-y-12 border-t border-white/5 w-full max-w-4xl mx-auto">
-            <p className="text-[11px] font-bold tracking-[0.8em] text-white/20 uppercase italic">
-              "Building systems that outlast trends."
+        {/* 05. FINAL SEAL */}
+        <div className="pt-20 border-t border-white/5 w-full max-w-4xl flex flex-col md:flex-row justify-between items-center gap-8 opacity-20">
+          <p className="text-[9px] font-bold tracking-[0.4em] text-white uppercase">
+            &copy; {new Date().getFullYear()} AXORA
+          </p>
+          <div className="flex items-center gap-4">
+            <div className="w-1 h-1 rounded-full bg-primary/40" />
+            <p className="text-[9px] font-bold tracking-[0.5em] text-white uppercase italic">
+              Designed With Intention.
             </p>
-            <div className="flex flex-col md:flex-row justify-between items-center gap-8 opacity-20">
-              <p className="text-[9px] font-bold tracking-[0.4em] text-white uppercase">
-                &copy; {new Date().getFullYear()} AXORA
-              </p>
-              <p className="text-[9px] font-bold tracking-[0.5em] text-white uppercase italic">
-                Designed With Intention.
-              </p>
-            </div>
           </div>
         </div>
       </div>
 
-      {/* ENTER THE STUDIO EXPERIENCE */}
-      <AnimatePresence>
-        {isStudioOpen && (
-          <StudioExperience onClose={handleCloseStudio} />
-        )}
-      </AnimatePresence>
-
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-96 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_70%)] pointer-events-none" />
+      {/* Atmospheric Horizon Glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[50vh] bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.02),transparent_70%)] pointer-events-none" />
     </footer>
   );
 }
 
-function EditorialLink({ label, href, isPrimary = false, onClick }: { label: string; href: string; isPrimary?: boolean; onClick?: () => void }) {
+function EditorialLink({ label, href, isPrimary = false }: { label: string; href: string; isPrimary?: boolean }) {
   return (
-    <a
-      href={onClick ? "#" : href}
-      target={onClick ? undefined : "_blank"}
-      rel={onClick ? undefined : "noopener noreferrer"}
-      onClick={(e) => {
-        if (onClick) {
-          e.preventDefault();
-          onClick();
-        }
-      }}
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      whileHover={{ x: 8 }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        "group relative py-2 text-xs font-bold tracking-[0.5em] uppercase transition-colors duration-500 flex items-center gap-3 cursor-pointer",
-        isPrimary ? "text-primary" : "text-white/30 hover:text-white"
+        "group relative py-2 text-[10px] font-bold tracking-[0.5em] uppercase transition-all duration-500 flex items-center gap-4 cursor-pointer",
+        isPrimary ? "text-primary drop-shadow-[0_0_12px_rgba(234,224,200,0.2)]" : "text-white/40 hover:text-white"
       )}
     >
       <span className="relative">
         {label}
-        <span className="absolute bottom-0 left-0 w-0 h-px bg-current transition-all duration-700 group-hover:w-full" />
+        <span className={cn(
+          "absolute -bottom-1 left-0 h-[1px] bg-current transition-all duration-700",
+          isPrimary ? "w-6 group-hover:w-full opacity-40 group-hover:opacity-100" : "w-0 group-hover:w-full"
+        )} />
       </span>
-      <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-40 group-hover:translate-x-0 transition-all duration-500" />
-    </a>
-  );
-}
-
-function OrbitalPortal({ onClick }: { onClick: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      className="group relative w-64 h-64 flex items-center justify-center cursor-pointer"
-    >
-      <motion.div 
-        animate={{ rotate: 360 }}
-        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-        className="absolute inset-0 border border-white/[0.03] rounded-full"
-      />
-      <div className="w-40 h-44 rounded-full glass border-white/5 flex items-center justify-center relative overflow-hidden transition-all duration-1000 group-hover:border-primary/20 group-hover:shadow-[0_0_80px_rgba(234,224,200,0.08)]">
-        <span className="relative z-10 text-[10px] font-bold tracking-[0.5em] text-white/40 group-hover:text-primary transition-colors text-center px-4 leading-relaxed uppercase">
-          ENTER THE <br />STUDIO
-        </span>
-      </div>
-    </button>
+      <ArrowUpRight className={cn(
+        "w-3 h-3 transition-all duration-500",
+        isPrimary ? "opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" : "opacity-0 -translate-x-2 group-hover:opacity-40 group-hover:translate-x-0"
+      )} />
+    </motion.a>
   );
 }
