@@ -15,9 +15,9 @@ import { ArrowUpRight } from "lucide-react";
 export function Footer() {
   return (
     <footer className="relative bg-background pt-64 pb-20 px-6 overflow-hidden" role="contentinfo">
-      {/* 00. GIANT BACKGROUND SIGNATURE - ARCHITECTURAL WATERMARK */}
+      {/* 00. GIANT BACKGROUND SIGNATURE - ARCHITECTURAL TEXTURE */}
       <div 
-        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
+        className="absolute inset-0 flex items-end justify-center pointer-events-none select-none z-0 overflow-hidden"
       >
         <motion.span
           initial={{ opacity: 0 }}
@@ -30,12 +30,13 @@ export function Footer() {
             scale: { duration: 30, repeat: Infinity, ease: "easeInOut" }
           }}
           style={{
-            fontSize: 'min(65vw, 1100px)',
+            fontSize: 'min(90vw, 1800px)',
             fontWeight: 900,
             letterSpacing: '-0.08em',
-            color: 'rgba(255, 255, 255, 0.025)',
+            color: 'rgba(255, 255, 255, 0.012)',
             lineHeight: 1,
-            whiteSpace: 'nowrap'
+            whiteSpace: 'nowrap',
+            transform: 'translateY(35%)', // Anchor typography lower as luxury texture
           }}
         >
           SYED
