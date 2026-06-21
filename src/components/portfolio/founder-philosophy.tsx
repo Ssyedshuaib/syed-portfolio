@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useInView, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useInView, useScroll, useSpring, useTransform, AnimatePresence, MotionValue } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const PRINCIPLES = [
@@ -68,10 +68,11 @@ export function FounderPhilosophy() {
   const progressFill = useSpring(mainProgress, { stiffness: 100, damping: 30 });
   const railProgressHeight = useTransform(progressFill, [0, 0.8], ["0%", "100%"]);
 
-  // Finale Transforms
+  // Finale Transforms declared at top level
   const finaleOpacity = useTransform(storyProgress, [0.88, 0.95, 1], [0, 1, 1]);
   const finaleY = useTransform(storyProgress, [0.88, 0.95], [40, 0]);
-  const finaleFilter = useTransform(storyProgress, [0.88, 0.93, 0.95], ["blur(30px)", "blur(15px)", "blur(0px)"]);
+  const finaleBlur = useTransform(storyProgress, [0.88, 0.93, 0.95], [30, 15, 0]);
+  const finaleFilter = useTransform(finaleBlur, (v) => `blur(${v}px)`);
   const theatricalDim = useTransform(storyProgress, [0.8, 1], [0, 0.6]);
 
   return (
@@ -162,7 +163,7 @@ export function FounderPhilosophy() {
           </motion.div>
         </div>
 
-        {/* Chapters */}
+        {/* Chapters: Presentation Slide Mode */}
         <div className="relative space-y-0">
           {PRINCIPLES.map((principle, idx) => (
             <PrincipleChapter 
@@ -174,7 +175,7 @@ export function FounderPhilosophy() {
           ))}
         </div>
 
-        {/* FINAL CINEMATIC STORYTELLING SEQUENCE */}
+        {/* FINAL CINEMATIC STORYTELLING SEQUENCE: Dead-Centered */}
         <div ref={storyRef} className="relative h-[300vh]">
           <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
             <motion.div 
@@ -185,7 +186,7 @@ export function FounderPhilosophy() {
               className="absolute inset-0 pointer-events-none z-0"
             />
             
-            <div className="space-y-24 w-full max-w-6xl mx-auto relative z-10 flex flex-col items-center justify-center px-6">
+            <div className="space-y-24 w-full max-w-6xl mx-auto relative z-10 flex flex-col items-center justify-center px-6 h-full">
                <StoryLine progress={storyProgress} range={[0.0, 0.15, 0.25]} text="Most companies build products." />
                <StoryLine progress={storyProgress} range={[0.25, 0.40, 0.50]} text="We build systems." className="text-primary italic font-medium" />
                <StoryLine progress={storyProgress} range={[0.50, 0.65, 0.75]} text="Systems create ecosystems." />
@@ -235,7 +236,6 @@ function StoryLine({ progress, range, text, className }: { progress: any, range:
         opacity, 
         y, 
         filter: filterStyle,
-        WebkitFilter: filterStyle
       }}
       className={cn(
         "text-4xl md:text-7xl font-light text-[#EAE0C8] tracking-tight leading-tight select-none text-center",
@@ -260,6 +260,7 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
   const isRight = idx % 2 === 0;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   
+  // Chapter transforms declared at top level
   const opacity = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0, 1, 1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.95, 1, 1, 0.95]);
 
@@ -267,7 +268,7 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
     <motion.div
       ref={ref}
       style={{ opacity, scale }}
-      className="relative min-h-screen lg:min-h-[110vh] sticky top-0 flex items-center justify-center py-20 px-6 overflow-hidden bg-background"
+      className="relative min-h-[110vh] flex items-center justify-center py-20 px-6 overflow-hidden bg-background"
     >
       {/* Cinematic Watermark Number */}
       <div className={cn(
