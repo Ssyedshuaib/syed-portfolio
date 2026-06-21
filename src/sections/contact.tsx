@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useRef } from "react";
-import { motion, useSpring, useMotionValue, AnimatePresence, LayoutGroup, useTransform } from "framer-motion";
+import React, { useState, useEffect, useMemo } from "react";
+import { motion, useSpring, useMotionValue, AnimatePresence, LayoutGroup } from "framer-motion";
 import { 
   ArrowRight, 
   Clock, 
   MapPin, 
-  Target,
   ArrowUpRight,
   X,
   Mail,
@@ -14,7 +13,10 @@ import {
   MoveLeft,
   Sparkles,
   Command,
-  Activity
+  Activity,
+  Cpu,
+  Target,
+  Zap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -56,10 +58,20 @@ const TOPICS = [
   },
 ];
 
+const TRANSITION_MESSAGES = [
+  "Preparing The Conversation...",
+  "Connecting Ideas...",
+  "Opening The Studio...",
+  "Initializing Dialogue...",
+  "Preparing The Next Step...",
+];
+
 export function Contact() {
   const [time, setTime] = useState("");
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedTopicId, setSelectedTopicId] = useState<string | null>(null);
+  const [isExiting, setIsExiting] = useState(false);
+  const [exitMessage, setExitMessage] = useState("");
 
   const selectedTopic = useMemo(() => 
     TOPICS.find(t => t.id === selectedTopicId), 
@@ -107,9 +119,24 @@ export function Contact() {
     setSelectedTopicId(null);
   };
 
+  const handleExternalNavigation = (href: string) => {
+    setExitMessage(TRANSITION_MESSAGES[Math.floor(Math.random() * TRANSITION_MESSAGES.length)]);
+    setIsExiting(true);
+    
+    setTimeout(() => {
+      window.open(href, '_blank');
+      setIsExiting(false);
+    }, 950);
+  };
+
   return (
-    <section id="contact" className="relative bg-background overflow-hidden py-48">
-      {/* Background Ambience Integration */}
+    <section id="contact" className="relative bg-background overflow-hidden py-48 md:py-64">
+      {/* Cinematic Background Layering */}
+      <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 w-[600px] h-[600px] bg-primary/5 blur-[150px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none translate-x-1/2 translate-y-1/2" />
+
+      {/* Modal / Portal Backdrop */}
       <AnimatePresence>
         {isExpanded && (
           <motion.div
@@ -124,49 +151,114 @@ export function Contact() {
         )}
       </AnimatePresence>
 
+      {/* Premium Exit Transition Screen */}
+      <AnimatePresence>
+        {isExiting && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] bg-[#050505] flex flex-col items-center justify-center pointer-events-auto"
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_70%)]" />
+            <motion.div
+              initial={{ y: 20, opacity: 0, filter: "blur(10px)" }}
+              animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="text-center space-y-8 relative z-10"
+            >
+              <div className="w-1.5 h-1.5 rounded-full bg-primary mx-auto animate-pulse" />
+              <h2 className="text-2xl md:text-3xl font-headline font-light text-white tracking-widest uppercase italic">
+                {exitMessage}
+              </h2>
+              <div className="h-px w-12 bg-primary/20 mx-auto" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="max-w-[1440px] mx-auto px-6 relative z-10">
-        <motion.div
-          animate={{ 
-            opacity: isExpanded ? 0.05 : 1,
-            scale: isExpanded ? 0.98 : 1,
-            filter: isExpanded ? "blur(20px)" : "blur(0px)"
-          }}
-          transition={{ duration: 1 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center"
-        >
-          {/* Narrative Branding */}
-          <div className="space-y-16">
-            <div className="space-y-8 max-w-lg">
-              <p className="text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase">Institutional Contact</p>
-              <h3 className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter leading-[1.05] italic uppercase">
+        {/* Supporting Architectural Elements (The "Studio" Environment) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+          
+          {/* Left Column: Contextual Scaffolding */}
+          <div className="lg:col-span-4 space-y-24 order-2 lg:order-1">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-12"
+            >
+              <div className="space-y-6">
+                <p className="text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase">Institutional Note</p>
+                <div className="h-px w-12 bg-primary/10" />
+                <h4 className="text-xl md:text-2xl font-headline font-bold text-white tracking-tight leading-relaxed max-w-xs">
+                  "I build for a future where technology simplifies the human experience."
+                </h4>
+              </div>
+
+              <div className="space-y-8">
+                <div className="space-y-4">
+                  <p className="text-[9px] font-bold tracking-[0.4em] text-primary/30 uppercase">Currently Focused On</p>
+                  <div className="flex flex-wrap gap-3">
+                    {["Education Systems", "Memory Platforms", "Product Architecture"].map((focus) => (
+                      <span key={focus} className="px-4 py-2 rounded-full glass border-white/5 text-[9px] font-bold tracking-widest text-[#EAE0C8]/60 uppercase">
+                        {focus}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <p className="text-[9px] font-bold tracking-[0.4em] text-primary/30 uppercase">Open For</p>
+                  <div className="flex flex-wrap gap-3">
+                    {["Ventures", "Consulting", "Strategic Design"].map((collab) => (
+                      <div key={collab} className="flex items-center gap-2">
+                        <div className="w-1 h-1 rounded-full bg-primary/40" />
+                        <span className="text-[10px] font-bold tracking-widest text-white/40 uppercase">{collab}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="pt-12 border-t border-white/5 space-y-6"
+            >
+              <div className="flex items-center gap-4 text-primary/40">
+                <MapPin className="w-4 h-4" />
+                <p className="text-[10px] font-bold tracking-[0.5em] uppercase">Bangalore, India</p>
+              </div>
+              <div className="flex items-center gap-4 text-primary/40">
+                <Clock className="w-4 h-4" />
+                <p className="text-[10px] font-bold tracking-[0.5em] uppercase">Local Time: {time}</p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right Column: Interaction Core */}
+          <div className="lg:col-span-8 flex flex-col items-center lg:items-end justify-center gap-20 order-1 lg:order-2">
+            <motion.div
+              animate={{ 
+                opacity: isExpanded ? 0.05 : 1,
+                scale: isExpanded ? 0.98 : 1,
+                filter: isExpanded ? "blur(20px)" : "blur(0px)"
+              }}
+              transition={{ duration: 1 }}
+              className="text-center lg:text-right space-y-8 max-w-xl"
+            >
+              <p className="text-[10px] font-bold tracking-[1em] text-primary/30 uppercase">Dialogue Hub</p>
+              <h3 className="text-4xl md:text-7xl font-headline font-black text-white tracking-tighter leading-[1.05] italic uppercase">
                 Let's Build <br />
                 <span className="text-primary/20 not-italic">The Future.</span>
               </h3>
-              <p className="text-lg md:text-xl text-[#EAE0C8]/40 font-light leading-relaxed">
-                Open to discussions about products, ecosystems, ventures, and long-term systems architecture.
-              </p>
-            </div>
+            </motion.div>
 
-            <div className="flex flex-wrap gap-8">
-              <div className="flex items-center gap-6 glass px-8 py-5 rounded-2xl border-white/5">
-                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                <div className="space-y-1">
-                  <p className="text-[9px] font-bold tracking-[0.4em] text-primary/30 uppercase">Studio Location</p>
-                  <p className="text-lg font-headline font-medium text-white tracking-widest uppercase">Bangalore, IN</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-6 glass px-8 py-5 rounded-2xl border-white/5">
-                <Clock className="w-4 h-4 text-primary/20" />
-                <div className="space-y-1">
-                  <p className="text-[9px] font-bold tracking-[0.4em] text-primary/30 uppercase">Local Time</p>
-                  <p className="text-lg font-mono font-medium text-white tracking-widest">{time}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Engagement Portal Trigger Area */}
-          <div className="flex justify-center lg:justify-end">
             <LayoutGroup>
               <motion.div
                 layout
@@ -187,7 +279,6 @@ export function Contact() {
                     : "w-72 h-72 md:w-80 md:h-80 rounded-full glass border-white/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)]"
                 )}
               >
-                {/* Internal Refractive Artifact Rendering */}
                 {!isExpanded && (
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <motion.div 
@@ -215,7 +306,7 @@ export function Contact() {
                       exit={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
                       className="relative z-10 text-center space-y-4 px-10"
                     >
-                      <span className="text-[10px] font-bold tracking-[1em] text-primary/40 uppercase">Dialogue</span>
+                      <span className="text-[10px] font-bold tracking-[1em] text-primary/40 uppercase">Open Portal</span>
                       <h4 className="text-xl md:text-2xl font-headline font-black text-white tracking-[0.3em] uppercase leading-tight italic">
                         Enter The <br /> Studio
                       </h4>
@@ -229,15 +320,13 @@ export function Contact() {
                       exit={{ opacity: 0 }}
                       className="w-full h-full flex flex-col p-12 md:p-20 relative overflow-hidden"
                     >
-                      {/* Close Control */}
                       <button 
                         onClick={(e) => { e.stopPropagation(); handleReset(); }} 
-                        className="absolute top-8 right-8 z-50 p-4 rounded-full glass border-white/5 hover:border-white/20 hover:rotate-90 hover:bg-white/5 transition-all duration-700 group/close"
+                        className="absolute top-8 right-8 z-50 p-4 rounded-full glass border-white/5 hover:border-white/20 hover:rotate-90 transition-all duration-700 group/close"
                       >
                         <X className="w-6 h-6 text-[#536878] group-hover/close:text-white" />
                       </button>
 
-                      {/* Content Stagger Logic */}
                       <div className="relative z-10 h-full flex flex-col justify-between">
                         <AnimatePresence mode="wait">
                           {!selectedTopicId ? (
@@ -250,7 +339,7 @@ export function Contact() {
                             >
                               <div className="space-y-6">
                                 <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">Founder Dialogue</p>
-                                <h4 className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter italic">
+                                <h4 className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter italic uppercase">
                                   Select a category <br />
                                   <span className="text-[#536878] not-italic opacity-40">for discussion.</span>
                                 </h4>
@@ -315,14 +404,13 @@ export function Contact() {
                                   { label: selectedTopic?.ctaLabel, icon: Activity, sub: "System action required.", href: "mailto:syedshuaib2429@gmail.com" },
                                   { label: "Studio Hub", icon: Command, sub: "Institutional resources.", href: "https://axora.in" }
                                 ].map((action, i) => (
-                                  <motion.a
+                                  <motion.button
                                     key={action.label}
                                     initial={{ opacity: 0, y: 15 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.2 + (i * 0.08) }}
-                                    href={action.href}
-                                    target={action.label !== "Email" ? "_blank" : undefined}
-                                    className="group flex items-center justify-between p-6 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-primary/20 hover:bg-white/[0.04] transition-all duration-500"
+                                    onClick={() => handleExternalNavigation(action.href)}
+                                    className="group flex items-center justify-between p-6 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-primary/20 hover:bg-white/[0.04] transition-all duration-500 text-left w-full"
                                   >
                                     <div className="flex items-center gap-6">
                                       <div className="w-12 h-12 rounded-2xl glass border-white/5 flex items-center justify-center text-primary/30 group-hover:text-primary transition-all duration-500">
@@ -334,14 +422,13 @@ export function Contact() {
                                       </div>
                                     </div>
                                     <ArrowUpRight className="w-5 h-5 text-primary/20 group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-500" />
-                                  </motion.a>
+                                  </motion.button>
                                 ))}
                               </div>
                             </motion.div>
                           )}
                         </AnimatePresence>
 
-                        {/* Studio Interaction Footer */}
                         <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 opacity-40">
                            <div className="flex items-center gap-8">
                               <div className="space-y-1">
@@ -365,11 +452,8 @@ export function Contact() {
               </motion.div>
             </LayoutGroup>
           </div>
-        </motion.div>
+        </div>
       </div>
-
-      {/* Decorative Structural Baseline */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-32 bg-gradient-to-t from-primary/10 to-transparent" />
     </section>
   );
 }
