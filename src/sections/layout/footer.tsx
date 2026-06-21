@@ -19,9 +19,9 @@ export function Footer() {
       <div 
         style={{
           position: 'absolute',
-          bottom: '-12%',
+          top: '50%',
           left: '50%',
-          transform: 'translateX(-50%)',
+          transform: 'translate(-50%, -50%)',
           zIndex: 0,
           pointerEvents: 'none',
           userSelect: 'none',
