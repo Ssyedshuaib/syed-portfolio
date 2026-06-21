@@ -4,11 +4,11 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { ArrowUpRight, X, Sparkles, Calendar, Mail, Linkedin, ChevronRight } from "lucide-react";
+import { ArrowUpRight, X, Sparkles, Calendar, Mail, Linkedin, ChevronRight, ArrowLeft } from "lucide-react";
 
 /**
  * THE FOUNDER SIGNATURE & STUDIO EXPERIENCE
- * A world-class cinematic finale and private dialogue hub.
+ * Re-engineered for a cinematic, typography-led dialogue hub.
  */
 
 interface FooterProps {
@@ -44,9 +44,9 @@ export function Footer({ onStudioStateChange }: FooterProps) {
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
         <motion.h2
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 0.03 }}
+          whileInView={{ opacity: 0.035 }}
           viewport={{ once: true }}
-          className="text-[35vw] font-headline font-black text-white tracking-tighter leading-none text-center animate-breathing"
+          className="text-[80vw] font-headline font-black text-white tracking-tighter leading-none text-center animate-breathing whitespace-nowrap"
         >
           SYED
         </motion.h2>
@@ -54,12 +54,12 @@ export function Footer({ onStudioStateChange }: FooterProps) {
 
       <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center text-center">
         
-        {/* THE STUDIO PORTAL (Interactive Artifact) */}
+        {/* THE STUDIO PORTAL (The Artifact) */}
         <div className="mb-48">
           <OrbitalPortal onClick={handleOpenStudio} />
         </div>
 
-        {/* THE SIGNATURE BLOCK (Founder Identity) */}
+        {/* THE SIGNATURE BLOCK */}
         <div className="space-y-32 w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -79,7 +79,6 @@ export function Footer({ onStudioStateChange }: FooterProps) {
             <div className="h-px w-12 bg-white/5 mx-auto" />
           </motion.div>
 
-          {/* Institutional Detail */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 0.5 }}
@@ -100,14 +99,14 @@ export function Footer({ onStudioStateChange }: FooterProps) {
             Bangalore, India
           </motion.div>
 
-          {/* PREMIUM EDITORIAL LINKS */}
+          {/* EDITORIAL LINKS */}
           <div className="flex flex-col md:flex-row items-center justify-center gap-16 pt-12">
             <EditorialLink label="Email" href="mailto:syedshuaib2429@gmail.com" />
             <EditorialLink label="LinkedIn" href="https://www.linkedin.com/in/syedshuaib485/" />
-            <EditorialLink label="Schedule Discussion" href="#" isPrimary />
+            <EditorialLink label="Schedule Discussion" href="#" isPrimary onClick={handleOpenStudio} />
           </div>
 
-          {/* SIGNATURE STATEMENT & COPYRIGHT */}
+          {/* SIGNATURE STATEMENT */}
           <div className="pt-32 space-y-12 border-t border-white/5 w-full max-w-4xl mx-auto">
             <p className="text-[11px] font-bold tracking-[0.8em] text-white/20 uppercase italic">
               "Building systems that outlast trends."
@@ -127,7 +126,7 @@ export function Footer({ onStudioStateChange }: FooterProps) {
       {/* CINEMATIC STUDIO MODE OVERLAY */}
       <AnimatePresence>
         {isStudioOpen && (
-          <StudioExperience onClose={handleCloseStudio} initialView={activeView} />
+          <StudioExperience onClose={handleCloseStudio} />
         )}
       </AnimatePresence>
 
@@ -136,14 +135,20 @@ export function Footer({ onStudioStateChange }: FooterProps) {
   );
 }
 
-function EditorialLink({ label, href, isPrimary = false }: { label: string; href: string; isPrimary?: boolean }) {
+function EditorialLink({ label, href, isPrimary = false, onClick }: { label: string; href: string; isPrimary?: boolean; onClick?: () => void }) {
   return (
     <motion.a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={onClick ? "#" : href}
+      target={onClick ? undefined : "_blank"}
+      rel={onClick ? undefined : "noopener noreferrer"}
+      onClick={(e) => {
+        if (onClick) {
+          e.preventDefault();
+          onClick();
+        }
+      }}
       className={cn(
-        "group relative py-2 text-xs font-bold tracking-[0.5em] uppercase transition-colors duration-500 flex items-center gap-3",
+        "group relative py-2 text-xs font-bold tracking-[0.5em] uppercase transition-colors duration-500 flex items-center gap-3 cursor-pointer",
         isPrimary ? "text-primary" : "text-white/30 hover:text-white"
       )}
     >
@@ -200,22 +205,6 @@ function OrbitalPortal({ onClick }: { onClick: () => void }) {
           className="absolute inset-0 bg-primary/5 blur-2xl rounded-full"
         />
       </div>
-
-      {[...Array(6)].map((_, i) => (
-        <motion.div
-          key={i}
-          animate={{ 
-            y: [0, -15, 0],
-            opacity: [0.1, 0.3, 0.1]
-          }}
-          transition={{ duration: 4 + i, repeat: Infinity, delay: i * 0.8 }}
-          className="absolute w-0.5 h-0.5 bg-primary/40 rounded-full blur-[1px]"
-          style={{ 
-            top: `${15 + Math.random() * 70}%`, 
-            left: `${15 + Math.random() * 70}%` 
-          }}
-        />
-      ))}
     </motion.button>
   );
 }
@@ -227,8 +216,8 @@ const STUDIO_INTRO_STEPS = [
   "Let's build something that matters."
 ];
 
-function StudioExperience({ onClose, initialView }: { onClose: () => void, initialView: any }) {
-  const [view, setView] = useState(initialView);
+function StudioExperience({ onClose }: { onClose: () => void }) {
+  const [view, setView] = useState<"intro" | "hub" | "build" | "explore" | "scheduling">("intro");
   const [introIndex, setIntroIndex] = useState(0);
 
   useEffect(() => {
@@ -237,10 +226,10 @@ function StudioExperience({ onClose, initialView }: { onClose: () => void, initi
         setIntroIndex((prev) => {
           if (prev < STUDIO_INTRO_STEPS.length - 1) return prev + 1;
           clearInterval(timer);
-          setTimeout(() => setView("hub"), 1200);
+          setTimeout(() => setView("hub"), 2000);
           return prev;
         });
-      }, 2200);
+      }, 3000); // 1.5s display + 1.5s pause
       return () => clearInterval(timer);
     }
   }, [view]);
@@ -255,20 +244,22 @@ function StudioExperience({ onClose, initialView }: { onClose: () => void, initi
       <div className="absolute inset-0 blueprint-grid opacity-[0.01]" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.06),transparent_75%)]" />
 
+      {/* Subtle Return Path */}
       <button 
         onClick={onClose} 
-        className="absolute top-10 right-10 z-[1001] text-[9px] font-bold tracking-[0.5em] text-white/20 hover:text-white uppercase transition-colors flex items-center gap-3"
+        className="absolute top-12 left-12 z-[1001] text-[9px] font-bold tracking-[0.5em] text-white/20 hover:text-white uppercase transition-colors flex items-center gap-4 group"
       >
-        <X className="w-4 h-4" /> Exit Studio
+        <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" /> 
+        Return To Website
       </button>
 
       <AnimatePresence mode="wait">
         {view === "intro" && (
           <motion.div 
             key="intro"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, filter: "blur(20px)" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, filter: "blur(40px)" }}
             className="text-center max-w-2xl px-6"
           >
             <AnimatePresence mode="wait">
@@ -277,8 +268,8 @@ function StudioExperience({ onClose, initialView }: { onClose: () => void, initi
                 initial={{ opacity: 0, y: 20, filter: "blur(15px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 exit={{ opacity: 0, y: -10, filter: "blur(10px)" }}
-                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                className="text-2xl md:text-4xl font-headline font-light text-white tracking-tight italic"
+                transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                className="text-2xl md:text-5xl font-headline font-light text-white tracking-tight italic"
               >
                 {STUDIO_INTRO_STEPS[introIndex]}
               </motion.p>
@@ -291,34 +282,52 @@ function StudioExperience({ onClose, initialView }: { onClose: () => void, initi
             key="hub"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex flex-col items-center justify-center gap-16 md:gap-24 w-full"
+            className="flex flex-col items-center justify-center gap-16 md:gap-32 w-full"
           >
-            <div className="space-y-8 text-center">
-               <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">Studio Hub</p>
-            </div>
-            <div className="flex flex-col items-center gap-12 md:gap-16">
+            <div className="flex flex-col items-center gap-12 md:gap-20">
               <HubAction label="BUILD SOMETHING" onClick={() => setView("build")} />
               <HubAction label="EXPLORE AXORA" onClick={() => setView("explore")} />
               <HubAction label="SCHEDULE DISCUSSION" onClick={() => setView("scheduling")} highlight />
             </div>
+            
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.15 }}
+              transition={{ delay: 1 }}
+              className="text-[9px] font-bold tracking-[1em] text-white uppercase mt-12"
+            >
+              The Studio is Open
+            </motion.div>
           </motion.div>
         )}
 
         {view === "build" && (
           <motion.div 
             key="build"
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex flex-col items-center gap-16 w-full max-w-4xl"
+            className="flex flex-col items-center gap-16 w-full max-w-5xl"
           >
-            <button onClick={() => setView("hub")} className="text-[9px] font-bold tracking-[0.5em] text-white/30 hover:text-white uppercase mb-4">← Back to Hub</button>
-            <div className="text-center space-y-4 mb-8">
-              <h3 className="text-4xl md:text-7xl font-headline font-black text-white italic uppercase tracking-tighter">Build Systems.</h3>
-              <p className="text-white/40 text-lg font-light">Select an institutional context for the dialogue.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
-              {["Product Strategy", "MVP Design", "Digital Ecosystems", "Startup Systems", "Technical Architecture"].map((opt) => (
-                <SubOption key={opt} label={opt} onClick={() => setView("scheduling")} />
+            <button onClick={() => setView("hub")} className="text-[9px] font-bold tracking-[0.6em] text-white/30 hover:text-white uppercase">← Back to Hub</button>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-16 text-left w-full px-12">
+              {[
+                { title: "Product Strategy", desc: "Long-term architecture and market alignment." },
+                { title: "MVP Design", desc: "Rapid prototyping and core feature validation." },
+                { title: "Startup Systems", desc: "Building foundations for scale and operations." },
+                { title: "Digital Ecosystems", desc: "Interconnected product layers and networks." },
+                { title: "Technical Architecture", desc: "High-performance systems and full-stack execution." }
+              ].map((item, i) => (
+                <motion.div 
+                  key={item.title}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  onClick={() => setView("scheduling")}
+                  className="group cursor-pointer space-y-4"
+                >
+                  <h4 className="text-3xl md:text-5xl font-headline font-black text-white italic group-hover:text-primary transition-colors tracking-tighter uppercase">{item.title}</h4>
+                  <p className="text-[#EAE0C8]/40 font-light text-lg italic tracking-wide group-hover:text-white/60 transition-colors">{item.desc}</p>
+                </motion.div>
               ))}
             </div>
           </motion.div>
@@ -327,23 +336,30 @@ function StudioExperience({ onClose, initialView }: { onClose: () => void, initi
         {view === "explore" && (
           <motion.div 
             key="explore"
-            initial={{ opacity: 0, scale: 1.05 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center gap-16 w-full max-w-2xl text-center"
+            className="flex flex-col items-center gap-16 w-full max-w-4xl text-center px-12"
           >
-            <button onClick={() => setView("hub")} className="text-[9px] font-bold tracking-[0.5em] text-white/30 hover:text-white uppercase">← Back to Hub</button>
-            <div className="space-y-12">
-              <div className="space-y-4">
-                <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">Philosophy</p>
-                <h3 className="text-5xl font-headline font-black text-white italic uppercase tracking-tight">The Journal</h3>
-              </div>
-              <div className="space-y-8 text-xl md:text-2xl text-white/60 font-light leading-relaxed">
-                <p>Axora was founded on the belief that technology should outlive the hype cycles of its own creation.</p>
-                <p>We build systems focused on <span className="text-white">long-term value</span>, architecting experiences that simplify complexity.</p>
-              </div>
-              <div className="pt-8 grid grid-cols-1 gap-4">
-                {["Why Axora exists", "Building products", "Systems thinking", "Long-term value", "Future vision"].map((topic) => (
-                   <span key={topic} className="text-sm font-bold tracking-[0.4em] text-primary/40 uppercase">{topic}</span>
+            <button onClick={() => setView("hub")} className="text-[9px] font-bold tracking-[0.6em] text-white/30 hover:text-white uppercase">← Back to Hub</button>
+            <div className="space-y-16">
+              <h3 className="text-4xl md:text-7xl font-headline font-black text-white italic uppercase tracking-tighter">The Journal</h3>
+              <div className="flex flex-col gap-12">
+                {[
+                  "Why Axora Exists",
+                  "Founder Philosophy",
+                  "Systems Thinking",
+                  "Building For Longevity",
+                  "Future Vision"
+                ].map((topic, i) => (
+                  <motion.div 
+                    key={topic}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.15 }}
+                    className="group cursor-pointer py-6 border-b border-white/5 hover:border-primary/20 transition-all text-center"
+                  >
+                    <span className="text-2xl md:text-4xl font-headline font-light text-white/40 group-hover:text-white italic transition-all">{topic}</span>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -353,22 +369,24 @@ function StudioExperience({ onClose, initialView }: { onClose: () => void, initi
         {view === "scheduling" && (
           <motion.div 
             key="scheduling"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col items-center gap-12 w-full h-full max-w-5xl"
+            className="flex flex-col items-center w-full h-full max-w-6xl py-20"
           >
-            <button onClick={() => setView("hub")} className="text-[9px] font-bold tracking-[0.5em] text-white/30 hover:text-white uppercase mt-12">← Back to Hub</button>
-            <div className="text-center space-y-4">
-              <h3 className="text-4xl md:text-6xl font-headline font-black text-white italic uppercase tracking-tight">Schedule Discussion</h3>
-              <p className="text-white/40 font-light">Confirming institutional availability.</p>
+            <button onClick={() => setView("hub")} className="text-[9px] font-bold tracking-[0.6em] text-white/30 hover:text-white uppercase mb-16">← Back to Hub</button>
+            <div className="text-center space-y-6 mb-20">
+              <h3 className="text-4xl md:text-8xl font-headline font-black text-white italic uppercase tracking-tighter">Schedule Session</h3>
+              <p className="text-white/40 text-xl font-light italic">Opening institutional booking sequence...</p>
             </div>
-            <div className="flex-1 w-full glass rounded-[3rem] border-white/5 flex items-center justify-center relative overflow-hidden">
-               <div className="text-center space-y-6">
-                  <div className="w-16 h-16 rounded-full glass flex items-center justify-center mx-auto border-primary/20">
-                    <Calendar className="w-6 h-6 text-primary animate-pulse" />
+            
+            {/* Calendly Anchor Point */}
+            <div className="flex-1 w-full bg-white/[0.02] border border-white/5 rounded-[4rem] flex flex-col items-center justify-center p-12 text-center relative overflow-hidden">
+               <div className="space-y-8 relative z-10">
+                  <div className="w-24 h-24 rounded-full border border-primary/20 flex items-center justify-center mx-auto mb-12">
+                    <Calendar className="w-8 h-8 text-primary animate-pulse" />
                   </div>
-                  <p className="text-[10px] font-bold tracking-[0.6em] text-white/20 uppercase">Preparing Booking Interface</p>
-                  <p className="text-sm text-white/40 italic">Integration sequence initialized.</p>
+                  <p className="text-white font-headline font-bold text-3xl uppercase tracking-tighter">Booking Interface Locked</p>
+                  <p className="text-white/30 max-w-md mx-auto italic">This area is architected to embed your native scheduling environment without redirects or popups.</p>
                </div>
                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.02),transparent_70%)]" />
             </div>
@@ -382,28 +400,15 @@ function StudioExperience({ onClose, initialView }: { onClose: () => void, initi
 function HubAction({ label, onClick, highlight = false }: { label: string, onClick: () => void, highlight?: boolean }) {
   return (
     <motion.button
-      whileHover={{ scale: 1.05, x: 10 }}
+      whileHover={{ scale: 1.05, x: 15 }}
       onClick={onClick}
       className={cn(
-        "group relative py-4 text-4xl md:text-7xl font-headline font-black tracking-tighter uppercase italic transition-all duration-700",
+        "group relative py-2 text-4xl md:text-8xl font-headline font-black tracking-tighter uppercase italic transition-all duration-700",
         highlight ? "text-primary" : "text-white/20 hover:text-white"
       )}
     >
       {label}
       <span className="absolute -bottom-2 left-0 w-0 h-[2px] bg-current transition-all duration-700 group-hover:w-full opacity-30" />
-    </motion.button>
-  );
-}
-
-function SubOption({ label, onClick }: { label: string, onClick: () => void }) {
-  return (
-    <motion.button
-      whileHover={{ scale: 1.02, x: 5 }}
-      onClick={onClick}
-      className="group flex items-center justify-between p-10 rounded-[2.5rem] glass border-white/5 text-left hover:border-primary/20 hover:bg-white/[0.02] transition-all duration-700"
-    >
-      <span className="text-xl md:text-2xl font-headline font-bold text-white/80 group-hover:text-white transition-colors">{label}</span>
-      <ChevronRight className="w-5 h-5 text-white/10 group-hover:text-primary transition-all duration-500" />
     </motion.button>
   );
 }
