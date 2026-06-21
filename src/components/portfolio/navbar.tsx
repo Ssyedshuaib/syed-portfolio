@@ -7,11 +7,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
-  { label: "Philosophy", href: "#philosophy" },
-  { label: "Journey", href: "#journey" },
-  { label: "Axora", href: "#axora" },
-  { label: "Products", href: "#ecosystem" },
-  { label: "Ideas", href: "#ideas" },
+  { label: "About", href: "/#founder" },
+  { label: "Journey", href: "/#journey" },
+  { label: "Axora", href: "/#axora" },
+  { label: "Products", href: "/#ecosystem" },
+  { label: "Ideas", href: "/#ideas" },
 ];
 
 export function Navbar() {
@@ -78,7 +78,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-4 ml-auto lg:ml-6">
           <Link 
-            href="#contact"
+            href="/#contact"
             className={cn(
               "hidden md:block px-6 py-2 rounded-full text-[9px] font-bold tracking-[0.4em] uppercase transition-all duration-600 ease-out",
               scrolled 
@@ -108,7 +108,7 @@ export function Navbar() {
             className="fixed inset-0 z-[90] bg-[#050505]/98 backdrop-blur-[40px] lg:hidden flex flex-col items-center justify-center p-8"
           >
             <nav className="space-y-10 text-center">
-              {[...NAV_LINKS, { label: "Contact", href: "#contact" }].map((link, i) => (
+              {[...NAV_LINKS, { label: "Contact", href: "/#contact" }].map((link, i) => (
                 <motion.div
                   key={link.label}
                   initial={{ opacity: 0, y: 10 }}

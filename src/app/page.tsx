@@ -4,17 +4,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Navbar } from "@/components/layout/navbar";
 import { Hero } from "@/sections/hero";
 import { FounderProfile } from "@/sections/founder-profile";
-import { AxoraProducts } from "@/sections/axora-products";
-import { Philosophy } from "@/sections/philosophy";
-import { WhatImBuilding } from "@/sections/what-im-building";
 import { Journey } from "@/sections/journey";
-import { BuilderPhilosophy } from "@/sections/builder-philosophy";
 import { AxoraEcosystem } from "@/sections/axora-ecosystem";
-import { Leadership } from "@/sections/leadership";
-import { ProductMetrics } from "@/sections/product-metrics";
 import { ProductEcosystem } from "@/sections/product-ecosystem";
 import { IdeasLab } from "@/sections/ideas-lab";
-import { SkillsClusters } from "@/sections/skills-clusters";
 import { Contact } from "@/sections/contact";
 import { Footer } from "@/sections/layout/footer";
 import { Preloader } from "@/components/ui/preloader";
@@ -22,8 +15,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
- * Main Entry Page
- * Optimized for stability and architectural consistency.
+ * Main Entry Page - Cleaned & Optimized
+ * Removed Founder's Philosophy to streamline narrative flow.
  */
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -92,19 +85,25 @@ export default function Home() {
         <div className="fixed inset-0 blueprint-grid opacity-[0.02] pointer-events-none z-0" />
         
         <Hero />
+        
+        {/* About Section */}
         <FounderProfile />
-        <AxoraProducts />
-        <Philosophy />
-        <WhatImBuilding />
+        
+        {/* Experience & Growth */}
         <Journey />
-        <BuilderPhilosophy />
+        
+        {/* Venture Hub */}
         <AxoraEcosystem />
-        <Leadership />
-        <ProductMetrics />
+        
+        {/* Portfolio */}
         <ProductEcosystem />
+        
+        {/* Research & Future Concepts */}
         <IdeasLab />
-        <SkillsClusters />
+        
+        {/* Engagement */}
         <Contact />
+        
         <Footer />
       </motion.main>
     </>
