@@ -95,6 +95,8 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
     damping: 30
   });
 
+  const isEven = idx % 2 === 0;
+
   return (
     <motion.div 
       ref={ref}
@@ -106,8 +108,11 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
     >
       <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-24 min-h-[60vh]">
         
-        {/* LEFT SIDE: Content (45% Width) */}
-        <div className="w-full lg:w-[45%] space-y-12 order-2 lg:order-1">
+        {/* NARRATIVE COLUMN: 45% Width */}
+        <div className={cn(
+          "w-full lg:w-[45%] space-y-12 order-2",
+          isEven ? "lg:order-1" : "lg:order-2"
+        )}>
           <div className="space-y-8">
             <div className="flex items-center gap-6">
                <span className="text-[12px] font-mono font-bold tracking-[0.4em] text-primary/20">{product.id}</span>
@@ -144,10 +149,13 @@ function ProductChapter({ product, idx }: { product: any; idx: number }) {
           </div>
         </div>
 
-        {/* RIGHT SIDE: Mockup (55% Width) */}
+        {/* MOCKUP COLUMN: 55% Width */}
         <motion.div 
           style={{ y: springY }}
-          className="w-full lg:w-[55%] flex justify-end order-1 lg:order-2"
+          className={cn(
+            "w-full lg:w-[55%] flex order-1",
+            isEven ? "lg:order-2 lg:justify-end" : "lg:order-1 lg:justify-start"
+          )}
         >
           <div className="w-full max-w-[760px]">
             <LaptopMockup imageId={product.imageId} />
