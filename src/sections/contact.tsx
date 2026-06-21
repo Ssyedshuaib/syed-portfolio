@@ -57,11 +57,19 @@ const PORTALS = [
   }
 ];
 
+// Configuration for scheduling destination
+const SCHEDULE_URL = "https://calendly.com/your-link";
+
 const ACTIONS = [
   { label: "DIRECT DIALOGUE", sub: "Direct communication for focused discussions.", href: "mailto:syedshuaib2429@gmail.com", icon: Mail },
   { label: "PROFESSIONAL NETWORK", sub: "Connect through my institutional network.", href: "https://www.linkedin.com/in/syedshuaib485/", icon: Linkedin },
-  { label: "PRIVATE SESSION", sub: "Schedule a dedicated strategy conversation.", href: "mailto:syedshuaib2429@gmail.com?subject=Private Session", icon: Calendar },
   { label: "BUILD TOGETHER", sub: "For founders, ventures, and collaborations.", href: "mailto:syedshuaib2429@gmail.com?subject=Build Together", icon: Sparkles },
+  { 
+    label: "SCHEDULE DISCUSSION", 
+    sub: "Book a dedicated time for a focused conversation about products, ventures, ecosystems, collaboration, or strategic opportunities.", 
+    href: SCHEDULE_URL, 
+    icon: Calendar 
+  },
 ];
 
 export function Contact() {
@@ -72,15 +80,31 @@ export function Contact() {
 
   const msgs = ["Preparing Communication...", "Analyzing Context...", "Opening Dialogue...", "Initializing Secure Channel..."];
 
-  const handleAction = (href: string) => {
-    setTransitionMsg(msgs[Math.floor(Math.random() * msgs.length)]);
-    setView("transition");
-    setTimeout(() => {
-      window.open(href, '_blank');
-      setView("entrance");
-      setSelectedPortal(null);
-      setSelectedOption(null);
-    }, 1200);
+  const handleAction = (action: typeof ACTIONS[0]) => {
+    if (action.label === "SCHEDULE DISCUSSION") {
+      setTransitionMsg("Preparing Discussion...");
+      setView("transition");
+      
+      // Choreographed sequence for scheduling
+      setTimeout(() => setTransitionMsg("Reviewing Availability..."), 400);
+      setTimeout(() => setTransitionMsg("Opening Calendar..."), 800);
+      
+      setTimeout(() => {
+        window.open(action.href, '_blank');
+        setView("entrance");
+        setSelectedPortal(null);
+        setSelectedOption(null);
+      }, 1200);
+    } else {
+      setTransitionMsg(msgs[Math.floor(Math.random() * msgs.length)]);
+      setView("transition");
+      setTimeout(() => {
+        window.open(action.href, '_blank');
+        setView("entrance");
+        setSelectedPortal(null);
+        setSelectedOption(null);
+      }, 1200);
+    }
   };
 
   return (
@@ -213,7 +237,7 @@ export function Contact() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.1 }}
-                      onClick={() => handleAction(action.href)}
+                      onClick={() => handleAction(action)}
                       className="group relative p-12 rounded-[3rem] glass border-white/10 text-left overflow-hidden flex flex-col gap-8 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-1000"
                     >
                       <div className="flex justify-between items-start">
@@ -323,4 +347,3 @@ function PortalCard({ portal, onClick }: { portal: typeof PORTALS[0], onClick: (
     </motion.button>
   );
 }
-
