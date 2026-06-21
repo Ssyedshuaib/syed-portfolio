@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { motion, useInView, useScroll, useSpring, useTransform, AnimatePresence, LayoutGroup } from "framer-motion";
+import { motion, useInView, useScroll, useSpring, useTransform, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const PRINCIPLES = [
@@ -66,6 +66,13 @@ export function FounderPhilosophy() {
   const isVisible = useInView(containerRef, { margin: "-20% 0px -20% 0px" });
 
   const progressFill = useSpring(mainProgress, { stiffness: 100, damping: 30 });
+  const railProgressHeight = useTransform(progressFill, [0, 0.8], ["0%", "100%"]);
+
+  // Finale Transforms
+  const finaleOpacity = useTransform(storyProgress, [0.88, 0.95, 1], [0, 1, 1]);
+  const finaleY = useTransform(storyProgress, [0.88, 0.95], [40, 0]);
+  const finaleFilter = useTransform(storyProgress, [0.88, 0.93, 0.95], ["blur(30px)", "blur(15px)", "blur(0px)"]);
+  const theatricalDim = useTransform(storyProgress, [0.8, 1], [0, 0.6]);
 
   return (
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-x-hidden">
@@ -83,7 +90,7 @@ export function FounderPhilosophy() {
           >
             <div className="relative w-px h-80 bg-white/5">
               <motion.div 
-                style={{ height: useTransform(progressFill, [0, 0.8], ["0%", "100%"]) }}
+                style={{ height: railProgressHeight }}
                 className="absolute top-0 left-0 w-full bg-primary origin-top shadow-[0_0_20px_rgba(234,224,200,0.4)]"
               />
             </div>
@@ -103,7 +110,7 @@ export function FounderPhilosophy() {
                   <p className="text-[10px] font-mono font-bold text-primary mb-1">{p.id}</p>
                   <p className={cn(
                     "text-[9px] font-bold tracking-[0.6em] uppercase transition-all duration-500",
-                    activeIndex === i ? "text-white text-shadow-glow" : "text-[#536878]"
+                    activeIndex === i ? "text-white" : "text-[#536878]"
                   )}>
                     {p.label}
                   </p>
@@ -137,7 +144,7 @@ export function FounderPhilosophy() {
       </AnimatePresence>
 
       <div className="max-w-[1440px] mx-auto">
-        {/* Intro Header - Full Screen Presentation */}
+        {/* Intro Header */}
         <div className="min-h-screen flex items-center justify-center text-center px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -155,7 +162,7 @@ export function FounderPhilosophy() {
           </motion.div>
         </div>
 
-        {/* Presentation Chapters - Each Pins and Centers Content */}
+        {/* Chapters */}
         <div className="relative space-y-0">
           {PRINCIPLES.map((principle, idx) => (
             <PrincipleChapter 
@@ -167,14 +174,13 @@ export function FounderPhilosophy() {
           ))}
         </div>
 
-        {/* FINAL CINEMATIC STORYTELLING SEQUENCE (Pinned Finale) */}
+        {/* FINAL CINEMATIC STORYTELLING SEQUENCE */}
         <div ref={storyRef} className="relative h-[300vh]">
           <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
-            {/* Theatrical Background Dimming */}
             <motion.div 
               style={{ 
                 backgroundColor: "#000000",
-                opacity: useTransform(storyProgress, [0.8, 1], [0, 0.6]) 
+                opacity: theatricalDim
               }}
               className="absolute inset-0 pointer-events-none z-0"
             />
@@ -185,12 +191,11 @@ export function FounderPhilosophy() {
                <StoryLine progress={storyProgress} range={[0.50, 0.65, 0.75]} text="Systems create ecosystems." />
                <StoryLine progress={storyProgress} range={[0.75, 0.85, 0.92]} text="Ecosystems create lasting value." />
                
-               {/* Final Axora Moment */}
                <motion.div
                   style={{ 
-                    opacity: useTransform(storyProgress, [0.88, 0.95, 1], [0, 1, 1]),
-                    y: useTransform(storyProgress, [0.88, 0.95], [40, 0]),
-                    filter: useTransform(storyProgress, [0.88, 0.93, 0.95], ["blur(30px)", "blur(15px)", "blur(0px)"])
+                    opacity: finaleOpacity,
+                    y: finaleY,
+                    filter: finaleFilter
                   }}
                   className="pt-32 space-y-16 flex flex-col items-center"
                >
@@ -204,7 +209,7 @@ export function FounderPhilosophy() {
                       transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                       className="absolute inset-[-60px] bg-primary/10 blur-[100px] rounded-full pointer-events-none" 
                     />
-                    <h4 className="relative text-7xl md:text-[10rem] font-headline font-black text-white tracking-tighter italic drop-shadow-[0_0_60px_rgba(234,224,200,0.2)]">
+                    <h4 className="relative text-7xl md:text-[10rem] font-headline font-black text-white tracking-tighter italic">
                       That is Axora.
                     </h4>
                   </div>
@@ -219,20 +224,18 @@ export function FounderPhilosophy() {
 }
 
 function StoryLine({ progress, range, text, className }: { progress: any, range: [number, number, number], text: string, className?: string }) {
-  // Logic: 0 -> Active (1.0 opacity, 0px blur) -> Sustained (0.25 opacity, 0px blur)
   const opacity = useTransform(progress, range, [0, 1, 0.25]);
   const y = useTransform(progress, range, [40, 0, -20]);
-  
-  // Specific blur range to ensure exactly 0px at range[1] and beyond
   const blurValue = useTransform(progress, [range[0], range[1], range[2]], [24, 0, 0]);
+  const filterStyle = useTransform(blurValue, (v) => `blur(${v}px)`);
 
   return (
     <motion.p 
       style={{ 
         opacity, 
         y, 
-        filter: useTransform(blurValue, (v) => `blur(${v}px)`),
-        WebkitFilter: useTransform(blurValue, (v) => `blur(${v}px)`)
+        filter: filterStyle,
+        WebkitFilter: filterStyle
       }}
       className={cn(
         "text-4xl md:text-7xl font-light text-[#EAE0C8] tracking-tight leading-tight select-none text-center",
@@ -257,7 +260,6 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
   const isRight = idx % 2 === 0;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   
-  // Slide entry/exit logic
   const opacity = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0, 1, 1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.95, 1, 1, 0.95]);
 
@@ -278,8 +280,6 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
       </div>
 
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-20 lg:gap-32 items-center relative z-10">
-        
-        {/* Content Side */}
         <div className={cn("space-y-12", !isRight && "lg:order-2")}>
           <div className="space-y-10">
             <div className="flex items-center gap-6">
@@ -305,11 +305,9 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
           </p>
         </div>
 
-        {/* Visual Side */}
         <div className={cn("flex justify-center items-center", !isRight && "lg:order-1")}>
           <div className="w-full max-w-md aspect-square relative group">
              <VisualEngine type={principle.visual} active={isInView} />
-             {/* Atmospheric Spotlight */}
              <div className="absolute inset-[-40px] bg-primary/[0.03] blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
           </div>
         </div>
