@@ -2,380 +2,387 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion, useSpring, useMotionValue, AnimatePresence, LayoutGroup } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { 
   ArrowRight, 
-  MapPin, 
   ArrowUpRight,
-  X,
   Mail,
   Linkedin,
   Clock,
   Target,
-  MessageSquare,
   Sparkles,
-  Zap,
-  Layers,
-  ChevronRight
+  ChevronRight,
+  ShieldCheck,
+  MousePointer2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const STUDIO_METADATA = [
-  { label: "LOCATION", value: "Bangalore, India", icon: MapPin },
-  { label: "RESPONSE TIME", value: "Within 24 Hours", icon: Clock },
-  { label: "CURRENT FOCUS", value: "Axora Ecosystem", icon: Target },
-];
 
 const CATEGORIES = [
   {
     id: "01",
-    label: "BUILDING PRODUCTS",
-    description: "Designing scalable digital ecosystems.",
+    label: "Building Products",
+    description: "Designing scalable digital systems and long-term ecosystems.",
     topics: ["Product Architecture", "MVP Strategy", "Ecosystem Design", "System Design", "Platform Growth"]
   },
   {
     id: "02",
-    label: "VENTURES & STARTUPS",
-    description: "Exploring meaningful opportunities.",
+    label: "Ventures & Startups",
+    description: "Exploring new ventures and long-term value building.",
     topics: ["Startup Ideas", "Validation", "Funding Readiness", "Venture Strategy", "Strategic Planning"]
   },
   {
     id: "03",
-    label: "COLLABORATION",
-    description: "Building together.",
-    topics: ["Partnerships", "Joint Projects", "Consulting", "Product Building", "Design Systems"]
+    label: "Collaboration",
+    description: "Open to partnerships and ambitious projects.",
+    topics: ["Partnerships", "Joint Ventures", "Product Building", "Consulting", "Design Systems"]
   },
   {
     id: "04",
-    label: "IDEAS & STRATEGY",
-    description: "Systems thinking and product direction.",
-    topics: ["Systems Thinking", "Future Tech", "Digital Artifacts", "Institutional Design", "Market Trends"]
+    label: "Ideas & Strategy",
+    description: "Systems thinking and future product direction.",
+    topics: ["Systems Thinking", "Future Tech", "Institutional Design", "Digital Artifacts", "Market Trends"]
   },
   {
     id: "05",
-    label: "JUST SAY HELLO",
-    description: "Start a simple conversation.",
-    topics: ["Networking", "Casual Chat", "Feedback", "Portfolio Review", "General Inquiry"]
+    label: "Just Say Hello",
+    description: "No agenda needed. Sometimes great opportunities begin with a simple conversation.",
+    topics: ["Networking", "Casual Chat", "Portfolio Review", "General Inquiry", "Collaboration"]
   }
 ];
 
 const ACTIONS = [
-  { label: "EMAIL", sub: "Direct communication for dialogue.", href: "mailto:syedshuaib2429@gmail.com", icon: Mail },
-  { label: "LINKEDIN", sub: "Professional network connection.", href: "https://www.linkedin.com/in/syedshuaib485/", icon: Linkedin },
-  { label: "BUILD TOGETHER", sub: "For ambitious partnerships.", href: "mailto:syedshuaib2429@gmail.com?subject=Build Together", icon: Sparkles },
-  { label: "SCHEDULE", sub: "Arrange a dedicated time.", href: "mailto:syedshuaib2429@gmail.com?subject=Schedule Discussion", icon: Clock },
-];
-
-const TRANSITION_MESSAGES = [
-  "Preparing The Studio...",
-  "Connecting Ideas...",
-  "Opening The Dialogue...",
-  "Initializing Workspace...",
-  "Finalizing Context..."
+  { 
+    label: "DIRECT DIALOGUE", 
+    sub: "Direct communication for focused discussions.", 
+    href: "mailto:syedshuaib2429@gmail.com", 
+    icon: Mail 
+  },
+  { 
+    label: "PROFESSIONAL NETWORK", 
+    sub: "Connect through my professional network.", 
+    href: "https://www.linkedin.com/in/syedshuaib485/", 
+    icon: Linkedin 
+  },
+  { 
+    label: "STRATEGIC PARTNERSHIP", 
+    sub: "For founders, ventures, and long-term collaborations.", 
+    href: "mailto:syedshuaib2429@gmail.com?subject=Strategic Partnership", 
+    icon: Target 
+  },
+  { 
+    label: "PRIVATE SESSION", 
+    sub: "Schedule a dedicated conversation.", 
+    href: "mailto:syedshuaib2429@gmail.com?subject=Schedule Private Session", 
+    icon: Clock 
+  },
 ];
 
 export function Contact() {
   const [isOpen, setIsOpen] = useState(false);
-  const [step, setStep] = useState(1); // 1: Category, 2: Topics, 3: Actions
+  const [step, setStep] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<typeof CATEGORIES[0] | null>(null);
-  const [isNavigating, setIsNavigating] = useState(false);
-  const [activeMessage, setActiveMessage] = useState(TRANSITION_MESSAGES[0]);
-
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springX = useSpring(mouseX, { stiffness: 40, damping: 20 });
-  const springY = useSpring(mouseY, { stiffness: 40, damping: 20 });
-
-  function handleMouseMove(e: React.MouseEvent) {
-    if (isOpen) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - (rect.left + rect.width / 2)) * 0.1;
-    const y = (e.clientY - (rect.top + rect.height / 2)) * 0.1;
-    mouseX.set(x);
-    mouseY.set(y);
-  }
+  const [transitionState, setTransitionState] = useState<"idle" | "phase1" | "phase2">("idle");
 
   const resetState = () => {
     setIsOpen(false);
-    setStep(1);
-    setSelectedCategory(null);
+    setTimeout(() => {
+      setStep(1);
+      setSelectedCategory(null);
+    }, 500);
   };
 
   const handleExternalClick = (href: string) => {
-    setActiveMessage(TRANSITION_MESSAGES[Math.floor(Math.random() * TRANSITION_MESSAGES.length)]);
-    setIsNavigating(true);
+    setTransitionState("phase1");
     setTimeout(() => {
-      window.open(href, '_blank');
-      setIsNavigating(false);
-    }, 1100);
-  };
-
-  const handleCategorySelect = (category: typeof CATEGORIES[0]) => {
-    setSelectedCategory(category);
-    setStep(2);
+      setTransitionState("phase2");
+      setTimeout(() => {
+        window.open(href, '_blank');
+        setTransitionState("idle");
+      }, 500);
+    }, 800);
   };
 
   return (
-    <section id="contact" className="relative bg-background overflow-hidden py-48 px-6 min-h-[900px] flex flex-col justify-center">
-      <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
+    <section id="contact" className="relative bg-[#050505] overflow-hidden py-48 px-6 min-h-screen flex flex-col justify-center">
+      {/* Background Architectural Grid */}
+      <div className="absolute inset-0 blueprint-grid opacity-[0.01] pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
       
-      {/* Cinematic Transition Overlay */}
+      {/* Cinematic Departure Overlay */}
       <AnimatePresence>
-        {isNavigating && (
+        {transitionState !== "idle" && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[500] bg-[#050505] flex flex-col items-center justify-center"
+            className="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-[40px] flex flex-col items-center justify-center"
           >
-            <motion.div 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              className="space-y-8 text-center"
-            >
-              <p className="text-2xl md:text-3xl font-headline font-light text-white tracking-[0.2em] italic uppercase">
-                {activeMessage}
-              </p>
-              <div className="h-px w-12 bg-primary/20 mx-auto" />
-            </motion.div>
+            <div className="space-y-6 text-center">
+              <motion.p 
+                key={transitionState}
+                initial={{ y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                className="text-2xl md:text-3xl font-headline font-light text-white tracking-[0.2em] italic uppercase"
+              >
+                {transitionState === "phase1" ? "Preparing Conversation..." : "Opening Communication Channel..."}
+              </motion.p>
+              <div className="flex justify-center gap-2">
+                <motion.div 
+                  animate={{ scale: [1, 1.5, 1], opacity: [0.3, 1, 0.3] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                  className="w-1.5 h-1.5 rounded-full bg-primary" 
+                />
+                <motion.div 
+                  animate={{ scale: [1, 1.5, 1], opacity: [0.3, 1, 0.3] }}
+                  transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
+                  className="w-1.5 h-1.5 rounded-full bg-primary" 
+                />
+                <motion.div 
+                  animate={{ scale: [1, 1.5, 1], opacity: [0.3, 1, 0.3] }}
+                  transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
+                  className="w-1.5 h-1.5 rounded-full bg-primary" 
+                />
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="max-w-[1440px] mx-auto w-full relative z-10">
         <LayoutGroup>
-          <AnimatePresence mode="wait">
-            {!isOpen ? (
-              <motion.div 
-                key="studio-intro"
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0, scale: 0.98, filter: "blur(20px)" }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center"
-              >
-                <div className="space-y-16">
-                  <div className="space-y-8">
-                    <p className="text-[10px] font-bold tracking-[0.6em] text-primary/40 uppercase">THE STUDIO</p>
-                    <h2 className="text-4xl md:text-6xl font-headline font-black tracking-tighter text-white leading-tight uppercase">
-                      Let's Design <br />
-                      <span className="text-primary italic font-medium">The Future.</span>
-                    </h2>
-                    <p className="text-xl text-[#EAE0C8]/40 font-light leading-relaxed max-w-md">
-                      Open to discussions about products, ecosystems, ventures, and long-term systems thinking.
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {STUDIO_METADATA.map((item) => (
-                      <div
-                        key={item.label}
-                        className="glass p-6 rounded-2xl border-white/5 group cursor-default transition-all duration-700 hover:border-primary/20"
-                      >
-                        <item.icon className="w-4 h-4 text-primary/20 transition-colors mb-4 group-hover:text-primary" />
-                        <p className="text-[8px] font-bold tracking-[0.3em] text-[#536878] uppercase mb-1">{item.label}</p>
-                        <p className="text-[11px] text-white font-medium tracking-wider">{item.value}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div 
-                  className="relative flex justify-center lg:justify-end items-center"
-                  onMouseMove={handleMouseMove}
+          {!isOpen ? (
+            <motion.div 
+              layoutId="studio-surface"
+              className="flex flex-col items-center text-center space-y-16"
+            >
+              <div className="space-y-8">
+                <motion.p 
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 0.4, y: 0 }}
+                  className="text-[10px] font-bold tracking-[0.8em] text-primary uppercase"
                 >
-                  <motion.div
-                    layoutId="portal-artifact"
-                    onClick={() => setIsOpen(true)}
-                    style={{ x: springX, y: springY }}
-                    className="relative w-64 h-64 md:w-72 md:h-72 cursor-pointer group"
-                  >
-                    <motion.div 
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                      className="absolute inset-[-15%] border border-dashed border-primary/10 rounded-full" 
-                    />
-                    
-                    <div className="absolute inset-0 rounded-full glass border-white/10 shadow-[inset_0_0_40px_rgba(255,255,255,0.02)] flex flex-col items-center justify-center overflow-hidden">
-                      <motion.div 
-                        animate={{ opacity: [0.1, 0.2, 0.1], scale: [1, 1.05, 1] }}
-                        transition={{ duration: 6, repeat: Infinity }}
-                        className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.1),transparent_70%)]"
-                      />
-                      
-                      <div className="relative z-10 text-center space-y-3 px-8">
-                        <p className="text-[8px] font-bold tracking-[0.8em] text-primary/40 uppercase">Dialogue</p>
-                        <h4 className="text-xs font-headline font-black text-white tracking-[0.4em] uppercase italic leading-tight">
-                          START A <br />CONVERSATION
-                        </h4>
-                        <div className="w-px h-8 bg-gradient-to-b from-primary/30 to-transparent mx-auto mt-2" />
-                      </div>
-                    </div>
-                  </motion.div>
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div 
-                key="conversation-workspace"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="max-w-[900px] mx-auto w-full relative"
-              >
-                <motion.div 
-                  layoutId="portal-artifact"
-                  className="absolute inset-0 -z-10 rounded-[3rem] glass border-white/10 opacity-40 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)]"
-                />
+                  PRIVATE STUDIO
+                </motion.p>
+                <motion.h2 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-5xl md:text-8xl font-headline font-black tracking-tighter text-white uppercase italic"
+                >
+                  What Shall <br />We Discuss?
+                </motion.h2>
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-xl md:text-2xl text-[#EAE0C8]/40 font-light leading-relaxed max-w-2xl mx-auto"
+                >
+                  Every meaningful ecosystem begins with a meaningful conversation. <br />
+                  Choose the nature of the discussion.
+                </motion.p>
+              </div>
 
-                <div className="p-8 md:p-16 space-y-16">
-                  {/* Workspace Header */}
-                  <div className="flex justify-between items-start">
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-3">
-                        <div className="h-px w-6 bg-primary/20" />
-                        <p className="text-[10px] font-bold tracking-[0.6em] text-primary/40 uppercase">STEP 0{step} OF 03</p>
-                      </div>
-                      <h3 className="text-4xl md:text-5xl font-headline font-black text-white tracking-tighter uppercase italic leading-none">
-                        {step === 1 && "What shall we discuss?"}
-                        {step === 2 && selectedCategory?.label}
-                        {step === 3 && "Start Dialogue"}
-                      </h3>
-                      {step === 2 && (
-                        <p className="text-sm text-[#EAE0C8]/40 font-light italic">Refine the focus of our conversation.</p>
-                      )}
+              <motion.button
+                onClick={() => setIsOpen(true)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative px-12 py-6 rounded-full glass border-white/10 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <span className="relative z-10 text-[11px] font-bold tracking-[0.4em] text-white uppercase flex items-center gap-4">
+                  ENTER THE STUDIO <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </motion.button>
+            </motion.div>
+          ) : (
+            <motion.div 
+              layoutId="studio-surface"
+              className="max-w-[1200px] mx-auto glass border-white/10 rounded-[4rem] p-12 md:p-20 relative overflow-hidden"
+            >
+              {/* Internal Studio Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                
+                {/* Left Sidebar: Metadata */}
+                <div className="lg:col-span-3 space-y-16 border-r border-white/5 pr-12 hidden lg:block">
+                  <div className="space-y-8">
+                    <div className="space-y-1">
+                      <p className="text-[9px] font-bold tracking-[0.3em] text-primary/30 uppercase">SELECTED CATEGORY</p>
+                      <p className="text-sm text-white font-medium italic">
+                        {selectedCategory ? selectedCategory.label : "None Selected"}
+                      </p>
                     </div>
-                    <button 
-                      onClick={resetState}
-                      className="p-4 rounded-full glass border-white/5 hover:border-white/20 transition-all hover:rotate-90"
-                    >
-                      <X className="w-5 h-5 text-white/40" />
-                    </button>
+                    {selectedCategory && (
+                      <motion.p 
+                        initial={{ opacity: 0 }} 
+                        animate={{ opacity: 1 }}
+                        className="text-xs text-[#EAE0C8]/40 leading-relaxed font-light"
+                      >
+                        {selectedCategory.description}
+                      </motion.p>
+                    )}
                   </div>
 
-                  <div className="relative overflow-hidden min-h-[400px]">
-                    <AnimatePresence mode="wait">
-                      {step === 1 && (
-                        <motion.div 
-                          key="step-1"
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -20 }}
-                          transition={{ duration: 0.5 }}
-                          className="space-y-3"
-                        >
+                  <div className="space-y-8 pt-8 border-t border-white/5">
+                    <div className="space-y-1">
+                      <p className="text-[9px] font-bold tracking-[0.3em] text-primary/30 uppercase">RESPONSE TIME</p>
+                      <p className="text-sm text-white/60">Usually within 24 hours</p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-[9px] font-bold tracking-[0.3em] text-primary/30 uppercase">AVAILABILITY</p>
+                      <div className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                        <p className="text-sm text-white/60">Open to Dialogue</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button 
+                    onClick={resetState}
+                    className="text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase hover:text-white transition-colors flex items-center gap-2 pt-12"
+                  >
+                    ← Exit Studio
+                  </button>
+                </div>
+
+                {/* Main Content Area */}
+                <div className="lg:col-span-9 space-y-12">
+                  <div className="flex justify-between items-center mb-8">
+                    <div className="flex items-center gap-6">
+                      <div className="flex items-center gap-2">
+                        <div className={cn("w-2 h-2 rounded-full transition-colors duration-500", step >= 1 ? "bg-primary" : "bg-white/10")} />
+                        <div className={cn("w-12 h-px transition-colors duration-500", step >= 2 ? "bg-primary/40" : "bg-white/10")} />
+                        <div className={cn("w-2 h-2 rounded-full transition-colors duration-500", step >= 2 ? "bg-primary" : "bg-white/10")} />
+                        <div className={cn("w-12 h-px transition-colors duration-500", step >= 3 ? "bg-primary/40" : "bg-white/10")} />
+                        <div className={cn("w-2 h-2 rounded-full transition-colors duration-500", step >= 3 ? "bg-primary" : "bg-white/10")} />
+                      </div>
+                      <span className="text-[9px] font-bold tracking-[0.5em] text-primary/40 uppercase">STEP 0{step} OF 03</span>
+                    </div>
+                    <button onClick={resetState} className="lg:hidden text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase">Exit</button>
+                  </div>
+
+                  <AnimatePresence mode="wait">
+                    {step === 1 && (
+                      <motion.div 
+                        key="step1"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        className="space-y-6"
+                      >
+                        <h3 className="text-3xl font-headline font-bold text-white tracking-tight uppercase italic">Conversation Path</h3>
+                        <div className="grid grid-cols-1 gap-3">
                           {CATEGORIES.map((cat, idx) => (
                             <button
                               key={cat.id}
-                              onClick={() => handleCategorySelect(cat)}
-                              className="w-full group flex items-center justify-between p-6 rounded-2xl glass border-white/5 transition-all hover:border-primary/20 hover:bg-primary/[0.02]"
+                              onClick={() => {
+                                setSelectedCategory(cat);
+                                setStep(2);
+                              }}
+                              className="group w-full flex items-center justify-between p-8 rounded-3xl glass border-white/5 hover:border-primary/20 hover:bg-primary/[0.02] transition-all duration-500 hover:-translate-y-1"
                             >
                               <div className="flex items-center gap-8">
-                                <span className="text-[10px] font-mono font-bold text-primary/20 group-hover:text-primary transition-colors">{cat.id}</span>
-                                <div className="space-y-0.5">
-                                  <p className="text-lg font-headline font-bold text-white uppercase italic tracking-tight group-hover:text-primary transition-colors">{cat.label}</p>
-                                  <p className="text-[10px] tracking-widest text-[#536878] uppercase font-light">{cat.description}</p>
+                                <span className="text-[11px] font-mono font-bold text-primary/20 group-hover:text-primary transition-colors">{cat.id}</span>
+                                <div className="text-left">
+                                  <p className="text-xl font-headline font-bold text-white uppercase tracking-tight group-hover:text-primary transition-colors">{cat.label}</p>
+                                  <p className="text-xs text-[#EAE0C8]/30 font-light mt-1">{cat.description}</p>
                                 </div>
                               </div>
-                              <ChevronRight className="w-4 h-4 text-white/10 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                              <ChevronRight className="w-5 h-5 text-white/5 group-hover:text-primary group-hover:translate-x-1 transition-all" />
                             </button>
                           ))}
-                        </motion.div>
-                      )}
+                        </div>
+                      </motion.div>
+                    )}
 
-                      {step === 2 && (
-                        <motion.div 
-                          key="step-2"
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -20 }}
-                          transition={{ duration: 0.5 }}
-                          className="space-y-4"
-                        >
-                          <button 
-                            onClick={() => setStep(1)}
-                            className="flex items-center gap-2 text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase hover:text-primary transition-colors mb-8"
-                          >
-                            <ArrowRight className="w-3 h-3 rotate-180" /> Back to Categories
+                    {step === 2 && (
+                      <motion.div 
+                        key="step2"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        className="space-y-8"
+                      >
+                        <div className="space-y-4">
+                          <button onClick={() => setStep(1)} className="text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase hover:text-white transition-colors flex items-center gap-2">
+                             ← Back to categories
                           </button>
-                          
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            {selectedCategory?.topics.map((topic, idx) => (
-                              <button
-                                key={topic}
-                                onClick={() => setStep(3)}
-                                className="group p-6 rounded-2xl glass border-white/5 text-left transition-all hover:border-primary/20 hover:bg-primary/[0.02] flex items-center justify-between"
-                              >
-                                <span className="text-sm font-medium text-[#EAE0C8]/60 group-hover:text-white transition-colors">{topic}</span>
-                                <ArrowRight className="w-3 h-3 text-white/0 group-hover:text-primary group-hover:translate-x-1 transition-all" />
-                              </button>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
+                          <h3 className="text-3xl font-headline font-bold text-white tracking-tight uppercase italic">{selectedCategory?.label}</h3>
+                        </div>
 
-                      {step === 3 && (
-                        <motion.div 
-                          key="step-3"
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -20 }}
-                          transition={{ duration: 0.5 }}
-                          className="space-y-8"
-                        >
-                          <button 
-                            onClick={() => setStep(2)}
-                            className="flex items-center gap-2 text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase hover:text-primary transition-colors"
-                          >
-                            <ArrowRight className="w-3 h-3 rotate-180" /> Change Topic
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {selectedCategory?.topics.map((topic, idx) => (
+                            <button
+                              key={topic}
+                              onClick={() => setStep(3)}
+                              className="group p-10 rounded-[2.5rem] glass border-white/5 text-left transition-all duration-700 hover:border-primary/30 hover:bg-primary/[0.03] flex items-center justify-between"
+                            >
+                              <div className="space-y-2">
+                                <span className="text-sm font-medium text-white/70 group-hover:text-white transition-colors">{topic}</span>
+                                <div className="h-px w-0 bg-primary/20 group-hover:w-full transition-all duration-700" />
+                              </div>
+                              <ArrowUpRight className="w-4 h-4 text-white/0 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                            </button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {step === 3 && (
+                      <motion.div 
+                        key="step3"
+                        initial={{ opacity: 0, scale: 0.98, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                        transition={{ duration: 0.8 }}
+                        className="space-y-12"
+                      >
+                        <div className="space-y-4">
+                          <button onClick={() => setStep(2)} className="text-[10px] font-bold tracking-[0.4em] text-primary/40 uppercase hover:text-white transition-colors flex items-center gap-2">
+                             ← Change topic
                           </button>
+                          <h3 className="text-3xl font-headline font-bold text-white tracking-tight uppercase italic">Institutional Dialogue</h3>
+                        </div>
 
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {ACTIONS.map((action) => (
-                              <button
-                                key={action.label}
-                                onClick={() => handleExternalClick(action.href)}
-                                className="group p-8 rounded-3xl glass border-white/5 transition-all hover:border-primary/30 hover:bg-primary/[0.03] text-left"
-                              >
-                                <div className="flex items-start justify-between mb-6">
-                                  <div className="w-10 h-10 rounded-xl glass border-white/5 flex items-center justify-center text-primary/40 group-hover:text-primary transition-all">
-                                    <action.icon className="w-5 h-5" />
-                                  </div>
-                                  <ArrowUpRight className="w-4 h-4 text-white/10 group-hover:text-primary group-hover:scale-110 transition-all" />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          {ACTIONS.map((action) => (
+                            <button
+                              key={action.label}
+                              onClick={() => handleExternalClick(action.href)}
+                              className="group p-10 rounded-[3rem] glass border-white/10 transition-all duration-1000 hover:border-primary/40 hover:bg-primary/[0.04] text-left relative overflow-hidden"
+                            >
+                              <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                              
+                              <div className="flex items-start justify-between mb-8 relative z-10">
+                                <div className="w-12 h-12 rounded-2xl glass border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:rotate-3 transition-all duration-700">
+                                  <action.icon className="w-6 h-6" />
                                 </div>
-                                <div className="space-y-1">
-                                  <p className="text-xl font-headline font-black text-white italic uppercase">{action.label}</p>
-                                  <p className="text-[10px] text-[#536878] uppercase font-bold tracking-widest">{action.sub}</p>
-                                </div>
-                              </button>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
+                                <ArrowUpRight className="w-5 h-5 text-white/10 group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
+                              </div>
 
-                  <div className="pt-8 border-t border-white/5 opacity-20 text-center">
-                    <p className="text-[9px] tracking-[0.4em] text-[#EAE0C8] uppercase font-bold">
-                      Meaningful conversations create meaningful outcomes.
-                    </p>
-                  </div>
+                              <div className="space-y-2 relative z-10">
+                                <p className="text-xl font-headline font-black text-white italic uppercase tracking-tight">{action.label}</p>
+                                <p className="text-[11px] text-[#536878] uppercase font-bold tracking-widest">{action.sub}</p>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+
+                        <div className="pt-12 text-center">
+                          <p className="text-[9px] font-bold tracking-[0.5em] text-primary/30 uppercase">
+                            Meaningful partnerships begin with meaningful conversations.
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </div>
+            </motion.div>
+          )}
         </LayoutGroup>
       </div>
-      
-      {/* Background Blur Effect */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[-1] backdrop-blur-[15px] bg-black/40 pointer-events-none"
-          />
-        )}
-      </AnimatePresence>
+
+      {/* Decorative Atmosphere */}
+      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-primary/[0.02] to-transparent pointer-events-none" />
     </section>
   );
 }
