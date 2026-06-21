@@ -23,7 +23,7 @@ export function StudioExperience({ onClose }: StudioExperienceProps) {
     if (step < INTRO_STEPS.length) {
       const timer = setTimeout(() => {
         setStep(prev => prev + 1);
-      }, 3000);
+      }, 2000); // Updated to 2-second timing as requested
       return () => clearTimeout(timer);
     } else {
       setShowHub(true);

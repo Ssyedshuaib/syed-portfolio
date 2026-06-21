@@ -26,7 +26,7 @@ export function Footer({ onStudioStateChange }: FooterProps) {
 
   return (
     <footer className="relative bg-background pt-96 pb-24 px-6 overflow-hidden" role="contentinfo">
-      {/* FIX 1: GIANT BACKGROUND SYED */}
+      {/* FIX 1: GIANT BACKGROUND SYED - RESTORED & SCALED */}
       <div 
         className="footer-background-word"
         style={{
@@ -35,7 +35,7 @@ export function Footer({ onStudioStateChange }: FooterProps) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: 'min(65vw, 1100px)',
+          fontSize: 'min(95vw, 1600px)',
           fontWeight: 900,
           letterSpacing: '-0.08em',
           color: 'rgba(255, 255, 255, 0.025)',
@@ -52,7 +52,7 @@ export function Footer({ onStudioStateChange }: FooterProps) {
         </motion.span>
       </div>
 
-      {/* FIX 1: FOOTER CONTENT WRAPPER */}
+      {/* FOOTER CONTENT WRAPPER */}
       <div className="footer-content relative z-10 max-w-7xl mx-auto flex flex-col items-center text-center">
         
         {/* THE STUDIO PORTAL */}
