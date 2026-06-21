@@ -62,7 +62,7 @@ export function FounderPhilosophy() {
     offset: ["start end", "end center"],
   });
 
-  const isVisible = useInView(containerRef, { margin: "-20% 0px -20% 0px" });
+  const isVisible = useInView(containerRef, { margin: "-10% 0px -10% 0px" });
 
   return (
     <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-32">
@@ -111,23 +111,41 @@ export function FounderPhilosophy() {
           ))}
         </div>
 
-        {/* FINAL STORYTELLING SEQUENCE - FIXED BLUR BUG */}
+        {/* FINAL STORYTELLING SEQUENCE */}
         <div ref={storyRef} className="min-h-screen flex flex-col items-center justify-center text-center relative px-4 py-32">
-          <div className="space-y-20 w-full max-w-4xl mx-auto">
+          {/* Cinematic Background Dimming */}
+          <motion.div 
+            style={{ opacity: useTransform(storyProgress, [0.8, 0.98], [0, 0.4]) }}
+            className="fixed inset-0 bg-black pointer-events-none z-0"
+          />
+          
+          <div className="space-y-20 w-full max-w-4xl mx-auto relative z-10">
              <div className="flex flex-col items-center gap-16">
                 <StoryLine progress={storyProgress} range={[0, 0.15, 0.25]} text="Most companies build products." />
                 <StoryLine progress={storyProgress} range={[0.25, 0.4, 0.5]} text="We build systems." className="text-primary italic" />
                 <StoryLine progress={storyProgress} range={[0.5, 0.65, 0.75]} text="Systems create ecosystems." />
-                <StoryLine progress={storyProgress} range={[0.75, 0.9, 1.0]} text="Ecosystems create lasting value." />
+                <StoryLine progress={storyProgress} range={[0.75, 0.85, 0.92]} text="Ecosystems create lasting value." />
                 
                 <motion.div
-                   style={{ opacity: useTransform(storyProgress, [0.9, 0.98], [0, 1]) }}
-                   className="pt-24 space-y-8"
+                   style={{ 
+                     opacity: useTransform(storyProgress, [0.9, 0.98], [0, 1]),
+                     y: useTransform(storyProgress, [0.9, 0.98], [20, 0]),
+                     filter: useTransform(storyProgress, [0.9, 0.96, 0.98], ["blur(20px)", "blur(10px)", "blur(0px)"])
+                   }}
+                   className="pt-24 space-y-12"
                 >
-                   <div className="h-px w-32 bg-primary/20 mx-auto" />
-                   <h4 className="text-5xl md:text-9xl font-headline font-black text-white tracking-tighter italic">
-                     That is Axora.
-                   </h4>
+                   <div className="h-px w-24 bg-primary/20 mx-auto" />
+                   <div className="relative group">
+                     <motion.div 
+                       animate={{ opacity: [0.1, 0.3, 0.1], scale: [1, 1.02, 1] }}
+                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                       className="absolute inset-0 bg-primary/10 blur-3xl rounded-full" 
+                     />
+                     <h4 className="relative text-5xl md:text-9xl font-headline font-black text-white tracking-tighter italic drop-shadow-[0_0_30px_rgba(234,224,200,0.15)]">
+                       That is Axora.
+                     </h4>
+                   </div>
+                   <p className="text-[10px] font-bold tracking-[1em] text-primary/40 uppercase">A Product Venture Studio</p>
                 </motion.div>
              </div>
           </div>
@@ -163,15 +181,12 @@ function PrincipleIndicator({ principle, index, progress }: { principle: any, in
 }
 
 function StoryLine({ progress, range, text, className }: { progress: any, range: [number, number, number], text: string, className?: string }) {
-  // Use a 3-point scale to handle: 
-  // 1. Initial State (Hidden/Blurred)
-  // 2. Active State (Opaque/Sharp)
-  // 3. Previous State (Dimmed/Sharp)
-  const opacity = useTransform(progress, range, [0, 1, 0.3]);
-  const y = useTransform(progress, range, [40, 0, -20]);
+  // Use a strictly mapped scale to guarantee blur(0px) for the active and previous states
+  const opacity = useTransform(progress, range, [0, 1, 0.25]);
+  const y = useTransform(progress, range, [30, 0, -20]);
   
-  // Explicitly mapping blur to 0 at the active point and keeping it at 0 for the previous state
-  const blurValue = useTransform(progress, [range[0], range[1], range[1] + 0.01, range[2]], ["20px", "0px", "0px", "0px"]);
+  // High-fidelity blur logic: Ensure the 0px state is held for all indices after activation
+  const blurValue = useTransform(progress, [range[0], range[1], range[1] + 0.001, range[2]], ["24px", "0px", "0px", "0px"]);
 
   return (
     <motion.p 
@@ -179,11 +194,10 @@ function StoryLine({ progress, range, text, className }: { progress: any, range:
         opacity, 
         y, 
         filter: useTransform(blurValue, (v) => `blur(${v})`),
-        // Critical: Ensure blur is completely off when we reach the active threshold
         WebkitFilter: useTransform(blurValue, (v) => `blur(${v})`)
       }}
       className={cn(
-        "text-3xl md:text-5xl font-light text-[#EAE0C8] tracking-tight leading-tight",
+        "text-3xl md:text-5xl font-light text-[#EAE0C8] tracking-tight leading-tight select-none",
         className
       )}
     >
