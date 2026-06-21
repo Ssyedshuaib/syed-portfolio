@@ -17,10 +17,11 @@ import { cn } from "@/lib/utils";
 
 /**
  * Main Entry Page - Optimized Architectural Flow
- * Flow: Intro -> Hero -> Identity (Identity Cards) -> Manifesto (Philosophy) -> Journey -> Venture Hub -> Portfolio -> Research -> Engagement
+ * Handled State: isLoading (Intro), isStudioOpen (Private Mode)
  */
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isStudioOpen, setIsStudioOpen] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
@@ -37,12 +38,12 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (isLoading && hasMounted) {
+    if ((isLoading || isStudioOpen) && hasMounted) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-  }, [isLoading, hasMounted]);
+  }, [isLoading, isStudioOpen, hasMounted]);
 
   const handleIntroComplete = useCallback(() => {
     sessionStorage.setItem("axora_intro_played", "true");
@@ -59,20 +60,22 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <div className={cn(
-        "fixed inset-x-0 top-0 z-[100] transition-all duration-[1.5s] ease-out",
-        isLoading ? "opacity-[0.05] pointer-events-none blur-[10px]" : "opacity-100 blur-0"
-      )}>
+      <motion.div 
+        className={cn(
+          "fixed inset-x-0 top-0 z-[100] transition-all duration-[1.5s] ease-out",
+          (isLoading || isStudioOpen) ? "opacity-0 pointer-events-none blur-[20px]" : "opacity-100 blur-0"
+        )}
+      >
         <Navbar />
-      </div>
+      </motion.div>
 
       <motion.main 
         className="min-h-screen relative overflow-x-hidden"
         initial={{ opacity: 0 }}
         animate={{ 
-          opacity: isLoading ? 0.05 : 1,
-          scale: isLoading ? 0.99 : 1,
-          filter: isLoading ? "blur(40px)" : "blur(0px)",
+          opacity: isLoading ? 0.05 : isStudioOpen ? 0 : 1,
+          scale: isLoading ? 0.99 : isStudioOpen ? 1.02 : 1,
+          filter: (isLoading || isStudioOpen) ? "blur(40px)" : "blur(0px)",
         }}
         transition={{ 
           duration: 1.5,
@@ -84,29 +87,15 @@ export default function Home() {
         <div className="fixed inset-0 blueprint-grid opacity-[0.02] pointer-events-none z-0" />
         
         <Hero />
-        
-        {/* Identity Section (Identity Cards) */}
         <FounderProfile />
-
-        {/* Manifesto Section */}
         <Philosophy />
-        
-        {/* Experience & Growth */}
         <Journey />
-        
-        {/* Venture Hub */}
         <AxoraEcosystem />
-        
-        {/* Portfolio */}
         <ProductEcosystem />
-        
-        {/* Research & Future Concepts */}
         <IdeasLab />
-        
-        {/* Engagement */}
         <Contact />
         
-        <Footer />
+        <Footer onStudioStateChange={setIsStudioOpen} />
       </motion.main>
     </>
   );

@@ -68,6 +68,15 @@
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+@keyframes breathing {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+
+.animate-breathing {
+  animation: breathing 30s ease-in-out infinite;
+}
+
 @media (min-width: 1025px) {
   a, button, [role="button"] {
     cursor: none !important;
