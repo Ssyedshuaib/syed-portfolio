@@ -65,11 +65,10 @@ export function FounderPhilosophy() {
 
   const isVisible = useInView(containerRef, { margin: "-10% 0px -10% 0px" });
 
-  // Manifesto Rail Fill logic
   const progressFill = useSpring(mainProgress, { stiffness: 100, damping: 30 });
 
   return (
-    <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden pb-32">
+    <section id="philosophy" ref={containerRef} className="relative bg-background overflow-hidden">
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
 
       {/* MANIFESTO RAIL (Desktop) */}
@@ -80,32 +79,30 @@ export function FounderPhilosophy() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed left-10 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex items-center gap-8"
+            className="fixed left-12 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex items-center gap-10"
           >
-            {/* Progress Track */}
-            <div className="relative w-px h-80 bg-white/5">
+            <div className="relative w-px h-96 bg-white/5">
               <motion.div 
-                style={{ height: useTransform(progressFill, [0, 1], ["0%", "100%"]) }}
+                style={{ height: useTransform(progressFill, [0, 0.8], ["0%", "100%"]) }}
                 className="absolute top-0 left-0 w-full bg-primary origin-top shadow-[0_0_15px_rgba(234,224,200,0.5)]"
               />
             </div>
 
-            {/* Labels Stack */}
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-12">
               {PRINCIPLES.map((p, i) => (
                 <motion.div
                   key={p.id}
                   animate={{ 
-                    opacity: activeIndex === i ? 1 : 0.2,
+                    opacity: activeIndex === i ? 1 : 0.15,
                     scale: activeIndex === i ? 1.05 : 1,
-                    x: activeIndex === i ? 5 : 0
+                    x: activeIndex === i ? 8 : 0
                   }}
                   className="group cursor-default"
                 >
                   <p className="text-[10px] font-mono font-bold text-primary mb-1">{p.id}</p>
                   <p className={cn(
-                    "text-[9px] font-bold tracking-[0.4em] uppercase transition-all duration-500",
-                    activeIndex === i ? "text-white text-shadow-glow" : "text-[#536878]"
+                    "text-[9px] font-bold tracking-[0.5em] uppercase transition-all duration-500",
+                    activeIndex === i ? "text-white" : "text-[#536878]"
                   )}>
                     {p.label}
                   </p>
@@ -123,14 +120,14 @@ export function FounderPhilosophy() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] lg:hidden"
+            className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[100] lg:hidden"
           >
-            <div className="glass px-6 py-3 rounded-full border-white/10 flex items-center gap-4 backdrop-blur-xl">
+            <div className="glass px-8 py-4 rounded-full border-white/10 flex items-center gap-6 backdrop-blur-2xl">
               <span className="text-[10px] font-mono font-bold text-primary">
                 0{activeIndex + 1} / 05
               </span>
-              <div className="w-px h-3 bg-white/10" />
-              <span className="text-[9px] font-bold tracking-[0.3em] text-white uppercase">
+              <div className="w-px h-4 bg-white/10" />
+              <span className="text-[10px] font-bold tracking-[0.4em] text-white uppercase">
                 {PRINCIPLES[activeIndex].label}
               </span>
             </div>
@@ -140,24 +137,24 @@ export function FounderPhilosophy() {
 
       <div className="max-w-[1440px] mx-auto px-6">
         {/* Intro Header */}
-        <div className="py-64 space-y-8 text-center">
+        <div className="min-h-screen flex items-center justify-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-8"
+            className="space-y-10"
           >
-            <p className="text-[10px] font-bold tracking-[1em] text-primary/30 uppercase">FOUNDER PHILOSOPHY</p>
-            <h2 className="text-4xl md:text-7xl lg:text-[clamp(3rem,6vw,5.5rem)] font-headline font-black tracking-tighter text-white leading-[0.85]">
+            <p className="text-[11px] font-bold tracking-[1.2em] text-primary/30 uppercase">FOUNDER PHILOSOPHY</p>
+            <h2 className="text-5xl md:text-8xl lg:text-[clamp(4rem,8vw,7.5rem)] font-headline font-black tracking-tighter text-white leading-[0.85]">
               Principles Over <br />
               <span className="text-primary italic font-medium">Shortcuts.</span>
             </h2>
           </motion.div>
         </div>
 
-        {/* Alternating Principles */}
-        <div className="space-y-64 lg:space-y-[45vh] pb-64">
+        {/* Presentation Chapters */}
+        <div className="space-y-32 pb-32">
           {PRINCIPLES.map((principle, idx) => (
             <PrincipleChapter 
               key={idx} 
@@ -169,42 +166,42 @@ export function FounderPhilosophy() {
         </div>
 
         {/* FINAL STORYTELLING SEQUENCE */}
-        <div ref={storyRef} className="min-h-screen flex flex-col items-center justify-center text-center relative px-4 py-32">
-          {/* Cinematic Background Dimming */}
-          <motion.div 
-            style={{ opacity: useTransform(storyProgress, [0.8, 0.98], [0, 0.4]) }}
-            className="fixed inset-0 bg-black pointer-events-none z-0"
-          />
-          
-          <div className="space-y-20 w-full max-w-4xl mx-auto relative z-10">
-             <div className="flex flex-col items-center gap-16">
-                <StoryLine progress={storyProgress} range={[0, 0.15, 0.25]} text="Most companies build products." />
-                <StoryLine progress={storyProgress} range={[0.25, 0.4, 0.5]} text="We build systems." className="text-primary italic" />
-                <StoryLine progress={storyProgress} range={[0.5, 0.65, 0.75]} text="Systems create ecosystems." />
-                <StoryLine progress={storyProgress} range={[0.75, 0.85, 0.92]} text="Ecosystems create lasting value." />
-                
-                <motion.div
-                   style={{ 
-                     opacity: useTransform(storyProgress, [0.9, 0.98], [0, 1]),
-                     y: useTransform(storyProgress, [0.9, 0.98], [20, 0]),
-                     filter: useTransform(storyProgress, [0.9, 0.96, 0.98], ["blur(24px)", "blur(12px)", "blur(0px)"])
-                   }}
-                   className="pt-24 space-y-12"
-                >
-                   <div className="h-px w-24 bg-primary/20 mx-auto" />
-                   <div className="relative group">
-                     <motion.div 
-                       animate={{ opacity: [0.1, 0.3, 0.1], scale: [1, 1.02, 1] }}
-                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                       className="absolute inset-0 bg-primary/10 blur-3xl rounded-full" 
-                     />
-                     <h4 className="relative text-5xl md:text-9xl font-headline font-black text-white tracking-tighter italic drop-shadow-[0_0_30px_rgba(234,224,200,0.15)]">
-                       That is Axora.
-                     </h4>
-                   </div>
-                   <p className="text-[10px] font-bold tracking-[1em] text-primary/40 uppercase">A Product Venture Studio</p>
-                </motion.div>
-             </div>
+        <div ref={storyRef} className="min-h-[200vh] flex flex-col items-center justify-center text-center relative px-6">
+          <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center">
+            {/* Cinematic Background Dimming */}
+            <motion.div 
+              style={{ opacity: useTransform(storyProgress, [0.8, 0.98], [0, 0.4]) }}
+              className="fixed inset-0 bg-black pointer-events-none z-0"
+            />
+            
+            <div className="space-y-24 w-full max-w-5xl mx-auto relative z-10 flex flex-col items-center justify-center">
+               <StoryLine progress={storyProgress} range={[0, 0.12, 0.22]} text="Most companies build products." />
+               <StoryLine progress={storyProgress} range={[0.22, 0.34, 0.44]} text="We build systems." className="text-primary italic" />
+               <StoryLine progress={storyProgress} range={[0.44, 0.56, 0.66]} text="Systems create ecosystems." />
+               <StoryLine progress={storyProgress} range={[0.66, 0.78, 0.88]} text="Ecosystems create lasting value." />
+               
+               <motion.div
+                  style={{ 
+                    opacity: useTransform(storyProgress, [0.88, 0.96], [0, 1]),
+                    y: useTransform(storyProgress, [0.88, 0.96], [30, 0]),
+                    filter: useTransform(storyProgress, [0.88, 0.94, 0.96], ["blur(30px)", "blur(15px)", "blur(0px)"])
+                  }}
+                  className="pt-24 space-y-12"
+               >
+                  <div className="h-px w-32 bg-primary/20 mx-auto" />
+                  <div className="relative group">
+                    <motion.div 
+                      animate={{ opacity: [0.1, 0.2, 0.1], scale: [1, 1.05, 1] }}
+                      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                      className="absolute inset-0 bg-primary/10 blur-[80px] rounded-full" 
+                    />
+                    <h4 className="relative text-6xl md:text-9xl font-headline font-black text-white tracking-tighter italic drop-shadow-[0_0_40px_rgba(234,224,200,0.15)]">
+                      That is Axora.
+                    </h4>
+                  </div>
+                  <p className="text-[11px] font-bold tracking-[1.2em] text-primary/40 uppercase">A Product Venture Studio</p>
+               </motion.div>
+            </div>
           </div>
         </div>
       </div>
@@ -213,12 +210,9 @@ export function FounderPhilosophy() {
 }
 
 function StoryLine({ progress, range, text, className }: { progress: any, range: [number, number, number], text: string, className?: string }) {
-  // Enhanced blur removal logic for absolute crispness
   const opacity = useTransform(progress, range, [0, 1, 0.25]);
-  const y = useTransform(progress, range, [30, 0, -20]);
-  
-  // Explicit mapping ensures 0px blur at the active point and beyond
-  const blurValue = useTransform(progress, [range[0], range[1], range[1] + 0.01, range[2]], ["24px", "0px", "0px", "0px"]);
+  const y = useTransform(progress, range, [40, 0, -30]);
+  const blurValue = useTransform(progress, [range[0], range[1], range[1] + 0.001, range[2]], ["24px", "0px", "0px", "0px"]);
 
   return (
     <motion.p 
@@ -229,7 +223,7 @@ function StoryLine({ progress, range, text, className }: { progress: any, range:
         WebkitFilter: useTransform(blurValue, (v) => `blur(${v})`)
       }}
       className={cn(
-        "text-3xl md:text-5xl font-light text-[#EAE0C8] tracking-tight leading-tight select-none",
+        "text-3xl md:text-6xl font-light text-[#EAE0C8] tracking-tight leading-tight select-none",
         className
       )}
     >
@@ -251,16 +245,16 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
   const isRight = idx % 2 === 0;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  const numberY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  const opacity = useTransform(scrollYProgress, [0, 0.25, 0.75, 1], [0, 1, 1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const numberY = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
   return (
     <motion.div
       ref={ref}
       style={{ opacity, y }}
       className={cn(
-        "relative flex flex-col lg:flex-row items-center gap-16 lg:gap-32 min-h-[70vh]",
+        "relative flex flex-col lg:flex-row items-center justify-center gap-24 lg:gap-40 min-h-[110vh] py-24",
         !isRight && "lg:flex-row-reverse"
       )}
     >
@@ -268,52 +262,48 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
       <motion.div 
         style={{ y: numberY }}
         className={cn(
-          "absolute -top-24 lg:-top-32 pointer-events-none select-none z-0 transition-opacity duration-1000",
-          isInView ? "opacity-[0.03]" : "opacity-0",
-          isRight ? "left-0 lg:-left-20" : "right-0 lg:-right-20"
+          "absolute pointer-events-none select-none z-0 transition-opacity duration-1000",
+          isInView ? "opacity-[0.035]" : "opacity-0",
+          isRight ? "left-0" : "right-0"
         )}
       >
-        <span className="text-[12rem] lg:text-[clamp(12rem,20vw,24rem)] font-headline font-black text-white tracking-tighter block leading-none">
+        <span className="text-[15rem] lg:text-[clamp(15rem,25vw,30rem)] font-headline font-black text-white tracking-tighter block leading-none">
           {principle.id}
         </span>
       </motion.div>
 
       {/* Content Column */}
-      <div className="flex-1 space-y-12 relative z-10 w-full">
-        <div className={cn("space-y-8 max-w-xl", isRight ? "lg:mr-auto" : "lg:ml-auto")}>
-          <div className="space-y-6">
-            <div className={cn("flex items-center gap-6", !isRight && "flex-row-reverse")}>
-               <span className="text-[11px] font-mono font-bold text-primary/30 tracking-[0.4em]">{principle.id}</span>
-               <div className="h-px w-8 bg-primary/10" />
-               <span className="text-[10px] font-bold tracking-[0.6em] text-primary/60 uppercase">
+      <div className="flex-1 space-y-16 relative z-10 w-full flex flex-col justify-center">
+        <div className={cn("space-y-10 max-w-2xl", isRight ? "lg:mr-auto" : "lg:ml-auto")}>
+          <div className="space-y-8">
+            <div className={cn("flex items-center gap-8", !isRight && "flex-row-reverse")}>
+               <span className="text-[13px] font-mono font-bold text-primary/30 tracking-[0.5em]">{principle.id}</span>
+               <div className="h-px w-12 bg-primary/10" />
+               <span className="text-[11px] font-bold tracking-[0.8em] text-primary/60 uppercase">
                  {principle.label}
                </span>
             </div>
-            <h3 className="text-4xl md:text-6xl font-headline font-black text-white tracking-tighter leading-[0.95]">
+            <h3 className="text-5xl md:text-7xl lg:text-8xl font-headline font-black text-white tracking-tighter leading-[0.9]">
               {principle.title}
             </h3>
           </div>
 
-          <div className="space-y-6">
-            <p className="text-xl md:text-2xl font-light text-[#EAE0C8]/70 italic leading-tight">
+          <div className="space-y-8">
+            <p className="text-2xl md:text-3xl font-light text-[#EAE0C8]/70 italic leading-tight">
               {principle.sub}
             </p>
-            <p className="text-base md:text-lg text-white/40 font-light leading-relaxed max-w-lg">
+            <p className="text-lg md:text-xl text-white/40 font-light leading-relaxed max-w-xl">
               {principle.body}
             </p>
-          </div>
-          
-          <div className="pt-8">
-             <div className="h-px w-12 bg-white/5" />
           </div>
         </div>
       </div>
 
       {/* Visual Column */}
       <div className="flex-1 w-full flex items-center justify-center relative">
-        <div className="w-full max-w-md aspect-square relative flex items-center justify-center group">
+        <div className="w-full max-w-lg aspect-square relative flex items-center justify-center group">
            <VisualEngine type={principle.visual} active={isInView} />
-           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.04),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
         </div>
       </div>
     </motion.div>
@@ -322,100 +312,100 @@ function PrincipleChapter({ principle, idx, onActive }: { principle: any, idx: n
 
 function VisualEngine({ type, active }: { type: string, active: boolean }) {
   return (
-    <div className="relative w-full h-full glass rounded-[3.5rem] border-white/5 overflow-hidden transition-all duration-1000 hover:border-white/10">
-      <div className="absolute inset-0 flex items-center justify-center scale-75 lg:scale-90">
+    <div className="relative w-full h-full glass rounded-[4rem] border-white/5 overflow-hidden transition-all duration-1000 hover:border-white/10 shadow-2xl">
+      <div className="absolute inset-0 flex items-center justify-center scale-90">
         {type === "clarity" && (
-          <div className="relative w-48 h-48 flex items-center justify-center">
+          <div className="relative w-64 h-64 flex items-center justify-center">
             {[...Array(3)].map((_, i) => (
               <motion.div
                 key={i}
                 animate={{ 
-                  scale: active ? [1, 1.15, 1] : 1,
+                  scale: active ? [1, 1.2, 1] : 1,
                   rotate: active ? (i * 120 + 360) : (i * 120),
-                  opacity: active ? [0.1, 0.25, 0.1] : 0.1
+                  opacity: active ? [0.1, 0.3, 0.1] : 0.1
                 }}
-                transition={{ duration: 12, repeat: Infinity, delay: i * 2, ease: "linear" }}
+                transition={{ duration: 15, repeat: Infinity, delay: i * 3, ease: "linear" }}
                 className="absolute inset-0 border border-primary/30 rounded-full"
               />
             ))}
             <motion.div 
-              animate={{ opacity: [0.4, 0.8, 0.4], scale: [1, 1.2, 1] }}
-              transition={{ duration: 4, repeat: Infinity }}
-              className="w-2 h-2 bg-primary rounded-full shadow-[0_0_20px_rgba(234,224,200,0.8)]" 
+              animate={{ opacity: [0.5, 1, 0.5], scale: [1, 1.3, 1] }}
+              transition={{ duration: 5, repeat: Infinity }}
+              className="w-3 h-3 bg-primary rounded-full shadow-[0_0_30px_rgba(234,224,200,0.8)]" 
             />
           </div>
         )}
 
         {type === "systems" && (
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid grid-cols-3 gap-12">
             {[...Array(9)].map((_, i) => (
               <motion.div
                 key={i}
                 animate={{ 
-                  opacity: active ? [0.1, 0.35, 0.1] : 0.1,
-                  scale: active ? [1, 1.1, 1] : 1
+                  opacity: active ? [0.15, 0.45, 0.15] : 0.1,
+                  scale: active ? [1, 1.15, 1] : 1
                 }}
-                transition={{ duration: 5, repeat: Infinity, delay: i * 0.5 }}
-                className="w-5 h-5 rounded-lg bg-primary/15 border border-primary/30"
+                transition={{ duration: 6, repeat: Infinity, delay: i * 0.4 }}
+                className="w-8 h-8 rounded-xl bg-primary/15 border border-primary/30"
               />
             ))}
           </div>
         )}
 
         {type === "value" && (
-          <div className="relative w-48 h-48">
+          <div className="relative w-64 h-64">
             {[...Array(5)].map((_, i) => (
               <motion.div
                 key={i}
                 animate={{ 
-                  scale: active ? [0.2, 1.8] : 0.2,
-                  opacity: active ? [0.6, 0] : 0
+                  scale: active ? [0.2, 2] : 0.2,
+                  opacity: active ? [0.8, 0] : 0
                 }}
-                transition={{ duration: 6, repeat: Infinity, delay: i * 1.2, ease: "easeOut" }}
-                className="absolute inset-0 border border-primary/20 rounded-full"
+                transition={{ duration: 8, repeat: Infinity, delay: i * 1.5, ease: "easeOut" }}
+                className="absolute inset-0 border border-primary/25 rounded-full"
               />
             ))}
           </div>
         )}
 
         {type === "longevity" && (
-          <div className="relative w-48 h-48 border border-white/5 rounded-full flex items-center justify-center">
+          <div className="relative w-64 h-64 border border-white/5 rounded-full flex items-center justify-center">
             <motion.div
               animate={{ rotate: active ? 360 : 0 }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
               className="absolute inset-0"
             >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-primary/60 rounded-full" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-primary/70 rounded-full" />
             </motion.div>
-            <div className="w-32 h-32 border border-primary/15 rounded-full flex items-center justify-center">
+            <div className="w-40 h-40 border border-primary/15 rounded-full flex items-center justify-center">
                <motion.div 
-                 animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.5, 0.3] }}
-                 transition={{ duration: 8, repeat: Infinity }}
-                 className="w-2 h-2 bg-primary/40 rounded-full" 
+                 animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.7, 0.4] }}
+                 transition={{ duration: 10, repeat: Infinity }}
+                 className="w-3 h-3 bg-primary/50 rounded-full" 
                />
             </div>
           </div>
         )}
 
         {type === "ecosystems" && (
-          <div className="relative w-48 h-48">
-             <svg viewBox="0 0 100 100" className="w-full h-full opacity-20">
+          <div className="relative w-64 h-64">
+             <svg viewBox="0 0 100 100" className="w-full h-full opacity-30">
                <motion.path
                  d="M20,50 L50,20 L80,50 L50,80 Z"
                  fill="none"
                  stroke="currentColor"
-                 strokeWidth="0.5"
+                 strokeWidth="0.8"
                  className="text-primary"
                  animate={{ pathLength: active ? [0, 1] : 0 }}
-                 transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                />
                <motion.circle 
-                 cx="50" cy="50" r="12" 
+                 cx="50" cy="50" r="15" 
                  stroke="currentColor" 
                  fill="none" 
                  className="text-primary" 
-                 animate={{ r: [12, 15, 12], strokeWidth: [0.5, 1, 0.5] }} 
-                 transition={{ duration: 6, repeat: Infinity }} 
+                 animate={{ r: [15, 20, 15], strokeWidth: [0.8, 1.5, 0.8] }} 
+                 transition={{ duration: 8, repeat: Infinity }} 
                />
              </svg>
           </div>
