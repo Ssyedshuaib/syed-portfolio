@@ -15,29 +15,36 @@ import { ArrowUpRight } from "lucide-react";
 export function Footer() {
   return (
     <footer className="relative bg-background pt-64 pb-20 px-6 overflow-hidden" role="contentinfo">
-      {/* 00. GIANT BACKGROUND SIGNATURE - ARCHITECTURAL TEXTURE */}
+      {/* 00. GIANT BACKGROUND SIGNATURE - LUXURY BRANDING TEXTURE */}
       <div 
-        className="absolute inset-0 flex items-end justify-center pointer-events-none select-none z-0 overflow-hidden"
+        style={{
+          position: 'absolute',
+          bottom: '-12%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 0,
+          pointerEvents: 'none',
+          userSelect: 'none',
+          fontSize: 'min(42vw, 700px)',
+          fontWeight: 900,
+          letterSpacing: '-0.08em',
+          color: 'rgba(255, 255, 255, 0.012)',
+          lineHeight: 1,
+          whiteSpace: 'nowrap',
+        }}
       >
         <motion.span
           initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           animate={{ 
-            opacity: 1,
             scale: [1, 1.015, 1],
           }}
           transition={{ 
             opacity: { duration: 2 },
             scale: { duration: 30, repeat: Infinity, ease: "easeInOut" }
           }}
-          style={{
-            fontSize: 'min(90vw, 1800px)',
-            fontWeight: 900,
-            letterSpacing: '-0.08em',
-            color: 'rgba(255, 255, 255, 0.012)',
-            lineHeight: 1,
-            whiteSpace: 'nowrap',
-            transform: 'translateY(35%)', // Anchor typography lower as luxury texture
-          }}
+          className="block"
         >
           SYED
         </motion.span>
