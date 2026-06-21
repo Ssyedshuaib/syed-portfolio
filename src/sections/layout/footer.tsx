@@ -26,7 +26,7 @@ export function Footer({ onStudioStateChange }: FooterProps) {
 
   return (
     <footer className="relative bg-background pt-96 pb-24 px-6 overflow-hidden" role="contentinfo">
-      {/* FIX 1: GIANT BACKGROUND SYED - RESTORED & SCALED */}
+      {/* GIANT BACKGROUND SYED - RECALIBRATED SIZE & ALIGNMENT */}
       <div 
         className="footer-background-word"
         style={{
@@ -35,13 +35,14 @@ export function Footer({ onStudioStateChange }: FooterProps) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: 'min(95vw, 1600px)',
+          fontSize: 'clamp(250px, 32vw, 600px)',
           fontWeight: 900,
           letterSpacing: '-0.08em',
-          color: 'rgba(255, 255, 255, 0.025)',
+          color: 'rgba(255, 255, 255, 0.02)',
           zIndex: 0,
           pointerEvents: 'none',
           userSelect: 'none',
+          lineHeight: 1,
         }}
       >
         <motion.span
@@ -110,7 +111,7 @@ export function Footer({ onStudioStateChange }: FooterProps) {
         </div>
       </div>
 
-      {/* FIX 2: ENTER THE STUDIO EXPERIENCE */}
+      {/* ENTER THE STUDIO EXPERIENCE */}
       <AnimatePresence>
         {isStudioOpen && (
           <StudioExperience onClose={handleCloseStudio} />
