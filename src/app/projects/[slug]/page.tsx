@@ -136,7 +136,7 @@ export default function ProjectPage() {
       <div className="min-h-screen flex items-center justify-center bg-black">
         <div className="text-center space-y-4">
           <h1 className="text-4xl font-bold text-white">Project Not Found</h1>
-          <Button onClick={() => router.push("/")} className="bg-primary text-black font-bold">Return to HQ</Button>
+          <Button onClick={() => router.push("/#product-portfolio")} className="bg-primary text-black font-bold">Return to HQ</Button>
         </div>
       </div>
     );
@@ -150,12 +150,12 @@ export default function ProjectPage() {
       <Navbar />
       
       {/* FIXED BACK BUTTON - Viewport level floating control */}
-      <div className="fixed top-24 md:top-32 left-0 right-0 z-[110] pointer-events-none">
+      <div className="fixed top-24 md:top-32 left-0 right-0 z-[110] pointer-events-auto">
         <div className="max-w-7xl mx-auto px-6">
           <Button 
             variant="ghost" 
             onClick={() => router.push("/#product-portfolio")}
-            className="group text-[#B7A7A9] hover:text-white h-12 px-6 rounded-full border border-white/5 bg-black/40 backdrop-blur-md transition-all pointer-events-auto"
+            className="group text-[#B7A7A9] hover:text-white h-12 px-6 rounded-full border border-white/5 bg-black/40 backdrop-blur-md transition-all"
           >
             <ArrowLeft className="mr-2 w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Back to Ecosystem

@@ -40,7 +40,7 @@ const PRODUCTS = [
     visualHint: "structure"
   },
   {
-    title: "NOVAPU",
+    title: "開NOVAPU",
     category: "LEARNING PLATFORM",
     mission: "Helping students access structured educational experiences and resources.",
     status: "In Development",
