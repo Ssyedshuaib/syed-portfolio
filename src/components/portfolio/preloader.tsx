@@ -29,7 +29,8 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       duration: 3 + Math.random() * 2,
     })));
 
-    // Luxurious cinematic sequence (11 seconds total)
+    // Luxurious cinematic sequence - calibrated for maximum readability
+    // Timing Logic: 1.2s Reveal + 3.5s Hold + 1.0s Exit + 0.5s Delay = ~6.2s per scene
     const t0 = setTimeout(() => {
       setScene(1);
       lightIntensity.set(0.06);
@@ -38,20 +39,20 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
     const t1 = setTimeout(() => {
       setScene(2);
       lightIntensity.set(0.08);
-    }, 2500);
+    }, 6200);
 
     const t2 = setTimeout(() => {
       setScene(3);
       lightIntensity.set(0.09);
-    }, 5000);
+    }, 12400);
 
     const t3 = setTimeout(() => {
       setScene(4);
       lightIntensity.set(0.14);
       ambientScale.set(1.05);
-    }, 7500);
+    }, 18600);
 
-    const t4 = setTimeout(onComplete, 11000);
+    const t4 = setTimeout(onComplete, 26000);
 
     return () => {
       [t0, t1, t2, t3, t4].forEach(clearTimeout);
@@ -71,7 +72,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       filter: "blur(0px)",
       scale: 1,
       transition: { 
-        duration: 1.4, 
+        duration: 1.2, 
         ease: [0.16, 1, 0.3, 1] 
       }
     },
@@ -80,7 +81,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       y: -10, 
       filter: "blur(15px)",
       transition: { 
-        duration: 0.8, 
+        duration: 1.0, 
         ease: [0.16, 1, 0.3, 1] 
       }
     }
