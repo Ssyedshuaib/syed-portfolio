@@ -13,24 +13,27 @@ import {
   Sparkles, 
   ChevronLeft,
   Calendar,
-  MessageSquare
+  MessageSquare,
+  Clock,
+  MapPin
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * THE STRATEGY ROOM
- * Rebuilt with premium centered portal cards.
- * Focus: High-fidelity interior alignment and luxury editorial depth.
+ * THE STRATEGY ROOM: FOUNDER COMMAND CENTER
+ * Redesigned for maximum institutional value and luxury editorial depth.
+ * Aesthetic: Private Strategy Room, High-End Product Laboratory.
  */
 
 type ViewState = "entrance" | "refinement" | "communication" | "transition";
 
 const PORTALS = [
   {
-    id: "systems",
+    id: "01",
     title: "BUILD SYSTEMS",
     icon: Cpu,
-    desc: "Designing scalable digital ecosystems and long-term product foundations.",
+    mission: "Architecting scalable digital foundations.",
+    desc: "Designing long-term product ecosystems focused on performance and impact.",
     options: [
       { title: "Startup Product", desc: "Launching zero-to-one digital foundations." },
       { title: "SaaS Platform", desc: "Engineering multi-tenant cloud ecosystems." },
@@ -40,10 +43,11 @@ const PORTALS = [
     ]
   },
   {
-    id: "ventures",
+    id: "02",
     title: "VENTURE IDEAS",
     icon: Boxes,
-    desc: "Exploring zero-to-one opportunities and future market ecosystems.",
+    mission: "Exploring future market ecosystems.",
+    desc: "Validating zero-to-one opportunities and strategic market shifts.",
     options: [
       { title: "Ecosystem Creation", desc: "Designing interconnected market platforms." },
       { title: "Validation Strategy", desc: "Market-testing core product hypotheses." },
@@ -53,10 +57,11 @@ const PORTALS = [
     ]
   },
   {
-    id: "collab",
+    id: "03",
     title: "COLLABORATION",
     icon: Target,
-    desc: "Strategic partnerships focused on high-intent product building.",
+    mission: "Strategic product partnerships.",
+    desc: "High-intent building and creative research for ambitious goals.",
     options: [
       { title: "Joint Projects", desc: "Shared execution on ambitious build goals." },
       { title: "Strategic Partnership", desc: "Long-term product-led growth alliances." },
@@ -66,10 +71,11 @@ const PORTALS = [
     ]
   },
   {
-    id: "dialogue",
+    id: "04",
     title: "OPEN DIALOGUE",
     icon: MessageSquare,
-    desc: "A direct channel for meaningful inquiries and networking.",
+    mission: "Direct channels for meaningful inquiry.",
+    desc: "Founder networking, portfolio reviews, and knowledge exchange.",
     options: [
       { title: "General Inquiry", desc: "Direct channel for primary questions." },
       { title: "Portfolio Review", desc: "Deep-dives into existing product work." },
@@ -89,29 +95,49 @@ const ACTIONS = [
   { label: "SCHEDULE DISCUSSION", href: SCHEDULE_URL, icon: Calendar },
 ];
 
+const LUXURY_EASE = [0.22, 1, 0.36, 1];
+
 export function Contact() {
   const [view, setView] = useState<ViewState>("entrance");
   const [selectedPortal, setSelectedPortal] = useState<typeof PORTALS[0] | null>(null);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [transitionMsg, setTransitionMsg] = useState("");
+  const [currentTime, setTime] = useState("");
 
-  const msgs = ["Preparing Communication...", "Analyzing Context...", "Opening Dialogue...", "Initializing Secure Channel..."];
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setTime(new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      }).format(now));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000 * 60);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleAction = (action: typeof ACTIONS[0]) => {
-    setTransitionMsg(msgs[Math.floor(Math.random() * msgs.length)]);
+    setTransitionMsg("Initializing Secure Channel...");
     setView("transition");
     setTimeout(() => {
       window.open(action.href, '_blank');
       setView("entrance");
       setSelectedPortal(null);
-      setSelectedOption(null);
-    }, 1200);
+    }, 1500);
   };
 
   return (
-    <section id="contact" className="relative bg-[#050505] overflow-hidden min-h-screen py-24 md:py-32 px-6 flex flex-col justify-center">
+    <section id="contact" className="relative bg-[#030303] overflow-hidden min-h-screen py-32 md:py-48 px-6">
+      {/* 00. ATMOSPHERIC ARCHITECTURE */}
       <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(20,30,50,0.12),transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_75%)] pointer-events-none" />
+      <div className="fixed inset-0 grain-overlay opacity-[0.012] pointer-events-none" />
+      
+      {/* Blueprint Guides */}
+      <div className="absolute top-0 left-1/4 w-px h-full bg-white/[0.04] pointer-events-none hidden lg:block" />
+      <div className="absolute top-0 right-1/4 w-px h-full bg-white/[0.04] pointer-events-none hidden lg:block" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <LayoutGroup>
@@ -121,24 +147,44 @@ export function Contact() {
                 key="entrance"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0, scale: 0.95, filter: "blur(20px)" }}
-                className="space-y-12 md:space-y-20"
+                exit={{ opacity: 0, scale: 0.98, filter: "blur(40px)" }}
+                className="space-y-32 md:space-y-48"
               >
-                <div className="text-center space-y-6 md:space-y-8 max-w-3xl mx-auto">
-                  <div className="space-y-4">
-                    <p className="text-[9px] md:text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase">The Strategy Room</p>
-                    <h2 className="text-4xl md:text-7xl font-headline font-black tracking-tighter text-white uppercase italic leading-none">
-                      What Shall <br />We Build?
-                    </h2>
+                {/* Header: Editorial Composition */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+                  <div className="lg:col-span-8 space-y-12">
+                    <div className="space-y-6">
+                      <motion.p 
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 0.3, x: 0 }}
+                        className="text-[10px] font-bold tracking-[0.8em] text-white uppercase"
+                      >
+                        The Strategy Room
+                      </motion.p>
+                      <h2 className="text-5xl md:text-8xl lg:text-[clamp(4rem,10vw,11rem)] font-headline font-[900] tracking-[-0.05em] text-white uppercase leading-[0.85]">
+                        What Shall <br />
+                        <span className="text-[#EAE0C8] italic">We Build?</span>
+                      </h2>
+                    </div>
+                  </div>
+                  
+                  <div className="lg:col-span-4 pb-4">
+                    <div className="flex flex-col gap-8">
+                       <div className="h-px w-16 bg-[#EAE0C8]/20" />
+                       <p className="text-xl md:text-2xl text-white/30 font-light leading-relaxed max-w-sm">
+                         Enter a private environment for strategic product architecture and venture development.
+                       </p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                  {PORTALS.map((portal) => (
-                    <OptionCard 
+                {/* Strategic Pillars: Deep Horizontal Layout */}
+                <div className="space-y-0 border-t border-white/[0.06]">
+                  {PORTALS.map((portal, i) => (
+                    <StrategicPillar 
                       key={portal.id} 
-                      title={portal.title}
-                      icon={portal.icon}
+                      portal={portal}
+                      index={i}
                       onClick={() => {
                         setSelectedPortal(portal);
                         setView("refinement");
@@ -146,43 +192,67 @@ export function Contact() {
                     />
                   ))}
                 </div>
+
+                {/* Institutional Footer Info */}
+                <div className="flex flex-col md:flex-row justify-between items-center gap-12 pt-24 opacity-20">
+                   <div className="flex items-center gap-4">
+                      <MapPin className="w-3 h-3 text-[#EAE0C8]" />
+                      <span className="text-[10px] font-bold tracking-[0.5em] text-white uppercase">Bangalore, IN</span>
+                   </div>
+                   <div className="flex items-center gap-4">
+                      <Clock className="w-3 h-3 text-[#EAE0C8]" />
+                      <span className="text-[10px] font-bold tracking-[0.5em] text-white uppercase">{currentTime} IST</span>
+                   </div>
+                   <div className="h-px w-24 bg-white/40 hidden md:block" />
+                </div>
               </motion.div>
             )}
 
             {view === "refinement" && selectedPortal && (
               <motion.div 
                 key="refinement"
-                initial={{ opacity: 0, scale: 1.05, filter: "blur(30px)" }}
-                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                exit={{ opacity: 0, x: -50 }}
-                className="space-y-12 md:space-y-20"
+                initial={{ opacity: 0, x: 100, filter: "blur(60px)" }}
+                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="space-y-32 md:space-y-48"
               >
-                <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-white/5 pb-8 md:pb-12 gap-8">
-                  <div className="space-y-4">
-                    <button 
-                      onClick={() => setView("entrance")}
-                      className="group flex items-center gap-2 text-[9px] md:text-[10px] font-bold tracking-[0.4em] text-primary/30 uppercase hover:text-white transition-colors"
-                    >
-                      <ChevronLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" /> 
-                      Return to Portals
-                    </button>
-                    <h3 className="text-3xl md:text-6xl font-headline font-black text-white italic uppercase tracking-tight">
+                <div className="space-y-12">
+                  <button 
+                    onClick={() => setView("entrance")}
+                    className="group flex items-center gap-3 text-[10px] font-bold tracking-[0.4em] text-[#EAE0C8]/30 uppercase hover:text-white transition-all duration-500"
+                  >
+                    <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> 
+                    Return to Selection
+                  </button>
+                  <div className="space-y-6">
+                    <p className="text-[11px] font-bold tracking-[0.8em] text-white/20 uppercase">Refining Focus</p>
+                    <h3 className="text-4xl md:text-8xl font-headline font-[900] text-white uppercase italic tracking-tighter">
                       {selectedPortal.title}
                     </h3>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                  {selectedPortal.options.map((opt) => (
-                    <OptionCard
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-12 max-w-6xl">
+                  {selectedPortal.options.map((opt, i) => (
+                    <motion.button
                       key={opt.title}
-                      title={opt.title}
-                      icon={selectedPortal.icon}
-                      onClick={() => {
-                        setSelectedOption(opt.title);
-                        setView("communication");
-                      }}
-                    />
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      onClick={() => setView("communication")}
+                      className="group flex flex-col items-start text-left p-12 rounded-[40px] hover:bg-white/[0.02] border border-transparent hover:border-white/5 transition-all duration-700"
+                    >
+                      <div className="space-y-6">
+                        <span className="text-[10px] font-mono text-[#EAE0C8]/20 tracking-[0.4em]">0{i+1}</span>
+                        <h4 className="text-2xl md:text-4xl font-headline font-bold text-white uppercase group-hover:text-[#EAE0C8] transition-colors">
+                          {opt.title}
+                        </h4>
+                        <p className="text-lg text-white/30 font-light max-w-xs">{opt.desc}</p>
+                        <div className="pt-8">
+                           <ArrowRight className="w-5 h-5 text-white/10 group-hover:text-[#EAE0C8] group-hover:translate-x-2 transition-all" />
+                        </div>
+                      </div>
+                    </motion.button>
                   ))}
                 </div>
               </motion.div>
@@ -191,31 +261,40 @@ export function Contact() {
             {view === "communication" && (
               <motion.div 
                 key="communication"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, filter: "blur(40px)" }}
-                className="space-y-12 md:space-y-20"
+                initial={{ opacity: 0, scale: 1.1, filter: "blur(80px)" }}
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0 }}
+                className="min-h-[70vh] flex flex-col items-center justify-center space-y-32"
               >
-                <div className="text-center space-y-6 max-w-2xl mx-auto">
+                <div className="text-center space-y-8">
                   <button 
                     onClick={() => setView("refinement")}
-                    className="text-[9px] md:text-[10px] font-bold tracking-[0.4em] text-primary/30 uppercase hover:text-white transition-colors"
+                    className="text-[10px] font-bold tracking-[0.6em] text-[#EAE0C8]/20 uppercase hover:text-white transition-colors"
                   >
-                    ← Adjust Context
+                    Adjust Strategic Context
                   </button>
-                  <h3 className="text-3xl md:text-6xl font-headline font-black text-white italic uppercase tracking-tight">
-                    Select Channel
+                  <h3 className="text-5xl md:text-9xl font-headline font-[900] text-white uppercase tracking-[-0.06em]">
+                    Establish <br />
+                    <span className="text-[#EAE0C8] italic">Dialogue.</span>
                   </h3>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                  {ACTIONS.map((action) => (
-                    <OptionCard
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+                  {ACTIONS.map((action, i) => (
+                    <motion.button
                       key={action.label}
-                      title={action.label}
-                      icon={action.icon}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
                       onClick={() => handleAction(action)}
-                    />
+                      className="group relative h-48 rounded-[32px] overflow-hidden border border-white/[0.04] bg-white/[0.01] hover:bg-white/[0.03] flex flex-col items-center justify-center gap-6 transition-all duration-700"
+                    >
+                      <action.icon className="w-6 h-6 text-white/20 group-hover:text-[#EAE0C8] group-hover:scale-110 transition-all duration-700" />
+                      <span className="text-[10px] font-bold tracking-[0.4em] text-white/40 uppercase group-hover:text-white">
+                        {action.label}
+                      </span>
+                      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#EAE0C8]/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+                    </motion.button>
                   ))}
                 </div>
               </motion.div>
@@ -226,19 +305,26 @@ export function Contact() {
                 key="transition"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-[60px] flex flex-col items-center justify-center p-6"
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[100] bg-black/98 backdrop-blur-[100px] flex flex-col items-center justify-center p-6"
               >
-                <div className="space-y-8 text-center relative w-full">
+                <div className="space-y-12 text-center max-w-xl">
                   <motion.div 
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full"
-                  />
-                  <p className="relative text-2xl md:text-5xl font-headline font-light text-white tracking-[0.1em] italic uppercase">
+                    animate={{ scale: [1, 1.05, 1], opacity: [0.4, 0.8, 0.4] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    className="text-3xl md:text-5xl font-headline font-light text-white tracking-[0.1em] italic uppercase"
+                  >
                     {transitionMsg}
-                  </p>
-                  <div className="flex items-center justify-center gap-4 relative">
-                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  </motion.div>
+                  <div className="flex justify-center gap-2">
+                    {[0, 1, 2].map((i) => (
+                      <motion.div 
+                        key={i}
+                        animate={{ scale: [1, 1.5, 1], opacity: [0.2, 1, 0.2] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+                        className="w-1.5 h-1.5 rounded-full bg-[#EAE0C8]"
+                      />
+                    ))}
                   </div>
                 </div>
               </motion.div>
@@ -250,49 +336,56 @@ export function Contact() {
   );
 }
 
-function OptionCard({ title, icon: Icon, onClick }: { title: string, icon?: any, onClick: () => void }) {
+function StrategicPillar({ portal, index, onClick }: { portal: any, index: number, onClick: () => void }) {
   return (
     <motion.button
-      whileHover={{ 
-        scale: 1.015, 
-        y: -8,
-        boxShadow: "0 20px 80px rgba(0,0,0,0.45), 0 0 40px rgba(255,255,255,0.04)"
-      }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 1.2, delay: index * 0.15, ease: LUXURY_EASE }}
       onClick={onClick}
-      className="group relative w-full h-[255px] rounded-[32px] overflow-hidden flex flex-col items-center justify-center border border-white/[0.03] shadow-[0_20px_80px_rgba(0,0,0,0.45)]"
-      style={{
-        background: 'linear-gradient(180deg, rgba(8,12,18,0.96) 0%, rgba(5,8,12,0.98) 100%)',
-        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 20px 80px rgba(0,0,0,0.45)'
-      }}
+      className="group relative w-full py-16 md:py-24 flex flex-col md:flex-row items-start md:items-center justify-between gap-12 border-b border-white/[0.06] hover:bg-white/[0.01] transition-all duration-1000 px-4 md:px-12 overflow-hidden"
     >
-      {/* 00. SUBTLE SPOTLIGHT DEPTH */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(40,60,120,0.08),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+      {/* Hover Background Depth */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(234,224,200,0.04),transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
       
-      {/* 01. MATERIAL QUALITY - GRAIN OVERLAY */}
-      <div className="absolute inset-0 grain-overlay opacity-[0.015] pointer-events-none" />
+      {/* 01. INDEX */}
+      <div className="relative z-10 w-24">
+        <span className="text-[12px] font-mono text-[#EAE0C8]/20 tracking-[0.5em] group-hover:text-[#EAE0C8] transition-colors duration-700">
+          {portal.id}
+        </span>
+      </div>
 
-      {/* 02. LUXURY GLASS ICON CONTAINER */}
-      <div className="relative z-10 mb-auto pt-10">
-        <div className="w-16 h-16 rounded-[20px] backdrop-blur-[20px] border border-white/[0.04] bg-white/[0.02] flex items-center justify-center text-white/30 group-hover:text-white/60 group-hover:scale-110 transition-all duration-700 shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
-          {Icon ? <Icon className="w-6 h-6 stroke-[1.5]" /> : <Sparkles className="w-6 h-6 stroke-[1.5]" />}
+      {/* 02. CORE TYPOGRAPHY */}
+      <div className="relative z-10 flex-1 space-y-4">
+        <h4 className="text-4xl md:text-7xl font-headline font-[900] text-white uppercase tracking-[-0.05em] leading-[0.9] group-hover:translate-x-4 transition-transform duration-700 ease-premium">
+          {portal.title}
+        </h4>
+        <p className="text-[11px] font-bold tracking-[0.6em] text-white/20 uppercase">
+          Focus Category
+        </p>
+      </div>
+
+      {/* 03. MISSION STATEMENT */}
+      <div className="relative z-10 flex-1 md:text-right">
+        <p className="text-xl md:text-3xl text-white/40 font-light leading-relaxed italic group-hover:text-white transition-colors duration-1000">
+          "{portal.mission}"
+        </p>
+        <p className="text-[9px] font-bold tracking-[0.4em] text-[#EAE0C8]/20 uppercase mt-4">
+          Strategic Intent
+        </p>
+      </div>
+
+      {/* 04. INTERACTION VECTOR */}
+      <div className="relative z-10 w-24 flex justify-end">
+        <div className="w-16 h-16 rounded-full border border-white/[0.06] group-hover:border-[#EAE0C8]/40 flex items-center justify-center transition-all duration-700 group-hover:scale-110">
+          <ArrowRight className="w-6 h-6 text-white/10 group-hover:text-[#EAE0C8] group-hover:translate-x-1 transition-all duration-700" />
         </div>
       </div>
 
-      {/* 03. REFINED INSTITUTIONAL TITLE */}
-      <div className="relative z-10 flex-1 flex items-center justify-center px-10 text-center">
-        <h4 className="text-3xl md:text-4xl font-headline font-[800] text-white uppercase tracking-[-0.04em] leading-[0.9] transition-all duration-700">
-          {title}
-        </h4>
-      </div>
-
-      {/* 04. PREMIUM MOMENTUM ARROW */}
-      <div className="relative z-10 mt-auto pb-8">
-        <ArrowRight className="w-4 h-4 text-white opacity-50 group-hover:opacity-100 group-hover:translate-x-[6px] transition-all duration-600 ease-out" />
-      </div>
-
-      {/* Internal Atmospheric Horizon - Luxury White Bloom */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+      {/* Cornerblueprint detail */}
+      <div className="absolute top-0 right-0 w-8 h-px bg-white/[0.05] group-hover:w-full transition-all duration-1000" />
     </motion.button>
   );
 }
+
