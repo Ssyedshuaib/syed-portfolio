@@ -183,7 +183,7 @@ export function Contact() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
                   {selectedPortal.options.map((opt, i) => (
                     <motion.button
                       key={opt}
@@ -194,13 +194,17 @@ export function Contact() {
                         setSelectedOption(opt);
                         setView("communication");
                       }}
-                      className="group relative p-8 md:p-10 h-48 md:h-64 rounded-[2rem] md:rounded-[2.5rem] glass border-white/5 flex flex-col justify-between items-start text-left hover:border-primary/30 hover:bg-primary/[0.03] transition-all duration-700"
+                      className="group relative p-5 md:p-7 h-36 md:h-44 rounded-2xl md:rounded-[2.5rem] glass border-white/5 flex flex-col justify-between items-start text-left hover:border-primary/30 hover:bg-primary/[0.03] transition-all duration-700"
                     >
-                      <span className="text-[9px] md:text-[10px] font-mono font-bold text-primary/20">0{i+1}</span>
-                      <p className="text-lg md:text-xl font-headline font-bold text-white tracking-tight group-hover:text-primary transition-colors">
-                        {opt}
-                      </p>
-                      <ArrowRight className="w-5 h-5 text-white/0 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                      <div className="space-y-3">
+                        <span className="text-[9px] md:text-[10px] font-mono font-bold text-primary/20">0{i+1}</span>
+                        <p className="text-lg md:text-xl font-headline font-bold text-white tracking-tight group-hover:text-primary transition-colors leading-tight">
+                          {opt}
+                        </p>
+                      </div>
+                      <div className="w-full flex justify-end">
+                        <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-white/0 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                      </div>
                     </motion.button>
                   ))}
                 </div>
