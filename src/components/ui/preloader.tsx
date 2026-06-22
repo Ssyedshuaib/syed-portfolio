@@ -30,7 +30,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
     })));
 
     // REFINED CINEMATIC SEQUENCE
-    // Timing Logic per Statement: 0.9s Reveal + 2.4s Hold + 0.7s Exit + 0.25s Gap = ~4.25s
+    // Timing Logic per Statement: 0.85s Reveal + 2.0s Hold + 0.65s Exit + 0.2s Gap = 3.7s
     const t0 = setTimeout(() => {
       setScene(1);
       lightIntensity.set(0.06);
@@ -39,20 +39,20 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
     const t1 = setTimeout(() => {
       setScene(2);
       lightIntensity.set(0.08);
-    }, 4250);
+    }, 3700);
 
     const t2 = setTimeout(() => {
       setScene(3);
       lightIntensity.set(0.09);
-    }, 8500);
+    }, 7400);
 
     const t3 = setTimeout(() => {
       setScene(4);
       lightIntensity.set(0.14);
       ambientScale.set(1.05);
-    }, 12750);
+    }, 11100);
 
-    const t4 = setTimeout(onComplete, 18500);
+    const t4 = setTimeout(onComplete, 16500);
 
     return () => {
       [t0, t1, t2, t3, t4].forEach(clearTimeout);
@@ -72,7 +72,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       filter: "blur(0px)",
       scale: 1,
       transition: { 
-        duration: 0.9, 
+        duration: 0.85, 
         ease: [0.16, 1, 0.3, 1] 
       }
     },
@@ -81,7 +81,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       y: -10, 
       filter: "blur(15px)",
       transition: { 
-        duration: 0.7, 
+        duration: 0.65, 
         ease: [0.16, 1, 0.3, 1] 
       }
     }
