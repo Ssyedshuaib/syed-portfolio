@@ -233,8 +233,8 @@ export function Contact() {
                         </span>
                       </div>
 
-                      {/* TITLE POSITION (Top 85px, Left 48px) */}
-                      <div className="absolute top-[85px] left-12 right-12 z-10 space-y-4 md:space-y-6">
+                      {/* TITLE POSITION (Top 88px, Left 48px) */}
+                      <div className="absolute top-[88px] left-12 right-12 z-10 space-y-4 md:space-y-6">
                         <h4 className="text-3xl md:text-5xl lg:text-6xl font-headline font-black text-white italic uppercase tracking-tighter leading-none group-hover:text-primary transition-all duration-700 group-hover:-translate-y-2">
                           {opt.title}
                         </h4>
