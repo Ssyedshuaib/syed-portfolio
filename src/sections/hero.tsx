@@ -27,9 +27,10 @@ export function Hero() {
   };
 
   const lineVariants = {
-    hidden: { opacity: 0, filter: "blur(20px)" },
+    hidden: { opacity: 0, y: 20, filter: "blur(10px)" },
     visible: {
       opacity: 1,
+      y: 0,
       filter: "blur(0px)",
       transition: {
         duration: 1.8,

@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -28,6 +29,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       duration: 3 + Math.random() * 2,
     })));
 
+    // Snappier cinematic sequence (6 seconds total)
     const t0 = setTimeout(() => {
       setScene(1);
       lightIntensity.set(0.06);

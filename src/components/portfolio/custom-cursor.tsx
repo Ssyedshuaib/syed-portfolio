@@ -12,7 +12,7 @@ export function CustomCursor() {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  // Spring Physics for weight and lag - optimized configuration
+  // Spring Physics for weight and lag - optimized luxury configuration
   const springConfig = { stiffness: 450, damping: 40, mass: 0.8 };
   const springX = useSpring(cursorX, springConfig);
   const springY = useSpring(cursorY, springConfig);
