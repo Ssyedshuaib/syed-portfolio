@@ -149,6 +149,20 @@ export default function ProjectPage() {
       <div className="fixed inset-0 grain-overlay z-[100] pointer-events-none" />
       <Navbar />
       
+      {/* FIXED BACK BUTTON - Viewport level floating control */}
+      <div className="fixed top-24 md:top-32 left-0 right-0 z-[110] pointer-events-none">
+        <div className="max-w-7xl mx-auto px-6">
+          <Button 
+            variant="ghost" 
+            onClick={() => router.push("/#product-portfolio")}
+            className="group text-[#B7A7A9] hover:text-white h-12 px-6 rounded-full border border-white/5 bg-black/40 backdrop-blur-md transition-all pointer-events-auto"
+          >
+            <ArrowLeft className="mr-2 w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            Back to Ecosystem
+          </Button>
+        </div>
+      </div>
+      
       <AnimatePresence>
         {isMounted && (
           <motion.div
@@ -165,18 +179,7 @@ export default function ProjectPage() {
                   transition={{ delay: 0.2 }}
                   className="mb-20"
                 >
-                  <div className="sticky top-24 md:top-32 z-50 w-fit mb-12">
-                    <Button 
-                      variant="ghost" 
-                      onClick={() => router.push("/#product-portfolio")}
-                      className="group text-[#B7A7A9] hover:text-white h-12 px-6 rounded-full border border-white/5 bg-black/40 backdrop-blur-md transition-all"
-                    >
-                      <ArrowLeft className="mr-2 w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                      Back to Ecosystem
-                    </Button>
-                  </div>
-
-                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-12">
+                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 pt-20 md:pt-0">
                     <div className="space-y-8">
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 rounded-2xl glass border-white/5 flex items-center justify-center text-primary">
