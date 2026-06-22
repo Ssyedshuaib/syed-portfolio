@@ -129,7 +129,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative bg-[#030303] overflow-hidden min-h-screen py-32 md:py-48 px-6">
+    <section id="contact" className="relative bg-[#030303] overflow-hidden min-h-screen pt-80 pb-64 px-6">
       {/* 00. ATMOSPHERIC ARCHITECTURE */}
       <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_75%)] pointer-events-none" />
@@ -148,10 +148,10 @@ export function Contact() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, scale: 0.98, filter: "blur(40px)" }}
-                className="space-y-32 md:space-y-48"
+                className="space-y-48 md:space-y-64"
               >
                 {/* Header: Editorial Composition */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-end">
                   <div className="lg:col-span-8 space-y-12">
                     <div className="space-y-6">
                       <motion.p 
@@ -161,7 +161,7 @@ export function Contact() {
                       >
                         The Strategy Room
                       </motion.p>
-                      <h2 className="text-5xl md:text-8xl lg:text-[clamp(4rem,10vw,11rem)] font-headline font-[900] tracking-[-0.05em] text-white uppercase leading-[0.85]">
+                      <h2 className="text-5xl md:text-8xl lg:text-[clamp(4.5rem,10vw,11.5rem)] font-headline font-[900] tracking-[-0.05em] text-white uppercase leading-[0.85]">
                         What Shall <br />
                         <span className="text-[#EAE0C8] italic">We Build?</span>
                       </h2>
@@ -169,8 +169,8 @@ export function Contact() {
                   </div>
                   
                   <div className="lg:col-span-4 pb-4">
-                    <div className="flex flex-col gap-8">
-                       <div className="h-px w-16 bg-[#EAE0C8]/20" />
+                    <div className="flex flex-col gap-10">
+                       <div className="h-px w-20 bg-[#EAE0C8]/20" />
                        <p className="text-xl md:text-2xl text-white/30 font-light leading-relaxed max-w-sm">
                          Enter a private environment for strategic product architecture and venture development.
                        </p>
@@ -194,16 +194,16 @@ export function Contact() {
                 </div>
 
                 {/* Institutional Footer Info */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-12 pt-24 opacity-20">
-                   <div className="flex items-center gap-4">
-                      <MapPin className="w-3 h-3 text-[#EAE0C8]" />
-                      <span className="text-[10px] font-bold tracking-[0.5em] text-white uppercase">Bangalore, IN</span>
+                <div className="flex flex-col md:flex-row justify-between items-center gap-12 pt-32 opacity-20">
+                   <div className="flex items-center gap-6">
+                      <MapPin className="w-3.5 h-3.5 text-[#EAE0C8]" />
+                      <span className="text-[10px] font-bold tracking-[0.6em] text-white uppercase">Bangalore, IN</span>
                    </div>
-                   <div className="flex items-center gap-4">
-                      <Clock className="w-3 h-3 text-[#EAE0C8]" />
-                      <span className="text-[10px] font-bold tracking-[0.5em] text-white uppercase">{currentTime} IST</span>
+                   <div className="flex items-center gap-6">
+                      <Clock className="w-3.5 h-3.5 text-[#EAE0C8]" />
+                      <span className="text-[10px] font-bold tracking-[0.6em] text-white uppercase">{currentTime} IST</span>
                    </div>
-                   <div className="h-px w-24 bg-white/40 hidden md:block" />
+                   <div className="h-px w-32 bg-white/40 hidden md:block" />
                 </div>
               </motion.div>
             )}
@@ -344,21 +344,21 @@ function StrategicPillar({ portal, index, onClick }: { portal: any, index: numbe
       viewport={{ once: true }}
       transition={{ duration: 1.2, delay: index * 0.15, ease: LUXURY_EASE }}
       onClick={onClick}
-      className="group relative w-full py-16 md:py-24 flex flex-col md:flex-row items-start md:items-center justify-between gap-12 border-b border-white/[0.06] hover:bg-white/[0.01] transition-all duration-1000 px-4 md:px-12 overflow-hidden"
+      className="group relative w-full py-24 md:py-32 flex flex-col md:flex-row items-start md:items-center justify-between gap-12 border-b border-white/[0.06] hover:bg-white/[0.01] transition-all duration-1000 px-4 md:px-12 overflow-hidden"
     >
       {/* Hover Background Depth */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(234,224,200,0.04),transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
       
-      {/* 01. INDEX */}
-      <div className="relative z-10 w-24">
+      {/* 01. INDEX - STRICT AXIS */}
+      <div className="relative z-10 w-32">
         <span className="text-[12px] font-mono text-[#EAE0C8]/20 tracking-[0.5em] group-hover:text-[#EAE0C8] transition-colors duration-700">
           {portal.id}
         </span>
       </div>
 
-      {/* 02. CORE TYPOGRAPHY */}
-      <div className="relative z-10 flex-1 space-y-4">
-        <h4 className="text-4xl md:text-7xl font-headline font-[900] text-white uppercase tracking-[-0.05em] leading-[0.9] group-hover:translate-x-4 transition-transform duration-700 ease-premium">
+      {/* 02. CORE TYPOGRAPHY - STRICT AXIS & REDUCED SCALE */}
+      <div className="relative z-10 basis-[40%] space-y-4 text-left">
+        <h4 className="text-3xl md:text-6xl font-headline font-[900] text-white uppercase tracking-[-0.05em] leading-[0.9] group-hover:translate-x-4 transition-transform duration-700 ease-premium">
           {portal.title}
         </h4>
         <p className="text-[11px] font-bold tracking-[0.6em] text-white/20 uppercase">
@@ -366,26 +366,25 @@ function StrategicPillar({ portal, index, onClick }: { portal: any, index: numbe
         </p>
       </div>
 
-      {/* 03. MISSION STATEMENT */}
-      <div className="relative z-10 flex-1 md:text-right">
+      {/* 03. MISSION STATEMENT - STRICT AXIS & INCREASED GUTTER */}
+      <div className="relative z-10 flex-1 md:text-right md:pl-16">
         <p className="text-xl md:text-3xl text-white/40 font-light leading-relaxed italic group-hover:text-white transition-colors duration-1000">
           "{portal.mission}"
         </p>
-        <p className="text-[9px] font-bold tracking-[0.4em] text-[#EAE0C8]/20 uppercase mt-4">
+        <p className="text-[9px] font-bold tracking-[0.4em] text-[#EAE0C8]/20 uppercase mt-5">
           Strategic Intent
         </p>
       </div>
 
-      {/* 04. INTERACTION VECTOR */}
-      <div className="relative z-10 w-24 flex justify-end">
+      {/* 04. INTERACTION VECTOR - STRICT AXIS */}
+      <div className="relative z-10 w-32 flex justify-end">
         <div className="w-16 h-16 rounded-full border border-white/[0.06] group-hover:border-[#EAE0C8]/40 flex items-center justify-center transition-all duration-700 group-hover:scale-110">
           <ArrowRight className="w-6 h-6 text-white/10 group-hover:text-[#EAE0C8] group-hover:translate-x-1 transition-all duration-700" />
         </div>
       </div>
 
-      {/* Cornerblueprint detail */}
-      <div className="absolute top-0 right-0 w-8 h-px bg-white/[0.05] group-hover:w-full transition-all duration-1000" />
+      {/* Corner blueprint detail */}
+      <div className="absolute top-0 right-0 w-12 h-px bg-white/[0.05] group-hover:w-full transition-all duration-1000" />
     </motion.button>
   );
 }
-
