@@ -32,28 +32,52 @@ const PORTALS = [
     title: "BUILD SYSTEMS",
     icon: Cpu,
     desc: "Designing scalable digital ecosystems and long-term product foundations.",
-    options: ["Startup Product", "SaaS Platform", "Student Ecosystem", "Internal Tool", "Institutional Architecture"]
+    options: [
+      { title: "Startup Product", desc: "Launching zero-to-one digital foundations." },
+      { title: "SaaS Platform", desc: "Engineering multi-tenant cloud ecosystems." },
+      { title: "Student Ecosystem", desc: "Architecting academic management platforms." },
+      { title: "Internal Tool", desc: "Custom software for high-efficiency workflows." },
+      { title: "Institutional Architecture", desc: "Large-scale enterprise systems design." }
+    ]
   },
   {
     id: "ventures",
     title: "VENTURE IDEAS",
     icon: Boxes,
     desc: "Exploring zero-to-one opportunities and future market ecosystems.",
-    options: ["Ecosystem Creation", "Validation Strategy", "Funding Readiness", "Joint Ventures", "Market Shifts"]
+    options: [
+      { title: "Ecosystem Creation", desc: "Designing interconnected market platforms." },
+      { title: "Validation Strategy", desc: "Market-testing core product hypotheses." },
+      { title: "Funding Readiness", desc: "Preparing technical and business foundations." },
+      { title: "Joint Ventures", desc: "Strategic co-building of digital products." },
+      { title: "Market Shifts", desc: "Identifying and capitalizing on industry evolution." }
+    ]
   },
   {
     id: "collab",
     title: "COLLABORATION",
     icon: Target,
     desc: "Strategic partnerships focused on high-intent product building.",
-    options: ["Joint Projects", "Strategic Partnership", "Creative Research", "Product Opportunity", "Expert Consulting"]
+    options: [
+      { title: "Joint Projects", desc: "Shared execution on ambitious build goals." },
+      { title: "Strategic Partnership", desc: "Long-term product-led growth alliances." },
+      { title: "Creative Research", desc: "Deep-dives into human-centered design." },
+      { title: "Product Opportunity", desc: "Identifying high-potential market gaps." },
+      { title: "Expert Consulting", desc: "Strategic architecture and systems review." }
+    ]
   },
   {
     id: "dialogue",
     title: "OPEN DIALOGUE",
     icon: MessageSquare,
     desc: "A direct channel for meaningful inquiries and networking.",
-    options: ["General Inquiry", "Portfolio Review", "Networking", "Knowledge Exchange", "Just Say Hello"]
+    options: [
+      { title: "General Inquiry", desc: "Direct channel for primary questions." },
+      { title: "Portfolio Review", desc: "Deep-dives into existing product work." },
+      { title: "Networking", desc: "Connecting within the founder ecosystem." },
+      { title: "Knowledge Exchange", desc: "Trading insights on architecture and scale." },
+      { title: "Just Say Hello", desc: "Professional greetings and connections." }
+    ]
   }
 ];
 
@@ -159,10 +183,10 @@ export function Contact() {
             {view === "refinement" && selectedPortal && (
               <motion.div 
                 key="refinement"
-                initial={{ opacity: 0, scale: 1.1, filter: "blur(30px)" }}
+                initial={{ opacity: 0, scale: 1.05, filter: "blur(30px)" }}
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                 exit={{ opacity: 0, x: -50 }}
-                className="space-y-12 md:space-y-16"
+                className="space-y-12 md:space-y-24"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-white/5 pb-8 md:pb-12 gap-8">
                   <div className="space-y-4">
@@ -183,42 +207,52 @@ export function Contact() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 max-w-6xl mx-auto">
                   {selectedPortal.options.map((opt, i) => (
                     <motion.button
-                      key={opt}
+                      key={opt.title}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.05 }}
+                      transition={{ 
+                        duration: 0.8,
+                        delay: i * 0.08,
+                        ease: [0.16, 1, 0.3, 1]
+                      }}
                       onClick={() => {
-                        setSelectedOption(opt);
+                        setSelectedOption(opt.title);
                         setView("communication");
                       }}
-                      className="group relative h-36 md:h-44 rounded-2xl md:rounded-[2.5rem] glass border-white/5 text-left hover:border-primary/30 hover:bg-primary/[0.04] transition-all duration-700 ease-premium overflow-hidden flex items-center pl-6 pr-8"
+                      className="group relative aspect-[1.2/1] md:aspect-square rounded-[2.5rem] md:rounded-[3.5rem] glass border-white/5 text-left p-10 md:p-16 flex flex-col justify-between overflow-hidden transition-all duration-700 ease-premium hover:border-primary/30 hover:bg-primary/[0.03] hover:-translate-y-2 hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.5)]"
                     >
-                      {/* Subtle Depth Spotlight */}
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                      {/* Background Soft Glow */}
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
                       
-                      {/* Integrated 3-Column Grid Row */}
-                      <div className="grid grid-cols-[80px_1fr_80px] items-center w-full pointer-events-none relative z-10">
-                        {/* COLUMN 1: Number */}
-                        <span className="text-[9px] md:text-[10px] font-mono font-bold text-primary/20 text-left">
+                      {/* TOP LEFT: INDEX */}
+                      <div className="relative z-10">
+                        <span className="text-[10px] md:text-[12px] font-mono font-bold tracking-[0.4em] text-primary/20">
                           0{i+1}
                         </span>
+                      </div>
 
-                        {/* COLUMN 2: Title */}
-                        <p className="text-lg md:text-xl font-headline font-bold text-white tracking-tight group-hover:text-primary transition-all duration-700 ease-premium group-hover:translate-x-2 leading-tight">
-                          {opt}
+                      {/* CENTER: CONTENT */}
+                      <div className="relative z-10 space-y-4 md:space-y-6">
+                        <h4 className="text-3xl md:text-5xl lg:text-6xl font-headline font-black text-white italic uppercase tracking-tighter leading-none group-hover:text-primary transition-all duration-700 group-hover:-translate-y-2">
+                          {opt.title}
+                        </h4>
+                        <p className="text-xs md:text-sm text-[#EAE0C8]/30 font-light leading-relaxed max-w-[280px] opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700 delay-100">
+                          {opt.desc}
                         </p>
+                      </div>
 
-                        {/* COLUMN 3: Arrow */}
-                        <div className="flex justify-end">
-                          <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-white/0 group-hover:text-primary group-hover:translate-x-1 transition-all duration-700 ease-premium" />
+                      {/* BOTTOM RIGHT: ARROW */}
+                      <div className="relative z-10 flex justify-end">
+                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-full glass border-white/5 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:bg-primary/[0.05] group-hover:border-primary/20 transition-all duration-700 ease-premium group-hover:translate-x-1 group-hover:-translate-y-1">
+                          <ArrowRight className="w-6 h-6 md:w-8 md:h-8" />
                         </div>
                       </div>
 
-                      {/* Internal Soft Glow Bloom */}
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                      {/* Interior Decorative Accent */}
+                      <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                     </motion.button>
                   ))}
                 </div>
