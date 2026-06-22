@@ -197,20 +197,26 @@ export function Contact() {
                       className="group relative h-36 md:h-44 rounded-2xl md:rounded-[2.5rem] glass border-white/5 text-left hover:border-primary/30 hover:bg-primary/[0.04] transition-all duration-700 ease-premium overflow-hidden flex items-center pl-6 pr-8"
                     >
                       {/* Subtle Depth Spotlight */}
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                       
-                      {/* Integrated Action Row */}
+                      {/* Integrated 3-Column Grid Row */}
                       <div className="flex items-center justify-between w-full pointer-events-none relative z-10">
-                        <div className="flex items-center gap-6">
-                          <span className="text-[9px] md:text-[10px] font-mono font-bold text-primary/20 w-4 shrink-0">
+                        {/* LEFT (Col 1) & CENTER (Col 2) */}
+                        <div className="flex items-center">
+                          {/* Column 1: Number (Fixed 80px) */}
+                          <span className="text-[9px] md:text-[10px] font-mono font-bold text-primary/20 w-20 shrink-0 text-left">
                             0{i+1}
                           </span>
-                          <p className="text-lg md:text-xl font-headline font-bold text-white tracking-tight group-hover:text-primary transition-all duration-700 ease-premium group-hover:translate-x-2 leading-tight">
+                          {/* Column 2: Title (40px Offset from Number) */}
+                          <p className="ml-10 text-lg md:text-xl font-headline font-bold text-white tracking-tight group-hover:text-primary transition-all duration-700 ease-premium group-hover:translate-x-2 leading-tight">
                             {opt}
                           </p>
                         </div>
 
-                        <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-white/0 group-hover:text-primary group-hover:translate-x-1 transition-all duration-700 ease-premium shrink-0" />
+                        {/* RIGHT (Col 3): Arrow (Fixed 80px) */}
+                        <div className="w-20 flex justify-end shrink-0">
+                          <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-white/0 group-hover:text-primary group-hover:translate-x-1 transition-all duration-700 ease-premium" />
+                        </div>
                       </div>
 
                       {/* Internal Soft Glow Bloom */}
