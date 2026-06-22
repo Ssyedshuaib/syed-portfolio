@@ -88,50 +88,50 @@ export function AxoraEcosystem() {
   return (
     <section 
       id="axora" 
-      className="py-64 px-6 bg-[#050505] relative overflow-hidden"
+      className="py-24 md:py-64 px-6 bg-[#050505] relative overflow-hidden"
       onMouseMove={handleMouseMove}
     >
       {/* Background Grid */}
       <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
       
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
           
           {/* Left Content Column */}
-          <div className="lg:col-span-5 space-y-16 relative z-50">
+          <div className="lg:col-span-5 space-y-12 md:space-y-16 relative z-50">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-12"
+              className="space-y-10 md:space-y-12"
             >
               <div className="space-y-6">
-                <p className="text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase">THE MISSION</p>
+                <p className="text-[9px] md:text-[10px] font-bold tracking-[0.6em] md:tracking-[0.8em] text-primary/30 uppercase">THE MISSION</p>
                 <div className="max-w-md">
-                  <h2 className="text-4xl md:text-6xl font-headline font-black tracking-tighter text-white leading-[0.95] uppercase">
+                  <h2 className="text-3xl md:text-6xl font-headline font-black tracking-tighter text-white leading-[1] md:leading-[0.95] uppercase">
                     Building Systems <br />
                     <span className="text-primary italic font-medium">That Outlive Trends.</span>
                   </h2>
                 </div>
               </div>
               
-              <div className="space-y-10 pt-4">
+              <div className="space-y-8 md:space-y-10 pt-4">
                 <div className="space-y-4">
                   <div className="space-y-1">
-                    <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">Technology changes.</p>
-                    <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">Principles remain.</p>
+                    <p className="text-base md:text-xl text-[#EAE0C8]/60 font-light italic">Technology changes.</p>
+                    <p className="text-base md:text-xl text-[#EAE0C8]/60 font-light italic">Principles remain.</p>
                   </div>
                   <div className="space-y-1">
-                    <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">Products evolve.</p>
-                    <p className="text-lg md:text-xl text-[#EAE0C8]/60 font-light italic">The mission stays the same.</p>
+                    <p className="text-base md:text-xl text-[#EAE0C8]/60 font-light italic">Products evolve.</p>
+                    <p className="text-base md:text-xl text-[#EAE0C8]/60 font-light italic">The mission stays the same.</p>
                   </div>
                 </div>
               </div>
               
               <div className="pt-8 flex items-center gap-6 text-[#536878]">
-                <div className="h-px w-12 bg-current opacity-20" />
-                <p className="text-[10px] font-bold tracking-[0.4em] uppercase">Hover core to power ecosystem</p>
+                <div className="h-px w-8 md:w-12 bg-current opacity-20" />
+                <p className="text-[8px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] uppercase">Hover core to power ecosystem</p>
               </div>
             </motion.div>
           </div>
@@ -139,18 +139,18 @@ export function AxoraEcosystem() {
           {/* Right Visualization Column */}
           <motion.div 
             style={{ x: springX, y: springY }}
-            className="lg:col-span-7 relative aspect-square max-w-[700px] w-full mx-auto flex items-center justify-center"
+            className="lg:col-span-7 relative aspect-square max-w-[700px] w-full mx-auto flex items-center justify-center overflow-hidden lg:overflow-visible"
           >
             {/* Background Energy Field */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <motion.div 
-                animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.05, 1] }}
+                animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.05, 1] }}
                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.08),transparent_70%)] opacity-40" 
               />
               
               {/* Concentric Circles */}
-              {[450, 550, 650].map((size, i) => (
+              {[300, 450, 600].map((size, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -191,7 +191,7 @@ export function AxoraEcosystem() {
                           opacity: [0, 0.8, 0]
                         }}
                         transition={{ 
-                          duration: 5 + node.delay * 3, // Slower ambient travel
+                          duration: 5 + node.delay * 3, 
                           repeat: Infinity, 
                           delay: node.delay * 8,
                           ease: "linear"
@@ -212,6 +212,7 @@ export function AxoraEcosystem() {
               onMouseLeave={() => {
                 if (!activeNode) setIsEcosystemOpen(false);
               }}
+              onClick={() => setIsEcosystemOpen(!isEcosystemOpen)}
               className="relative z-50 cursor-pointer"
               animate={{ 
                 scale: isEcosystemOpen ? 1.05 : 1,
@@ -224,11 +225,11 @@ export function AxoraEcosystem() {
                   opacity: [0.1, 0.25, 0.1]
                 }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute inset-0 bg-primary blur-[60px] rounded-full"
+                className="absolute inset-0 bg-primary blur-[40px] md:blur-[60px] rounded-full"
               />
 
               <div className={cn(
-                "w-44 h-44 rounded-full glass border-white/5 flex flex-col items-center justify-center transition-all duration-1000 relative z-10",
+                "w-32 h-32 md:w-44 md:h-44 rounded-full glass border-white/5 flex flex-col items-center justify-center transition-all duration-1000 relative z-10",
                 isEcosystemOpen ? "border-primary/40 shadow-[0_0_80px_rgba(234,224,200,0.15)] bg-primary/[0.04]" : "hover:border-primary/20"
               )}>
                 <motion.div
@@ -238,11 +239,11 @@ export function AxoraEcosystem() {
                   transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
                 >
                   <Sparkles className={cn(
-                    "w-8 h-8 mb-4 transition-all duration-700",
+                    "w-6 h-6 md:w-8 md:h-8 mb-3 md:mb-4 transition-all duration-700",
                     isEcosystemOpen ? "text-white" : "text-[#536878]"
                   )} />
                 </motion.div>
-                <span className="text-white font-headline font-bold text-xs tracking-[0.6em] uppercase">AXORA</span>
+                <span className="text-white font-headline font-bold text-[10px] md:text-xs tracking-[0.5em] md:tracking-[0.6em] uppercase">AXORA</span>
                 
                 <AnimatePresence>
                   {isEcosystemOpen && (
@@ -250,7 +251,7 @@ export function AxoraEcosystem() {
                       initial={{ opacity: 0, y: 5 }}
                       animate={{ opacity: 0.4, y: 0 }}
                       exit={{ opacity: 0, y: 5 }}
-                      className="text-[8px] tracking-[0.4em] uppercase mt-3 font-bold"
+                      className="text-[7px] md:text-[8px] tracking-[0.3em] md:tracking-[0.4em] uppercase mt-2 md:mt-3 font-bold"
                     >
                       Core Vision
                     </motion.p>
@@ -291,47 +292,50 @@ export function AxoraEcosystem() {
                   onMouseLeave={() => {
                     setActiveNode(null);
                   }}
-                  onClick={() => node.slug !== "#" && router.push(node.slug)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (node.slug !== "#") router.push(node.slug);
+                  }}
                   className="absolute z-40 group cursor-pointer"
                   style={{ transform: 'translate(-50%, -50%)' }}
                 >
                   <motion.div
-                    animate={{ y: [0, -8, 0] }}
-                    transition={{ duration: 8 + node.delay * 10, repeat: Infinity, ease: "easeInOut" }} // Slower breathing
+                    animate={{ y: [0, -4, 0] }}
+                    transition={{ duration: 8 + node.delay * 10, repeat: Infinity, ease: "easeInOut" }}
                   >
                     <div className={cn(
-                      "relative glass p-6 rounded-[2rem] border-white/5 w-64 transition-all duration-700 ease-premium",
+                      "relative glass p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] border-white/5 w-48 md:w-64 transition-all duration-700 ease-premium",
                       activeNode === node.id 
-                        ? "border-primary/40 bg-primary/[0.06] -translate-y-2 shadow-[0_30px_60px_rgba(0,0,0,0.6)]" 
+                        ? "border-primary/40 bg-primary/[0.06] -translate-y-1 md:-translate-y-2 shadow-[0_30px_60px_rgba(0,0,0,0.6)]" 
                         : "group-hover:border-white/15"
                     )}>
-                      <div className="flex items-start justify-between mb-5">
+                      <div className="flex items-start justify-between mb-3 md:mb-5">
                         <div className={cn(
-                          "w-10 h-10 rounded-xl glass border-white/5 flex items-center justify-center transition-all duration-700",
+                          "w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl glass border-white/5 flex items-center justify-center transition-all duration-700",
                           activeNode === node.id ? "text-white scale-110 shadow-[0_0_20px_rgba(234,224,200,0.3)]" : "text-[#536878]"
                         )}>
-                          <node.icon className="w-5 h-5" />
+                          <node.icon className="w-4 h-4 md:w-5 md:h-5" />
                         </div>
-                        <div className="px-2.5 py-1 rounded-full glass border-white/5 text-[7px] font-bold tracking-[0.2em] uppercase text-primary/60">
+                        <div className="px-2 py-0.5 md:px-2.5 md:py-1 rounded-full glass border-white/5 text-[6px] md:text-[7px] font-bold tracking-[0.1em] md:tracking-[0.2em] uppercase text-primary/60">
                           {node.status}
                         </div>
                       </div>
 
-                      <div className="space-y-1.5">
-                        <p className="text-[10px] font-bold tracking-[0.4em] text-white uppercase">{node.title}</p>
-                        <p className="text-[8px] font-bold tracking-[0.5em] text-[#536878] uppercase">{node.subtitle}</p>
+                      <div className="space-y-1">
+                        <p className="text-[8px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] text-white uppercase">{node.title}</p>
+                        <p className="text-[7px] md:text-[8px] font-bold tracking-[0.4em] md:tracking-[0.5em] text-[#536878] uppercase">{node.subtitle}</p>
                         
-                        <p className="text-[9px] text-[#EAE0C8]/50 tracking-widest uppercase mt-4 leading-relaxed font-light line-clamp-2">
+                        <p className="hidden md:block text-[9px] text-[#EAE0C8]/50 tracking-widest uppercase mt-4 leading-relaxed font-light line-clamp-2">
                           {node.description}
                         </p>
                       </div>
 
                       <div className={cn(
-                        "mt-6 pt-4 border-t border-white/5 flex items-center justify-between transition-all duration-500",
+                        "mt-3 md:mt-6 pt-2 md:pt-4 border-t border-white/5 flex items-center justify-between transition-all duration-500",
                         activeNode === node.id ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                       )}>
-                        <span className="text-[8px] font-bold tracking-[0.3em] text-primary uppercase">Explore Ecosystem</span>
-                        <ArrowUpRight className="w-3 h-3 text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        <span className="text-[7px] md:text-[8px] font-bold tracking-[0.2em] md:tracking-[0.3em] text-primary uppercase">Explore</span>
+                        <ArrowUpRight className="w-2.5 h-2.5 md:w-3 md:h-3 text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </div>
                     </div>
                   </motion.div>

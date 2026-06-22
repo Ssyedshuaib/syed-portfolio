@@ -108,7 +108,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative bg-[#050505] overflow-hidden min-h-screen py-32 px-6 flex flex-col justify-center">
+    <section id="contact" className="relative bg-[#050505] overflow-hidden min-h-screen py-24 md:py-32 px-6 flex flex-col justify-center">
       {/* Background Architectural Grid */}
       <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.05),transparent_70%)] pointer-events-none" />
@@ -122,26 +122,26 @@ export function Contact() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, scale: 0.95, filter: "blur(20px)" }}
-                className="space-y-24"
+                className="space-y-16 md:space-y-24"
               >
-                <div className="text-center space-y-8 max-w-3xl mx-auto">
+                <div className="text-center space-y-6 md:space-y-8 max-w-3xl mx-auto">
                   <motion.div 
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     className="space-y-4"
                   >
-                    <p className="text-[10px] font-bold tracking-[0.8em] text-primary/30 uppercase">The Strategy Room</p>
-                    <h2 className="text-5xl md:text-7xl font-headline font-black tracking-tighter text-white uppercase italic">
+                    <p className="text-[9px] md:text-[10px] font-bold tracking-[0.6em] md:tracking-[0.8em] text-primary/30 uppercase">The Strategy Room</p>
+                    <h2 className="text-4xl md:text-7xl font-headline font-black tracking-tighter text-white uppercase italic">
                       What Shall <br />We Build?
                     </h2>
-                    <p className="text-xl text-[#EAE0C8]/40 font-light leading-relaxed">
-                      Enter a private dialogue space designed for systems thinking, <br />
+                    <p className="text-lg md:text-xl text-[#EAE0C8]/40 font-light leading-relaxed">
+                      Enter a private dialogue space designed for systems thinking, <br className="hidden md:block" />
                       product architecture, and long-term ventures.
                     </p>
                   </motion.div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                   {PORTALS.map((portal) => (
                     <PortalCard 
                       key={portal.id} 
@@ -162,28 +162,28 @@ export function Contact() {
                 initial={{ opacity: 0, scale: 1.1, filter: "blur(30px)" }}
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                 exit={{ opacity: 0, x: -50 }}
-                className="space-y-16"
+                className="space-y-12 md:space-y-16"
               >
-                <div className="flex items-center justify-between border-b border-white/5 pb-12">
+                <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-white/5 pb-8 md:pb-12 gap-8">
                   <div className="space-y-4">
                     <button 
                       onClick={() => setView("entrance")}
-                      className="group flex items-center gap-2 text-[10px] font-bold tracking-[0.4em] text-primary/30 uppercase hover:text-white transition-colors"
+                      className="group flex items-center gap-2 text-[9px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] text-primary/30 uppercase hover:text-white transition-colors"
                     >
                       <ChevronLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" /> 
                       Return to Portals
                     </button>
-                    <h3 className="text-4xl md:text-6xl font-headline font-black text-white italic uppercase tracking-tight">
+                    <h3 className="text-3xl md:text-6xl font-headline font-black text-white italic uppercase tracking-tight">
                       {selectedPortal.title}
                     </h3>
                   </div>
-                  <div className="hidden md:block text-right">
-                    <p className="text-[10px] font-bold tracking-[0.3em] text-primary/30 uppercase mb-1">Context</p>
+                  <div className="text-left md:text-right">
+                    <p className="text-[9px] md:text-[10px] font-bold tracking-[0.3em] text-primary/30 uppercase mb-1">Context</p>
                     <p className="text-sm text-white/40 italic max-w-xs">{selectedPortal.desc}</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
                   {selectedPortal.options.map((opt, i) => (
                     <motion.button
                       key={opt}
@@ -194,10 +194,10 @@ export function Contact() {
                         setSelectedOption(opt);
                         setView("communication");
                       }}
-                      className="group relative p-10 h-64 rounded-[2.5rem] glass border-white/5 flex flex-col justify-between items-start text-left hover:border-primary/30 hover:bg-primary/[0.03] transition-all duration-700"
+                      className="group relative p-8 md:p-10 h-48 md:h-64 rounded-[2rem] md:rounded-[2.5rem] glass border-white/5 flex flex-col justify-between items-start text-left hover:border-primary/30 hover:bg-primary/[0.03] transition-all duration-700"
                     >
-                      <span className="text-[10px] font-mono font-bold text-primary/20">0{i+1}</span>
-                      <p className="text-xl font-headline font-bold text-white tracking-tight group-hover:text-primary transition-colors">
+                      <span className="text-[9px] md:text-[10px] font-mono font-bold text-primary/20">0{i+1}</span>
+                      <p className="text-lg md:text-xl font-headline font-bold text-white tracking-tight group-hover:text-primary transition-colors">
                         {opt}
                       </p>
                       <ArrowRight className="w-5 h-5 text-white/0 group-hover:text-primary group-hover:translate-x-1 transition-all" />
@@ -213,24 +213,24 @@ export function Contact() {
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, filter: "blur(40px)" }}
-                className="space-y-16"
+                className="space-y-12 md:space-y-16"
               >
-                <div className="text-center space-y-6 max-w-2xl mx-auto">
+                <div className="text-center space-y-4 md:space-y-6 max-w-2xl mx-auto">
                   <button 
                     onClick={() => setView("refinement")}
-                    className="text-[10px] font-bold tracking-[0.4em] text-primary/30 uppercase hover:text-white transition-colors"
+                    className="text-[9px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] text-primary/30 uppercase hover:text-white transition-colors"
                   >
                     ← Adjust Context
                   </button>
-                  <h3 className="text-4xl md:text-6xl font-headline font-black text-white italic uppercase tracking-tight">
+                  <h3 className="text-3xl md:text-6xl font-headline font-black text-white italic uppercase tracking-tight">
                     Select Channel
                   </h3>
-                  <p className="text-lg text-[#EAE0C8]/40 font-light italic">
+                  <p className="text-base md:text-lg text-[#EAE0C8]/40 font-light italic px-4">
                     Initiating dialogue for <span className="text-primary font-medium">{selectedOption}</span>.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
                   {ACTIONS.map((action, i) => (
                     <motion.button
                       key={action.label}
@@ -238,24 +238,24 @@ export function Contact() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.1 }}
                       onClick={() => handleAction(action)}
-                      className="group relative p-12 rounded-[3rem] glass border-white/10 text-left overflow-hidden flex flex-col gap-8 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-1000"
+                      className="group relative p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] glass border-white/10 text-left overflow-hidden flex flex-col gap-6 md:gap-8 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-1000"
                     >
                       <div className="flex justify-between items-start">
-                        <div className="w-16 h-16 rounded-2xl glass border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:scale-110 transition-all duration-700">
-                          <action.icon className="w-8 h-8" />
+                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl glass border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:scale-110 transition-all duration-700">
+                          <action.icon className="w-6 h-6 md:w-8 md:h-8" />
                         </div>
                         <Sparkles className="w-5 h-5 text-primary/0 group-hover:text-primary group-hover:animate-pulse transition-all" />
                       </div>
                       <div className="space-y-2">
-                        <p className="text-2xl font-headline font-black text-white italic uppercase tracking-tight">{action.label}</p>
-                        <p className="text-sm text-[#EAE0C8]/30 font-light leading-relaxed">{action.sub}</p>
+                        <p className="text-xl md:text-2xl font-headline font-black text-white italic uppercase tracking-tight">{action.label}</p>
+                        <p className="text-xs md:text-sm text-[#EAE0C8]/30 font-light leading-relaxed">{action.sub}</p>
                       </div>
                     </motion.button>
                   ))}
                 </div>
 
                 <div className="pt-12 text-center opacity-20">
-                  <p className="text-[10px] font-bold tracking-[1em] text-white uppercase">Meaningful Partnerships Begin Here</p>
+                  <p className="text-[9px] font-bold tracking-[0.8em] md:tracking-[1em] text-white uppercase">Meaningful Partnerships Begin Here</p>
                 </div>
               </motion.div>
             )}
@@ -265,21 +265,21 @@ export function Contact() {
                 key="transition"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-[60px] flex flex-col items-center justify-center"
+                className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-[60px] flex flex-col items-center justify-center p-6"
               >
-                <div className="space-y-8 text-center relative">
+                <div className="space-y-8 text-center relative w-full">
                   <motion.div 
                     animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full"
+                    className="absolute inset-0 bg-primary/20 blur-[80px] md:blur-[100px] rounded-full"
                   />
-                  <p className="relative text-3xl md:text-5xl font-headline font-light text-white tracking-[0.1em] italic uppercase">
+                  <p className="relative text-2xl md:text-5xl font-headline font-light text-white tracking-[0.1em] italic uppercase">
                     {transitionMsg}
                   </p>
                   <div className="flex items-center justify-center gap-4 relative">
-                    <div className="h-px w-12 bg-white/20" />
+                    <div className="h-px w-8 md:w-12 bg-white/20" />
                     <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                    <div className="h-px w-12 bg-white/20" />
+                    <div className="h-px w-8 md:w-12 bg-white/20" />
                   </div>
                 </div>
               </motion.div>
@@ -311,7 +311,7 @@ function PortalCard({ portal, onClick }: { portal: typeof PORTALS[0], onClick: (
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => { mouseX.set(0); mouseY.set(0); }}
-      className="group relative aspect-[3/4] rounded-[3.5rem] glass border-white/5 overflow-hidden flex flex-col items-center justify-center p-12 text-center hover:border-primary/40 transition-all duration-1000"
+      className="group relative aspect-square md:aspect-[3/4] rounded-[2rem] md:rounded-[3.5rem] glass border-white/5 overflow-hidden flex flex-col items-center justify-center p-8 md:p-12 text-center hover:border-primary/40 transition-all duration-1000"
     >
       {/* Background Refractive Layers */}
       <motion.div 
@@ -321,29 +321,29 @@ function PortalCard({ portal, onClick }: { portal: typeof PORTALS[0], onClick: (
       
       <motion.div 
         style={{ x: dx, y: dy, rotate: dx }}
-        className="relative z-10 space-y-8 flex flex-col items-center"
+        className="relative z-10 space-y-4 md:space-y-8 flex flex-col items-center"
       >
-        <div className="w-24 h-24 rounded-3xl glass border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-1000">
-          <portal.icon className="w-10 h-10" />
+        <div className="w-16 h-16 md:w-24 md:h-24 rounded-2xl md:rounded-3xl glass border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:scale-110 group-hover:rotate-12 transition-all duration-1000">
+          <portal.icon className="w-8 h-8 md:w-10 md:h-10" />
         </div>
         
-        <div className="space-y-4">
-          <h4 className="text-2xl md:text-3xl font-headline font-black text-white tracking-tighter uppercase italic leading-none group-hover:text-primary transition-colors">
+        <div className="space-y-2 md:space-y-4">
+          <h4 className="text-xl md:text-3xl font-headline font-black text-white tracking-tighter uppercase italic leading-none group-hover:text-primary transition-colors">
             {portal.title}
           </h4>
-          <p className="text-xs text-[#EAE0C8]/30 font-light leading-relaxed px-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700">
+          <p className="hidden md:block text-xs text-[#EAE0C8]/30 font-light leading-relaxed px-4 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700">
             {portal.desc}
           </p>
         </div>
 
-        <div className="pt-4 opacity-20 group-hover:opacity-100 transition-all duration-700">
-          <div className="w-10 h-px bg-primary/40" />
+        <div className="pt-2 md:pt-4 opacity-20 group-hover:opacity-100 transition-all duration-700">
+          <div className="w-8 md:w-10 h-px bg-primary/40" />
         </div>
       </motion.div>
 
       {/* Decorative Corner Details */}
-      <div className="absolute top-10 left-10 w-2 h-2 border-t border-l border-white/10 group-hover:border-primary/40 transition-colors" />
-      <div className="absolute bottom-10 right-10 w-2 h-2 border-b border-r border-white/10 group-hover:border-primary/40 transition-colors" />
+      <div className="absolute top-6 left-6 md:top-10 md:left-10 w-2 h-2 border-t border-l border-white/10 group-hover:border-primary/40 transition-colors" />
+      <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 w-2 h-2 border-b border-r border-white/10 group-hover:border-primary/40 transition-colors" />
     </motion.button>
   );
 }

@@ -14,7 +14,7 @@ import { ArrowUpRight } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="relative bg-background pt-64 pb-20 px-6 overflow-hidden" role="contentinfo">
+    <footer className="relative bg-background pt-32 md:pt-64 pb-20 px-6 overflow-hidden" role="contentinfo">
       {/* 00. GIANT BACKGROUND SIGNATURE - LUXURY BRANDING TEXTURE */}
       <div 
         style={{
@@ -59,18 +59,18 @@ export function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-32"
+          className="text-center mb-16 md:mb-32"
         >
-          <div className="space-y-10">
-            <div className="space-y-6">
-              <h3 className="text-3xl md:text-4xl font-headline font-bold text-white tracking-tight">SYED SHUAIB</h3>
-              <div className="flex flex-col gap-3 text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">
+          <div className="space-y-8 md:space-y-10">
+            <div className="space-y-4 md:space-y-6">
+              <h3 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tight">SYED SHUAIB</h3>
+              <div className="flex flex-col gap-2 md:gap-3 text-[9px] md:text-[10px] font-bold tracking-[0.6em] md:tracking-[0.8em] text-primary/40 uppercase">
                 <span>Founder</span>
                 <span>Product Builder</span>
                 <span>System Architect</span>
               </div>
             </div>
-            <div className="h-px w-10 bg-white/10 mx-auto" />
+            <div className="h-px w-8 md:w-10 bg-white/10 mx-auto" />
           </div>
         </motion.div>
 
@@ -80,12 +80,12 @@ export function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, delay: 0.4 }}
-          className="text-center space-y-4 mb-20"
+          className="text-center space-y-4 mb-16 md:mb-20"
         >
-          <div className="text-xl font-light tracking-[0.5em] text-[#EAE0C8] uppercase">
+          <div className="text-lg md:text-xl font-light tracking-[0.4em] md:tracking-[0.5em] text-[#EAE0C8] uppercase">
             AXORA
           </div>
-          <p className="text-[10px] font-bold tracking-[0.4em] text-white/20 uppercase italic">
+          <p className="text-[8px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] text-white/20 uppercase italic px-4">
             "Building systems that outlast trends."
           </p>
         </motion.div>
@@ -96,26 +96,26 @@ export function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, delay: 0.6 }}
-          className="text-[10px] font-bold tracking-[0.6em] text-white/30 uppercase mb-24"
+          className="text-[9px] md:text-[10px] font-bold tracking-[0.5em] md:tracking-[0.6em] text-white/30 uppercase mb-16 md:mb-24"
         >
           Bangalore, India
         </motion.div>
 
         {/* 04. EDITORIAL LINKS - REFINED DIALOGUE PATHS */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-24 mb-48">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-24 mb-24 md:mb-48">
           <EditorialLink label="Email" href="mailto:syedshuaib2429@gmail.com" />
           <EditorialLink label="LinkedIn" href="https://www.linkedin.com/in/syedshuaib485/" />
           <EditorialLink label="Schedule Discussion" href="https://calendly.com/your-link" isPrimary />
         </div>
 
         {/* 05. FINAL SEAL */}
-        <div className="pt-20 border-t border-white/5 w-full max-w-4xl flex flex-col md:flex-row justify-between items-center gap-8 opacity-20">
-          <p className="text-[9px] font-bold tracking-[0.4em] text-white uppercase">
+        <div className="pt-16 border-t border-white/5 w-full max-w-4xl flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 opacity-20">
+          <p className="text-[8px] md:text-[9px] font-bold tracking-[0.4em] text-white uppercase">
             &copy; {new Date().getFullYear()} AXORA
           </p>
           <div className="flex items-center gap-4">
             <div className="w-1 h-1 rounded-full bg-primary/40" />
-            <p className="text-[9px] font-bold tracking-[0.5em] text-white uppercase italic">
+            <p className="text-[8px] md:text-[9px] font-bold tracking-[0.4em] text-white uppercase italic">
               Designed With Intention.
             </p>
           </div>
@@ -137,7 +137,7 @@ function EditorialLink({ label, href, isPrimary = false }: { label: string; href
       whileHover={{ x: 8 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        "group relative py-2 text-[10px] font-bold tracking-[0.5em] uppercase transition-all duration-500 flex items-center gap-4 cursor-pointer",
+        "group relative py-2 text-[9px] md:text-[10px] font-bold tracking-[0.4em] md:tracking-[0.5em] uppercase transition-all duration-500 flex items-center gap-4 cursor-pointer",
         isPrimary ? "text-primary drop-shadow-[0_0_12px_rgba(234,224,200,0.2)]" : "text-white/40 hover:text-white"
       )}
     >
