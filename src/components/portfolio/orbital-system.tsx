@@ -1,6 +1,7 @@
+
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 
@@ -42,9 +43,20 @@ export function OrbitalSystem() {
       mouseX.set(x);
       mouseY.set(y);
     };
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
+
+  // Memoize static background elements
+  const particles = useMemo(() => {
+    return [...Array(12)].map((_, i) => ({
+      id: i,
+      x: `${Math.random() * 100}%`,
+      y: `${Math.random() * 100}%`,
+      duration: 5 + Math.random() * 10,
+      delay: Math.random() * 5
+    }));
+  }, []);
 
   if (!mounted) {
     return <div className="relative w-full aspect-square max-w-[600px] flex items-center justify-center opacity-0" />;
@@ -52,7 +64,7 @@ export function OrbitalSystem() {
 
   return (
     <div 
-      className="relative w-full aspect-square max-w-[600px] flex items-center justify-center"
+      className="relative w-full aspect-square max-w-[600px] flex items-center justify-center gpu-accelerated"
       style={{ perspective: 1200 }}
     >
       {/* Cinematic Ambient Glow */}
@@ -63,17 +75,17 @@ export function OrbitalSystem() {
           scale: [1, 1.05, 1]
         }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute w-[110%] h-[110%] bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.1),transparent_70%)] blur-3xl pointer-events-none"
+        className="absolute w-[110%] h-[110%] bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.1),transparent_70%)] blur-3xl pointer-events-none will-change-transform"
       />
 
       {/* Atmospheric Cinematic Dust / Particles */}
       <div className="absolute inset-0 pointer-events-none opacity-20">
-        {[...Array(12)].map((_, i) => (
+        {particles.map((p) => (
           <motion.div
-            key={i}
+            key={p.id}
             initial={{ 
-              x: `${Math.random() * 100}%`, 
-              y: `${Math.random() * 100}%`, 
+              x: p.x, 
+              y: p.y, 
               opacity: 0 
             }}
             animate={{ 
@@ -81,27 +93,27 @@ export function OrbitalSystem() {
               opacity: [0, 0.6, 0],
             }}
             transition={{ 
-              duration: 5 + Math.random() * 10, 
+              duration: p.duration, 
               repeat: Infinity, 
-              delay: Math.random() * 5 
+              delay: p.delay 
             }}
-            className="absolute w-0.5 h-0.5 bg-primary/40 rounded-full blur-[1px]"
+            className="absolute w-0.5 h-0.5 bg-primary/40 rounded-full blur-[1px] will-change-transform"
           />
         ))}
       </div>
 
       <motion.div 
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="relative w-full h-full flex items-center justify-center"
+        className="relative w-full h-full flex items-center justify-center will-change-transform"
       >
-        {/* Central Identity Module - Unchanged as per requirements */}
+        {/* Central Identity Module */}
         <motion.div 
           style={{ translateZ: 80 }}
           animate={{ 
             scale: [1, 1.02, 1],
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="relative z-50 group"
+          className="relative z-50 group will-change-transform"
         >
           <div className="w-44 h-44 rounded-full glass border-white/[0.08] shadow-[0_0_80px_rgba(0,0,0,0.5)] relative overflow-hidden transition-all duration-1000 group-hover:border-primary/30 flex items-center justify-center">
             <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.02] via-transparent to-white/[0.08] pointer-events-none" />
@@ -138,7 +150,7 @@ export function OrbitalSystem() {
           return (
             <motion.div
               key={idx}
-              className="absolute z-10"
+              className="absolute z-10 will-change-transform"
               initial={{ rotate: orbit.delay * 10 }}
               animate={{ rotate: 360 }}
               transition={{

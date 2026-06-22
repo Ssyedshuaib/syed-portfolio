@@ -43,7 +43,7 @@ export function Hero() {
   return (
     <section className="relative min-h-[95vh] lg:min-h-screen flex flex-col items-center justify-center pt-28 pb-16 px-6 lg:px-12 overflow-hidden bg-background">
       <div className="absolute inset-0 pointer-events-none select-none z-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.08),transparent_70%)]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.08),transparent_70%)] will-change-transform" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
         <div className="absolute inset-0 shadow-[inset_0_0_150px_rgba(0,0,0,0.8)] z-10" />
       </div>
@@ -98,7 +98,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.95, filter: "blur(30px)" }}
           animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={{ duration: 2.5, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="hidden lg:flex justify-center lg:justify-end"
+          className="hidden lg:flex justify-center lg:justify-end will-change-transform"
         >
           <OrbitalSystem />
         </motion.div>

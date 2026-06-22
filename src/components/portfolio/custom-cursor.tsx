@@ -1,8 +1,8 @@
+
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { motion, useSpring, useMotionValue, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
 
 export function CustomCursor() {
   const [cursorState, setCursorState] = useState<"default" | "visit" | "explore" | "enter" | "email" | "connect" | "hidden">("default");
@@ -12,7 +12,7 @@ export function CustomCursor() {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
-  // Spring Physics for weight and lag
+  // Spring Physics for weight and lag - optimized configuration
   const springConfig = { stiffness: 450, damping: 40, mass: 0.8 };
   const springX = useSpring(cursorX, springConfig);
   const springY = useSpring(cursorY, springConfig);
@@ -29,25 +29,27 @@ export function CustomCursor() {
       cursorY.set(e.clientY);
     };
 
+    // Optimized event handler to prevent redundant state updates
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const cursorData = target.closest("[data-cursor]")?.getAttribute("data-cursor");
       
+      let nextState: any = "default";
       if (cursorData) {
-        setCursorState(cursorData as any);
+        nextState = cursorData;
       } else if (target.tagName === "A" || target.closest("button") || target.tagName === "BUTTON") {
-        setCursorState("visit");
-      } else {
-        setCursorState("default");
+        nextState = "visit";
       }
+
+      setCursorState(prev => prev !== nextState ? nextState : prev);
     };
 
     const handleMouseOut = () => {
       setCursorState("default");
     };
 
-    window.addEventListener("mousemove", moveCursor);
-    window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("mousemove", moveCursor, { passive: true });
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
     document.addEventListener("mouseleave", () => setCursorState("hidden"));
     document.addEventListener("mouseenter", () => setCursorState("default"));
 
@@ -70,32 +72,32 @@ export function CustomCursor() {
     connect: { width: 50, height: 50, backgroundColor: "rgba(42, 33, 85, 0.1)", border: "1px solid rgba(234, 224, 200, 0.4)" },
   };
 
-  const getLabel = () => {
-    switch (cursorState) {
-      case "visit": return "Visit";
-      case "explore": return "Explore";
-      case "enter": return "Enter";
-      case "email": return "Email";
-      case "connect": return "Connect";
-      default: return "";
-    }
+  const labels: Record<string, string> = {
+    visit: "Visit",
+    explore: "Explore",
+    enter: "Enter",
+    email: "Email",
+    connect: "Connect"
   };
+
+  const currentLabel = labels[cursorState] || "";
 
   return (
     <motion.div
-      className="fixed top-0 left-0 z-[9999] pointer-events-none flex items-center justify-center rounded-full mix-blend-difference backdrop-blur-[2px]"
+      className="fixed top-0 left-0 z-[9999] pointer-events-none flex items-center justify-center rounded-full mix-blend-difference backdrop-blur-[2px] will-change-transform"
       style={{
         x: springX,
         y: springY,
         translateX: "-50%",
         translateY: "-50%",
+        transformStyle: "preserve-3d"
       }}
       animate={cursorState}
       variants={variants}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
     >
       <AnimatePresence mode="wait">
-        {getLabel() && (
+        {currentLabel && (
           <motion.span
             key={cursorState}
             initial={{ opacity: 0, scale: 0.8 }}
@@ -104,7 +106,7 @@ export function CustomCursor() {
             transition={{ duration: 0.2 }}
             className="text-[8px] font-bold tracking-[0.2em] uppercase text-white/80"
           >
-            {getLabel()}
+            {currentLabel}
           </motion.span>
         )}
       </AnimatePresence>

@@ -2,19 +2,22 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/navbar";
 import { Hero } from "@/sections/hero";
-import { FounderProfile } from "@/sections/founder-profile";
-import { Philosophy } from "@/sections/philosophy";
-import { Journey } from "@/sections/journey";
-import { AxoraEcosystem } from "@/sections/axora-ecosystem";
-import { ProductEcosystem } from "@/sections/product-ecosystem";
-import { IdeasLab } from "@/sections/ideas-lab";
-import { Contact } from "@/sections/contact";
-import { Footer } from "@/sections/layout/footer";
 import { Preloader } from "@/components/ui/preloader";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+
+// Dynamic imports for below-fold sections to optimize TTI and bundle size
+const FounderProfile = dynamic(() => import("@/sections/founder-profile").then(m => m.FounderProfile), { ssr: true });
+const Philosophy = dynamic(() => import("@/sections/philosophy").then(m => m.Philosophy), { ssr: true });
+const Journey = dynamic(() => import("@/sections/journey").then(m => m.Journey), { ssr: true });
+const AxoraEcosystem = dynamic(() => import("@/sections/axora-ecosystem").then(m => m.AxoraEcosystem), { ssr: false });
+const ProductEcosystem = dynamic(() => import("@/sections/product-ecosystem").then(m => m.ProductEcosystem), { ssr: true });
+const IdeasLab = dynamic(() => import("@/sections/ideas-lab").then(m => m.IdeasLab), { ssr: true });
+const Contact = dynamic(() => import("@/sections/contact").then(m => m.Contact), { ssr: true });
+const Footer = dynamic(() => import("@/sections/layout/footer").then(m => m.Footer), { ssr: true });
 
 /**
  * Main Entry Page - Optimized Architectural Flow
@@ -34,7 +37,9 @@ export default function Home() {
     window.addEventListener("beforeunload", handleUnload);
     
     setHasMounted(true);
-    return () => window.removeEventListener("beforeunload", handleUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleUnload);
+    };
   }, []);
 
   useEffect(() => {
@@ -82,8 +87,8 @@ export default function Home() {
           ease: [0.16, 1, 0.3, 1] 
         }}
       >
-        <div className="fixed inset-0 grain-overlay z-[1] pointer-events-none" />
-        <div className="fixed inset-0 premium-glow pointer-events-none z-0" />
+        <div className="fixed inset-0 grain-overlay z-[1] pointer-events-none will-change-transform" />
+        <div className="fixed inset-0 premium-glow pointer-events-none z-0 will-change-transform" />
         <div className="fixed inset-0 blueprint-grid opacity-[0.02] pointer-events-none z-0" />
         
         <Hero />

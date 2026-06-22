@@ -1,3 +1,4 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { CustomCursor } from '@/components/portfolio/custom-cursor';
@@ -54,6 +55,8 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preload critical font stylesheet */}
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Inter+Tight:wght@500;600;700;800;900&display=swap" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Inter+Tight:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
         {/* Structured Data for SEO */}
         <script

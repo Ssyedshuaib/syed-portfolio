@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -30,11 +31,15 @@
 @layer base {
   * {
     @apply border-border selection:bg-primary/20 selection:text-primary;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   body {
     @apply bg-background text-foreground font-body antialiased;
     scroll-behavior: smooth;
     background: radial-gradient(circle at 50% -20%, #161C21 0%, #0F1317 100%);
+    overflow-x: hidden;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-headline tracking-tighter;
@@ -50,6 +55,7 @@
 
 .glass {
   @apply bg-[#161C21]/40 backdrop-blur-[35px] border border-[#EAE0C8]/[0.05] transition-all duration-1000;
+  backface-visibility: hidden;
 }
 
 .premium-glow {
@@ -69,12 +75,20 @@
 }
 
 @keyframes breathing {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.015); }
+  0%, 100% { transform: scale(1) translateZ(0); }
+  50% { transform: scale(1.015) translateZ(0); }
 }
 
 .animate-breathing {
   animation: breathing 30s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Optimization Utilities */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 @media (min-width: 1025px) {
