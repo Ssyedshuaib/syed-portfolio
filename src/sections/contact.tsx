@@ -63,7 +63,7 @@ const SCHEDULE_URL = "https://calendly.com/your-link";
 const ACTIONS = [
   { label: "DIRECT DIALOGUE", sub: "Direct communication for focused discussions.", href: "mailto:syedshuaib2429@gmail.com", icon: Mail },
   { label: "PROFESSIONAL NETWORK", sub: "Connect through my institutional network.", href: "https://www.linkedin.com/in/syedshuaib485/", icon: Linkedin },
-  { label: "BUILD TOGETHER", sub: "For founders, ventures, and collaborations.", href: "mailto:syedshuaib2429@gmail.com?subject=Build Together", icon: Sparkles },
+  { label: "BUILD TOGETHER", sub: "For founders, builders, and meaningful collaborations.", href: "mailto:syedshuaib2429@gmail.com?subject=Build Together", icon: Sparkles },
   { 
     label: "SCHEDULE DISCUSSION", 
     sub: "Book a dedicated time for a focused conversation about products, ventures, ecosystems, collaboration, or strategic opportunities.", 
@@ -200,21 +200,19 @@ export function Contact() {
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                       
                       {/* Integrated 3-Column Grid Row */}
-                      <div className="flex items-center justify-between w-full pointer-events-none relative z-10">
-                        {/* LEFT (Col 1) & CENTER (Col 2) */}
-                        <div className="flex items-center">
-                          {/* Column 1: Number (Fixed 80px) */}
-                          <span className="text-[9px] md:text-[10px] font-mono font-bold text-primary/20 w-20 shrink-0 text-left">
-                            0{i+1}
-                          </span>
-                          {/* Column 2: Title (40px Offset from Number) */}
-                          <p className="ml-10 text-lg md:text-xl font-headline font-bold text-white tracking-tight group-hover:text-primary transition-all duration-700 ease-premium group-hover:translate-x-2 leading-tight">
-                            {opt}
-                          </p>
-                        </div>
+                      <div className="grid grid-cols-[80px_1fr_80px] items-center w-full pointer-events-none relative z-10">
+                        {/* COLUMN 1: Number */}
+                        <span className="text-[9px] md:text-[10px] font-mono font-bold text-primary/20 text-left">
+                          0{i+1}
+                        </span>
 
-                        {/* RIGHT (Col 3): Arrow (Fixed 80px) */}
-                        <div className="w-20 flex justify-end shrink-0">
+                        {/* COLUMN 2: Title */}
+                        <p className="text-lg md:text-xl font-headline font-bold text-white tracking-tight group-hover:text-primary transition-all duration-700 ease-premium group-hover:translate-x-2 leading-tight">
+                          {opt}
+                        </p>
+
+                        {/* COLUMN 3: Arrow */}
+                        <div className="flex justify-end">
                           <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-white/0 group-hover:text-primary group-hover:translate-x-1 transition-all duration-700 ease-premium" />
                         </div>
                       </div>
