@@ -29,7 +29,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       duration: 3 + Math.random() * 2,
     })));
 
-    // Snappier cinematic sequence (6 seconds total)
+    // Luxurious cinematic sequence (11 seconds total)
     const t0 = setTimeout(() => {
       setScene(1);
       lightIntensity.set(0.06);
@@ -38,20 +38,20 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
     const t1 = setTimeout(() => {
       setScene(2);
       lightIntensity.set(0.08);
-    }, 1500);
+    }, 2500);
 
     const t2 = setTimeout(() => {
       setScene(3);
       lightIntensity.set(0.09);
-    }, 3000);
+    }, 5000);
 
     const t3 = setTimeout(() => {
       setScene(4);
       lightIntensity.set(0.14);
       ambientScale.set(1.05);
-    }, 4500);
+    }, 7500);
 
-    const t4 = setTimeout(onComplete, 6000);
+    const t4 = setTimeout(onComplete, 11000);
 
     return () => {
       [t0, t1, t2, t3, t4].forEach(clearTimeout);
