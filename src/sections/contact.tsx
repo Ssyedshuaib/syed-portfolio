@@ -109,7 +109,6 @@ export function Contact() {
       setTransitionMsg("Preparing Discussion...");
       setView("transition");
       
-      // Choreographed sequence for scheduling
       setTimeout(() => setTransitionMsg("Reviewing Availability..."), 400);
       setTimeout(() => setTransitionMsg("Opening Calendar..."), 800);
       
@@ -222,20 +221,20 @@ export function Contact() {
                         setSelectedOption(opt.title);
                         setView("communication");
                       }}
-                      className="group relative aspect-[1.2/1] md:aspect-square rounded-[2.5rem] md:rounded-[3.5rem] glass border-white/5 text-left p-10 md:p-16 flex flex-col justify-between overflow-hidden transition-all duration-700 ease-premium hover:border-primary/30 hover:bg-primary/[0.03] hover:-translate-y-2 hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.5)]"
+                      className="group relative aspect-[1.4/1] rounded-[2.5rem] md:rounded-[3.5rem] glass border-white/5 text-left p-12 flex flex-col justify-between overflow-hidden transition-all duration-700 ease-premium hover:border-primary/30 hover:bg-primary/[0.03] hover:-translate-y-2 hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.5)]"
                     >
                       {/* Background Soft Glow */}
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
                       
                       {/* TOP LEFT: INDEX */}
                       <div className="relative z-10">
-                        <span className="text-[10px] md:text-[12px] font-mono font-bold tracking-[0.4em] text-primary/20">
+                        <span className="text-[10px] md:text-[11px] font-mono font-bold tracking-[0.4em] text-primary/20">
                           0{i+1}
                         </span>
                       </div>
 
-                      {/* CENTER: CONTENT */}
-                      <div className="relative z-10 space-y-4 md:space-y-6">
+                      {/* CENTER: CONTENT (Slightly higher than true center for editorial balance) */}
+                      <div className="relative z-10 space-y-4 md:space-y-6 flex-1 flex flex-col justify-center -mt-6">
                         <h4 className="text-3xl md:text-5xl lg:text-6xl font-headline font-black text-white italic uppercase tracking-tighter leading-none group-hover:text-primary transition-all duration-700 group-hover:-translate-y-2">
                           {opt.title}
                         </h4>
@@ -246,7 +245,7 @@ export function Contact() {
 
                       {/* BOTTOM RIGHT: ARROW */}
                       <div className="relative z-10 flex justify-end">
-                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-full glass border-white/5 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:bg-primary/[0.05] group-hover:border-primary/20 transition-all duration-700 ease-premium group-hover:translate-x-1 group-hover:-translate-y-1">
+                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-full glass border-white/5 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:bg-primary/[0.05] group-hover:border-primary/20 transition-all duration-700 ease-premium group-hover:translate-x-1 group-hover:-translate-y-1">
                           <ArrowRight className="w-6 h-6 md:w-8 md:h-8" />
                         </div>
                       </div>
@@ -365,7 +364,6 @@ function PortalCard({ portal, onClick }: { portal: typeof PORTALS[0], onClick: (
       onMouseLeave={() => { mouseX.set(0); mouseY.set(0); }}
       className="group relative aspect-square md:aspect-[3/4] rounded-[2rem] md:rounded-[3.5rem] glass border-white/5 overflow-hidden flex flex-col items-center justify-center p-8 md:p-12 text-center hover:border-primary/40 transition-all duration-1000"
     >
-      {/* Background Refractive Layers */}
       <motion.div 
         style={{ x: dx, y: dy }}
         className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.1),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" 
@@ -393,7 +391,6 @@ function PortalCard({ portal, onClick }: { portal: typeof PORTALS[0], onClick: (
         </div>
       </motion.div>
 
-      {/* Decorative Corner Details */}
       <div className="absolute top-6 left-6 md:top-10 md:left-10 w-2 h-2 border-t border-l border-white/10 group-hover:border-primary/40 transition-colors" />
       <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 w-2 h-2 border-b border-r border-white/10 group-hover:border-primary/40 transition-colors" />
     </motion.button>
