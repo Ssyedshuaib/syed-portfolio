@@ -194,24 +194,23 @@ export function Contact() {
                         setSelectedOption(opt);
                         setView("communication");
                       }}
-                      className="group relative h-36 md:h-44 rounded-2xl md:rounded-[2.5rem] glass border-white/5 text-left hover:border-primary/30 hover:bg-primary/[0.03] transition-all duration-700 overflow-hidden"
+                      className="group relative h-36 md:h-44 rounded-2xl md:rounded-[2.5rem] glass border-white/5 text-left hover:border-primary/30 hover:bg-primary/[0.03] transition-all duration-700 overflow-hidden flex items-center pl-6 pr-8"
                     >
-                      {/* Number Label - Fixed at 24px/24px */}
-                      <span className="absolute top-6 left-6 text-[9px] md:text-[10px] font-mono font-bold text-primary/20">
-                        0{i+1}
-                      </span>
-
-                      {/* Portal Title & Arrow Container - Shared Center Line */}
-                      <div className="absolute inset-0 flex items-center justify-between pointer-events-none">
-                        {/* Title - Left Aligned at 40px (pl-10) */}
-                        <p className="text-lg md:text-xl font-headline font-bold text-white tracking-tight group-hover:text-primary transition-colors leading-tight pl-10 pr-20">
-                          {opt}
-                        </p>
-
-                        {/* Arrow - Right Aligned at 32px (pr-8) */}
-                        <div className="pr-8">
-                          <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-white/0 group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                      {/* REBUILT LAYOUT: Balanced Horizontal Row */}
+                      <div className="flex items-center justify-between w-full pointer-events-none">
+                        <div className="flex items-center">
+                          {/* Fixed width number label (01, 02...) */}
+                          <span className="text-[9px] md:text-[10px] font-mono font-bold text-primary/20 w-4 shrink-0">
+                            0{i+1}
+                          </span>
+                          {/* Portal Title - Vertically Centered and Aligned consistently */}
+                          <p className="text-lg md:text-xl font-headline font-bold text-white tracking-tight group-hover:text-primary transition-colors leading-tight">
+                            {opt}
+                          </p>
                         </div>
+
+                        {/* Arrow Icon - Aligned on the same horizontal axis as title */}
+                        <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-white/0 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0" />
                       </div>
                     </motion.button>
                   ))}
