@@ -230,7 +230,7 @@ export function Contact() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-[1150px] mx-auto">
                   {ACTIONS.map((action, i) => (
                     <motion.button
                       key={action.label}
@@ -238,17 +238,17 @@ export function Contact() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.1 }}
                       onClick={() => handleAction(action)}
-                      className="group relative p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] glass border-white/10 text-left overflow-hidden flex flex-col gap-6 md:gap-8 hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-1000"
+                      className="group relative p-6 md:p-9 rounded-[1.5rem] md:rounded-[2.5rem] glass border-white/5 text-left overflow-hidden flex flex-col gap-5 md:gap-7 hover:border-primary/25 hover:bg-primary/[0.02] hover:shadow-[0_0_40px_-10px_rgba(234,224,200,0.08)] transition-all duration-700"
                     >
                       <div className="flex justify-between items-start">
-                        <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl glass border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:scale-110 transition-all duration-700">
-                          <action.icon className="w-6 h-6 md:w-8 md:h-8" />
+                        <div className="w-10 h-10 md:w-14 md:h-14 rounded-lg md:rounded-xl glass border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:scale-105 transition-all duration-500">
+                          <action.icon className="w-5 h-5 md:w-7 md:h-7" />
                         </div>
-                        <Sparkles className="w-5 h-5 text-primary/0 group-hover:text-primary group-hover:animate-pulse transition-all" />
+                        <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-primary/0 group-hover:text-primary group-hover:animate-pulse transition-all" />
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-1.5">
                         <p className="text-xl md:text-2xl font-headline font-black text-white italic uppercase tracking-tight">{action.label}</p>
-                        <p className="text-xs md:text-sm text-[#EAE0C8]/30 font-light leading-relaxed">{action.sub}</p>
+                        <p className="text-xs md:text-sm text-[#EAE0C8]/30 font-light leading-snug">{action.sub}</p>
                       </div>
                     </motion.button>
                   ))}
