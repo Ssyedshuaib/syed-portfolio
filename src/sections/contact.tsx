@@ -221,30 +221,30 @@ export function Contact() {
                         setSelectedOption(opt.title);
                         setView("communication");
                       }}
-                      className="group relative h-[280px] md:h-[300px] rounded-[2.5rem] md:rounded-[3.5rem] glass border-white/5 text-left p-8 md:px-12 md:py-8 overflow-hidden transition-all duration-700 ease-premium hover:border-primary/30 hover:bg-primary/[0.03] hover:-translate-y-2 hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.5)]"
+                      className="group relative h-[240px] md:h-[260px] rounded-[2.5rem] md:rounded-[3.5rem] glass border-white/5 text-left overflow-hidden transition-all duration-700 ease-premium hover:border-primary/30 hover:bg-primary/[0.03] hover:-translate-y-2 hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.5)]"
                     >
                       {/* Background Soft Glow */}
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
                       
-                      {/* TOP LEFT: INDEX (32px from top, 32px from left) */}
-                      <div className="absolute top-8 left-8 z-10">
+                      {/* TOP LEFT: INDEX */}
+                      <div className="absolute top-7 left-7 z-10">
                         <span className="text-[10px] md:text-[11px] font-mono font-bold tracking-[0.4em] text-primary/20">
                           0{i+1}
                         </span>
                       </div>
 
-                      {/* TITLE POSITION (Top 88px, Left 48px) */}
-                      <div className="absolute top-[88px] left-12 right-12 z-10 space-y-4 md:space-y-6">
-                        <h4 className="text-3xl md:text-5xl lg:text-6xl font-headline font-black text-white italic uppercase tracking-tighter leading-none group-hover:text-primary transition-all duration-700 group-hover:-translate-y-2">
+                      {/* TITLE POSITION */}
+                      <div className="absolute top-[80px] left-10 z-10 max-w-[70%] space-y-4">
+                        <h4 className="text-3xl md:text-5xl font-headline font-black text-white italic uppercase tracking-tighter leading-[0.9] group-hover:text-primary transition-all duration-700 group-hover:-translate-y-1">
                           {opt.title}
                         </h4>
-                        <p className="text-xs md:text-sm text-[#EAE0C8]/30 font-light leading-relaxed max-w-[280px] opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700 delay-100">
+                        <p className="text-[10px] md:text-xs text-[#EAE0C8]/30 font-light leading-relaxed opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-700 delay-100 line-clamp-2">
                           {opt.desc}
                         </p>
                       </div>
 
-                      {/* BOTTOM RIGHT: ARROW (32px from bottom, 32px from right) */}
-                      <div className="absolute bottom-8 right-8 z-10">
+                      {/* BOTTOM RIGHT: ARROW */}
+                      <div className="absolute bottom-7 right-7 z-10">
                         <div className="w-12 h-12 md:w-14 md:h-14 rounded-full glass border-white/5 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:bg-primary/[0.05] group-hover:border-primary/20 transition-all duration-700 ease-premium group-hover:translate-x-1 group-hover:-translate-y-1">
                           <ArrowRight className="w-6 h-6 md:w-8 md:h-8" />
                         </div>
