@@ -14,7 +14,7 @@ import { ArrowUpRight } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="relative bg-background pt-32 md:pt-64 pb-20 px-6 overflow-hidden" role="contentinfo">
+    <footer className="relative bg-background pt-48 md:pt-80 pb-20 px-6 overflow-hidden" role="contentinfo">
       {/* 00. GIANT BACKGROUND SIGNATURE - LUXURY BRANDING TEXTURE */}
       <div 
         style={{
@@ -59,9 +59,9 @@ export function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-16 md:mb-32"
+          className="text-center mb-12 md:mb-16"
         >
-          <div className="space-y-8 md:space-y-10">
+          <div className="space-y-6 md:space-y-8">
             <div className="space-y-4 md:space-y-6">
               <h3 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tight">SYED SHUAIB</h3>
               <div className="flex flex-col gap-2 md:gap-3 text-[9px] md:text-[10px] font-bold tracking-[0.6em] md:tracking-[0.8em] text-primary/40 uppercase">
@@ -80,13 +80,13 @@ export function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, delay: 0.4 }}
-          className="text-center space-y-4 mb-16 md:mb-20"
+          className="text-center space-y-4 md:space-y-5 mb-12 md:mb-16"
         >
           <div className="text-lg md:text-xl font-light tracking-[0.4em] md:tracking-[0.5em] text-[#EAE0C8] uppercase">
             AXORA
           </div>
           <p className="text-[8px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] text-white/20 uppercase italic px-4">
-            "Building systems that outlast trends."
+            "BUILDING SYSTEMS THAT OUTLAST TRENDS."
           </p>
         </motion.div>
 
@@ -96,13 +96,13 @@ export function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, delay: 0.6 }}
-          className="text-[9px] md:text-[10px] font-bold tracking-[0.5em] md:tracking-[0.6em] text-white/30 uppercase mb-16 md:mb-24"
+          className="text-[9px] md:text-[10px] font-bold tracking-[0.5em] md:tracking-[0.6em] text-white/30 uppercase mb-16 md:mb-20"
         >
           Bangalore, India
         </motion.div>
 
         {/* 04. EDITORIAL LINKS - REFINED DIALOGUE PATHS */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-24 mb-24 md:mb-48">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-20 mb-32 md:mb-48">
           <EditorialLink label="Email" href="mailto:syedshuaib2429@gmail.com" />
           <EditorialLink label="LinkedIn" href="https://www.linkedin.com/in/syedshuaib485/" />
           <EditorialLink label="Schedule Discussion" href="https://calendly.com/your-link" isPrimary />
