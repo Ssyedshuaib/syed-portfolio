@@ -1,30 +1,29 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 210 21% 5%; /* Slightly deeper background for more depth */
-    --foreground: 42 33% 85%;
-    --card: 208 18% 40% / 0.08;
-    --card-foreground: 0 0% 100%;
-    --popover: 210 21% 5%;
+    --background: 210 24% 7%; /* Deep Payne's Grey undertone #0B1116 */
+    --foreground: 42 33% 85%; /* Pearl #EAE0C8 */
+    --card: 208 18% 40% / 0.06;
+    --card-foreground: 42 33% 85%;
+    --popover: 210 24% 7%;
     --popover-foreground: 42 33% 85%;
     --primary: 42 33% 85%;
-    --primary-foreground: 210 21% 7%;
+    --primary-foreground: 210 24% 7%;
     --secondary: 208 18% 40%;
     --secondary-foreground: 42 33% 85%;
-    --muted: 208 18% 40%;
+    --muted: 208 18% 40% / 0.4;
     --muted-foreground: 42 10% 65%;
     --accent: 208 18% 40% / 0.12;
     --accent-foreground: 42 33% 85%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 38% 97%;
-    --border: 42 33% 85% / 0.06;
+    --border: 42 33% 85% / 0.08;
     --input: 208 18% 40% / 0.15;
     --ring: 208 18% 40%;
-    --radius: 2rem; /* Consistent large border radius for a handcrafted feel */
+    --radius: 2rem;
   }
 }
 
@@ -38,7 +37,7 @@
   body {
     @apply bg-background text-foreground font-body antialiased;
     scroll-behavior: smooth;
-    background: radial-gradient(circle at 50% -20%, #161C21 0%, #0F1317 100%);
+    background: radial-gradient(circle at 50% -20%, #17222C 0%, #0B1116 100%);
     overflow-x: hidden;
   }
   h1, h2, h3, h4, h5, h6 {
@@ -54,7 +53,7 @@
 }
 
 .glass {
-  @apply bg-[#161C21]/40 backdrop-blur-[35px] border border-[#EAE0C8]/[0.05] transition-all duration-1000;
+  @apply bg-[#536878]/5 backdrop-blur-[35px] border border-[#EAE0C8]/[0.08] transition-all duration-1000;
   backface-visibility: hidden;
 }
 
@@ -69,7 +68,6 @@
   pointer-events: none;
 }
 
-/* Custom Premium Easing */
 .ease-premium {
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -84,7 +82,6 @@
   will-change: transform;
 }
 
-/* Optimization Utilities */
 .gpu-accelerated {
   transform: translateZ(0);
   backface-visibility: hidden;

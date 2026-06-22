@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -29,8 +28,6 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
       duration: 3 + Math.random() * 2,
     })));
 
-    // REFINED CINEMATIC SEQUENCE
-    // Timing Logic per Statement: 0.85s Reveal + 2.0s Hold + 0.65s Exit + 0.2s Gap = 3.7s
     const t0 = setTimeout(() => {
       setScene(1);
       lightIntensity.set(0.06);
@@ -98,7 +95,7 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
         filter: "blur(80px)",
         transition: { duration: 1.5, ease: [0.16, 1, 0.3, 1] } 
       }}
-      className="fixed inset-0 z-[9999] bg-[#050505] flex items-center justify-center overflow-hidden"
+      className="fixed inset-0 z-[9999] bg-[#060708] flex items-center justify-center overflow-hidden"
     >
       <motion.div 
         style={{ 
@@ -110,12 +107,12 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
           y: [-10, 10, -10],
         }}
         transition={{ duration: 40, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-[-30%] bg-[radial-gradient(circle_at_30%_30%,rgba(83,104,120,0.18),transparent_70%)] z-[-1]" 
+        className="absolute inset-[-30%] bg-[radial-gradient(circle_at_30%_30%,rgba(83,104,120,0.12),transparent_70%)] z-[-1]" 
       />
 
-      <div className="fixed inset-0 grain-overlay z-[1] opacity-[0.025] pointer-events-none" />
+      <div className="fixed inset-0 grain-overlay z-[1] opacity-[0.02] pointer-events-none" />
 
-      <div className="absolute inset-0 z-[2] pointer-events-none opacity-10">
+      <div className="absolute inset-0 z-[2] pointer-events-none opacity-5">
         {particles.map((p) => (
           <motion.div
             key={p.id}
@@ -144,14 +141,14 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
               exit="exit"
               className="flex flex-col items-center justify-center"
             >
-              <h2 className="text-3xl md:text-5xl lg:text-7xl font-headline font-black tracking-tighter text-white/90 uppercase italic leading-none select-none">
+              <h2 className="text-3xl md:text-5xl lg:text-7xl font-headline font-black tracking-tighter text-[#EAE0C8] uppercase italic leading-none select-none">
                 {STATEMENTS[scene - 1]}
               </h2>
               <motion.div 
                 initial={{ width: 0 }}
                 animate={{ width: 60 }}
                 transition={{ delay: 0.5, duration: 1.5 }}
-                className="h-[1px] bg-primary/20 mt-12"
+                className="h-[1px] bg-[#EAE0C8]/20 mt-12"
               />
             </motion.div>
           )}
@@ -169,19 +166,19 @@ export function Preloader({ onComplete }: { onComplete: () => void }) {
                   animate={{ y: [0, -4, 0] }}
                   transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <h1 className="text-4xl md:text-7xl lg:text-[clamp(3.5rem,8vw,9rem)] font-headline font-black tracking-tighter text-white uppercase relative leading-tight select-none px-4">
+                  <h1 className="text-4xl md:text-7xl lg:text-[clamp(3.5rem,8vw,9rem)] font-headline font-black tracking-tighter text-[#EAE0C8] uppercase relative leading-tight select-none px-4">
                     SYED SHARFUDDIN SHUAIB
                   </h1>
                 </motion.div>
                 
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 0.4, y: 0 }}
+                  animate={{ opacity: 0.3, y: 0 }}
                   transition={{ delay: 1.5, duration: 2 }}
                   className="flex flex-col items-center gap-8"
                 >
-                  <div className="h-px w-24 bg-primary/30" />
-                  <p className="text-[10px] md:text-xs lg:text-[13px] font-bold tracking-[1em] md:tracking-[1.4em] text-primary/80 uppercase select-none text-center">
+                  <div className="h-px w-24 bg-[#EAE0C8]/30" />
+                  <p className="text-[10px] md:text-xs lg:text-[13px] font-bold tracking-[1em] md:tracking-[1.4em] text-[#EAE0C8]/60 uppercase select-none text-center">
                     Founder • Builder • Systems Thinker
                   </p>
                 </motion.div>

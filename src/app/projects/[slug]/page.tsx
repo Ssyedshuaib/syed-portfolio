@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -58,8 +57,9 @@ const PROJECT_DATA: Record<string, any> = {
     founderNotes: "DevNexus was built from my own frustration. I didn't want students to face the same resource fragmentation I did."
   },
   novapu: {
-    title: "NOVAPU",
+    title: "開NOVAPU",
     tag: "Learning Platform",
+    tagline: "NOVAPU",
     type: "Educational Tool",
     status: "Live",
     icon: GraduationCap,
@@ -133,10 +133,10 @@ export default function ProjectPage() {
 
   if (!project) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="min-h-screen flex items-center justify-center bg-[#060708]">
         <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-white">Project Not Found</h1>
-          <Button onClick={() => router.push("/#product-portfolio")} className="bg-primary text-black font-bold">Return to HQ</Button>
+          <h1 className="text-4xl font-bold text-[#EAE0C8]">Project Not Found</h1>
+          <Button onClick={() => router.push("/#product-portfolio")} className="bg-[#EAE0C8] text-[#0B1116] font-bold">Return to HQ</Button>
         </div>
       </div>
     );
@@ -145,17 +145,16 @@ export default function ProjectPage() {
   const Icon = project.icon;
 
   return (
-    <main className="min-h-screen relative bg-black selection:bg-primary/30">
-      <div className="fixed inset-0 grain-overlay z-[100] pointer-events-none" />
+    <main className="min-h-screen relative bg-[#060708] selection:bg-[#EAE0C8]/30">
+      <div className="fixed inset-0 grain-overlay z-[100] pointer-events-none opacity-[0.02]" />
       <Navbar />
       
-      {/* FIXED BACK BUTTON - Viewport level floating control */}
       <div className="fixed top-24 md:top-32 left-0 right-0 z-[110] pointer-events-auto">
         <div className="max-w-7xl mx-auto px-6">
           <Button 
             variant="ghost" 
             onClick={() => router.push("/#product-portfolio")}
-            className="group text-[#B7A7A9] hover:text-white h-12 px-6 rounded-full border border-white/5 bg-black/40 backdrop-blur-md transition-all"
+            className="group text-[#EAE0C8]/40 hover:text-[#EAE0C8] h-12 px-6 rounded-full border border-[#EAE0C8]/10 bg-[#0B1116]/60 backdrop-blur-md transition-all"
           >
             <ArrowLeft className="mr-2 w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Back to Ecosystem
@@ -170,7 +169,6 @@ export default function ProjectPage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
           >
-            {/* Hero Section */}
             <section className="pt-48 pb-32 px-6">
               <div className="max-w-7xl mx-auto">
                 <motion.div 
@@ -182,35 +180,31 @@ export default function ProjectPage() {
                   <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 pt-20 md:pt-0">
                     <div className="space-y-8">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl glass border-white/5 flex items-center justify-center text-primary">
+                        <div className="w-12 h-12 rounded-2xl glass border-[#EAE0C8]/10 flex items-center justify-center text-[#EAE0C8]">
                           <Icon className="w-6 h-6" />
                         </div>
                         <div className="space-y-1">
-                          <span className="px-4 py-1.5 rounded-full glass border-white/5 text-[9px] font-bold tracking-[0.2em] uppercase text-primary">
+                          <span className="px-4 py-1.5 rounded-full glass border-[#EAE0C8]/10 text-[9px] font-bold tracking-[0.2em] uppercase text-[#EAE0C8]">
                             {project.tag}
                           </span>
                         </div>
                       </div>
-                      <h1 className="text-7xl md:text-[10rem] font-headline font-black tracking-tighter leading-[0.85] text-white">
-                        {project.title}
+                      <h1 className="text-7xl md:text-[10rem] font-headline font-black tracking-tighter leading-[0.85] text-[#EAE0C8]">
+                        {project.tagline || project.title}
                       </h1>
                     </div>
                     
                     <div className="space-y-4 text-right">
-                       <p className="text-[10px] font-bold tracking-[0.4em] text-[#B7A7A9] uppercase">Project Vision</p>
-                       <p className="text-xl text-white font-light max-w-sm ml-auto">
+                       <p className="text-[10px] font-bold tracking-[0.4em] text-[#EAE0C8]/40 uppercase">Project Vision</p>
+                       <p className="text-xl text-[#EAE0C8]/80 font-light max-w-sm ml-auto">
                          {project.vision}
                        </p>
                     </div>
                   </div>
                 </motion.div>
 
-                {/* Main Content Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-24">
-                  {/* Left Column: Narrative */}
                   <div className="lg:col-span-8 space-y-32">
-                    
-                    {/* Problem & Solution */}
                     <motion.div 
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -222,56 +216,55 @@ export default function ProjectPage() {
                           <div className="h-px w-8 bg-current" />
                           <span className="text-[10px] font-bold tracking-[0.5em] uppercase">The Problem</span>
                         </div>
-                        <p className="text-2xl md:text-3xl font-light leading-relaxed text-[#B7A7A9]">
+                        <p className="text-2xl md:text-3xl font-light leading-relaxed text-[#EAE0C8]/60">
                           {project.problem}
                         </p>
                       </div>
                       <div className="space-y-6">
-                        <div className="flex items-center gap-3 text-primary">
+                        <div className="flex items-center gap-3 text-[#EAE0C8]">
                           <div className="h-px w-8 bg-current" />
                           <span className="text-[10px] font-bold tracking-[0.5em] uppercase">The Solution</span>
                         </div>
-                        <p className="text-2xl md:text-3xl font-light leading-relaxed text-white">
+                        <p className="text-2xl md:text-3xl font-light leading-relaxed text-[#EAE0C8]">
                           {project.solution}
                         </p>
                       </div>
                     </motion.div>
 
-                    {/* Features & Architecture */}
                     <motion.div 
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       className="grid grid-cols-1 md:grid-cols-2 gap-16"
                     >
-                      <div className="glass p-12 rounded-[3rem] border-white/5 space-y-10">
+                      <div className="glass p-12 rounded-[3rem] border-[#EAE0C8]/10 space-y-10">
                          <div className="flex items-center gap-4">
-                           <Layout className="w-5 h-5 text-primary" />
-                           <h3 className="text-[10px] font-bold tracking-[0.5em] text-[#B7A7A9] uppercase">Key Features</h3>
+                           <Layout className="w-5 h-5 text-[#EAE0C8]" />
+                           <h3 className="text-[10px] font-bold tracking-[0.5em] text-[#EAE0C8]/40 uppercase">Key Features</h3>
                          </div>
                          <ul className="space-y-6">
                            {project.features.map((f: string, i: number) => (
                              <li key={i} className="flex items-start gap-4 group">
-                               <span className="text-[10px] font-bold text-primary/40 group-hover:text-primary transition-colors mt-1.5">0{i+1}</span>
-                               <span className="text-lg text-white font-light">{f}</span>
+                               <span className="text-[10px] font-bold text-[#EAE0C8]/20 group-hover:text-[#EAE0C8] transition-colors mt-1.5">0{i+1}</span>
+                               <span className="text-lg text-[#EAE0C8]/80 font-light">{f}</span>
                              </li>
                            ))}
                          </ul>
                       </div>
 
-                      <div className="glass p-12 rounded-[3rem] border-white/5 space-y-10">
+                      <div className="glass p-12 rounded-[3rem] border-[#EAE0C8]/10 space-y-10">
                          <div className="flex items-center gap-4">
-                           <Cpu className="w-5 h-5 text-primary" />
-                           <h3 className="text-[10px] font-bold tracking-[0.5em] text-[#B7A7A9] uppercase">Architecture</h3>
+                           <Cpu className="w-5 h-5 text-[#EAE0C8]" />
+                           <h3 className="text-[10px] font-bold tracking-[0.5em] text-[#EAE0C8]/40 uppercase">Architecture</h3>
                          </div>
                          <div className="space-y-8">
-                            <p className="text-lg text-[#B7A7A9] font-light leading-relaxed">
+                            <p className="text-lg text-[#EAE0C8]/60 font-light leading-relaxed">
                               {project.architecture}
                             </p>
-                            <div className="pt-8 border-t border-white/5">
+                            <div className="pt-8 border-t border-[#EAE0C8]/5">
                               <div className="flex flex-wrap gap-2">
                                 {project.tech.map((t: string) => (
-                                  <span key={t} className="px-4 py-2 rounded-xl bg-white/5 border border-white/5 text-[10px] font-bold uppercase tracking-widest text-[#B7A7A9]">
+                                  <span key={t} className="px-4 py-2 rounded-xl bg-[#EAE0C8]/5 border border-[#EAE0C8]/10 text-[10px] font-bold uppercase tracking-widest text-[#EAE0C8]/60">
                                     {t}
                                   </span>
                                 ))}
@@ -281,7 +274,6 @@ export default function ProjectPage() {
                       </div>
                     </motion.div>
 
-                    {/* Roadmap */}
                     <motion.div 
                       initial={{ opacity: 0, y: 30 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -292,42 +284,41 @@ export default function ProjectPage() {
                         <Milestone className="w-5 h-5" />
                         <span className="text-[10px] font-bold tracking-[0.5em] uppercase">Future Roadmap</span>
                       </div>
-                      <div className="glass p-12 rounded-[3rem] border-white/5">
-                        <p className="text-3xl md:text-5xl font-headline font-bold text-white tracking-tighter leading-tight italic">
+                      <div className="glass p-12 rounded-[3rem] border-[#EAE0C8]/10">
+                        <p className="text-3xl md:text-5xl font-headline font-bold text-[#EAE0C8] tracking-tighter leading-tight italic">
                           "{project.roadmap}"
                         </p>
                       </div>
                     </motion.div>
                   </div>
 
-                  {/* Right Column: Metadata & Actions */}
                   <div className="lg:col-span-4 space-y-12">
                      <motion.div 
                        initial={{ opacity: 0, scale: 0.95 }}
                        whileInView={{ opacity: 1, scale: 1 }}
                        viewport={{ once: true }}
-                       className="glass p-12 rounded-[3.5rem] border-white/10 space-y-10 sticky top-32"
+                       className="glass p-12 rounded-[3.5rem] border-[#EAE0C8]/10 space-y-10 sticky top-32"
                      >
                        <div className="space-y-2">
-                         <p className="text-[10px] font-bold tracking-[0.5em] text-primary uppercase">Status</p>
+                         <p className="text-[10px] font-bold tracking-[0.5em] text-[#EAE0C8]/60 uppercase">Status</p>
                          <div className="flex items-center gap-3">
-                            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-                            <p className="text-xl text-white font-medium">{project.status}</p>
+                            <div className="w-2 h-2 rounded-full bg-[#EAE0C8] animate-pulse shadow-[0_0_10px_rgba(234,224,200,0.4)]" />
+                            <p className="text-xl text-[#EAE0C8] font-medium">{project.status}</p>
                          </div>
                        </div>
 
                        <div className="space-y-6">
-                         <p className="text-[10px] font-bold tracking-[0.5em] text-[#B7A7A9] uppercase">Founder Notes</p>
-                         <p className="text-[#B7A7A9] leading-relaxed font-light italic text-lg">
+                         <p className="text-[10px] font-bold tracking-[0.5em] text-[#EAE0C8]/40 uppercase">Founder Notes</p>
+                         <p className="text-[#EAE0C8]/60 leading-relaxed font-light italic text-lg">
                            {project.founderNotes}
                          </p>
                        </div>
 
-                       <div className="space-y-4 pt-10 border-t border-white/5">
-                         <Button className="w-full h-16 rounded-full bg-primary text-black font-bold tracking-[0.2em] uppercase text-xs hover:scale-[1.02] transition-all">
+                       <div className="space-y-4 pt-10 border-t border-[#EAE0C8]/5">
+                         <Button className="w-full h-16 rounded-full bg-[#EAE0C8] text-[#0B1116] font-bold tracking-[0.2em] uppercase text-xs hover:opacity-90 transition-all">
                            <Globe className="mr-3 w-4 h-4" /> Live Platform
                          </Button>
-                         <Button variant="outline" className="w-full h-16 rounded-full border-white/10 text-white font-bold tracking-[0.2em] uppercase text-xs hover:bg-white/5 transition-all">
+                         <Button variant="outline" className="w-full h-16 rounded-full border-[#EAE0C8]/10 text-[#EAE0C8] font-bold tracking-[0.2em] uppercase text-xs hover:bg-[#EAE0C8]/5 transition-all">
                            <Github className="mr-3 w-4 h-4" /> View Architecture
                          </Button>
                        </div>
@@ -337,7 +328,6 @@ export default function ProjectPage() {
               </div>
             </section>
 
-            {/* Custom Project-Specific Sections */}
             {slug === "reverie" && <ReverieShowcase />}
             {slug === "novapu" && <NovaPUShowcase />}
             {slug === "devnexus" && <DevNexusShowcase />}

@@ -60,12 +60,11 @@ export function Journey() {
     <section 
       id="journey" 
       ref={containerRef}
-      className="relative bg-[#050505] py-24 md:py-32 px-6 overflow-hidden"
+      className="relative bg-[#060708] py-24 md:py-32 px-6 overflow-hidden"
     >
-      <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
+      <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
       
       <div className="max-w-[1440px] mx-auto">
-        {/* Compact Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -73,10 +72,10 @@ export function Journey() {
           className="flex flex-col items-center justify-center text-center px-6 mb-24 md:mb-32"
         >
           <div className="space-y-6">
-            <p className="text-[10px] font-bold tracking-[0.8em] text-primary/40 uppercase">THE JOURNEY</p>
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-headline font-black tracking-tighter text-white leading-none uppercase">
+            <p className="text-[10px] font-bold tracking-[0.8em] text-[#EAE0C8]/30 uppercase">THE JOURNEY</p>
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-headline font-black tracking-tighter text-[#EAE0C8] leading-none uppercase">
               From Curiosity <br />
-              <span className="text-primary italic font-medium">To Ecosystems.</span>
+              <span className="opacity-40 italic font-medium">To Ecosystems.</span>
             </h2>
             <p className="text-lg md:text-xl text-[#EAE0C8]/40 font-light italic leading-relaxed max-w-lg mx-auto">
               Every product began as a question. <br />
@@ -85,13 +84,11 @@ export function Journey() {
           </div>
         </motion.div>
 
-        {/* Dense Timeline Chapters */}
         <div className="relative">
-          {/* Animated Timeline Path */}
-          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-white/5 md:-translate-x-1/2">
+          <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-[#EAE0C8]/5 md:-translate-x-1/2">
             <motion.div 
               style={{ scaleY: pathLength }}
-              className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-primary via-primary/50 to-transparent origin-top shadow-[0_0_15px_rgba(234,224,200,0.4)]"
+              className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#EAE0C8] via-[#EAE0C8]/40 to-transparent origin-top shadow-[0_0_15px_rgba(234,224,200,0.2)]"
             />
           </div>
 
@@ -102,8 +99,7 @@ export function Journey() {
           </div>
         </div>
 
-        {/* Integrated Ending */}
-        <div className="mt-48 py-32 text-center space-y-20 px-6 border-t border-white/5">
+        <div className="mt-48 py-32 text-center space-y-20 px-6 border-t border-[#EAE0C8]/5">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -111,7 +107,7 @@ export function Journey() {
             transition={{ duration: 1.5 }}
             className="space-y-8"
           >
-            <div className="h-px w-16 bg-primary/20 mx-auto" />
+            <div className="h-px w-16 bg-[#EAE0C8]/20 mx-auto" />
             <div className="space-y-4">
               {[
                 "Curiosity became execution.",
@@ -126,7 +122,7 @@ export function Journey() {
                   transition={{ delay: i * 0.3, duration: 1 }}
                   className={cn(
                     "text-xl md:text-4xl font-headline font-bold tracking-tight leading-tight",
-                    i === 2 ? "text-primary italic" : "text-white/20"
+                    i === 2 ? "text-[#EAE0C8] italic" : "text-[#EAE0C8]/10"
                   )}
                 >
                   {text}
@@ -137,7 +133,7 @@ export function Journey() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 0.4 }}
               transition={{ delay: 1.2 }}
-              className="text-[10px] font-bold tracking-[0.6em] text-white uppercase pt-12"
+              className="text-[10px] font-bold tracking-[0.6em] text-[#EAE0C8] uppercase pt-12"
             >
               The journey continues.
             </motion.p>
@@ -167,20 +163,18 @@ function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
         isLeft ? "md:flex-row" : "md:flex-row-reverse"
       )}
     >
-      {/* Background Year - Integrated Position */}
       <motion.div 
         style={{ y: yearY }}
         className={cn(
-          "absolute -top-16 md:-top-20 pointer-events-none select-none z-0 opacity-[0.03]",
+          "absolute -top-16 md:-top-20 pointer-events-none select-none z-0 opacity-[0.02]",
           isLeft ? "left-0 md:-left-12" : "right-0 md:-right-12"
         )}
       >
-        <span className="text-7xl md:text-[clamp(8rem,18vw,16rem)] font-headline font-black text-white tracking-tighter block leading-none">
+        <span className="text-7xl md:text-[clamp(8rem,18vw,16rem)] font-headline font-black text-[#EAE0C8] tracking-tighter block leading-none">
           {chapter.year}
         </span>
       </motion.div>
 
-      {/* Narrative Block */}
       <motion.div 
         style={{ opacity: contentOpacity }}
         className={cn(
@@ -197,16 +191,16 @@ function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
             "flex items-center gap-4",
             isLeft ? "md:flex-row-reverse" : "md:flex-row"
           )}>
-            <span className="text-[11px] font-mono font-bold tracking-[0.4em] text-primary/40 uppercase">
+            <span className="text-[11px] font-mono font-bold tracking-[0.4em] text-[#EAE0C8]/20 uppercase">
               Chapter {chapter.id}
             </span>
-            <div className="h-px w-8 bg-primary/20" />
+            <div className="h-px w-8 bg-[#EAE0C8]/10" />
           </div>
 
           <div className="space-y-4">
             <h3 className={cn(
-              "text-3xl md:text-5xl font-headline font-black text-white tracking-tight leading-[1.05]",
-              chapter.isTerminal && "text-primary italic"
+              "text-3xl md:text-5xl font-headline font-black text-[#EAE0C8] tracking-tight leading-[1.05]",
+              chapter.isTerminal && "opacity-40 italic"
             )}>
               {chapter.title}
             </h3>
@@ -217,11 +211,10 @@ function TimelineChapter({ chapter, idx }: { chapter: any, idx: number }) {
         </div>
       </motion.div>
 
-      {/* Marker */}
       <div className="hidden md:flex relative w-12 items-center justify-center">
         <motion.div 
           whileHover={{ scale: 1.5 }}
-          className="w-3 h-3 rounded-full bg-black border border-primary shadow-[0_0_10px_rgba(234,224,200,0.3)] z-20 transition-transform" 
+          className="w-3 h-3 rounded-full bg-background border border-[#EAE0C8]/30 shadow-[0_0_10px_rgba(234,224,200,0.2)] z-20 transition-transform" 
         />
       </div>
 

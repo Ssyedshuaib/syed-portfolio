@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -18,12 +17,6 @@ import {
   MapPin
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-/**
- * THE STRATEGY ROOM: FOUNDER COMMAND CENTER
- * Redesigned for maximum institutional value and luxury editorial depth.
- * Aesthetic: Private Strategy Room, High-End Product Laboratory.
- */
 
 type ViewState = "entrance" | "refinement" | "communication" | "transition";
 
@@ -86,7 +79,7 @@ const PORTALS = [
   }
 ];
 
-const SCHEDULE_URL = "https://calendly.com/your-link";
+const SCHEDULE_URL = "#";
 
 const ACTIONS = [
   { label: "DIRECT DIALOGUE", href: "mailto:syedshuaib2429@gmail.com", icon: Mail },
@@ -129,15 +122,12 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative bg-[#030303] overflow-hidden min-h-screen pt-80 pb-64 px-6">
-      {/* 00. ATMOSPHERIC ARCHITECTURE */}
-      <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.03),transparent_75%)] pointer-events-none" />
-      <div className="fixed inset-0 grain-overlay opacity-[0.012] pointer-events-none" />
+    <section id="contact" className="relative bg-[#060708] overflow-hidden min-h-screen pt-80 pb-64 px-6">
+      <div className="absolute inset-0 blueprint-grid opacity-[0.01] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.04),transparent_75%)] pointer-events-none" />
       
-      {/* Blueprint Guides */}
-      <div className="absolute top-0 left-1/4 w-px h-full bg-white/[0.04] pointer-events-none hidden lg:block" />
-      <div className="absolute top-0 right-1/4 w-px h-full bg-white/[0.04] pointer-events-none hidden lg:block" />
+      <div className="absolute top-0 left-1/4 w-px h-full bg-[#EAE0C8]/[0.03] pointer-events-none hidden lg:block" />
+      <div className="absolute top-0 right-1/4 w-px h-full bg-[#EAE0C8]/[0.03] pointer-events-none hidden lg:block" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <LayoutGroup>
@@ -150,36 +140,34 @@ export function Contact() {
                 exit={{ opacity: 0, scale: 0.98, filter: "blur(40px)" }}
                 className="space-y-48 md:space-y-64"
               >
-                {/* Header: Editorial Composition */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-end">
                   <div className="lg:col-span-8 space-y-12">
                     <div className="space-y-6">
                       <motion.p 
                         initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 0.3, x: 0 }}
-                        className="text-[10px] font-bold tracking-[0.8em] text-white uppercase"
+                        animate={{ opacity: 0.2, x: 0 }}
+                        className="text-[10px] font-bold tracking-[0.8em] text-[#EAE0C8] uppercase"
                       >
                         The Strategy Room
                       </motion.p>
-                      <h2 className="text-5xl md:text-8xl lg:text-[clamp(4.5rem,10vw,11.5rem)] font-headline font-[900] tracking-[-0.05em] text-white uppercase leading-[0.85]">
+                      <h2 className="text-5xl md:text-8xl lg:text-[clamp(4.5rem,10vw,11.5rem)] font-headline font-[900] tracking-[-0.05em] text-[#EAE0C8] uppercase leading-[0.85]">
                         What Shall <br />
-                        <span className="text-[#EAE0C8] italic">We Build?</span>
+                        <span className="opacity-30 italic">We Build?</span>
                       </h2>
                     </div>
                   </div>
                   
                   <div className="lg:col-span-4 pb-4">
                     <div className="flex flex-col gap-10">
-                       <div className="h-px w-20 bg-[#EAE0C8]/20" />
-                       <p className="text-xl md:text-2xl text-white/30 font-light leading-relaxed max-w-sm">
+                       <div className="h-px w-20 bg-[#EAE0C8]/10" />
+                       <p className="text-xl md:text-2xl text-[#EAE0C8]/30 font-light leading-relaxed max-w-sm">
                          Enter a private environment for strategic product architecture and venture development.
                        </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Strategic Pillars: Deep Horizontal Layout */}
-                <div className="space-y-0 border-t border-white/[0.06]">
+                <div className="space-y-0 border-t border-[#EAE0C8]/5">
                   {PORTALS.map((portal, i) => (
                     <StrategicPillar 
                       key={portal.id} 
@@ -193,17 +181,16 @@ export function Contact() {
                   ))}
                 </div>
 
-                {/* Institutional Footer Info */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-12 pt-32 opacity-20">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-12 pt-32 opacity-10">
                    <div className="flex items-center gap-6">
                       <MapPin className="w-3.5 h-3.5 text-[#EAE0C8]" />
-                      <span className="text-[10px] font-bold tracking-[0.6em] text-white uppercase">Bangalore, IN</span>
+                      <span className="text-[10px] font-bold tracking-[0.6em] text-[#EAE0C8] uppercase">Bangalore, IN</span>
                    </div>
                    <div className="flex items-center gap-6">
                       <Clock className="w-3.5 h-3.5 text-[#EAE0C8]" />
-                      <span className="text-[10px] font-bold tracking-[0.6em] text-white uppercase">{currentTime} IST</span>
+                      <span className="text-[10px] font-bold tracking-[0.6em] text-[#EAE0C8] uppercase">{currentTime} IST</span>
                    </div>
-                   <div className="h-px w-32 bg-white/40 hidden md:block" />
+                   <div className="h-px w-32 bg-[#EAE0C8]/40 hidden md:block" />
                 </div>
               </motion.div>
             )}
@@ -219,14 +206,14 @@ export function Contact() {
                 <div className="space-y-12">
                   <button 
                     onClick={() => setView("entrance")}
-                    className="group flex items-center gap-3 text-[10px] font-bold tracking-[0.4em] text-[#EAE0C8]/30 uppercase hover:text-white transition-all duration-500"
+                    className="group flex items-center gap-3 text-[10px] font-bold tracking-[0.4em] text-[#EAE0C8]/30 uppercase hover:text-[#EAE0C8] transition-all duration-500"
                   >
                     <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> 
                     Return to Selection
                   </button>
                   <div className="space-y-6">
-                    <p className="text-[11px] font-bold tracking-[0.8em] text-white/20 uppercase">Refining Focus</p>
-                    <h3 className="text-4xl md:text-8xl font-headline font-[900] text-white uppercase italic tracking-tighter">
+                    <p className="text-[11px] font-bold tracking-[0.8em] text-[#EAE0C8]/20 uppercase">Refining Focus</p>
+                    <h3 className="text-4xl md:text-8xl font-headline font-[900] text-[#EAE0C8] uppercase italic tracking-tighter">
                       {selectedPortal.title}
                     </h3>
                   </div>
@@ -240,16 +227,16 @@ export function Contact() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.1 }}
                       onClick={() => setView("communication")}
-                      className="group flex flex-col items-start text-left p-12 rounded-[40px] hover:bg-white/[0.02] border border-transparent hover:border-white/5 transition-all duration-700"
+                      className="group flex flex-col items-start text-left p-12 rounded-[40px] hover:bg-[#EAE0C8]/[0.02] border border-transparent hover:border-[#EAE0C8]/5 transition-all duration-700"
                     >
                       <div className="space-y-6">
                         <span className="text-[10px] font-mono text-[#EAE0C8]/20 tracking-[0.4em]">0{i+1}</span>
-                        <h4 className="text-2xl md:text-4xl font-headline font-bold text-white uppercase group-hover:text-[#EAE0C8] transition-colors">
+                        <h4 className="text-2xl md:text-4xl font-headline font-bold text-[#EAE0C8]/80 uppercase group-hover:text-[#EAE0C8] transition-colors">
                           {opt.title}
                         </h4>
-                        <p className="text-lg text-white/30 font-light max-w-xs">{opt.desc}</p>
+                        <p className="text-lg text-[#EAE0C8]/30 font-light max-w-xs">{opt.desc}</p>
                         <div className="pt-8">
-                           <ArrowRight className="w-5 h-5 text-white/10 group-hover:text-[#EAE0C8] group-hover:translate-x-2 transition-all" />
+                           <ArrowRight className="w-5 h-5 text-[#EAE0C8]/10 group-hover:text-[#EAE0C8] group-hover:translate-x-2 transition-all" />
                         </div>
                       </div>
                     </motion.button>
@@ -269,13 +256,13 @@ export function Contact() {
                 <div className="text-center space-y-8">
                   <button 
                     onClick={() => setView("refinement")}
-                    className="text-[10px] font-bold tracking-[0.6em] text-[#EAE0C8]/20 uppercase hover:text-white transition-colors"
+                    className="text-[10px] font-bold tracking-[0.6em] text-[#EAE0C8]/20 uppercase hover:text-[#EAE0C8] transition-colors"
                   >
                     Adjust Strategic Context
                   </button>
-                  <h3 className="text-5xl md:text-9xl font-headline font-[900] text-white uppercase tracking-[-0.06em]">
+                  <h3 className="text-5xl md:text-9xl font-headline font-[900] text-[#EAE0C8] uppercase tracking-[-0.06em]">
                     Establish <br />
-                    <span className="text-[#EAE0C8] italic">Dialogue.</span>
+                    <span className="opacity-30 italic">Dialogue.</span>
                   </h3>
                 </div>
 
@@ -287,10 +274,10 @@ export function Contact() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.1 }}
                       onClick={() => handleAction(action)}
-                      className="group relative h-48 rounded-[32px] overflow-hidden border border-white/[0.04] bg-white/[0.01] hover:bg-white/[0.03] flex flex-col items-center justify-center gap-6 transition-all duration-700"
+                      className="group relative h-48 rounded-[32px] overflow-hidden border border-[#EAE0C8]/5 bg-[#EAE0C8]/[0.01] hover:bg-[#EAE0C8]/[0.04] flex flex-col items-center justify-center gap-6 transition-all duration-700"
                     >
-                      <action.icon className="w-6 h-6 text-white/20 group-hover:text-[#EAE0C8] group-hover:scale-110 transition-all duration-700" />
-                      <span className="text-[10px] font-bold tracking-[0.4em] text-white/40 uppercase group-hover:text-white">
+                      <action.icon className="w-6 h-6 text-[#EAE0C8]/20 group-hover:text-[#EAE0C8] group-hover:scale-110 transition-all duration-700" />
+                      <span className="text-[10px] font-bold tracking-[0.4em] text-[#EAE0C8]/40 uppercase group-hover:text-[#EAE0C8]">
                         {action.label}
                       </span>
                       <div className="absolute bottom-0 left-0 w-full h-[2px] bg-[#EAE0C8]/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
@@ -306,13 +293,13 @@ export function Contact() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[100] bg-black/98 backdrop-blur-[100px] flex flex-col items-center justify-center p-6"
+                className="fixed inset-0 z-[100] bg-[#060708]/98 backdrop-blur-[100px] flex flex-col items-center justify-center p-6"
               >
                 <div className="space-y-12 text-center max-w-xl">
                   <motion.div 
-                    animate={{ scale: [1, 1.05, 1], opacity: [0.4, 0.8, 0.4] }}
+                    animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.7, 0.3] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    className="text-3xl md:text-5xl font-headline font-light text-white tracking-[0.1em] italic uppercase"
+                    className="text-3xl md:text-5xl font-headline font-light text-[#EAE0C8] tracking-[0.1em] italic uppercase"
                   >
                     {transitionMsg}
                   </motion.div>
@@ -344,47 +331,41 @@ function StrategicPillar({ portal, index, onClick }: { portal: any, index: numbe
       viewport={{ once: true }}
       transition={{ duration: 1.2, delay: index * 0.15, ease: LUXURY_EASE }}
       onClick={onClick}
-      className="group relative w-full py-24 md:py-32 flex flex-col md:flex-row items-start md:items-center justify-between gap-12 border-b border-white/[0.06] hover:bg-white/[0.01] transition-all duration-1000 px-4 md:px-12 overflow-hidden"
+      className="group relative w-full py-24 md:py-32 flex flex-col md:flex-row items-start md:items-center justify-between gap-12 border-b border-[#EAE0C8]/5 hover:bg-[#EAE0C8]/[0.01] transition-all duration-1000 px-4 md:px-12 overflow-hidden"
     >
-      {/* Hover Background Depth */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(234,224,200,0.04),transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(234,224,200,0.03),transparent_50%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
       
-      {/* 01. INDEX - STRICT AXIS */}
       <div className="relative z-10 w-32">
-        <span className="text-[12px] font-mono text-[#EAE0C8]/20 tracking-[0.5em] group-hover:text-[#EAE0C8] transition-colors duration-700">
+        <span className="text-[12px] font-mono text-[#EAE0C8]/20 tracking-[0.5em] group-hover:text-[#EAE0C8]/60 transition-colors duration-700">
           {portal.id}
         </span>
       </div>
 
-      {/* 02. CORE TYPOGRAPHY - STRICT AXIS & REDUCED SCALE */}
       <div className="relative z-10 basis-[40%] space-y-4 text-left">
-        <h4 className="text-3xl md:text-6xl font-headline font-[900] text-white uppercase tracking-[-0.05em] leading-[0.9] group-hover:translate-x-4 transition-transform duration-700 ease-premium">
+        <h4 className="text-3xl md:text-6xl font-headline font-[900] text-[#EAE0C8]/90 uppercase tracking-[-0.05em] leading-[0.9] group-hover:text-[#EAE0C8] transition-all duration-700 ease-premium">
           {portal.title}
         </h4>
-        <p className="text-[11px] font-bold tracking-[0.6em] text-white/20 uppercase">
+        <p className="text-[11px] font-bold tracking-[0.6em] text-[#EAE0C8]/20 uppercase">
           Focus Category
         </p>
       </div>
 
-      {/* 03. MISSION STATEMENT - STRICT AXIS & INCREASED GUTTER */}
       <div className="relative z-10 flex-1 md:text-right md:pl-16">
-        <p className="text-xl md:text-3xl text-white/40 font-light leading-relaxed italic group-hover:text-white transition-colors duration-1000">
+        <p className="text-xl md:text-3xl text-[#EAE0C8]/30 font-light leading-relaxed italic group-hover:text-[#EAE0C8]/60 transition-colors duration-1000">
           "{portal.mission}"
         </p>
-        <p className="text-[9px] font-bold tracking-[0.4em] text-[#EAE0C8]/20 uppercase mt-5">
+        <p className="text-[9px] font-bold tracking-[0.4em] text-[#EAE0C8]/10 uppercase mt-5">
           Strategic Intent
         </p>
       </div>
 
-      {/* 04. INTERACTION VECTOR - STRICT AXIS */}
       <div className="relative z-10 w-32 flex justify-end">
-        <div className="w-16 h-16 rounded-full border border-white/[0.06] group-hover:border-[#EAE0C8]/40 flex items-center justify-center transition-all duration-700 group-hover:scale-110">
-          <ArrowRight className="w-6 h-6 text-white/10 group-hover:text-[#EAE0C8] group-hover:translate-x-1 transition-all duration-700" />
+        <div className="w-16 h-16 rounded-full border border-[#EAE0C8]/5 group-hover:border-[#EAE0C8]/30 flex items-center justify-center transition-all duration-700 group-hover:scale-110">
+          <ArrowRight className="w-6 h-6 text-[#EAE0C8]/20 group-hover:text-[#EAE0C8]/80 group-hover:translate-x-1 transition-all duration-700" />
         </div>
       </div>
 
-      {/* Corner blueprint detail */}
-      <div className="absolute top-0 right-0 w-12 h-px bg-white/[0.05] group-hover:w-full transition-all duration-1000" />
+      <div className="absolute top-0 right-0 w-12 h-px bg-[#EAE0C8]/5 group-hover:w-full transition-all duration-1000" />
     </motion.button>
   );
 }

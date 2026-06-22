@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from "react";
@@ -6,16 +5,9 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
 
-/**
- * THE FINAL SIGNATURE
- * A calm, intentional, and premium conclusion to the digital ecosystem.
- * Focuses on institutional restraint and professional authority.
- */
-
 export function Footer() {
   return (
     <footer className="relative bg-background pt-48 md:pt-80 pb-20 px-6 overflow-hidden" role="contentinfo">
-      {/* 00. GIANT BACKGROUND SIGNATURE - LUXURY BRANDING TEXTURE */}
       <div 
         style={{
           position: 'absolute',
@@ -28,7 +20,7 @@ export function Footer() {
           fontSize: 'min(42vw, 700px)',
           fontWeight: 900,
           letterSpacing: '-0.08em',
-          color: 'rgba(255, 255, 255, 0.012)',
+          color: 'rgba(234, 224, 200, 0.012)',
           lineHeight: 1,
           whiteSpace: 'nowrap',
         }}
@@ -50,10 +42,7 @@ export function Footer() {
         </motion.span>
       </div>
 
-      {/* FOOTER CONTENT - PRECISION CENTERED COMPOSITION */}
       <div className="relative z-10 max-w-7xl mx-auto flex flex-col items-center">
-        
-        {/* 01. THE FOUNDER SIGNATURE */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -63,18 +52,17 @@ export function Footer() {
         >
           <div className="space-y-6 md:space-y-8">
             <div className="space-y-4 md:space-y-6">
-              <h3 className="text-2xl md:text-4xl font-headline font-bold text-white tracking-tight">SYED SHUAIB</h3>
-              <div className="flex flex-col gap-2 md:gap-3 text-[9px] md:text-[10px] font-bold tracking-[0.6em] md:tracking-[0.8em] text-primary/40 uppercase">
+              <h3 className="text-2xl md:text-4xl font-headline font-bold text-[#EAE0C8] tracking-tight">SYED SHUAIB</h3>
+              <div className="flex flex-col gap-2 md:gap-3 text-[9px] md:text-[10px] font-bold tracking-[0.6em] md:tracking-[0.8em] text-[#EAE0C8]/30 uppercase">
                 <span>Founder</span>
                 <span>Product Builder</span>
                 <span>System Architect</span>
               </div>
             </div>
-            <div className="h-px w-8 md:w-10 bg-white/10 mx-auto" />
+            <div className="h-px w-8 md:w-10 bg-[#EAE0C8]/10 mx-auto" />
           </div>
         </motion.div>
 
-        {/* 02. IDENTITY & PHILOSOPHY */}
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -85,45 +73,41 @@ export function Footer() {
           <div className="text-lg md:text-xl font-light tracking-[0.4em] md:tracking-[0.5em] text-[#EAE0C8] uppercase">
             AXORA
           </div>
-          <p className="text-[8px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] text-white/20 uppercase italic px-4">
+          <p className="text-[8px] md:text-[10px] font-bold tracking-[0.3em] md:tracking-[0.4em] text-[#EAE0C8]/20 uppercase italic px-4">
             "BUILDING SYSTEMS THAT OUTLAST TRENDS."
           </p>
         </motion.div>
 
-        {/* 03. QUIET INFO */}
         <motion.div 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1.5, delay: 0.6 }}
-          className="text-[9px] md:text-[10px] font-bold tracking-[0.5em] md:tracking-[0.6em] text-white/30 uppercase mb-16 md:mb-20"
+          className="text-[9px] md:text-[10px] font-bold tracking-[0.5em] md:tracking-[0.6em] text-[#EAE0C8]/30 uppercase mb-16 md:mb-20"
         >
           Bangalore, India
         </motion.div>
 
-        {/* 04. EDITORIAL LINKS - REFINED DIALOGUE PATHS */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-20 mb-32 md:mb-48">
           <EditorialLink label="Email" href="mailto:syedshuaib2429@gmail.com" />
           <EditorialLink label="LinkedIn" href="https://www.linkedin.com/in/syedshuaib485/" />
-          <EditorialLink label="Schedule Discussion" href="https://calendly.com/your-link" isPrimary />
+          <EditorialLink label="Schedule Discussion" href="#" isPrimary />
         </div>
 
-        {/* 05. FINAL SEAL */}
-        <div className="pt-16 border-t border-white/5 w-full max-w-4xl flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 opacity-20">
-          <p className="text-[8px] md:text-[9px] font-bold tracking-[0.4em] text-white uppercase">
+        <div className="pt-16 border-t border-[#EAE0C8]/5 w-full max-w-4xl flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 opacity-20">
+          <p className="text-[8px] md:text-[9px] font-bold tracking-[0.4em] text-[#EAE0C8] uppercase">
             &copy; {new Date().getFullYear()} AXORA
           </p>
           <div className="flex items-center gap-4">
-            <div className="w-1 h-1 rounded-full bg-primary/40" />
-            <p className="text-[8px] md:text-[9px] font-bold tracking-[0.4em] text-white uppercase italic">
+            <div className="w-1 h-1 rounded-full bg-[#EAE0C8]/40" />
+            <p className="text-[8px] md:text-[9px] font-bold tracking-[0.4em] text-[#EAE0C8] uppercase italic">
               Designed With Intention.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Atmospheric Horizon Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[50vh] bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.02),transparent_70%)] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[50vh] bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.02),transparent_70%)] pointer-events-none" />
     </footer>
   );
 }
@@ -138,7 +122,7 @@ function EditorialLink({ label, href, isPrimary = false }: { label: string; href
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "group relative py-2 text-[9px] md:text-[10px] font-bold tracking-[0.4em] md:tracking-[0.5em] uppercase transition-all duration-500 flex items-center gap-4 cursor-pointer",
-        isPrimary ? "text-primary drop-shadow-[0_0_12px_rgba(234,224,200,0.2)]" : "text-white/40 hover:text-white"
+        isPrimary ? "text-[#EAE0C8] drop-shadow-[0_0_12px_rgba(234,224,200,0.15)]" : "text-[#EAE0C8]/40 hover:text-[#EAE0C8]"
       )}
     >
       <span className="relative">
