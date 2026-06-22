@@ -111,7 +111,7 @@ export function Contact() {
   return (
     <section id="contact" className="relative bg-[#050505] overflow-hidden min-h-screen py-24 md:py-32 px-6 flex flex-col justify-center">
       <div className="absolute inset-0 blueprint-grid opacity-[0.015] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.05),transparent_70%)] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(20,30,50,0.12),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
         <LayoutGroup>
@@ -253,38 +253,51 @@ export function Contact() {
 function OptionCard({ title, icon: Icon, onClick }: { title: string, icon?: any, onClick: () => void }) {
   return (
     <motion.button
-      whileHover={{ scale: 1.02, y: -8 }}
+      whileHover={{ 
+        scale: 1.015, 
+        y: -6,
+        boxShadow: "0 0 40px rgba(50,90,180,0.08)"
+      }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       onClick={onClick}
-      className="group relative w-full h-[255px] rounded-[32px] bg-[#0A0A0A]/90 border border-white/5 flex flex-col items-center justify-center overflow-hidden transition-all duration-700 ease-premium hover:border-primary/20"
+      className="group relative w-full h-[255px] rounded-[32px] overflow-hidden flex flex-col items-center justify-center border border-white/5 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+      style={{
+        background: 'linear-gradient(180deg, rgba(12,18,28,0.95) 0%, rgba(8,12,18,0.98) 100%)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 20px 60px rgba(0,0,0,0.35)'
+      }}
     >
-      {/* Backdrop Depth */}
-      <div className="absolute inset-0 backdrop-blur-[40px] z-0" />
-      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent z-0" />
+      {/* 00. DECORATIVE CORNER ACCENTS */}
+      <div className="absolute top-4 left-4 w-2 h-2 border-t border-l border-white/20 opacity-[0.08]" />
+      <div className="absolute top-4 right-4 w-2 h-2 border-t border-r border-white/20 opacity-[0.08]" />
       
-      {/* Top Center: Minimal Icon Container */}
+      {/* 01. LUXURY GLASS ICON CONTAINER */}
       <div className="relative z-10 mb-auto pt-10">
-        <div className="w-14 h-14 rounded-2xl glass border border-white/10 flex items-center justify-center text-primary/30 group-hover:text-primary group-hover:scale-110 transition-all duration-700">
-          {Icon ? <Icon className="w-6 h-6" /> : <Sparkles className="w-6 h-6" />}
+        <div className="w-16 h-16 rounded-[20px] backdrop-blur-[20px] border border-white/10 flex items-center justify-center text-primary/30 group-hover:text-primary group-hover:scale-110 transition-all duration-700 shadow-[0_8px_30px_rgba(0,0,0,0.25)]"
+          style={{
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%)',
+            boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.05), 0 8px 30px rgba(0,0,0,0.25)'
+          }}
+        >
+          {Icon ? <Icon className="w-7 h-7" /> : <Sparkles className="w-7 h-7" />}
         </div>
       </div>
 
-      {/* Center: Portal Title (Centered horizontally, large, bold) */}
+      {/* 02. REFINED INSTITUTIONAL TITLE */}
       <div className="relative z-10 flex-1 flex items-center justify-center px-10 text-center">
-        <h4 className="text-3xl md:text-4xl font-headline font-black text-white uppercase tracking-tighter leading-[0.95] group-hover:text-primary/90 transition-colors duration-700">
+        <h4 className="text-3xl md:text-4xl font-headline font-[800] text-white uppercase tracking-[-0.04em] leading-[0.9] transition-all duration-700">
           {title}
         </h4>
       </div>
 
-      {/* Bottom: Small Directional Arrow */}
+      {/* 03. PREMIUM MOMENTUM ARROW */}
       <div className="relative z-10 mt-auto pb-8">
-        <div className="flex flex-col items-center gap-3">
-          <ArrowRight className="w-5 h-5 text-white/10 group-hover:text-primary group-hover:translate-x-1.5 transition-all duration-700" />
-          <div className="h-px w-0 bg-primary/20 transition-all duration-700 group-hover:w-8" />
+        <div className="flex flex-col items-center">
+          <ArrowRight className="w-5 h-5 text-primary opacity-[0.55] group-hover:opacity-100 group-hover:translate-x-[6px] transition-all duration-500 ease-out" />
         </div>
       </div>
 
-      {/* Internal Atmospheric Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+      {/* Internal Atmospheric Glow - Sub-perceptual */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.05),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
     </motion.button>
   );
 }
