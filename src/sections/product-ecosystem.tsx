@@ -1,3 +1,4 @@
+
 "use client";
 
 import React from "react";
@@ -108,7 +109,10 @@ const VisualIdentity = ({ type }: { type: string }) => {
 
 export function ProductEcosystem() {
   return (
-    <section id="ecosystem" className="py-48 px-6 bg-background relative overflow-hidden">
+    <section id="product-portfolio" className="py-48 px-6 bg-background relative overflow-hidden">
+      {/* Scroll anchor to maintain navbar consistency without touching Navbar component */}
+      <div id="ecosystem" className="absolute top-0 left-0 h-1 w-1 opacity-0 pointer-events-none" />
+      
       <div className="absolute inset-0 blueprint-grid opacity-[0.02] pointer-events-none" />
       
       <div className="max-w-[1440px] mx-auto space-y-24">

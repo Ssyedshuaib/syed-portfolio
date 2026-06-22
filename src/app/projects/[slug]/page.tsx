@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -164,14 +165,16 @@ export default function ProjectPage() {
                   transition={{ delay: 0.2 }}
                   className="mb-20"
                 >
-                  <Button 
-                    variant="ghost" 
-                    onClick={() => router.push("/#ecosystem")}
-                    className="group text-[#B7A7A9] hover:text-white mb-12 h-12 px-6 rounded-full border border-white/5"
-                  >
-                    <ArrowLeft className="mr-2 w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                    Back to Ecosystem
-                  </Button>
+                  <div className="sticky top-24 md:top-32 z-50 w-fit mb-12">
+                    <Button 
+                      variant="ghost" 
+                      onClick={() => router.push("/#product-portfolio")}
+                      className="group text-[#B7A7A9] hover:text-white h-12 px-6 rounded-full border border-white/5 bg-black/40 backdrop-blur-md transition-all"
+                    >
+                      <ArrowLeft className="mr-2 w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                      Back to Ecosystem
+                    </Button>
+                  </div>
 
                   <div className="flex flex-col md:flex-row md:items-end justify-between gap-12">
                     <div className="space-y-8">
