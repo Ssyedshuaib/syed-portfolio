@@ -255,49 +255,44 @@ function OptionCard({ title, icon: Icon, onClick }: { title: string, icon?: any,
     <motion.button
       whileHover={{ 
         scale: 1.015, 
-        y: -6,
-        boxShadow: "0 0 40px rgba(50,90,180,0.08)"
+        y: -8,
+        boxShadow: "0 20px 80px rgba(0,0,0,0.45), 0 0 40px rgba(255,255,255,0.04)"
       }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       onClick={onClick}
-      className="group relative w-full h-[255px] rounded-[32px] overflow-hidden flex flex-col items-center justify-center border border-white/5 shadow-[0_20px_60px_rgba(0,0,0,0.35)]"
+      className="group relative w-full h-[255px] rounded-[32px] overflow-hidden flex flex-col items-center justify-center border border-white/[0.03] shadow-[0_20px_80px_rgba(0,0,0,0.45)]"
       style={{
-        background: 'linear-gradient(180deg, rgba(12,18,28,0.95) 0%, rgba(8,12,18,0.98) 100%)',
-        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 20px 60px rgba(0,0,0,0.35)'
+        background: 'linear-gradient(180deg, rgba(8,12,18,0.96) 0%, rgba(5,8,12,0.98) 100%)',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 20px 80px rgba(0,0,0,0.45)'
       }}
     >
-      {/* 00. DECORATIVE CORNER ACCENTS */}
-      <div className="absolute top-4 left-4 w-2 h-2 border-t border-l border-white/20 opacity-[0.08]" />
-      <div className="absolute top-4 right-4 w-2 h-2 border-t border-r border-white/20 opacity-[0.08]" />
+      {/* 00. SUBTLE SPOTLIGHT DEPTH */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(40,60,120,0.08),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
       
-      {/* 01. LUXURY GLASS ICON CONTAINER */}
+      {/* 01. MATERIAL QUALITY - GRAIN OVERLAY */}
+      <div className="absolute inset-0 grain-overlay opacity-[0.015] pointer-events-none" />
+
+      {/* 02. LUXURY GLASS ICON CONTAINER */}
       <div className="relative z-10 mb-auto pt-10">
-        <div className="w-16 h-16 rounded-[20px] backdrop-blur-[20px] border border-white/10 flex items-center justify-center text-primary/30 group-hover:text-primary group-hover:scale-110 transition-all duration-700 shadow-[0_8px_30px_rgba(0,0,0,0.25)]"
-          style={{
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%)',
-            boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.05), 0 8px 30px rgba(0,0,0,0.25)'
-          }}
-        >
-          {Icon ? <Icon className="w-7 h-7" /> : <Sparkles className="w-7 h-7" />}
+        <div className="w-16 h-16 rounded-[20px] backdrop-blur-[20px] border border-white/[0.04] bg-white/[0.02] flex items-center justify-center text-white/30 group-hover:text-white/60 group-hover:scale-110 transition-all duration-700 shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
+          {Icon ? <Icon className="w-6 h-6 stroke-[1.5]" /> : <Sparkles className="w-6 h-6 stroke-[1.5]" />}
         </div>
       </div>
 
-      {/* 02. REFINED INSTITUTIONAL TITLE */}
+      {/* 03. REFINED INSTITUTIONAL TITLE */}
       <div className="relative z-10 flex-1 flex items-center justify-center px-10 text-center">
         <h4 className="text-3xl md:text-4xl font-headline font-[800] text-white uppercase tracking-[-0.04em] leading-[0.9] transition-all duration-700">
           {title}
         </h4>
       </div>
 
-      {/* 03. PREMIUM MOMENTUM ARROW */}
+      {/* 04. PREMIUM MOMENTUM ARROW */}
       <div className="relative z-10 mt-auto pb-8">
-        <div className="flex flex-col items-center">
-          <ArrowRight className="w-5 h-5 text-primary opacity-[0.55] group-hover:opacity-100 group-hover:translate-x-[6px] transition-all duration-500 ease-out" />
-        </div>
+        <ArrowRight className="w-4 h-4 text-white opacity-50 group-hover:opacity-100 group-hover:translate-x-[6px] transition-all duration-600 ease-out" />
       </div>
 
-      {/* Internal Atmospheric Glow - Sub-perceptual */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.05),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+      {/* Internal Atmospheric Horizon - Luxury White Bloom */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
     </motion.button>
   );
 }
