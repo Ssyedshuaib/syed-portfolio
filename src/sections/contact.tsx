@@ -122,7 +122,7 @@ export function Contact() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0, scale: 0.95, filter: "blur(20px)" }}
-                className="space-y-16 md:space-y-24"
+                className="space-y-12 md:space-y-20"
               >
                 <div className="text-center space-y-6 md:space-y-8 max-w-3xl mx-auto">
                   <div className="space-y-4">
@@ -155,7 +155,7 @@ export function Contact() {
                 initial={{ opacity: 0, scale: 1.05, filter: "blur(30px)" }}
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                 exit={{ opacity: 0, x: -50 }}
-                className="space-y-16 md:space-y-24"
+                className="space-y-12 md:space-y-20"
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-white/5 pb-8 md:pb-12 gap-8">
                   <div className="space-y-4">
@@ -194,7 +194,7 @@ export function Contact() {
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, filter: "blur(40px)" }}
-                className="space-y-16 md:space-y-24"
+                className="space-y-12 md:space-y-20"
               >
                 <div className="text-center space-y-6 max-w-2xl mx-auto">
                   <button 
