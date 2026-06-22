@@ -19,8 +19,8 @@ import { cn } from "@/lib/utils";
 
 /**
  * THE STRATEGY ROOM
- * A cinematic, high-fidelity interaction experience.
- * Rebuilt as a grid of premium 300px portals.
+ * Rebuilt with premium centered portal cards.
+ * Focus: High-fidelity interior alignment and luxury editorial depth.
  */
 
 type ViewState = "entrance" | "refinement" | "communication" | "transition";
@@ -83,15 +83,10 @@ const PORTALS = [
 const SCHEDULE_URL = "https://calendly.com/your-link";
 
 const ACTIONS = [
-  { label: "DIRECT DIALOGUE", sub: "Direct communication for focused discussions.", href: "mailto:syedshuaib2429@gmail.com", icon: Mail },
-  { label: "PROFESSIONAL NETWORK", sub: "Connect through my institutional network.", href: "https://www.linkedin.com/in/syedshuaib485/", icon: Linkedin },
-  { label: "BUILD TOGETHER", sub: "For founders, builders, and meaningful collaborations.", href: "mailto:syedshuaib2429@gmail.com?subject=Build Together", icon: Sparkles },
-  { 
-    label: "SCHEDULE DISCUSSION", 
-    sub: "Book a dedicated time for a focused conversation about products, ventures, ecosystems, or strategic opportunities.", 
-    href: SCHEDULE_URL, 
-    icon: Calendar 
-  },
+  { label: "DIRECT DIALOGUE", href: "mailto:syedshuaib2429@gmail.com", icon: Mail },
+  { label: "PROFESSIONAL NETWORK", href: "https://www.linkedin.com/in/syedshuaib485/", icon: Linkedin },
+  { label: "BUILD TOGETHER", href: "mailto:syedshuaib2429@gmail.com?subject=Build Together", icon: Sparkles },
+  { label: "SCHEDULE DISCUSSION", href: SCHEDULE_URL, icon: Calendar },
 ];
 
 export function Contact() {
@@ -139,11 +134,11 @@ export function Contact() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                  {PORTALS.map((portal, i) => (
+                  {PORTALS.map((portal) => (
                     <OptionCard 
                       key={portal.id} 
-                      index={i + 1}
                       title={portal.title}
+                      icon={portal.icon}
                       onClick={() => {
                         setSelectedPortal(portal);
                         setView("refinement");
@@ -178,11 +173,11 @@ export function Contact() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                  {selectedPortal.options.map((opt, i) => (
+                  {selectedPortal.options.map((opt) => (
                     <OptionCard
                       key={opt.title}
-                      index={i + 1}
                       title={opt.title}
+                      icon={selectedPortal.icon}
                       onClick={() => {
                         setSelectedOption(opt.title);
                         setView("communication");
@@ -214,11 +209,11 @@ export function Contact() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                  {ACTIONS.map((action, i) => (
+                  {ACTIONS.map((action) => (
                     <OptionCard
                       key={action.label}
-                      index={i + 1}
                       title={action.label}
+                      icon={action.icon}
                       onClick={() => handleAction(action)}
                     />
                   ))}
@@ -255,43 +250,41 @@ export function Contact() {
   );
 }
 
-function OptionCard({ index, title, onClick }: { index: number, title: string, onClick: () => void }) {
+function OptionCard({ title, icon: Icon, onClick }: { title: string, icon?: any, onClick: () => void }) {
   return (
     <motion.button
-      whileHover={{ scale: 1.02, y: -6 }}
+      whileHover={{ scale: 1.02, y: -8 }}
       onClick={onClick}
-      className="group relative w-full h-[300px] rounded-[32px] glass bg-[#0A0A0A]/80 border border-white/5 text-left overflow-hidden transition-all duration-700 ease-premium hover:border-primary/20 hover:bg-primary/[0.02]"
+      className="group relative w-full h-[300px] rounded-[32px] bg-[#0A0A0A]/90 border border-white/5 flex flex-col items-center justify-center overflow-hidden transition-all duration-700 ease-premium hover:border-primary/20"
     >
-      {/* Background Soft Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(83,104,120,0.08),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+      {/* Backdrop Depth */}
+      <div className="absolute inset-0 backdrop-blur-[40px] z-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent z-0" />
       
-      {/* INDEX NUMBER: TOP 32PX LEFT 32PX */}
-      <div className="absolute top-8 left-8">
-        <span className="text-xs md:text-sm font-mono font-bold tracking-[0.4em] text-primary/20 group-hover:text-primary/40 transition-colors duration-700">
-          0{index}
-        </span>
-      </div>
-
-      {/* PORTAL TITLE: LEFT 32PX BOTTOM 72PX */}
-      <div className="absolute bottom-[72px] left-8 max-w-[80%]">
-        <h4 className="text-3xl md:text-5xl font-headline font-black text-white italic uppercase tracking-tighter leading-[0.95] group-hover:text-primary transition-all duration-700">
-          {title.split(' ').map((word, i) => (
-            <React.Fragment key={i}>
-              {word} <br className={cn(i === 0 ? "block" : "hidden")} />
-            </React.Fragment>
-          ))}
-        </h4>
-      </div>
-
-      {/* ARROW BUTTON: BOTTOM 32PX RIGHT 32PX (56X56) */}
-      <div className="absolute bottom-8 right-8">
-        <div className="w-14 h-14 rounded-full glass border border-white/10 flex items-center justify-center text-primary/40 group-hover:text-primary group-hover:bg-primary/[0.05] group-hover:border-primary/20 transition-all duration-700 ease-premium">
-          <ArrowRight className="w-6 h-6 transform transition-transform group-hover:rotate-[-45deg]" />
+      {/* Top Center: Minimal Icon Container */}
+      <div className="relative z-10 mb-auto pt-12">
+        <div className="w-14 h-14 rounded-2xl glass border border-white/10 flex items-center justify-center text-primary/30 group-hover:text-primary group-hover:scale-110 transition-all duration-700">
+          {Icon ? <Icon className="w-6 h-6" /> : <Sparkles className="w-6 h-6" />}
         </div>
       </div>
 
-      {/* Subtle Internal Highlight */}
-      <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/5 blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+      {/* Center: Portal Title (Centered horizontally, large, bold) */}
+      <div className="relative z-10 flex-1 flex items-center justify-center px-10 text-center">
+        <h4 className="text-3xl md:text-4xl font-headline font-black text-white uppercase tracking-tighter leading-[0.95] group-hover:text-primary/90 transition-colors duration-700">
+          {title}
+        </h4>
+      </div>
+
+      {/* Bottom: Small Directional Arrow */}
+      <div className="relative z-10 mt-auto pb-10">
+        <div className="flex flex-col items-center gap-3">
+          <ArrowRight className="w-5 h-5 text-white/10 group-hover:text-primary group-hover:translate-x-1.5 transition-all duration-700" />
+          <div className="h-px w-0 bg-primary/20 transition-all duration-700 group-hover:w-8" />
+        </div>
+      </div>
+
+      {/* Internal Atmospheric Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,224,200,0.06),transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
     </motion.button>
   );
 }
