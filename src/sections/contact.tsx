@@ -255,14 +255,14 @@ function OptionCard({ title, icon: Icon, onClick }: { title: string, icon?: any,
     <motion.button
       whileHover={{ scale: 1.02, y: -8 }}
       onClick={onClick}
-      className="group relative w-full h-[300px] rounded-[32px] bg-[#0A0A0A]/90 border border-white/5 flex flex-col items-center justify-center overflow-hidden transition-all duration-700 ease-premium hover:border-primary/20"
+      className="group relative w-full h-[255px] rounded-[32px] bg-[#0A0A0A]/90 border border-white/5 flex flex-col items-center justify-center overflow-hidden transition-all duration-700 ease-premium hover:border-primary/20"
     >
       {/* Backdrop Depth */}
       <div className="absolute inset-0 backdrop-blur-[40px] z-0" />
       <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent z-0" />
       
       {/* Top Center: Minimal Icon Container */}
-      <div className="relative z-10 mb-auto pt-12">
+      <div className="relative z-10 mb-auto pt-10">
         <div className="w-14 h-14 rounded-2xl glass border border-white/10 flex items-center justify-center text-primary/30 group-hover:text-primary group-hover:scale-110 transition-all duration-700">
           {Icon ? <Icon className="w-6 h-6" /> : <Sparkles className="w-6 h-6" />}
         </div>
@@ -276,7 +276,7 @@ function OptionCard({ title, icon: Icon, onClick }: { title: string, icon?: any,
       </div>
 
       {/* Bottom: Small Directional Arrow */}
-      <div className="relative z-10 mt-auto pb-10">
+      <div className="relative z-10 mt-auto pb-8">
         <div className="flex flex-col items-center gap-3">
           <ArrowRight className="w-5 h-5 text-white/10 group-hover:text-primary group-hover:translate-x-1.5 transition-all duration-700" />
           <div className="h-px w-0 bg-primary/20 transition-all duration-700 group-hover:w-8" />
